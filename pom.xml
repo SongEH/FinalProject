@@ -75,10 +75,13 @@
 			<scope>test</scope>
 		</dependency>
 
+
+		<!-- jsp -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
@@ -98,7 +101,6 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-
 
 	</dependencies>
 

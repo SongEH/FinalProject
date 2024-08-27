@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.githrd.demo_final_project.dao.MemberMapper">
+
+   <!-- 전체조회 -->
+   <select id="selectList" resultType="member">
+       select * from member order by mem_idx
+   </select>
+   
+   
+   <!-- mem_idx 이용해서  MemberVo  구하기 -->
+   <select id="selectOneFromIdx"  parameterType="int"  resultType="member">
+       select * from member where mem_idx=#{mem_idx}
+   </select>
+   
+   <!-- mem_id 이용해서  MemberVo  구하기 -->
+   <select id="selectOneFromId"  parameterType="String"  resultType="member">
+       select * from member where mem_id=#{mem_id}
+   </select>
+   
+   <!-- 추가  
+        #{mem_name} => vo.getMem_name()
+   -->
+   <insert id="insert"  parameterType="member">
+       insert into member values(null,
+                                  #{ mem_name }, 
+                                  #{ mem_id },
+                                  #{ mem_pwd },
+                                  #{ mem_zipcode },
+                                  #{ mem_addr },
+                                  #{ mem_ip},
+                                  default,
+                                  default)
+   </insert>
+   
+   <!-- 삭제  -->
+   <delete id="delete" parameterType="int">
+      delete from member where mem_idx=#{ mem_idx }
+   </delete>
+   
+   <!-- 수정  -->
+   <update id="update" parameterType="member">
+      update member 
+             set mem_name=#{ mem_name },
+                 mem_pwd=#{ mem_pwd },
+                 mem_zipcode=#{ mem_zipcode },
+                 mem_addr=#{ mem_addr },
+                 mem_ip=#{ mem_ip },
+                 mem_grade=#{ mem_grade }  
+      where mem_idx=#{ mem_idx }
+   </update>
+   
+   
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

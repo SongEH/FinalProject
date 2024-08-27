@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.githrd.finalproject.dao.OwnerMapper">
+
+    <select id="selectList" resultType="owner">
+        select * from owner order by owner_id
+    </select>
+
+    <select id="selectOneFromIdx" parameterType="int" resultType="owner">
+        select * from owner where owner_id = #{owner_id}
+    </select>
+
+    <select id="selectOneFromId" parameterType="String" resultType="owner">
+        select * from owner where owner_accountId = #{owner_accountId}
+    </select>
+
+    <insert id="insert" parameterType="owner">
+        INSERT INTO `Owner`(
+            `owner_name`,
+            `owner_accountId`,
+            `owner_pwd`,
+            `owner_email`,
+            `owner_phone`,
+            `owner_license`,
+            `owner_bankbook`
+        ) VALUES(
+            #{owner_name},
+            #{owner_accountId},
+            #{owner_pwd},
+            #{owner_email},
+            #{owner_phone},
+            #{owner_license},
+            #{owner_bankbook}
+            )
+    </insert>
+</mapper>
+
+

@@ -45,6 +45,7 @@ public class ShopController {
 
             return "error/error_page";
         }
+        System.out.println("대기");
 
         model.addAttribute("list", list);
 

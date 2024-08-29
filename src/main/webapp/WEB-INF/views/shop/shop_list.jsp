@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +12,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
+      /* *{
+        border: 1px solid grey
+      } */
+      .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 5%;
+      }
       body {
         background-color: #f8f9fa;
         font-family: "Arial", sans-serif;
@@ -98,19 +110,19 @@
     </script>
   </head>
   <body>
+    <%@include file="../common.jsp" %>
+
+    <!-- header import -->
+    <%@include file="../header.jsp" %>
+
+
+      <!-- side bar import -->
+      <%@include file="../sidebar.jsp" %>
     <div class="container">
       <!-- <input type="button" value="가게등록" onclick="location.href='/shop/insert_form.do'"/> -->
       
-
-      <header class="text-center my-5">
-        <p>나는헤더</p>
-      </header>
-      <nav>
-        <p>나는 nav</p>
-      </nav>
-
       <main id="main">
-        <input type="button" value="가게등록" onclick="insert_form_shop();"/>
+        <!-- <input type="button" value="가게등록" onclick="insert_form_shop();"/> -->
       
       <div class="menu-section">
         

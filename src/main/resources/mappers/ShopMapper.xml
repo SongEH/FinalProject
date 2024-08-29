@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="first.final_project.dao.ShopMapper">
+
+
+    <!-- 가게추가 -->
+    <!-- <insert id="insert" parameterType="first.final_project.vo.ShopVo"> -->
+        <insert id="insert" parameterType="shop">
+        insert into shop (
+            shop_id,
+            shop_name, shop_img, shop_addr, food_category, shop_call, 
+            shop_content, shop_min_price, shop_delivery_time, shop_rate, 
+            shop_stemp_count, shop_review_count, shop_open_time, 
+            shop_close_time,
+            shop_close_day,
+            shop_area, shop_cdate, shop_mdate, shop_status
+        ) values (
+            null,
+            #{shop_name}, #{shop_img}, #{shop_addr}, #{food_category}, #{shop_call}, 
+            #{shop_content}, #{shop_min_price}, #{shop_delivery_time}, default, 
+            default, default, #{shop_open_time}, 
+            #{shop_close_time},
+            #{shop_close_day},
+            #{shop_area}, default, default, #{shop_status}
+        )
+    </insert>
+
+    <!-- 전체 리스트 조회  -->
+    <select id="selectList" resultType="shop">
+        select * from shop
+    </select>
+
+
+    <!-- 가게 1개 상세보기  -->
+    <select id="selectOne" parameterType="int" resultType="shop">
+        select * from shop where shop_id = #{shop_id}
+    </select>
+
+
+    <!-- 가게 수정하기 -->
+    <select id="select_modify_shop_id" parameterType="int" resultType="shop">
+        select * from shop where shop_id = #{shop_id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from shop where shop_id = #{shop_id}
+    </delete>
+
+</mapper>

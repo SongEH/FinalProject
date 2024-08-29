@@ -79,10 +79,10 @@ public class ShopController {
         }
 
         vo.setShop_img(shop_img);
-        @SuppressWarnings("unused")
+        System.out.println("${pageContext.request.contextPath}");
         int res = shop_Service.insert(vo);
 
-        ra.addAttribute("vo", vo);
+        
 
         return "redirect:list.do";
     }

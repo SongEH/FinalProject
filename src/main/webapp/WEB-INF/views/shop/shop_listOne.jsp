@@ -7,9 +7,9 @@ pageEncoding="UTF-8"%>
     <title>Insert title here</title>
 
     <style>
-      *{
+      /* *{
         border : 1px  solid rgb(126, 125, 125);
-      }
+      } */
       .restaurant-info img{
         width: 100px;
         height: 100px;

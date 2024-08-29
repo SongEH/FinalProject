@@ -6,7 +6,44 @@
     <head>
       <meta charset="utf-8">
     </head>
+     <script>
+      function send(f) {
+        alert("도착 ");
 
+        let shop_name = f.shop_name.value.trim();
+        console.log(f.shop_name.value);
+        let shop_content = f.shop_content.value.trim();
+        console.log(f.shop_content.value);
+        let shop_addr = f.shop_addr.value.trim();
+        console.log(f.shop_addr.value);
+        let shop_call= f.shop_call.value.trim();
+        console.log(f.shop_call.value);
+        let shop_min_price = f.shop_min_price.value.trim();
+        console.log(f.shop_min_price.value);
+        let shop_open_time = f.shop_open_time.value.trim();
+        console.log(f.shop_open_time.value);
+        let shop_close_time = f.shop_close_time.value.trim();
+        console.log(f.shop_close_time.value);
+        let shop_close_day = f.shop_close_day.value.trim();
+        console.log(f.shop_close_day.value);
+        let shop_area = f.shop_area.value.trim();
+        console.log(f.shop_area.value);
+        let food_category = f.food_category.value;
+        console.log(f.food_category.value);
+        let shop_status = f.shop_status.value;
+        console.log(f.shop_status.value);
+
+        if(f.shop_name==""){
+          alert("가게 이름을 작성해주세요")
+        }
+
+
+        alert(shop_status)
+
+        f.action = "insert.do";
+        f.submit();
+      }
+    </script>
     <body>
       <%@include file="../common.jsp" %>
 

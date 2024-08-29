@@ -110,29 +110,22 @@
     </script>
   </head>
   <body>
+    <!-- common import -->
     <%@include file="../common.jsp" %>
 
     <!-- header import -->
     <%@include file="../header.jsp" %>
 
-
       <!-- side bar import -->
       <%@include file="../sidebar.jsp" %>
+
+    
     <div class="container">
-      <!-- <input type="button" value="가게등록" onclick="location.href='/shop/insert_form.do'"/> -->
-      
       <main id="main">
-        <!-- <input type="button" value="가게등록" onclick="insert_form_shop();"/> -->
-      
       <div class="menu-section">
-        
           <div class="row">
             <c:forEach var="vo" items="${list}">
-            <div
-              class="col-md-6 col-sm-12 menu-item"
-              onclick="selectOne('${vo.shop_id}');"
-            >
-            
+            <div class="col-md-6 col-sm-12 menu-item" onclick="selectOne('${vo.shop_id}');">
               <div class="row">
                 <div class="row-md2 col-sm-4">
                   <img
@@ -141,7 +134,6 @@
                   />
                 </div>
                 <div class="row-md10 col-sm-8">
-                  ${ vo.shop_id}
                   <h2>${vo.shop_name}</h2>
                   <p>${vo.shop_rate} | ${vo.shop_review_count}</p>
                   <p>${vo.shop_min_price}</p>

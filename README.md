@@ -11,3 +11,5 @@ Final Project시작
 
 클라우드 ERD
 https://www.erdcloud.com/d/cd5tCqegTyFd9srKc
+
+fulltest1

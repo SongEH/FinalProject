@@ -14,4 +14,4 @@ Final Project시작
 https://www.erdcloud.com/d/cd5tCqegTyFd9srKc
 
 fulltest1
--> merge2
+-> merge2 --> pull

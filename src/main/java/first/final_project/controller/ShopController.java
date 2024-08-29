@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.service.ShopService;
+import first.final_project.vo.MenuVo;
 import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -79,10 +80,7 @@ public class ShopController {
         }
 
         vo.setShop_img(shop_img);
-        System.out.println("${pageContext.request.contextPath}");
         int res = shop_Service.insert(vo);
-
-        
 
         return "redirect:list.do";
     }
@@ -125,8 +123,10 @@ public class ShopController {
 
         System.out.println(shop_id);
         ShopVo vo;
+        MenuVo menuvo;
         try {
             vo = shop_Service.selectOne(shop_id);
+           
         } catch (Exception e) {
 
             model.addAttribute("errorMessage", "fail_select_one");
@@ -139,22 +139,31 @@ public class ShopController {
         return "shop/shop_listOne";
     }
 
-    // 가게 정보수정
-    @RequestMapping("/shop/modify.do")
-    public String shop_modify(int shop_id, Model model) {
+    // 가게 정보 수정
+    @RequestMapping("/shop/modify_form.do")
+    public String shop_modify(@RequestParam(value="shop_id") int shop_id, Model model) {
 
-        ShopVo vo;
+
         try {
-            vo = shop_Service.select_modify_shop_id(shop_id);
+            ShopVo vo = shop_Service.select_modify_shop_id(shop_id);
+            model.addAttribute("vo", vo);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_select_one");
 
+            
+        }
+        return "shop/shop_modify_form";
+    }
+
+    // 가게 정보 수정 업데이트 
+    @RequestMapping("/shop/modify.do")
+    public String shop_modify(ShopVo vo,RedirectAttributes ra){
+        try {
+            int res = shop_Service.update(vo);
+        } catch (Exception e) {
             return "error/error_page";
         }
-
-        model.addAttribute("vo", vo);
-
-        return "shop/shop_modify_form";
+        return "redirect:modify_form.do";
     }
 
     @RequestMapping("/shop/delete.do")

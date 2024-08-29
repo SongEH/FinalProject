@@ -47,7 +47,6 @@ pageEncoding="UTF-8"%>
     </style>
 
     <script>
-
       function shop_del(shop_id){
         if(confirm("삭제하면 복구되지 않습니다?\n 정말 삭제하시겠습니까? ")==false) return;
 
@@ -63,14 +62,40 @@ pageEncoding="UTF-8"%>
           }
         });
       }
-
     </script>
 
+    <!-- <script>
+      function shop_modify(shop_id){
+        alert("수정하기클릭함")
+        $.ajax({
+        url     :     "/shop/modify_form.do",
+        data    :      {"shop_id": shop_id},
+        success :   function(res_data){
+          alert("성공")
+          $("#modify_form_display").html(res_data);
+          $("#select_one_display").hide();
+          
+        },
+        error   :   function(err){
+        alert(error.responseText)
+        }
+        });
+        }
+    </script> -->
+
+    <script>
+      function shop_modify(shop_id){
+        alert("도착")
+        action = "/shop/modify_form.do";
+        submit();
+      }
+    </script>
   </head>
-</form method="post">
+  <body class="container">
+  <main>
+  </form method="post">
   <!-- 표현은 하지않고 활용하기 위한 데이터  -->
    <input type="hidden" name="shop_id" value="${vo.shop_id}"/>
-   <body class="container">
     <div class="restaurant-info">
         <div class="row">
           <div class="col-md-8 mb-30">
@@ -129,10 +154,14 @@ pageEncoding="UTF-8"%>
 
       
       <div>
-        <input type="button" value="수정하기" onclick=""/>
+        <!-- <input type="button" value="수정하기" onclick="shop_modify('${vo.shop_id}')"/> -->
+        <input type="button" value="수정하기" onclick="location.href='modify_form.do?shop_id=${vo.shop_id}'"/>
         <input type="button" value="삭제하기" onclick="shop_del('${vo.shop_id}')"/>
       </div>
       <form>
   </main>
+    <div>
+      <div id="modify_form_display"></div>
+    </div>
   </body>
 </html>

@@ -1,4 +1,7 @@
-﻿CREATE TABLE `shop` (
+﻿drop table shop
+drop table menu
+
+CREATE TABLE `shop` (
     `shop_id` int not null primary key auto_increment,
     `shop_name` varchar(90) NOT NULL,
     `shop_img` varchar(255) NULL,
@@ -7,7 +10,6 @@
     `shop_call` varchar(20) NOT NULL,
     `shop_content` varchar(255) NULL,
     `shop_min_price` int NULL DEFAULT 0,
-    `shop_delivery_time` int NOT NULL,
     `shop_rate` decimal(2, 1) NOT NULL DEFAULT 0,
     `shop_stemp_count` int NOT NULL DEFAULT 0,
     `shop_review_count` int NOT NULL DEFAULT 0,

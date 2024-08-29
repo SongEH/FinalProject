@@ -17,6 +17,9 @@ public interface ShopService {
     // 가게 정보 수정하기
     ShopVo select_modify_shop_id(int shop_id);
 
+    // 가게 정보 수정 업데이트
+    int update(ShopVo vo);
+
     // 가게 삭제하기
     int delete(int shop_id);
 }

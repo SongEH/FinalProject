@@ -16,8 +16,6 @@ public class ShopVo {
     private String shop_call;
     private String shop_content;
     private int shop_min_price;
-    private int shop_delivery_tip;
-    private int shop_delivery_time;
     private String shop_rate;
     private int shop_stemp_count;
     private int shop_review_count;

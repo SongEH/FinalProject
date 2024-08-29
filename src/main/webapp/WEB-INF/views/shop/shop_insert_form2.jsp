@@ -153,7 +153,7 @@ pageEncoding="UTF-8"%>
                       <button type="reset" class="btn btn-secondary">Reset</button> -->
                         <input class="btn btn-success" type="button" value="메인화면" onclick="location.href='list.do'">
 
-                        <input class="btn btn-primary" type="button" value="가게등록" onclick="send(this.form);">
+                        <input class="btn btn-primary" type="button"  value="가게등록" onclick="send(this.form);">
                       </div>
                     </form><!-- End floating Labels Form -->
 

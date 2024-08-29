@@ -1,4 +1,5 @@
 # FinalProject
+
 글로벌 아이티 7e강의장 Final Project!
 
 풀스택 프레임워크(자바,스프링)기반 데이터 융합SW개발자 과정 (7회차)
@@ -13,3 +14,4 @@ Final Project시작
 https://www.erdcloud.com/d/cd5tCqegTyFd9srKc
 
 fulltest1
+-> merge2

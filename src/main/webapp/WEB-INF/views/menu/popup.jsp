@@ -31,26 +31,6 @@
     }
   </style>
 
-
-  <script type="text/javascript">
-    //전역변수
-    var g_menu_img; //hoisting
-    var g_menu_id;
-
-
-    function delete_photo() {
-
-      if (confirm("정말 삭제하시겠습니까?") == false) return;
-
-      location.href = "delete.do?menu_id=" + g_menu_id; // PhotoDeleteAction
-    } //end:delete_photo()
-
-    function modify_photo() {
-
-      location.href = "modify_form.do?menu_id=" + g_menu_id; // PhotoModifyFormAction
-
-    } //end:modify_form()
-  </script>
 </head>
 
 <body>
@@ -72,6 +52,12 @@
           <div style="text-align: center; height: 310px;">
             <img id="pop_image">
           </div>
+
+          
+          <!-- menu id -->
+          <input type="hidden" id="pop_hidden_menuid">
+          <input type="hidden" id="pop_hidden_shopid">
+
           <h5 class="modal-title" id="pop_title">메뉴명</h5>
           <p><strong>설명:</strong> <span id="pop_content">메뉴에 대한 자세한 설명이 여기에 들어갑니다.</span></p>
           <p><strong>가격:</strong> <span id="pop_price">₩00,000</span></p>
@@ -85,10 +71,11 @@
               <option value="3">옵션 3</option>
             </select>
           </div>
+          
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary">장바구니담기</button>
+            <button type="button" class="btn btn-primary" onclick="input_cart();">장바구니담기</button>
           </div>
           <div id="pop_job" style="text-align: center;">
             <!-- <input style="display: none;" class="btn btn-info" type="button" id="btn_popup_update" value="수정"

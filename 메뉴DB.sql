@@ -1,8 +1,9 @@
-create database final_jihye;
-drop database final_jihye;
-use final_jihye;
+create database finalproject;
 
-drop table menu;
+use finalproject;
+
+drop table carts;
+
 -- 테이블 생성
 CREATE TABLE `Menu` (
     `menu_id` INT NOT NULL AUTO_INCREMENT,
@@ -32,16 +33,17 @@ CREATE TABLE `Orders` (
     `addr_id` INT NOT NULL,
     PRIMARY KEY (`orders_id`)
 );
+
 CREATE TABLE `Carts` (
-    `carts_menu_id` INT NOT NULL,
+    `carts_menu_id` INT NOT NULL AUTO_INCREMENT,
     `carts_menu_quantity` INT NOT NULL DEFAULT 1,
     `member_id` INT NOT NULL,
     `shop_id` INT NOT NULL,
     `orders_id` INT NOT NULL,
-    `menu_id2` INT NOT NULL,
-    PRIMARY KEY (`carts_menu_id`, `member_id`, `shop_id`, `orders_id`)
+    `menu_id` INT NOT NULL,
+    `carts_cdate` DATE NOT NULL DEFAULT (CURRENT_DATE),
+    PRIMARY KEY (`carts_menu_id`)
 );
-
 
 -- 더미데이터
 INSERT INTO `Menu` (
@@ -78,6 +80,13 @@ INSERT INTO `Menu` (
     1
 );
 
+-- 장바구니 더미데이터 
+INSERT INTO `Carts` (carts_menu_quantity, member_id, shop_id, orders_id, menu_id, carts_cdate)
+VALUES (2, 101, 202, 303, 404, '2024-08-30');
+
+-- 더미 데이터 2
+INSERT INTO `Carts` ( carts_menu_quantity, member_id, shop_id, orders_id, menu_id, carts_cdate)
+VALUES ( 3, 102, 203, 304, 405, '2024-08-30');
 
 -- 조회
 SELECT * FROM MENU;

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -224,6 +225,11 @@
     </script>
   </head>
   <body>
+    <%@include file="../common.jsp" %>
+        <!-- header import -->
+        <%@include file="../header.jsp" %>
+          <!-- side bar import -->
+          <%@include file="../sidebar.jsp" %>
     <button id="openModal" data-toggle="modal" data-target="#signupModal">
       회&nbsp;원
     </button>
@@ -342,4 +348,3 @@
     </div>
   </body>
 </html>
-

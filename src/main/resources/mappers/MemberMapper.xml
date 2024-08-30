@@ -27,26 +27,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--추가 등록 -->
     <insert id="insert" parameterType="member">
-            INSERT INTO `Member` (
-                `member_name`, 
-                `member_nickname`, 
-                `member_accountId`, 
-                `member_pwd`, 
-                `member_email`, 
-                `member_phone` 
-            ) VALUES (
-                #{member_name}, 
-                #{member_nickname}, 
-                #{member_accountId}, 
-                #{member_pwd}, 
-                #{member_email}, 
-                #{member_phone} 
-            )
+        insert into member(`member_name`, 
+                    `member_nickname`, 
+                    `member_accountId`, 
+                    `member_pwd`, 
+                    `member_email`, 
+                    `member_phone` 
+                    )values( 
+                    #{member_name}, 
+                    #{member_nickname}, 
+                    #{member_accountId}, 
+                    #{member_pwd}, 
+                    #{member_email}, 
+                    #{member_phone} 
+                    )
     </insert>
 
+    <!--수정-->
+    <update id="update" parameterType="member">
+        update member set member_name=#{member_name}, member_nickname=#{member_nickname}, member_pwd=#{member_pwd}, member_email=#{member_email}, member_phone=#{member_phone}
+        where member_id=#{member_id}
+    </update>
 
-
-
+    <!--삭제-->
+    <delete id="delete" parameterType="member">
+        delete from member where member_id-#{member_id}
+    </delete>
 
 </mapper>
-

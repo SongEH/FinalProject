@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -67,7 +68,7 @@
     </script>
   </head>
   <body>
-    <button id="openModal" data-toggle="modal" data-target="#loginModal">로&nbsp;그&nbsp;인</button>
+    <div id="openModal" data-toggle="modal" data-target="#loginModal">로&nbsp;그&nbsp;인</div>
     <div id="loginModal" class="modal fade" role="dialog">
       <div class="modal-content">
         <div class="container mx-auto p-6">
@@ -113,4 +114,3 @@
     </div>
   </body>
 </html>
-

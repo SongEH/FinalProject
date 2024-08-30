@@ -1,22 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Insert title here</title>
+    <title>마이페이지</title>
+   <!--  Bootstrap  3.x  -->
+   <link
+   rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+ />
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+      /* 사이드바 스타일 */
+      .sidebar {
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #f4f4f4;
+        padding: 15px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
 
-    <!--  Bootstrap  3.x  -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      .sidebar a {
+        display: block;
+        padding: 10px;
+        color: #333;
+        text-decoration: none;
+      }
 
-    <script type="text/javascript">
+      .sidebar a:hover {
+        background-color: #ddd;
+      }
+
+      .content {
+        margin-left: 270px;
+        padding: 15px;
+      }
+
+      /* 각 섹션의 기본 숨김 */
+      .section {
+        display: none;
+      }
+
+      .section.active {
+        display: block;
+      }
+    </style>
+
+    <script>
+      // 섹션 표시 함수
+      function showSection(sectionId) {
+        var sections = document.getElementsByClassName("section");
+        for (var i = 0; i < sections.length; i++) {
+          sections[i].style.display = "none"; // 모든 섹션 숨기기
+        }
+        var section = document.getElementById(sectionId);
+        if (section) {
+          section.style.display = "block"; // 선택된 섹션만 표시
+        }
+      }
+
+      // 페이지 로딩 시 기본 섹션 표시 (여기서는 회원정보를 기본으로 설정)
+      window.onload = function () {
+        showSection("profileSection");
+      };
+    </script>
+    <script>
       function check_nickname() {
         //회원가입 버튼은 비활성화
         // <input id="btn_register" type="button" ...  disabled="disabled">
@@ -61,67 +115,8 @@ pageEncoding="UTF-8"%>
           },
         });
       } //end:check_nickname()
-
-      function check_id() {
-        //회원가입 버튼은 비활성화
-        // <input id="btn_register" type="button" ...  disabled="disabled">
-        $("#btn_register").prop("disabled", true);
-
-        //           document.getElementById("mem_id").value
-        let member_accountId = $("#member_accountId").val();
-
-        if (member_accountId.length == 0) {
-          $("#id_msg").html("");
-          return;
-        }
-
-        if (member_accountId.length < 5) {
-          $("#id_msg")
-            .html("아이디는 5자리 이상 입력하세요")
-            .css("color", "red");
-          return;
-        }
-
-        $.ajax({
-          url: "check_id.do",
-          data: {
-            member_accountId: member_accountId,
-          },
-          dataType: "json",
-          success: function (res_data) {
-            if (res_data.result) {
-              $("#id_msg")
-                .html("사용가능한 아이디 입니다")
-                .css("color", "blue");
-
-              $("#btn_register").prop("disabled", false);
-            } else {
-              $("#id_msg")
-                .html("이미 사용중인 아이디 입니다")
-                .css("color", "red");
-            }
-          },
-          error: function (err) {
-            alert(err.responseText);
-          },
-        });
-      } //end:check_nickname()
-
-      function execDaumPostcode() {
-        new daum.Postcode({
-          oncomplete: function (data) {
-            var addr = "";
-            if (data.userSelectedType === "R") {
-              addr = data.roadAddress;
-            } else {
-              addr = data.jibunAddress;
-            }
-            document.getElementById("m_zipcode").value = data.zonecode;
-            document.getElementById("m_addr").value = addr;
-          },
-        }).open();
-      }
-      
+    </script>
+    <script>
       // 전화번호 포맷팅 함수
       function formatPhoneNumber(input) {
           let member_phone = input.value.replace(/\D/g, ''); // 숫자만 남기기
@@ -136,14 +131,16 @@ pageEncoding="UTF-8"%>
               input.value = member_phone;
           }
       }
-
+    </script>
+    <script>
       function send(f) {
         let member_name = f.member_name.value.trim();
         let member_nickname = f.member_nickname.value.trim();
         let member_pwd = f.member_pwd.value.trim();
         let member_phone = f.member_phone.value.trim();
-        let email_id = $("#email_id").val().trim();
-        let email_domain = $("#email_domain").val().trim();
+        let member_email = f.member_email
+        // let email_id = $("#email_id").val().trim();
+        // let email_domain = $("#email_domain").val().trim();
 
         if (member_name == "") {
           alert("이름을 입력하시오");
@@ -172,50 +169,21 @@ pageEncoding="UTF-8"%>
           return;
         }
         
-        let member_email = email_id + "@" + email_domain;
-        $("#member_email").val(member_email); // email 필드가 있는지 확인하세요
+        // let member_email = email_id + "@" + email_domain;
+        // $("#member_email").val(member_email); // email 필드가 있는지 확인하세요
 
         alert(member_email);
 
         f.action = "modify.do"; 
         f.submit(); //전송
       } //end:send()
-
-
     </script>
 
-    <script type="text/javascript">
-      function setEmailDomain(domain) {
-        // '직접입력'을 선택한 경우, 도메인 입력 필드를 비웁니다.
-        if (domain === "직접입력") {
-          document.getElementById("email_domain").value = "";
-        } else {
-          // 선택된 도메인 값을 도메인 입력 필드에 설정합니다.
-          document.getElementById("email_domain").value = domain;
-        }
-      }
-    </script>
-
-    <script>
-      // 섹션 표시 함수
-      function showSection(sectionId) {
-        var sections = document.getElementsByClassName("section");
-        for (var i = 0; i < sections.length; i++) {
-          sections[i].style.display = "none"; // 모든 섹션 숨기기
-        }
-        var section = document.getElementById(sectionId);
-        if (section) {
-          section.style.display = "block"; // 선택된 섹션만 표시
-        }
-      }
-
-      // 페이지 로딩 시 기본 섹션 표시 (여기서는 회원정보를 기본으로 설정)
-      window.onload = function () {
-        showSection("profileSection");
-      };
-    </script>
   </head>
   <body>
+    
+
+
 
     <div class="sidebar">
       <h2>마이페이지</h2>
@@ -225,24 +193,16 @@ pageEncoding="UTF-8"%>
       <a href="#" onclick="showSection('addressesSection')">주소정보</a>
       <a href="#" onclick="showSection('ordersSection')">주문내역</a>
       <a href="#" onclick="showSection('cartSection')">장바구니</a>
-    </div>
+    </div> --%>
 
-    <button id="openModal" data-toggle="modal" data-target="#signupModal">
-      회&nbsp;원
-    </button>
-    <div id="signupModal" class="modal fade" role="dialog">
-      <div class="modal-content">
-      <div class ="container mx-auto p-6">
-        <span class="close-button">&times;</span>
-        <h2>회&nbsp;원&nbsp;수&nbsp;정</h2>
-        <form
-          id="signupForm"
-          action="${pageContext.request.contextPath}/member/insert_form.do"
-          method="post"
-        >
-          <input type="hidden" name="member_id" id="member_id" />
-          <input type="hidden" name="member_email" id="member_email" />
-          <!-- <input type="hidden" name="member_accountId" id="member_accountId" /> -->
+    <div class="content">
+      <!-- 회원정보 섹션 -->
+      <div id="profileSection" class="container mx-auto p-6">
+        <h2>회원 정보</h2>
+        <form action="" method="post" align="center">
+          <input type="hidden" name="member_id" value="${member.member_id}" />
+          <input type="hidden" name="member_email" value="${member.member_email}" />
+          <div class="form-group">
           <div class="mb-4">
             <label for="member_name">이름</label>
             <input
@@ -265,18 +225,6 @@ pageEncoding="UTF-8"%>
             <span id="nickname_msg" />
           </div>
           <div class="mb-4">
-            <label for="member_accountId">아이디</label>
-            <input
-              class="form-control"
-              type="text"
-              id="member_accountId"
-              name="member_accountId"
-              readonly="readonly"
-              value="${member.member_accountId}"
-            />
-            <span id="id_msg" />
-          </div>
-          <div class="mb-4">
             <label for="member_pwd">비밀번호</label>
             <input
               class="form-control"
@@ -286,17 +234,17 @@ pageEncoding="UTF-8"%>
               value="${member.member_pwd}"
             />
           </div>
-          
           <div class="mb-4">
             <label for="member_email"
               >이메일<span class="em_red">*</span></label
             >
-            <input
+            <input class="form-control" type="text" id="member_email" name="member_email" value="${member.member_email}">
+            <!-- <input
               class="form-control"
               type="text"
               id="email_id"
               name="email_id"
-              value=""
+              value="email_id"
               title="이메일 아이디"
               maxlength="18"
             />
@@ -306,7 +254,7 @@ pageEncoding="UTF-8"%>
               type="text"
               id="email_domain"
               name="email_domain"
-              value=""
+              value="email_domain"
               title="이메일 도메인"
               maxlength="18"
             />
@@ -322,20 +270,28 @@ pageEncoding="UTF-8"%>
               <option value="daum.net">daum.net</option>
               <option value="kakao.com">kakao.com</option>
               <option value="nate.com">nate.com</option>
-            </select>
+            </select> -->
           </div>
           <div class="mb-4">
             <label for="member_phone">전화번호</label>
-            <input class="form-control" type="text" name="member_phone" id="member_phone" oninput="formatPhoneNumber(this);" value="${member.member_phone}">
-            
+            <input
+              class="form-control"
+              type="text"
+              name="member_phone"
+              id="member_phone"
+              oninput="formatPhoneNumber(this);"
+              value="${member.member_phone}"
+            />
           </div>
-
+        </div>
           <div class="flex justify-end">
-            <button type="button" onclick="location.href='../member/mypage.do'">돌아가기</button>
-            <button type="button" class="btn btn-primary" onclick="send(this.form);">수정하기</button>
+            <button type="button">저장</button>
+            <button type="button" onclick="location.href='../member/mypage/modify.do'">수정</button>
           </div>
         </form>
       </div>
-    </div>
+
+    
+
   </body>
 </html>

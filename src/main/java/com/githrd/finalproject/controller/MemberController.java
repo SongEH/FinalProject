@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -42,7 +41,6 @@ public class MemberController {
         return "member/member_list";
     }
 
-    // member/insert_form.do?member_accountId=&member_name=&member_nickname=&member_accountId=&member_pwd=&member_pwd_confirm=&member_phone=
     // 회원가입 폼
     @RequestMapping("insert_form.do")
     public String insert_form() {
@@ -53,6 +51,8 @@ public class MemberController {
     @RequestMapping("insert.do")
     public String insert(MemberVo vo) {
         memberMapper.insert(vo);
+
+        session.setAttribute("vo", vo);
 
         return "redirect:login_form.do";
     }
@@ -87,7 +87,7 @@ public class MemberController {
 
     // 로그인
     @RequestMapping("login.do")
-    public String login(String member_accountId, String member_pwd, RedirectAttributes ra) {
+    public String login(String member_accountId, String member_pwd, String url, RedirectAttributes ra) {
 
         MemberVo user = memberMapper.selectOneFromId(member_accountId);
 
@@ -105,8 +105,12 @@ public class MemberController {
         }
 
         session.setAttribute("user", user);
+        session.setAttribute("isLoggedIn", true);
 
-        return "redirect:../main.do";
+        if (url == null || url.isEmpty())
+            return "redirect:../main.do";
+        else
+            return "redirect:" + url;
     }
 
     // 로그아웃
@@ -119,37 +123,49 @@ public class MemberController {
     }
 
     // 마이페이지
-    @GetMapping("mypage.do")
-    public String showMyPage(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("loggedInUser");
-        model.addAttribute("user", user);
+    @RequestMapping("mypage.do")
+    public String showMyPage(MemberVo vo, Model model) {
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:login_form.do";
+        }
+        MemberVo member = memberMapper.selectOneFromIdx(user.getMember_id());
+        model.addAttribute("member", member);
         // 다른 데이터 모델 추가
-        return "member/member_page";
+        return "member/member_mypage";
     }
 
-    // 수정폼
-    @RequestMapping("modify_form.do")
-    public String modify_form(int member_id, Model model) {
-        MemberVo vo = memberMapper.selectOneFromIdx(member_id);
-
-        model.addAttribute("vo", vo);
-
-        return "member/member_modify_form";
+    // 마이페이지에서 회원 수정폼 띄우기
+    @RequestMapping(value = "mypage/modify_form.do", method = RequestMethod.GET)
+    public String myPageEditForm(Model model) {
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:login_form.do";
+        }
+        // 로그인한 유저의 정보를 가져옴
+        MemberVo member = memberMapper.selectOneFromIdx(user.getMember_id());
+        model.addAttribute("member", member);
+        return "member/mypage_modify"; // 수정 폼 JSP 페이지
     }
 
-    // 수정하기
-    @RequestMapping("modify.do")
-    public String modify(MemberVo vo) {
-
+    // 회원정보 수정을 처리하는 메소드
+    @RequestMapping(value = "mypage/modify.do", method = RequestMethod.POST)
+    public String myPageEdit(MemberVo vo) {
+        // 회원 정보 업데이트
         memberMapper.update(vo);
 
-        MemberVo loginUser = (MemberVo) session.getAttribute("user");
+        // 세션의 사용자 정보도 업데이트
+        session.setAttribute("user", vo);
 
-        if (loginUser.getMember_id() == vo.getMember_id()) {
-            MemberVo user = memberMapper.selectOneFromIdx(vo.getMember_id());
-            session.setAttribute("user", user);
-        }
-
-        return "redirect: ../main.do";
+        return "redirect:mypage.do"; // 수정 후 마이페이지로 리다이렉트
     }
+
+    // 마이페이지에서 회원 탈퇴
+    @RequestMapping(value = "mypage/delete.do", method = RequestMethod.POST)
+    public String myPageDelete(@RequestParam int member_id) {
+        memberMapper.delete(member_id);
+        session.invalidate(); // 세션 무호화 -> 사용자가 탈퇴할 때 세션에 저장된 정보가 더이상 유효하지 않기에 세션을 무효화 시켜야 한다
+        return "redirect:../main.do";
+    }
+
 }

@@ -37,11 +37,16 @@ public class ShopServiceImpl implements ShopService {
     public ShopVo select_modify_shop_id(int shop_id) {
         return shopMapper.select_modify_shop_id(shop_id);
     }
+    
+    // 가게 업데이트 
+    @Override
+    public int update(ShopVo vo) {
+        return shopMapper.update(vo);
+    }
 
     // 가게 삭제하기
     @Override
     public int delete(int shop_id) {
-
         return shopMapper.delete(shop_id);
     }
 }

@@ -102,7 +102,7 @@
                 $("#main").hide();
           },
           error   :   function(err){
-            alert(error.responseText)
+            alert(error.responseText);
           }
         });
       }

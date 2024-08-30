@@ -1,6 +1,7 @@
 package first.final_project.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import first.final_project.dao.MenuMapper;
 import first.final_project.service.ShopService;
 import first.final_project.vo.MenuVo;
 import first.final_project.vo.ShopVo;
@@ -24,6 +26,9 @@ public class ShopController {
 
     @Autowired
     ShopService shop_Service;
+
+    @Autowired
+    MenuMapper menuMapper;
 
     @Autowired
     HttpServletRequest request;
@@ -122,27 +127,24 @@ public class ShopController {
     public String shop_selectOne(int shop_id, Model model) {
 
         System.out.println(shop_id);
-        ShopVo vo;
-        MenuVo menuvo;
+        ShopVo shop_vo;
+
         try {
-            vo = shop_Service.selectOne(shop_id);
-           
+            shop_vo = shop_Service.selectOne(shop_id);
+            List<MenuVo> menu_list = menuMapper.selectList();
+            model.addAttribute("shop_vo", shop_vo);
+            model.addAttribute("menu_list", menu_list);
         } catch (Exception e) {
-
             model.addAttribute("errorMessage", "fail_select_one");
-
             return "error/error_page";
         }
-
-        model.addAttribute("vo", vo);
 
         return "shop/shop_listOne";
     }
 
     // 가게 정보 수정
     @RequestMapping("/shop/modify_form.do")
-    public String shop_modify(@RequestParam(value="shop_id") int shop_id, Model model) {
-
+    public String shop_modify(@RequestParam(value = "shop_id") int shop_id, Model model) {
 
         try {
             ShopVo vo = shop_Service.select_modify_shop_id(shop_id);
@@ -150,22 +152,60 @@ public class ShopController {
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_select_one");
 
-            
         }
         return "shop/shop_modify_form";
     }
 
-    // 가게 정보 수정 업데이트 
+    // 가게 정보 수정 업데이트
     @RequestMapping("/shop/modify.do")
-    public String shop_modify(ShopVo vo,RedirectAttributes ra){
+    public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
+            Model model) {
+
+        // 기존 이미지 불러오기
+        String filename = vo.getShop_img();
+        String shop_img = "";
+        // 이미지 저장할 경로
+        String absPath = application.getRealPath("/resources/images/");
+        // 새로운 이미지 UUID 부여
+        if (!photo.isEmpty()) {
+            UUID uuid = UUID.randomUUID();
+            shop_img = uuid + "_" + photo.getOriginalFilename();
+            // 기존 이미지 확인 및 삭제
+            if (filename != null && !filename.isEmpty()) {
+                File oldFile = new File(absPath, filename);
+                if (oldFile.exists()) {
+                    boolean result = oldFile.delete();
+                    if (!result) {
+                        model.addAttribute("errorMessage", "Failed to delete the old image");
+                        return "error/error_page";
+                    }
+                }
+            }
+            // 새로운 이미지 파일 저장
+            vo.setShop_img(shop_img);
+            File f = new File(absPath, shop_img);
+
+            try {
+                photo.transferTo(f);
+            } catch (Exception e) {
+                model.addAttribute("errorMessage", "shop_update");
+                return "error/error_page";
+            }
+
+        }
+        // 새로운 이미지 저장
+
         try {
             int res = shop_Service.update(vo);
+            shop_id = vo.getShop_id();
         } catch (Exception e) {
             return "error/error_page";
         }
-        return "redirect:modify_form.do";
+        // return "redirect:modify_form.do?shop_id=" + shop_id;
+        return "redirect:select_one.do";
     }
 
+    // 가게 삭제
     @RequestMapping("/shop/delete.do")
     public String shop_delete(int shop_id, RedirectAttributes ra, Model model) {
         try {

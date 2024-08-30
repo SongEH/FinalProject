@@ -48,6 +48,7 @@ pageEncoding="UTF-8"%>
 
     <script>
       function shop_del(shop_id){
+        alert(shop_id);
         if(confirm("삭제하면 복구되지 않습니다?\n 정말 삭제하시겠습니까? ")==false) return;
 
         $.ajax({
@@ -65,19 +66,18 @@ pageEncoding="UTF-8"%>
     </script>
 
     <script>
-      function shop_modify(f){
+      function shop_modi(f){
 
         alert("여기?");
         alert(f.shop_id.value);
-        f.action = "modify_form.do";
+        f.action="modify_form.do";
         f.submit();
       }
 
     </script>
   </head>
   <body class="container">
-  <main>
-  </form method="post" action="modify_form.do" >
+  <form method="post">
   <!-- 표현은 하지않고 활용하기 위한 데이터  -->
    <input type="hidden" name="shop_id" value="${shop_vo.shop_id}"/>
    
@@ -181,11 +181,11 @@ pageEncoding="UTF-8"%>
 
       
       <div>
-        <input type="submit" value="수정하기"/>
+        <input type="button" value="수정하기" onclick="shop_modi(this.form)"/>
         <!-- <input type="button" value="수정하기" onclick="location.href='modify_form.do?shop_id=${shop_vo.shop_id}'"/> -->
-        <input type="button" value="삭제하기" onclick="shop_del('${vo.shop_id}')"/>
+        <input type="button" value="삭제하기" onclick="shop_del('${shop_vo.shop_id}')"/>
       </div>
-      <form>
+    </form>
   </main>
     <div>
       <div id="modify_form_display"></div>

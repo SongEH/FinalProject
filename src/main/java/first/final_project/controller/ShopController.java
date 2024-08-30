@@ -158,51 +158,55 @@ public class ShopController {
 
     // 가게 정보 수정 업데이트
     @RequestMapping("/shop/modify.do")
-    public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
+    public String shop_modify(ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
             Model model) {
 
         // 기존 이미지 불러오기
-        String filename = vo.getShop_img();
-        String shop_img = "";
+        int shop_id = vo.getShop_id();
+        System.out.println(shop_id);
+        String filename = shop_Service.selectOne(shop_id).getShop_img();
+        System.out.println("vo.getShop_img filename = " + filename);
+        String shop_img = "no_file";
         // 이미지 저장할 경로
         String absPath = application.getRealPath("/resources/images/");
         // 새로운 이미지 UUID 부여
         if (!photo.isEmpty()) {
             UUID uuid = UUID.randomUUID();
             shop_img = uuid + "_" + photo.getOriginalFilename();
-            // 기존 이미지 확인 및 삭제
-            if (filename != null && !filename.isEmpty()) {
-                File oldFile = new File(absPath, filename);
-                if (oldFile.exists()) {
-                    boolean result = oldFile.delete();
-                    if (!result) {
-                        model.addAttribute("errorMessage", "Failed to delete the old image");
-                        return "error/error_page";
-                    }
-                }
-            }
-            // 새로운 이미지 파일 저장
-            vo.setShop_img(shop_img);
-            File f = new File(absPath, shop_img);
 
-            try {
-                photo.transferTo(f);
-            } catch (Exception e) {
-                model.addAttribute("errorMessage", "shop_update");
+            // 기존 이미지 확인 및 삭제
+            File oldFile = new File(absPath, filename);
+            boolean result = oldFile.delete();
+            if (!result) {
+                model.addAttribute("errorMessage", "Failed to delete the old image");
                 return "error/error_page";
             }
-
         }
-        // 새로운 이미지 저장
+
+        System.out.println(shop_img);
+        // 새로운 이미지 파일 저장
+        vo.setShop_img(shop_img);
+        File f = new File(absPath, shop_img);
 
         try {
+            photo.transferTo(f);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "shop_update");
+            return "error/error_page";
+        }
+
+        // 새로운 이미지 저장
+
+        try
+
+        {
             int res = shop_Service.update(vo);
-            shop_id = vo.getShop_id();
+            // shop_id = vo.getShop_id();
         } catch (Exception e) {
             return "error/error_page";
         }
         // return "redirect:modify_form.do?shop_id=" + shop_id;
-        return "redirect:select_one.do";
+        return "redirect:list.do";
     }
 
     // 가게 삭제

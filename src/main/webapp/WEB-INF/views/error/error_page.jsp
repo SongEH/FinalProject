@@ -5,9 +5,8 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
-    <script>
-      locaion.href = "menu/list.do";
-    </script>
   </head>
-  <body></body>
+  <body>
+    에러발생
+  </body>
 </html>

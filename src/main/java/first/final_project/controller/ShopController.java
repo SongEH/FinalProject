@@ -158,13 +158,14 @@ public class ShopController {
 
     // 가게 정보 수정 업데이트
     @RequestMapping("/shop/modify.do")
-    public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
-            Model model) {
 
+    public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
+            Model model) 
         // 기존 이미지 불러오기
-        // int shop_id = vo.getShop_id();
+        System.out.println(shop_id);
         String filename = shop_Service.selectOne(shop_id).getShop_img();
-        // System.out.println("vo.getShop_img filename = " + filename);
+        System.out.println("vo.getShop_img filename = " + filename);
+
         String shop_img = "no_file";
         // 이미지 저장할 경로
         String absPath = application.getRealPath("/resources/images/");
@@ -176,11 +177,11 @@ public class ShopController {
             // 기존 이미지 확인 및 삭제
             File oldFile = new File(absPath, filename);
             boolean result = oldFile.delete();
-
             if (!result) {
                 model.addAttribute("errorMessage", "Failed to delete the old image");
                 return "error/error_page";
             }
+
             System.out.println(shop_img);
             // 새로운 이미지 파일 저장
             vo.setShop_img(shop_img);
@@ -191,8 +192,16 @@ public class ShopController {
                 return "error/error_page";
             }
         }
-
         try {
+            photo.transferTo(f);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "shop_update");
+            return "error/error_page";
+        }
+
+                try
+
+        {
             int res = shop_Service.update(vo);
             // shop_id = vo.getShop_id();
         } catch (Exception e) {

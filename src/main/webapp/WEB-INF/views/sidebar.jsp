@@ -128,8 +128,8 @@
             </a>
           </li>
           <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
+            <a href="/carts/list.do">
+              <i class="bi bi-circle"></i><span>(임시!)장바구니목록(회원-마이페이지)</span>
             </a>
           </li>
           <li>

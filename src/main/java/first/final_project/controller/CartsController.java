@@ -1,11 +1,18 @@
 package first.final_project.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import first.final_project.dao.MenuMapper;
+import first.final_project.dao.CartsMapper;
+import first.final_project.util.MyCommon;
+import first.final_project.util.Paging;
 import first.final_project.vo.CartsVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
 public class CartsController {
 
 	@Autowired
-	MenuMapper menu_mapper;
+	CartsMapper carts_mapper;
 
 	@Autowired
 	HttpServletRequest request;
@@ -29,38 +36,44 @@ public class CartsController {
 
 	// /menu/list.do
 	// /menu/list.do?page=2
+	@RequestMapping("list.do")
+	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
+			Model model) {
 
-	// @RequestMapping("list.do")
-	// public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
-	// 		Model model) {
+		// 게시물의 범위 계산(start/end)
+		// int start = (nowPage - 1) * MyCommon.Menu.BLOCK_LIST + 1;
+		// int end = start + MyCommon.Menu.BLOCK_LIST - 1;
 
-	// 	// // 게시물의 범위 계산(start/end)
-	// 	// int start = (nowPage - 1) * MyCommon.Menu.BLOCK_LIST + 1;
-	// 	// int end = start + MyCommon.Menu.BLOCK_LIST - 1;
+		// Map<String, Object> map = new HashMap<String, Object>();
+		// map.put("start", start);
+		// map.put("end", end);
 
-	// 	// Map<String, Object> map = new HashMap<String, Object>();
-	// 	// map.put("start", start);
-	// 	// map.put("end", end);
+		// // 페이징된 리스트를 가져온다
+		// List<CartsVo> list = carts_mapper.selectPageList(map);
 
-	// 	// // 페이징된 리스트를 가져온다
-	// 	// List<MenuVo> list = menu_mapper.selectPageList(map);
 
-	// 	// // 전체 게시물수
-	// 	// int rowTotal = menu_mapper.selectRowTotal();
+		List<CartsVo> list = carts_mapper.selectList();
+		
+		// 전체 게시물수
+		int rowTotal = carts_mapper.selectRowTotal();
 
-	// 	// // pageMenu만들기
-	// 	// String pageMenu = Paging.getPaging("list.do", // pageURL
-	// 	// 		nowPage, // 현재페이지
-	// 	// 		rowTotal, // 전체게시물수
-	// 	// 		MyCommon.Menu.BLOCK_LIST, // 한화면에 보여질 게시물수
-	// 	// 		MyCommon.Menu.BLOCK_PAGE); // 한화면에 보여질 페이지수
+		System.out.println(rowTotal);
+		System.out.println(list);
 
-	// 	// // 결과적으로 request binding
-	// 	// model.addAttribute("list", list);
-	// 	// model.addAttribute("pageMenu", pageMenu);
 
-	// 	// return "menu/menu_list";
-	// }
+		// pageMenu만들기
+		// String pageMenu = Paging.getPaging("list.do", // pageURL
+		// 		nowPage, // 현재페이지
+		// 		rowTotal, // 전체게시물수
+		// 		MyCommon.Menu.BLOCK_LIST, // 한화면에 보여질 게시물수
+		// 		MyCommon.Menu.BLOCK_PAGE); // 한화면에 보여질 페이지수
+
+		// 결과적으로 request binding
+		model.addAttribute("list", list);
+		// model.addAttribute("pageMenu", pageMenu);
+
+		return "carts/carts_list";
+	}
 
 
 	// 장바구니에 메뉴 추가 
@@ -73,14 +86,14 @@ public class CartsController {
         @RequestParam("quantity") int quantity) {
 
         CartsVo vo = new CartsVo();
-		vo.setCartsQuantity(quantity);
-		vo.setMemberId(98);
-		vo.setMenuId(menuId);
-		vo.setShopId(shopId);
+		vo.setCarts_quantity(quantity);
+		vo.setMember_id(98);
+		vo.setMenu_id(menuId);
+		vo.setShop_id(shopId);
  
-		System.out.println("Menu ID: " + vo.getMenuId());
-        System.out.println("Shop ID: " + vo.getShopId());
-        System.out.println("Quantity: " + vo.getCartsQuantity());
+		System.out.println("Menu ID: " + vo.getMenu_id());
+        System.out.println("Shop ID: " + vo.getShop_id());
+        System.out.println("Quantity: " + vo.getCarts_quantity());
 
 		}
 	// 	// cats 매퍼 만들고 DAO 만들기 

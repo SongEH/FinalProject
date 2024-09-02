@@ -114,10 +114,8 @@
 
   <%@include file="../common.jsp" %>
 
-  <!-- header import -->
   <%@include file="../header.jsp" %>
 
-  <!-- side bar import -->
   <%@include file="../sidebar.jsp" %>
 
   <main id="main" class="main">
@@ -194,7 +192,6 @@
       </div>
     </section>
 
-    <%@include file="carts_list.jsp" %>
   </main><!-- End #main -->
 
 </body>

@@ -37,10 +37,31 @@ CREATE TABLE `Carts` (
     `carts_quantity` INT NOT NULL DEFAULT 1,
     `member_id` INT NOT NULL,
     `shop_id` INT NOT NULL,
-    `orders_id` INT NOT NULL,
+    `orders_id` INT NULL,
     `menu_id` INT NOT NULL,
     `carts_cdate` DATE NOT NULL DEFAULT (CURRENT_DATE),
     PRIMARY KEY (`carts_id`)
+);
+
+CREATE TABLE `shop` (
+    `shop_id` int not null primary key auto_increment,
+    `shop_name` varchar(90) NOT NULL,
+    `shop_img` varchar(255) NULL,
+    `shop_addr` varchar(255) NOT NULL,
+    `food_category` varchar(30) NOT NULL,
+    `shop_call` varchar(20) NOT NULL,
+    `shop_content` varchar(255) NULL,
+    `shop_min_price` int NULL DEFAULT 0,
+    `shop_rate` decimal(2, 1) NOT NULL DEFAULT 0,
+    `shop_stemp_count` int NOT NULL DEFAULT 0,
+    `shop_review_count` int NOT NULL DEFAULT 0,
+    `shop_open_time` varchar(30) NOT NULL,
+    `shop_close_time` varchar(30) NOT NULL,
+    `shop_close_day` varchar(30) NOT NULL,
+    `shop_area` varchar(255) NOT NULL,
+    `shop_cdate` date NOT NULL default(current_date),
+    `shop_mdate` date NULL default(current_date),
+    `shop_status` varchar(30) NOT NULL default '오픈전'
 );
 
 -- -------------------------------- 조회
@@ -56,6 +77,37 @@ Drop table shop;
 delete from menu;
 delete from carts;
 delete from shop;
+
+
+-- 외래키 설정
+
+-- Menu 테이블에 외래 키 추가
+ALTER TABLE `Menu`
+ADD CONSTRAINT `fk_menu_shop`
+    FOREIGN KEY (`shop_id`) REFERENCES `shop`(`shop_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- Carts 테이블에 외래 키 추가
+ALTER TABLE `Carts`
+ADD CONSTRAINT `fk_carts_shop`
+    FOREIGN KEY (`shop_id`) REFERENCES `shop`(`shop_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `Carts`
+ADD CONSTRAINT `fk_carts_menu`
+    FOREIGN KEY (`menu_id`) REFERENCES `Menu`(`menu_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `Carts`
+ADD CONSTRAINT `fk_carts_orders`
+    FOREIGN KEY (`orders_id`) REFERENCES `Orders`(`orders_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- Carts에는 회원 id도 외래키 추가하기 
+ALTER TABLE `Carts`
+ADD CONSTRAINT `fk_carts_member`
+    FOREIGN KEY (`member_id`) REFERENCES `Member`(`member_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- Orders 테이블에 외래 키 추가 ( 추가로 더 있을 듯 )
+ALTER TABLE `Orders`
+ADD CONSTRAINT `fk_orders_shop`
+    FOREIGN KEY (`shop_id`) REFERENCES `shop`(`shop_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- -------------------------------- 더미데이터 --------------------------
 
@@ -186,28 +238,6 @@ INSERT INTO `Carts` (
 
 
 -- --------------------------------------------------------
-
-CREATE TABLE `shop` (
-    `shop_id` int not null primary key auto_increment,
-    `shop_name` varchar(90) NOT NULL,
-    `shop_img` varchar(255) NULL,
-    `shop_addr` varchar(255) NOT NULL,
-    `food_category` varchar(30) NOT NULL,
-    `shop_call` varchar(20) NOT NULL,
-    `shop_content` varchar(255) NULL,
-    `shop_min_price` int NULL DEFAULT 0,
-    `shop_rate` decimal(2, 1) NOT NULL DEFAULT 0,
-    `shop_stemp_count` int NOT NULL DEFAULT 0,
-    `shop_review_count` int NOT NULL DEFAULT 0,
-    `shop_open_time` varchar(30) NOT NULL,
-    `shop_close_time` varchar(30) NOT NULL,
-    `shop_close_day` varchar(30) NOT NULL,
-    `shop_area` varchar(255) NOT NULL,
-    `shop_cdate` date NOT NULL default(current_date),
-    `shop_mdate` date NULL default(current_date),
-    `shop_status` varchar(30) NOT NULL default '오픈전'
-);
-
 
 
 SELECT 

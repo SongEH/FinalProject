@@ -22,6 +22,6 @@ public interface CartsMapper {
 
     int delete(int carts_id);
 
-    int update(CartsVo vo);
+    int update(int carts_id, int carts_quantity);
 
 }

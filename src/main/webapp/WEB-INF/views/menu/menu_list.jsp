@@ -64,7 +64,7 @@
 
           // popup modal에 hidden 필드에 넣을 값     
           $('#pop_hidden_menuid').val(menu_id);
-          $('#pop_hidden_shopid').val(999);
+          $('#pop_hidden_shopid').val(res_data.shop_id);
         },
         error: function (err) {
           alert(err.responseText);
@@ -78,23 +78,21 @@
 
       alert("장바구니에 추가되었습니다!");
 
-      // 모달창에서 히든태그의 값을 가져온다. 
+      // 모달창에서 hidden 태그의 값을 가져온다. 
       menu_id = document.getElementById("pop_hidden_menuid").value;
       shop_id = document.getElementById("pop_hidden_shopid").value;
 
-      // html 히든값을 가져와서 컨트롤러에 넘긴다.
+      carts_quantity = document.getElementById("pop_quantity").value;
 
-
-      // ajax로 카트 컨트롤러에다가 추가를 할건데 
-      // 회원ID, 가게ID, 메뉴ID를 넣을거다.  + 수량 
-
+      // ajax로 장바구니 추가 
+      // 회원ID, 가게ID, 메뉴ID, 수량 추가 
       $.ajax({
         url: '/carts/insert.do',
         type: 'POST',
         data: {
           menu_id: menu_id,
           shop_id: shop_id,
-          quantity: 3
+          carts_quantity: carts_quantity
         },
         success: function (response) {
           // Handle success response
@@ -139,8 +137,6 @@
           <c:forEach var="vo" items="${list}">
             <!-- vo.menu_status가 1인 경우만 표시 -->
             <c:if test="${vo.menu_status == 1}">
-
-
 
               <!-- Card with an image on left -->
               <div class="card mb-3">

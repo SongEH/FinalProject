@@ -53,7 +53,7 @@
             <img id="pop_image">
           </div>
 
-          
+
           <!-- menu id -->
           <input type="hidden" id="pop_hidden_menuid">
           <input type="hidden" id="pop_hidden_shopid">
@@ -62,7 +62,13 @@
           <p><strong>설명:</strong> <span id="pop_content">메뉴에 대한 자세한 설명이 여기에 들어갑니다.</span></p>
           <p><strong>가격:</strong> <span id="pop_price">₩00,000</span></p>
 
-          <div class="mb-3">
+          <!-- 수량 입력 -->
+          <p><strong>수량:</strong>
+            <input type="number" id="pop_quantity" class="form-control" min="1" max="50" value="1"></p>
+          
+
+          <!-- 메뉴별 옵션은 추후에 고려 -->
+          <!-- <div class="mb-3">
             <label for="optionSelect" class="form-label">옵션 선택</label>
             <select class="form-select" id="optionSelect">
               <option selected>옵션을 선택하세요</option>
@@ -70,23 +76,12 @@
               <option value="2">옵션 2</option>
               <option value="3">옵션 3</option>
             </select>
-          </div>
-          
+          </div> -->
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             <button type="button" class="btn btn-primary" onclick="input_cart();">장바구니담기</button>
           </div>
-          <div id="pop_job" style="text-align: center;">
-            <!-- <input style="display: none;" class="btn btn-info" type="button" id="btn_popup_update" value="수정"
-              onclick="modify_photo();">
-            <input style="display: none;" class="btn btn-danger" type="button" id="btn_popup_delete" value="삭제"
-              onclick="delete_photo();"> -->
-
-
-          </div>
-
-
         </div>
         <!--   
         <div class="modal-footer">

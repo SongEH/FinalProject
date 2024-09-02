@@ -7,8 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.CartsMapper;
 import first.final_project.util.MyCommon;
@@ -51,22 +53,20 @@ public class CartsController {
 		// // 페이징된 리스트를 가져온다
 		// List<CartsVo> list = carts_mapper.selectPageList(map);
 
-
 		List<CartsVo> list = carts_mapper.selectList();
-		
+
 		// 전체 게시물수
 		int rowTotal = carts_mapper.selectRowTotal();
 
 		System.out.println(rowTotal);
 		System.out.println(list);
 
-
 		// pageMenu만들기
 		// String pageMenu = Paging.getPaging("list.do", // pageURL
-		// 		nowPage, // 현재페이지
-		// 		rowTotal, // 전체게시물수
-		// 		MyCommon.Menu.BLOCK_LIST, // 한화면에 보여질 게시물수
-		// 		MyCommon.Menu.BLOCK_PAGE); // 한화면에 보여질 페이지수
+		// nowPage, // 현재페이지
+		// rowTotal, // 전체게시물수
+		// MyCommon.Menu.BLOCK_LIST, // 한화면에 보여질 게시물수
+		// MyCommon.Menu.BLOCK_PAGE); // 한화면에 보여질 페이지수
 
 		// 결과적으로 request binding
 		model.addAttribute("list", list);
@@ -75,70 +75,59 @@ public class CartsController {
 		return "carts/carts_list";
 	}
 
-
-	// 장바구니에 메뉴 추가 
+	// 장바구니에 메뉴 추가
 	// 요청 Parameter이름과 받는 변수명이 동일하면 @RequestParam(name="")의 name속성은 생략가능
-	
+
 	@RequestMapping("insert.do")
-    public void insert(
-		@RequestParam("menu_id") int menuId,
-        @RequestParam("shop_id") int shopId,
-        @RequestParam("quantity") int quantity) {
+	public String insert(
+			@RequestParam("menu_id") int menuId,
+			@RequestParam("shop_id") int shopId,
+			@RequestParam("carts_quantity") int quantity) {
 
-        CartsVo vo = new CartsVo();
+		CartsVo vo = new CartsVo();
 		vo.setCarts_quantity(quantity);
-		vo.setMember_id(98);
+		vo.setMember_id(98); // 현재 로그인한 사용자 id 가져오기
 		vo.setMenu_id(menuId);
-		vo.setShop_id(shopId);
- 
+		vo.setShop_id(shopId); // 현재 선택한 가게 id 가져오기
+
 		System.out.println("Menu ID: " + vo.getMenu_id());
-        System.out.println("Shop ID: " + vo.getShop_id());
-        System.out.println("Quantity: " + vo.getCarts_quantity());
+		System.out.println("Shop ID: " + vo.getShop_id());
+		System.out.println("Quantity: " + vo.getCarts_quantity());
 
-		}
-	// 	// cats 매퍼 만들고 DAO 만들기 
-	// 	int res = carts_mapper.insert(vo);
+		carts_mapper.insert(vo);
 
-	// 	return "redirect:list.do";
-	// }
+		return "redirect:list.do";
+	}
 
+	// 수정
+	// /carts/modify.do?carts_id=9&carts_quantity=5
+	@PostMapping("modify.do")
+	public String modify(int carts_id, int carts_quantity, RedirectAttributes ra) {
 
+		System.out.println("수정!!!!" + carts_id + " " + carts_quantity);
+		
+		int res = carts_mapper.update(carts_id, carts_quantity);
 
-	// // 수정
-	// // /photo/modify.do?p_idx=9&p_title=노트북&p_content=복사본
-	// @RequestMapping("modify.do")
-	// public String modify(MenuVo vo, RedirectAttributes ra) {
+		// ra.addAttribute("page", page);
 
-	// 	String menu_content = vo.getMenu_content().replaceAll("\n", "<br>");
-	// 	vo.setMenu_content(menu_content);
+		return "redirect:list.do";
+	}
 
-	// 	int res = menu_mapper.update(vo);
+	// 삭제
+	// /carts/delete.do?carts_id=5
+	// /carts/delete.do?carts_id=5&page=2
+	@RequestMapping("delete.do")
+	public String delete(int carts_id, RedirectAttributes ra) {
 
-	// 	// ra.addAttribute("page", page);
+		// CartsVo 정보 얻어온다
+		CartsVo vo = carts_mapper.selectOne(carts_id);
 
-	// 	return "redirect:list.do";
-	// }
+		// DB delete
+		int res = carts_mapper.delete(carts_id);
 
-	// // 삭제
-	// // /photo/delete.do?p_idx=5&page=2
-	// @RequestMapping("delete.do")
-	// public String delete(int menu_id, RedirectAttributes ra) {
+		// ra.addAttribute("page", page);
 
-	// 	// 현재 p_idx가 사용하고 있는 화일도 삭제
-	// 	// 2.PhotoVo정보 얻어온다
-	// 	MenuVo vo = menu_mapper.selectOne(menu_id);
-	// 	// /images/의 절대경로
-	// 	String absPath = application.getRealPath("/resources/images/");
-	// 	// 절대경로 (삭제)파일명
-	// 	File delFile = new File(absPath, vo.getMenu_img());
+		return "redirect:list.do";
 
-	// 	delFile.delete();
-
-	// 	// DB delete
-	// 	int res = menu_mapper.delete(menu_id);
-
-	// 	// ra.addAttribute("page", page);
-
-	// 	return "redirect:list.do";
-	// }
+	}
 }

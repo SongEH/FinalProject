@@ -39,15 +39,15 @@ public class RiderService {
         return riderMapper.findOrdersByStatus(status);
     }
 
-    public List<OrderVo> getOrdersByRiderAndStatus(int riders_id, String status) {
+    public List<OrderVo> getOrdersByRiderAndStatus(int raiders_id, String status) {
         Map<String, Object> params = new HashMap<>();
-        params.put("riders_id", riders_id);
+        params.put("raiders_id", raiders_id);
         params.put("status", status);
         return riderMapper.findOrdersByRiderAndStatus(params);
     }
 
     @Transactional
-    public synchronized boolean assignOrderToRider(int orders_id, int riders_id, String method) {
+    public synchronized boolean assignOrderToRider(int orders_id, int raiders_id, String deliveries_method) {
         OrderVo order = riderMapper.getOrderById(orders_id);
         if (order == null || !order.getOrders_status().equals("배차 대기")) {
             return false; // 이미 수락된 주문이거나 존재하지 않는 경우
@@ -55,14 +55,14 @@ public class RiderService {
 
         riderMapper.updateOrderStatus(orders_id, "배차 완료");
 
-        int deliveries_id = riderMapper.assignDelivery(riders_id, method, orders_id);
+        int deliveries_id = riderMapper.assignDelivery(raiders_id, deliveries_method, orders_id);
         int delivery_history_id = riderMapper.insertDeliveryHistory("배차 완료", deliveries_id);
 
         return delivery_history_id > 0;
     }
 
-    public List<OrderVo> getCompletedOrdersByRider(int riders_id) {
-        return riderMapper.findCompletedOrdersByRider(riders_id);
+    public List<OrderVo> getCompletedOrdersByRider(int raiders_id) {
+        return riderMapper.findCompletedOrdersByRider(raiders_id);
     }
 
 }

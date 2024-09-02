@@ -6,6 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>배달 현황</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFC6C6;
+            color: #333;
+        }
+        .order-box {
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #FFEBD4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .order-info {
+            margin-bottom: 10px;
+        }
+        .order-info div {
+            margin-bottom: 5px;
+        }
+        .assign-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #F0A8D0;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .assign-button:hover {
+            background-color: #0056b3;
+        }
+        select{
+            background-color: #FFC6C6;
+        }
+        .alert {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-info {
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
+    </style>
 </head>
 <body>
     <div class="container mx-auto p-5">

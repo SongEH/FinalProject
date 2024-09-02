@@ -15,14 +15,15 @@
         UPDATE Orders SET orders_status = #{status} WHERE orders_id = #{orders_id}
     </update>
 
-    <insert id="assignDelivery" useGeneratedKeys="true" keyProperty="DeliveriesVo.deliveries_id">
-        INSERT INTO Deliveries (raiders_id, deliveries_method, orders_id)
-        VALUES (#{riders_id}, #{method}, #{orders_id})
+    <insert id="assignDelivery">
+        INSERT INTO Deliveries (deliveries_id, raiders_id, deliveries_method, orders_id)
+        VALUES (null, #{raiders_id}, #{deliveries_method}, #{orders_id})
     </insert>
 
-    <insert id="insertDeliveryHistory" useGeneratedKeys="true" keyProperty="delivery_history_id">
-        INSERT INTO Delivery_history (delivery_history_status, deliveries_id)
-        VALUES (#{status}, #{deliveries_id})
+
+    <insert id="insertDeliveryHistory">
+        INSERT INTO Delivery_history (delivery_history_id, delivery_history_status, deliveries_id)
+        VALUES (null, #{status}, #{deliveries_id})
     </insert>
 
 
@@ -42,7 +43,7 @@
         JOIN Deliveries d ON o.orders_id = d.orders_id
         JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
         JOIN Shop s ON o.shop_id = s.shop_id
-        WHERE d.raiders_id = #{riders_id} AND dh.delivery_history_status = #{status}
+        WHERE d.raiders_id = #{raiders_id} AND dh.delivery_history_status = #{status}
     </select>
 
     <select id="getAddrById" parameterType="int" resultType="com.delivery.finalproject.vo.AddrVo">

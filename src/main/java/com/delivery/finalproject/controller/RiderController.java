@@ -33,8 +33,8 @@ public class RiderController {
     @ResponseBody
     public Map<String, Object> assignOrder(
             @RequestParam(value = "orders_id", required = true) String orderIdStr,
-            @RequestParam(value = "riders_id", required = true) String riderIdStr,
-            @RequestParam(value = "method", required = true) String method,
+            @RequestParam(value = "raiders_id", required = true) String riderIdStr,
+            @RequestParam(value = "deliveries_method", required = true) String deliveries_method,
             Model model) {
 
         Map<String, Object> response = new HashMap<>();
@@ -48,10 +48,10 @@ public class RiderController {
         try {
             // String 값을 int로 변환
             int orders_id = Integer.parseInt(orderIdStr);
-            int riders_id = Integer.parseInt(riderIdStr);
+            int raiders_id = Integer.parseInt(riderIdStr);
 
             // 주문 배차 로직 실행
-            boolean result = riderService.assignOrderToRider(orders_id, riders_id, method);
+            boolean result = riderService.assignOrderToRider(orders_id, raiders_id, deliveries_method);
             String resultMessage = result ? "주문을 받으셨습니다." : "주문을 받으실 수 없습니다";
             model.addAttribute("resultMessage", resultMessage);
 
@@ -65,15 +65,19 @@ public class RiderController {
     // 라이더가 진행 중인 주문 리스트를 표시
     @GetMapping("/progress")
     public String getOrderProgress(Model model) {
-        int riders_id = 1; // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID를 가져와야 함)
-        List<OrderVo> orders = riderService.getOrdersByRiderAndStatus(riders_id, "배차 완료");
-        model.addAttribute("orders", orders);
+        // int raiders_id = 1; // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID를 가져와야 함)
+        List<OrderVo> orders = riderService.getOrdersByRiderAndStatus(1, "배차 완료");
+        if (orders == null || orders.isEmpty()) {
+            model.addAttribute("message", "현재 진행 중인 주문이 없습니다.");
+        } else {
+            model.addAttribute("orders", orders);
+        }
         return "riders/orderProgress";
     }
 
     // 라이더가 주문을 픽업 완료
     @PostMapping("/pickup")
-    public String pickupOrder(@RequestParam("orders_id") int orders_id, @RequestParam("riders_id") int riders_id) {
+    public String pickupOrder(@RequestParam("orders_id") int orders_id, @RequestParam("raiders_id") int raiders_id) {
         // 주문 상태를 '픽업 완료'로 변경
         riderService.updateOrderStatus(orders_id, "픽업 완료");
         return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
@@ -81,7 +85,8 @@ public class RiderController {
 
     // 라이더가 배달을 완료로 설정
     @PostMapping("/completeDelivery")
-    public String completeDelivery(@RequestParam("orders_id") int orders_id, @RequestParam("riders_id") int riders_id) {
+    public String completeDelivery(@RequestParam("orders_id") int orders_id,
+            @RequestParam("riders_id") int raiders_id) {
         // 주문 상태를 '배송 완료'로 변경
         riderService.updateOrderStatus(orders_id, "배송 완료");
         return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
@@ -142,7 +147,7 @@ public class RiderController {
         }
 
         model.addAttribute("orders", orders);
-        model.addAttribute("riders_id", 1); // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID가 필요)
+        model.addAttribute("raiders_id", 1); // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID가 필요)
         return "riders/waitingOrders";
     }
 

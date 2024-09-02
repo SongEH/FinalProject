@@ -9,6 +9,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from admin order by admin_id
     </select>
 
+    <select id="selectOneFromIdx" parameterType="int" resultType="admin">
+        select * from admin where admin_id=#{admin_id}
+    </select>
+
+    <select id="selectOneFromId" parameterType="String" resultType="admin">
+        select * from admin where admin_accountId=#{admin_accountId}
+    </select>
 
 </mapper>
 

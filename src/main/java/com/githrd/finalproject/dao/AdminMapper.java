@@ -12,6 +12,10 @@ import com.githrd.finalproject.vo.OwnerVo;
 public interface AdminMapper {
     List<AdminVo> selectList(); // 관리자 전체 조회
 
+    AdminVo selectOneFromIdx(int admin_id);
+
+    AdminVo selectOneFromId(String admin_accountId);
+
     List<MemberVo> member_selectList(); // 회원(고객) 전체조회
 
     List<OwnerVo> owner_selectList(); // 사장 전체조회
@@ -20,11 +24,11 @@ public interface AdminMapper {
 
     OwnerVo selectOneOwnerIdx(int owner_id); // 사장 일련번호 조회
 
-    AdminVo selectOneFromId(String admin_accountId);
+    int update(MemberVo vo);
 
-    int insert(AdminVo vo);
+    int update(OwnerVo vo);
 
-    int update(AdminVo vo);
+    int delete(MemberVo vo);
 
-    int delete(AdminVo vo);
+    int delete(OwnerVo vo);
 }

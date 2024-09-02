@@ -14,6 +14,7 @@ public class OwnerVo {
     String owner_registration;
     String owner_bankbook;
     String owner_rdate;
+    String approval_status;
 
     public int getOwner_id() {
         return owner_id;
@@ -93,6 +94,14 @@ public class OwnerVo {
 
     public void setOwner_rdate(String owner_rdate) {
         this.owner_rdate = owner_rdate;
+    }
+
+    public String getApproval_status() {
+        return approval_status;
+    }
+
+    public void setApproval_status(String approval_status) {
+        this.approval_status = approval_status;
     }
 
 }

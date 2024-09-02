@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,7 +30,7 @@ public class OwnerController {
     @Autowired
     OwnerMapper ownerMapper;
 
-    // 사장 조회
+    // // 사장 조회
     // @RequestMapping("list.do")
     // public String list(Model model) {
     // List<OwnerVo> list = ownerMapper.selectList();
@@ -70,22 +72,28 @@ public class OwnerController {
     @RequestMapping("login.do")
     public String login(String owner_accountId, String owner_pwd, RedirectAttributes ra) {
 
-        OwnerVo user = ownerMapper.selectOneFromId(owner_accountId);
+        OwnerVo owner_user = ownerMapper.selectOneFromId(owner_accountId);
 
-        if (user == null) {
+        if (owner_user == null) {
             ra.addAttribute("reason", "fail_id");
 
             return "redirect:login_form.do";
         }
 
-        if (user.getOwner_pwd().equals(owner_pwd) == false) {
+        if (owner_user.getOwner_pwd().equals(owner_pwd) == false) {
             ra.addAttribute("reason", "fail_pwd");
             ra.addAttribute("owner_accountId", owner_accountId);
 
             return "redirect:login_form.do";
         }
 
-        session.setAttribute("user", user);
+        if ("PENDING".equals(owner_user.getApproval_status())) {
+            ra.addAttribute("reason", "pending");
+
+            return "redirect:login_form.do";
+        }
+
+        session.setAttribute("owner_user", owner_user);
 
         return "redirect:../main.do";
     }
@@ -98,4 +106,48 @@ public class OwnerController {
 
         return "redirect:../main.do";
     }
+
+    // 사장의 마이페이지
+    @RequestMapping("ownerpage.do")
+    public String showOnwerPage(OwnerVo vo, Model model) {
+        OwnerVo owner_user = (OwnerVo) session.getAttribute("owner_user");
+        if (owner_user == null) {
+            return "redirect:/owner/login_form.do";
+        }
+        OwnerVo owner = ownerMapper.selectOneFromIdx(owner_user.getOwner_id());
+        model.addAttribute("owner", owner);
+
+        return "owner/owner_page";
+    }
+
+    // 사장의 마이페이지에서 수정폼 띄우기
+    @RequestMapping(value = "ownerpage/modify_form.do", method = RequestMethod.GET)
+    public String ownerPageEditForm(Model model) {
+        OwnerVo owner_user = (OwnerVo) session.getAttribute("owner_user");
+        if (owner_user == null) {
+            return "redirect:/owner/login_form.do";
+        }
+
+        OwnerVo owner = ownerMapper.selectOneFromIdx(owner_user.getOwner_id());
+        model.addAttribute("owner", owner);
+        return "owner/ownerpage_modify";
+
+    }
+
+    // 사장의 마이페이지에서 수정을 처리하는 메소드
+    @RequestMapping(value = "ownerpage/modify.do", method = RequestMethod.POST)
+    public String ownerPageEdit(OwnerVo vo) {
+        ownerMapper.update(vo);
+        session.setAttribute("owner", vo);
+        return "redirect:/owner/ownerpage.do";
+    }
+
+    // 사장의 마이페이지에서 회원 탈퇴
+    @RequestMapping(value = "ownerpage/delete.do", method = RequestMethod.GET)
+    public String ownerPageDelete(@RequestParam int owner_id) {
+        ownerMapper.delete(owner_id);
+        session.invalidate();
+        return "redirect:/main.do";
+    }
+
 }

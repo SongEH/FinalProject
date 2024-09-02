@@ -7,20 +7,20 @@ pageEncoding="UTF-8"%>
     <meta charset="UTF-8" />
     <title></title>
 
-    <script>
+    <script type="text/javascript">
       function del(member_id) {
         //console.log(mem_idx,"삭제");
-        if (confirm("정말 삭제 하시겠습니까?") == false) return;
+        if (confirm("정말 탈퇴 하시겠습니까?") == false) return;
 
         //삭제요청
-        location.href = "mypage/delete.do?member_id=" + member_id; //MemberDeleteAction
+        location.href = "mypage/delete.do?member_id=" + member_id;
       }
     </script>
   </head>
   <body>
     <input type="hidden" name="member_id" value="${member.member_id}" />
     <h1>회&nbsp;원&nbsp;정&nbsp;보</h1>
-    <div class="container">
+    <div class="container mx-auto p-6">
       <div class="mb-4">
         <lable for="name">이름:</lable>
         <input
@@ -40,10 +40,19 @@ pageEncoding="UTF-8"%>
         />
       </div>
       <div class="mb-4">
-        <lable for="password">비밀번호:</lable>
+        <lable for="accountId">아이디:</lable>
         <input
           class="form-control"
           type="text"
+          value="${member.member_accountId}"
+          readonly
+        />
+      </div>
+      <div class="mb-4">
+        <lable for="password">비밀번호:</lable>
+        <input
+          class="form-control"
+          type="password"
           value="${member.member_pwd}"
           readonly
         />
@@ -65,8 +74,17 @@ pageEncoding="UTF-8"%>
             readonly
           />
         </div>
+        <div class="mb-4">
+          <lable for="grade">회원등급:</lable>
+          <input
+            class="form-control"
+            type="icon"
+            value="${member.member_grade}"
+            readonly
+          />
+        </div>
         <div class="flex justify-end">
-          <c:if test="( user.member_id eq vo.member_id )">
+          <c:if test="( user.member_id eq member.member_id )">
             <input
               type="button"
               value="회원 수정"
@@ -75,7 +93,7 @@ pageEncoding="UTF-8"%>
             <input
               type="button"
               value="회원 탈퇴"
-              onclick="del('${ vo.member_id }');"
+              onclick="del('${ member.member_id }');"
             />
           </c:if>
         </div>

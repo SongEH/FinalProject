@@ -11,6 +11,8 @@ public interface OwnerMapper {
 
     List<OwnerVo> selectList();
 
+    List<OwnerVo> selectPendingRequests();
+
     OwnerVo selectOneFromIdx(int owner_id);
 
     OwnerVo selectOneFromId(String owner_accountId);
@@ -19,5 +21,8 @@ public interface OwnerMapper {
 
     int update(OwnerVo vo);
 
+    int update_status(String approval_status);
+
     int delete(int owner_id);
+
 }

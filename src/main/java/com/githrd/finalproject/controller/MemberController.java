@@ -157,15 +157,15 @@ public class MemberController {
         // 세션의 사용자 정보도 업데이트
         session.setAttribute("user", vo);
 
-        return "redirect:mypage.do"; // 수정 후 마이페이지로 리다이렉트
+        return "redirect:/member/mypage.do"; // 수정 후 마이페이지로 리다이렉트
     }
 
     // 마이페이지에서 회원 탈퇴
-    @RequestMapping(value = "mypage/delete.do", method = RequestMethod.POST)
+    @RequestMapping(value = "mypage/delete.do", method = RequestMethod.GET)
     public String myPageDelete(@RequestParam int member_id) {
         memberMapper.delete(member_id);
         session.invalidate(); // 세션 무호화 -> 사용자가 탈퇴할 때 세션에 저장된 정보가 더이상 유효하지 않기에 세션을 무효화 시켜야 한다
-        return "redirect:../main.do";
+        return "redirect:/main.do";
     }
 
 }

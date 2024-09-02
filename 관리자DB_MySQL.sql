@@ -4,4 +4,6 @@ CREATE TABLE `Admin` (
 	`admin_accountId`	VARCHAR(50)	NOT NULL,
 	`admin_pwd`	VARCHAR(50)	NOT NULL
 );
+
+insert into admin values(null,'admin','admin');
 */

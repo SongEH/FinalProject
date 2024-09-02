@@ -158,9 +158,8 @@ public class ShopController {
 
     // 가게 정보 수정 업데이트
     @RequestMapping("/shop/modify.do")
-
     public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
-            Model model) 
+            Model model) {
         // 기존 이미지 불러오기
         System.out.println(shop_id);
         String filename = shop_Service.selectOne(shop_id).getShop_img();
@@ -192,16 +191,8 @@ public class ShopController {
                 return "error/error_page";
             }
         }
+
         try {
-            photo.transferTo(f);
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "shop_update");
-            return "error/error_page";
-        }
-
-                try
-
-        {
             int res = shop_Service.update(vo);
             // shop_id = vo.getShop_id();
         } catch (Exception e) {

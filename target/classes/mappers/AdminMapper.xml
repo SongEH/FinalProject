@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.githrd.finalproject.dao.AdminMapper">
+<mapper namespace="first.final_project.dao.AdminMapper">
 
     <select id="selectList" resultType="admin">
         select * from admin order by admin_id

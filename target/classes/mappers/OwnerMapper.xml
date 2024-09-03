@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.githrd.finalproject.dao.OwnerMapper">
+<mapper namespace="first.final_project.dao.OwnerMapper">
 
     <select id="selectPendingRequests" resultType="owner">
         select * from owner where approval_status='PENDING'

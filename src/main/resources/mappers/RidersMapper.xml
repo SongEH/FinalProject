@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.githrd.demo_photo.dao.RidersMapper">
+
+  <!-- 전체조회 -->
+  <select id="selectList" resultType="riders">
+       select * from riders order by riders_id
+  </select>
+
+
+  <!-- mem_idx 이용해서  MemberVo  구하기 -->
+  <select id="selectOneFromId" parameterType="int" resultType="riders">
+       select * from riders where riders_id=#{riders_id}
+  </select>
+
+  <!-- mem_id 이용해서  MemberVo  구하기 -->
+  <select id="selectOneFromEmail" parameterType="String" resultType="riders">
+       select * from riders where riders_email=#{riders_email}
+  </select>
+
+  <!-- 추가  
+        #{mem_name} => vo.getMem_name()
+   -->
+  <insert id="insert" parameterType="riders">
+      insert into riders (
+        riders_name,
+        riders_email,
+        riders_pwd,
+        riders_phone,
+        riders_region
+    ) values (
+        #{riders_name},
+        #{riders_email},
+        #{riders_pwd},
+        #{riders_phone},
+        #{riders_region}
+    )
+                                  
+                                  
+  </insert>
+
+  <!-- 삭제  -->
+  <delete id="delete" parameterType="int">
+      delete from riders where riders_id=#{ riders_id }
+  </delete>
+
+  <!-- 수정  -->
+  <update id="update" parameterType="riders">
+      update riders 
+             set riders_pwd=#{ riders_pwd }, riders_phone=#{ riders_phone }, riders_region=#{ riders_region}
+      where riders_id=#{ riders_id }
+  </update>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

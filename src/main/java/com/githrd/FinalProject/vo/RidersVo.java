@@ -1,4 +1,4 @@
-package com.githrd.demo_photo.vo;
+package com.githrd.FinalProject.vo;
 
 import org.apache.ibatis.type.Alias;
 

@@ -1,4 +1,4 @@
-package com.githrd.demo_photo.controller;
+package com.githrd.FinalProject.controller;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.githrd.demo_photo.dao.RidersMapper;
-import com.githrd.demo_photo.vo.RidersVo;
+import com.githrd.FinalProject.dao.RidersMapper;
+import com.githrd.FinalProject.vo.RidersVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

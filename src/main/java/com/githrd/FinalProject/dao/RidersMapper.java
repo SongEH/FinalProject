@@ -1,10 +1,10 @@
-package com.githrd.demo_photo.dao;
+package com.githrd.FinalProject.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.githrd.demo_photo.vo.RidersVo;
+import com.githrd.FinalProject.vo.RidersVo;
 
 @Mapper
 public interface RidersMapper {

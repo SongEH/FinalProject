@@ -18,13 +18,15 @@
                 <div><strong>가격:</strong> ${order.orders_price}원</div>
                 <div><strong>요청사항:</strong> ${order.orders_srequest}</div>
             </div>
-            <form id="assignForm-${order.orders_id}" onsubmit="assignOrder(${order.orders_id}, ${raiders_id}); return false;">
+            <form action="${pageContext.request.contextPath}/riders/assign" method="post">
+                <input type="hidden" name="orders_id" value="${order.orders_id}" />
+                <input type="hidden" name="raiders_id" value="${raiders_id}" />
                 <label for="method-${order.orders_id}">배송 수단:</label>
                 <select id="method-${order.orders_id}" name="deliveries_method" required>
-                    <option value="오토바이">오토바이</option>
-                    <option value="자동차">자동차</option>
-                    <option value="자전거">자전거</option>
-                    <option value="도보">도보</option>
+                    <option value="오토바이" ${order.deliveries_method == '오토바이' ? 'selected' : ''}>오토바이</option>
+                    <option value="자동차" ${order.deliveries_method == '자동차' ? 'selected' : ''}>자동차</option>
+                    <option value="자전거" ${order.deliveries_method == '자전거' ? 'selected' : ''}>자전거</option>
+                    <option value="도보" ${order.deliveries_method == '도보' ? 'selected' : ''}>도보</option>
                 </select>
                 <button type="submit" class="assign-button">배차 받기</button>
             </form>
@@ -32,32 +34,39 @@
     </c:forEach>
 
     <script>
-        function assignOrder(orderId, raiderId) {
-            const method = document.getElementById(`method-${orderId}`).value;
+        function assignOrder(orders_id, raiders_id) {
+            console.log("assignOrder 호출됨");  // 이 부분 추가
+            const method = document.getElementById(`method-${order_id}`).value;
             fetch('${pageContext.request.contextPath}/riders/assign', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: new URLSearchParams({
-                    'orders_id': orderId,
-                    'raiders_id': raiderId,
-                    'deliveries_method': method
+                    'orders_id': orders_id,
+                    'raiders_id': raiders_id,
+                    'deliveries_method': deliveries_method
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                const resultMessageDiv = document.getElementById('result-message');
-                resultMessageDiv.textContent = data.resultMessage;
-                resultMessageDiv.style.display = 'block';
+                alert(data.resultMessage); // 메시지를 alert로 표시
                 if (data.success) {
-                    loadPage('${pageContext.request.contextPath}/riders/progress');
+                    loadPage('${pageContext.request.contextPath}/riders/progress'); // 배차 완료 후 진행 상황 페이지로 이동
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                alert('배차 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
             });
+
         }
+
 
         function loadPage(url) {
             fetch(url)

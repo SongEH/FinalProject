@@ -130,14 +130,9 @@ VALUES
 ('버거월드', NULL, '서울특별시 관악구 남부순환로 1796', '햄버거', '051-987-6543', '마약넣은 햄버거', 8000, '20 mins', 4.2, 5, 50, '11:00 AM', null, '서울', 2);
 
 -- Orders 테이블 더미 데이터
-INSERT INTO Orders (orders_payment, orders_price, orders_srequest, orders_drequest, orders_status, shop_id, addr_id)
-VALUES 
-('카드', 20000, '치즈추가', '링링 링 마 벨', '주문 완료', 1, 1),
-('카드', 10000, '노 비건', '도착하면 전화줘여', '주문 완료', 2, 2);
-
 INSERT INTO Orders (orders_payment, orders_price, orders_srequest, orders_drequest, orders_cdate, orders_status, shop_id, addr_id) VALUES
-('카카오페이', 20000, 'No onions please', 'Leave at the door', '2024-08-27', '배차 대기', 1, 1),
-('토스페이', 12000, 'Extra cheese', 'Ring the bell', '2024-08-27', '배차 대기', 2, 2);
+('카카오페이', 20000, '노피클', '집앞에두세요', '2024-08-27', '배차 대기', 1, 1),
+('토스페이', 12000, '치즈폭탄추가', '링링링링마벨', '2024-08-27', '배차 대기', 2, 2);
 
 
 -- Deliveries 테이블 더미 데이터
@@ -147,11 +142,6 @@ VALUES
 (2, '오토바이', 2);
 
 -- Delivery_history 테이블 더미 데이터
-INSERT INTO Delivery_history (delivery_history_status, deliveries_id)
-VALUES 
-('배달 완료', 1),
-('배달 완료', 2);
-
 INSERT INTO Delivery_history (delivery_history_status, deliveries_id) VALUES
 ('배차 대기', 1),
 ('배차 대기', 2);

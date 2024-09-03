@@ -51,6 +51,20 @@
             background-color: #d9edf7;
             border-color: #bce8f1;
         }
+        .order-progress-box {
+            padding: 20px;
+            background-color: #FFEBD4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .completed-order-box {
+            padding: 20px;
+            background-color: #FFEBD4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>

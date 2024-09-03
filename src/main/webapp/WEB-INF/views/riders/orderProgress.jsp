@@ -4,21 +4,6 @@
 <html>
 <head>
     <title>진행 중인 주문</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 20px;
-        }
-        .order-progress-box {
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
     <h2>진행 중인 주문</h2>

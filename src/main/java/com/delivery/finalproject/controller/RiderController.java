@@ -50,13 +50,25 @@ public class RiderController {
             int orders_id = Integer.parseInt(orderIdStr);
             int raiders_id = Integer.parseInt(riderIdStr);
 
+            System.out.println("Parsed orders_id: " + orders_id + ", raiders_id: " + raiders_id);
+
             // 주문 배차 로직 실행
             boolean result = riderService.assignOrderToRider(orders_id, raiders_id, deliveries_method);
             String resultMessage = result ? "주문을 받으셨습니다." : "주문을 받으실 수 없습니다";
-            model.addAttribute("resultMessage", resultMessage);
+            response.put("resultMessage", resultMessage);
+            response.put("success", result);
+
+            System.out.println("Order assignment result: " + result);
+
+            // 주문 테이블 업테이트 실행
+            if (result) {
+                riderService.updateOrderStatus(orders_id, "배차 완료");
+                System.out.println("Order status updated to '배차 완료'");
+            }
 
         } catch (NumberFormatException e) {
             response.put("error", "Order ID 또는 Rider ID가 잘못되었습니다.");
+            System.out.println("NumberFormatException occurred: " + e.getMessage());
         }
 
         return response;
@@ -124,9 +136,16 @@ public class RiderController {
     // 라이더가 완료한 배달 내역을 표시
     @GetMapping("/completed")
     public String getCompletedDeliveries(Model model) {
-        List<OrderVo> completedOrders = riderService.getOrdersByRiderAndStatus(1, "배송 완료");
+        // 라이더 ID를 고정값으로 설정 (로그인 시스템이 있다면 해당 라이더의 ID를 사용)
+        int raiders_id = 1; // 예시로 1번 라이더로 설정
+
+        // 배달 완료된 주문 목록을 가져오기
+        List<OrderVo> completedOrders = riderService.getCompletedOrdersByRider(raiders_id);
+
+        // 주문 목록을 모델에 추가하여 JSP에서 사용 가능하게 설정
         model.addAttribute("completedOrders", completedOrders);
-        return "riders/deliveryCompleted";
+
+        return "riders/deliveryCompleted"; // 배달 완료된 주문을 표시하는 JSP로 이동
     }
 
     // index에서 delivery.jsp로 이어지도록

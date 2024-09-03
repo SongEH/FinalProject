@@ -2,6 +2,7 @@ package com.delivery.finalproject.service;
 
 import com.delivery.finalproject.mapper.RiderMapper;
 import com.delivery.finalproject.vo.AddrVo;
+import com.delivery.finalproject.vo.DeliveriesVo;
 import com.delivery.finalproject.vo.OrderVo;
 import com.delivery.finalproject.vo.ShopVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,18 @@ public class RiderService {
 
         riderMapper.updateOrderStatus(orders_id, "배차 완료");
 
-        int deliveries_id = riderMapper.assignDelivery(raiders_id, deliveries_method, orders_id);
+        // int deliveries_id = riderMapper.assignDelivery(raiders_id, deliveries_method,
+        // orders_id);
+        DeliveriesVo deliveriesVo = new DeliveriesVo();
+        deliveriesVo.setRaiders_id(raiders_id);
+        deliveriesVo.setDeliveries_method(deliveries_method);
+        deliveriesVo.setOrders_id(orders_id);
+
+        // 배차 정보 삽입 후, MyBatis가 자동 생성된 deliveries_id를 가져옴
+        riderMapper.assignDelivery(raiders_id, deliveries_method, orders_id);
+        int deliveries_id = deliveriesVo.getDeliveries_id();
+
+        // 배차 이력 생성
         int delivery_history_id = riderMapper.insertDeliveryHistory("배차 완료", deliveries_id);
 
         return delivery_history_id > 0;

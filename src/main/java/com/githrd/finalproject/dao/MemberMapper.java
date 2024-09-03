@@ -22,4 +22,6 @@ public interface MemberMapper {
 
     int delete(int member_id);
 
+    void deactivate(int member_id);
+
 }

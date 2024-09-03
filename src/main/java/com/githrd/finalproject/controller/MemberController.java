@@ -36,8 +36,8 @@ public class MemberController {
     // 회원 조회
     @RequestMapping("list.do")
     public String list(Model model) {
-        List<MemberVo> list = memberMapper.selectList();
-        model.addAttribute("list", list);
+        List<MemberVo> member_list = memberMapper.selectList();
+        model.addAttribute("member_list", member_list);
         return "member/member_list";
     }
 

@@ -15,6 +15,7 @@ public class MemberVo {
     int member_monthOrder;
     String member_cdate;
     String member_grade;
+    boolean member_active;
 
     public MemberVo() {
     }
@@ -97,6 +98,14 @@ public class MemberVo {
 
     public void setMember_grade(String member_grade) {
         this.member_grade = member_grade;
+    }
+
+    public boolean isMember_active() {
+        return member_active;
+    }
+
+    public void setMember_active(boolean member_active) {
+        this.member_active = member_active;
     }
 
 }

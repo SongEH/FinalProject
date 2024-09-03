@@ -50,8 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <!--삭제-->
-    <delete id="delete" parameterType="member">
-        delete from member where member_id-#{member_id}
+    <delete id="delete" parameterType="int">
+        delete from member where member_id=#{member_id}
     </delete>
 
 </mapper>

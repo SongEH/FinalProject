@@ -21,7 +21,7 @@ public interface OwnerMapper {
 
     int update(OwnerVo vo);
 
-    int update_status(String approval_status);
+    int update_status(OwnerVo owner);
 
     int delete(int owner_id);
 

@@ -86,6 +86,10 @@ public class AdminController {
     @RequestMapping("member_list.do")
     public String memberList(Model model) {
         List<MemberVo> member_list = memberMapper.selectList();
+        // 회원목록이 없다면 빈 목록으로 초기화
+        if (member_list == null) {
+            member_list = List.of();
+        }
         model.addAttribute("member_list", member_list);
         return "admin/member_list";
     }
@@ -93,9 +97,16 @@ public class AdminController {
     // 관리자페이지에서 회원 삭제
     @RequestMapping("delete_member.do")
     public String deleteMember(@RequestParam("member_id") int member_id) {
-
+        // 회원 삭제
         memberMapper.delete(member_id);
-        return "redirect:member_list.do";
+
+        // 세션에서 해당 회원 정보 제거
+        MemberVo member = (MemberVo) session.getAttribute("member_user");
+        if (member != null && member.getMember_id() == member_id) {
+            session.removeAttribute("member_user");
+        }
+
+        return "redirect:adminpage.do";
     }
 
     // 관리자 페이지에서 사장 목록을 조회
@@ -110,7 +121,8 @@ public class AdminController {
     @RequestMapping("delete_owner.do")
     public String deleteOwner(@RequestParam("owner_id") int owner_id) {
         ownerMapper.delete(owner_id);
-        return "redirect:owner_list.do";
+
+        return "redirect:adminpage.do";
     }
 
     // 관리자가 대기 중인 사장 등록 요청 확인
@@ -127,9 +139,9 @@ public class AdminController {
         OwnerVo owner = ownerMapper.selectOneFromIdx(owner_id);
         if (owner != null) {
             owner.setApproval_status("APPROVED");
-            ownerMapper.update(owner);
+            ownerMapper.update_status(owner);
         }
-        return "redirect:pending_requests.do";
+        return "redirect:adminpage.do";
     }
 
     // 관리자가 사장 거절 처리
@@ -138,8 +150,8 @@ public class AdminController {
         OwnerVo owner = ownerMapper.selectOneFromIdx(owner_id);
         if (owner != null) {
             owner.setApproval_status("REJECTED");
-            ownerMapper.update(owner);
+            ownerMapper.update_status(owner);
         }
-        return "redirect:pending_requests.do";
+        return "redirect:adminpage.do";
     }
 }

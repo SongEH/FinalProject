@@ -225,18 +225,14 @@ pageEncoding="UTF-8"%>
     </script>
   </head>
   <body>
-    <%@include file="../common.jsp" %>
-        <!-- header import -->
-        <%@include file="../header.jsp" %>
-          <!-- side bar import -->
-          <%@include file="../sidebar.jsp" %>
+    
     <button id="openModal" data-toggle="modal" data-target="#signupModal">
       회&nbsp;원
     </button>
     <div id="signupModal" class="modal fade" role="dialog">
       <div class="modal-content">
       <div class ="container mx-auto p-6">
-        <span class="close-button">&times;</span>s
+        <span class="close-button">&times;</span>
         <h2>회&nbsp;원&nbsp;가&nbsp;입</h2>
         <form
           id="signupForm"

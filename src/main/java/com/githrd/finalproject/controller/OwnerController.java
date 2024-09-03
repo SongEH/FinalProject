@@ -30,14 +30,6 @@ public class OwnerController {
     @Autowired
     OwnerMapper ownerMapper;
 
-    // // 사장 조회
-    // @RequestMapping("list.do")
-    // public String list(Model model) {
-    // List<OwnerVo> list = ownerMapper.selectList();
-    // model.addAttribute("list", list);
-    // return "owner/owner_list";
-    // }
-
     // 사장 회원가입
     @RequestMapping("insert_form.do")
     public String insert_form() {
@@ -76,6 +68,7 @@ public class OwnerController {
 
         if (owner_user == null) {
             ra.addAttribute("reason", "fail_id");
+            ra.addAttribute("owner_accountId", owner_accountId);
 
             return "redirect:login_form.do";
         }
@@ -93,8 +86,13 @@ public class OwnerController {
             return "redirect:login_form.do";
         }
 
-        session.setAttribute("owner_user", owner_user);
+        if ("REJECTED".equals(owner_user.getApproval_status())) {
+            ra.addAttribute("reason", "rejected");
 
+            return "redirect:login_form.do";
+        }
+
+        session.setAttribute("owner_user", owner_user);
         return "redirect:../main.do";
     }
 
@@ -102,7 +100,7 @@ public class OwnerController {
     @RequestMapping("logout.do")
     public String logout() {
 
-        session.removeAttribute("user");
+        session.removeAttribute("owner_user");
 
         return "redirect:../main.do";
     }

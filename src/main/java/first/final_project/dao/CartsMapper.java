@@ -27,4 +27,7 @@ public interface CartsMapper {
     // 메뉴id로 장바구니 검색 검색 
     CartsVo findByMenuId(int member_id, int shop_id, int menu_id);
 
+    List<CartsVo> findPendingOrders(int member_id, int shop_id);
+
+
 }

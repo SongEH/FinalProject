@@ -92,6 +92,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        where carts_id=#{ carts_id }
    </update>
 
+   <!-- 조건에 맞는 장바구니 항목 조회 쿼리 -->
+   <select id="findPendingOrders" resultType="carts">
+        SELECT * 
+        FROM Carts
+        WHERE member_id = #{member_id}
+          AND shop_id = #{shop_id}
+          AND orders_id IS NULL
+   </select>
+
 </mapper>
 
 

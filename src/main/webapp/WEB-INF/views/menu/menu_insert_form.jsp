@@ -137,7 +137,7 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <textarea class="form-control" placeholder="메뉴설명" name="menu_content"
-                                tyle="height: 100px;"></textarea>
+                                style="height: 100px;"></textarea>
                               <label>메뉴설명</label>
                             </div>
                           </div>

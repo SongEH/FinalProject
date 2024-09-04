@@ -7,6 +7,7 @@ import java.util.Date;
 public class OrderVo {
     private int orders_id;
     private String orders_payment;
+    private String orders_name;
     private int orders_price;
     private String orders_srequest;
     private String orders_drequest;
@@ -17,4 +18,5 @@ public class OrderVo {
     private String shop_name;
     private String deliveries_method;
     private String shop_status;
+    private int member_id;
 }

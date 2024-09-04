@@ -64,7 +64,7 @@ public class RiderService {
         deliveriesVo.setOrders_id(orders_id);
 
         // 배차 정보 삽입 후, MyBatis가 자동 생성된 deliveries_id를 가져옴
-        riderMapper.assignDelivery(raiders_id, deliveries_method, orders_id);
+        riderMapper.assignDelivery(deliveriesVo);
         int deliveries_id = deliveriesVo.getDeliveries_id();
 
         // 배차 이력 생성

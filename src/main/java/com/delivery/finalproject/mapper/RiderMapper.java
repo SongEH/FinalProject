@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.delivery.finalproject.vo.AddrVo;
+import com.delivery.finalproject.vo.DeliveriesVo;
 import com.delivery.finalproject.vo.OrderVo;
 import com.delivery.finalproject.vo.ShopVo;
 
@@ -17,8 +18,7 @@ public interface RiderMapper {
 
     void updateOrderStatus(@Param("orders_id") int orders_id, @Param("status") String status);
 
-    int assignDelivery(@Param("raiders_id") int raiders_id, @Param("deliveries_method") String deliveries_method,
-            @Param("orders_id") int orders_id);
+    int assignDelivery(DeliveriesVo deliveriesVo);
 
     int insertDeliveryHistory(@Param("status") String status, @Param("deliveries_id") int deliveries_id);
 

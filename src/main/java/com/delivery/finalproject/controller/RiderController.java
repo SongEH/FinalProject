@@ -1,10 +1,9 @@
 package com.delivery.finalproject.controller;
 
-import com.delivery.finalproject.service.KakaoMapService;
-import com.delivery.finalproject.service.RiderService;
-import com.delivery.finalproject.vo.AddrVo;
-import com.delivery.finalproject.vo.OrderVo;
-import com.delivery.finalproject.vo.ShopVo;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.delivery.finalproject.service.KakaoMapService;
+import com.delivery.finalproject.service.RiderService;
+import com.delivery.finalproject.vo.AddrVo;
+import com.delivery.finalproject.vo.OrderVo;
+import com.delivery.finalproject.vo.ShopVo;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/riders")
@@ -30,11 +33,11 @@ public class RiderController {
 
     // 라이더가 주문을 배차 받기
     @PostMapping("/assign")
-    @ResponseBody
-    public Map<String, Object> assignOrder(
+    public String assignOrder(
             @RequestParam(value = "orders_id", required = true) String orderIdStr,
             @RequestParam(value = "raiders_id", required = true) String riderIdStr,
             @RequestParam(value = "deliveries_method", required = true) String deliveries_method,
+            HttpServletRequest request,
             Model model) {
 
         Map<String, Object> response = new HashMap<>();
@@ -42,7 +45,7 @@ public class RiderController {
         // 입력 값이 비어있는지 확인
         if (orderIdStr.isEmpty() || riderIdStr.isEmpty()) {
             response.put("error", "Order ID 또는 Rider ID가 없습니다.");
-            return response;
+            return "index"; // JSP 페이지로 이동
         }
 
         try {
@@ -50,7 +53,8 @@ public class RiderController {
             int orders_id = Integer.parseInt(orderIdStr);
             int raiders_id = Integer.parseInt(riderIdStr);
 
-            System.out.println("Parsed orders_id: " + orders_id + ", raiders_id: " + raiders_id);
+            // System.out.println("Parsed orders_id: " + orders_id + ", raiders_id: " +
+            // raiders_id);
 
             // 주문 배차 로직 실행
             boolean result = riderService.assignOrderToRider(orders_id, raiders_id, deliveries_method);
@@ -58,20 +62,22 @@ public class RiderController {
             response.put("resultMessage", resultMessage);
             response.put("success", result);
 
-            System.out.println("Order assignment result: " + result);
+            // System.out.println("Order assignment result: " + result);
 
             // 주문 테이블 업테이트 실행
             if (result) {
                 riderService.updateOrderStatus(orders_id, "배차 완료");
-                System.out.println("Order status updated to '배차 완료'");
+
+                return "redirect:/riders/progress"; // 성공 시 진행 상황 페이지로 리다이렉트
+                // System.out.println("Order status updated to '배차 완료'");
             }
 
         } catch (NumberFormatException e) {
             response.put("error", "Order ID 또는 Rider ID가 잘못되었습니다.");
-            System.out.println("NumberFormatException occurred: " + e.getMessage());
+            // System.out.println("NumberFormatException occurred: " + e.getMessage());
         }
 
-        return response;
+        return "riders/waitingOrders";
     }
 
     // 라이더가 진행 중인 주문 리스트를 표시
@@ -119,9 +125,12 @@ public class RiderController {
         try {
             // 경로 계산을 위한 주소 정보 가져오기
             String customerAddress = addr.getAddr_line1() + " " + addr.getAddr_line2(); // 주소 1, 2 결합
+            String shopAddress = shop.getShop_addr();
             double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
             double[] customerCoordinates = kakaoMapService.getCoordinates(customerAddress);
 
+            model.addAttribute("shopAddress", shopAddress);
+            model.addAttribute("customerAddress", customerAddress);
             model.addAttribute("shopLat", shopCoordinates[0]);
             model.addAttribute("shopLng", shopCoordinates[1]);
             model.addAttribute("customerLat", customerCoordinates[0]);

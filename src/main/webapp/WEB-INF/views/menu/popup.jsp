@@ -1,113 +1,124 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Insert title here</title>
+    <style type="text/css">
+      .mycommon {
+        /* text-align: center; */
+        width: 300px;
+        margin: auto;
+        border: 1px solid gray;
+        margin-bottom: 10px;
+        padding: 5px;
 
-  <style type="text/css">
-    .mycommon {
+        box-shadow: 1px 1px 1px black;
+      }
 
-      /* text-align: center; */
-      width: 300px;
-      margin: auto;
-      border: 1px solid gray;
-      margin-bottom: 10px;
-      padding: 5px;
+      #pop_image {
+        width: 300px;
+        height: 300px;
+        border: 2px solid gray;
+        outline: 2px solid black;
+      }
 
-      box-shadow: 1px 1px 1px black;
-    }
+      #pop_content {
+        min-height: 80px;
+      }
+    </style>
 
-    #pop_image {
-      width: 300px;
-      height: 300px;
-      border: 2px solid gray;
-      outline: 2px solid black;
-    }
+    <script type="text/javascript">
+      //전역변수
+      var g_menu_img; //hoisting
+      var g_menu_id;
 
-    #pop_content {
-      min-height: 80px;
-    }
-  </style>
+      function delete_photo() {
+        if (confirm("정말 삭제하시겠습니까?") == false) return;
 
+        location.href = "delete.do?menu_id=" + g_menu_id; // PhotoDeleteAction
+      } //end:delete_photo()
 
-  <script type="text/javascript">
-    //전역변수
-    var g_menu_img; //hoisting
-    var g_menu_id;
+      function modify_photo() {
+        location.href = "modify_form.do?menu_id=" + g_menu_id; // PhotoModifyFormAction
+      } //end:modify_form()
+    </script>
+  </head>
 
-
-    function delete_photo() {
-
-      if (confirm("정말 삭제하시겠습니까?") == false) return;
-
-      location.href = "delete.do?menu_id=" + g_menu_id; // PhotoDeleteAction
-    } //end:delete_photo()
-
-    function modify_photo() {
-
-      location.href = "modify_form.do?menu_id=" + g_menu_id; // PhotoModifyFormAction
-
-    } //end:modify_form()
-  </script>
-</head>
-
-<body>
-  <!-- 이미지 팝업  -->
-  <!-- Modal -->
-  <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-        </div>
-
-        <!-- 본문 -->
-        <div class="modal-body">
-          <div style="text-align: center; height: 310px;">
-            <img id="pop_image">
-          </div>
-          <h5 class="modal-title" id="pop_title">메뉴명</h5>
-          <p><strong>설명:</strong> <span id="pop_content">메뉴에 대한 자세한 설명이 여기에 들어갑니다.</span></p>
-          <p><strong>가격:</strong> <span id="pop_price">₩00,000</span></p>
-
-          <div class="mb-3">
-            <label for="optionSelect" class="form-label">옵션 선택</label>
-            <select class="form-select" id="optionSelect">
-              <option selected>옵션을 선택하세요</option>
-              <option value="1">옵션 1</option>
-              <option value="2">옵션 2</option>
-              <option value="3">옵션 3</option>
-            </select>
+  <body>
+    <!-- 이미지 팝업  -->
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="menuModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="photoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary">장바구니담기</button>
-          </div>
-          <div id="pop_job" style="text-align: center;">
-            <!-- <input style="display: none;" class="btn btn-info" type="button" id="btn_popup_update" value="수정"
+          <!-- 본문 -->
+          <div class="modal-body">
+            <div style="text-align: center; height: 310px">
+              <img id="pop_image" />
+            </div>
+            <h5 class="modal-title" id="pop_title">메뉴명</h5>
+            <p>
+              <strong>설명:</strong>
+              <span id="pop_content"
+                >메뉴에 대한 자세한 설명이 여기에 들어갑니다.</span
+              >
+            </p>
+            <p><strong>가격:</strong> <span id="pop_price">₩00,000</span></p>
+
+            <div class="mb-3">
+              <label for="optionSelect" class="form-label">옵션 선택</label>
+              <select class="form-select" id="optionSelect">
+                <option selected>옵션을 선택하세요</option>
+                <option value="1">옵션 1</option>
+                <option value="2">옵션 2</option>
+                <option value="3">옵션 3</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                닫기
+              </button>
+              <button type="button" class="btn btn-primary">
+                장바구니담기
+              </button>
+            </div>
+            <div id="pop_job" style="text-align: center">
+              <!-- <input style="display: none;" class="btn btn-info" type="button" id="btn_popup_update" value="수정"
               onclick="modify_photo();">
             <input style="display: none;" class="btn btn-danger" type="button" id="btn_popup_delete" value="삭제"
               onclick="delete_photo();"> -->
-
-
+            </div>
           </div>
-
-
-        </div>
-        <!--   
+          <!--   
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div> -->
+        </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

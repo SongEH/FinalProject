@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/riders")
+@RequestMapping("/riders/")
 public class RiderController {
 
     @Autowired
@@ -45,14 +45,14 @@ public class RiderController {
     private KakaoMapService kakaoMapService;
 
     // ==========
-    @RequestMapping("/main.do")
+    @RequestMapping("main.do")
     public String main() {
 
         return "riders/riders_main";
     }
 
     // 회원 조회
-    @RequestMapping("/list.do")
+    @RequestMapping("list.do")
     public String list(Model model) {
         List<RiderVo> list = riderMapper.selectList();
         model.addAttribute("list", list);
@@ -60,13 +60,13 @@ public class RiderController {
     }
 
     // 회원가입 폼
-    @RequestMapping("/insert_form.do")
+    @RequestMapping("insert_form.do")
     public String insert_form() {
         return "riders/riders_insert_form";
     }
 
     // 회원가입
-    @RequestMapping("/insert.do")
+    @RequestMapping("insert.do")
     public String insert(RiderVo vo) {
         riderMapper.insert(vo);
 
@@ -74,7 +74,7 @@ public class RiderController {
     }
 
     // 로그인 폼
-    @RequestMapping("/login_form.do")
+    @RequestMapping("login_form.do")
     public String login_form() {
 
         return "redirect:main.do";
@@ -82,7 +82,7 @@ public class RiderController {
     }
 
     // 로그인
-    @RequestMapping("/login.do")
+    @RequestMapping("login.do")
     public String login(String riders_email, String riders_pwd, String url, RedirectAttributes ra) {
 
         RiderVo user = riderMapper.selectOneFromEmail(riders_email);
@@ -97,7 +97,7 @@ public class RiderController {
             ra.addAttribute("reason", "fail_pwd");
             ra.addAttribute("riders_email", riders_email);
 
-            return "redirect:main.do";
+            return "redirect:/main.do";
         }
 
         session.setAttribute("user", user);
@@ -108,7 +108,7 @@ public class RiderController {
     }
 
     // 로그아웃
-    @RequestMapping("/logout.do")
+    @RequestMapping("logout.do")
     public String logout() {
 
         session.removeAttribute("user");
@@ -116,7 +116,7 @@ public class RiderController {
         return "redirect:main.do";
     }
 
-    @RequestMapping("/mypage.do")
+    @RequestMapping("mypage.do")
     public String showMyPage(RiderVo vo, Model model) {
         RiderVo user = (RiderVo) session.getAttribute("user");
         if (user == null) {

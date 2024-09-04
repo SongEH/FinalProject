@@ -3,7 +3,10 @@ package com.delivery.finalproject.vo;
 import lombok.Data;
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
 @Data
+@Alias("owner")
 public class OwnerVo {
     private int owner_id;
     private String owner_name;

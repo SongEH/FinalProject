@@ -73,6 +73,20 @@
         <div class="text-center font-bold p-4 border-b border-black">
           배달 현황
         </div>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-toggle="dropdown"
+            aria-expanded="false"
+          >
+            마이페이지
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="mypage.do">회원수정</a>
+          </div>
+        </div>
+        <p>${user.rider_name}입니다.</p>
         <div class="flex">
           <div class="w-1/3 text-center border-r border-black">
             <button

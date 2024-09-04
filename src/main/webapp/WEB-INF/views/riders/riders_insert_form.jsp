@@ -161,7 +161,7 @@ pageEncoding="UTF-8"%>
       }
 
       function send(f) {
-    let riders_name = f.riders_name.value.trim();
+    let rider_name = f.rider_name.value.trim();
     let riders_pwd = f.riders_pwd.value.trim();
     let riders_phone = f.riders_phone.value.trim();
     let email_id = $("#email_id").val().trim();
@@ -184,10 +184,10 @@ pageEncoding="UTF-8"%>
     
 
     // 입력값 검증
-    if (riders_name === "") {
+    if (rider_name === "") {
         alert("이름을 입력하시오");
-        f.riders_name.value = "";
-        f.riders_name.focus();
+        f.rider_name.value = "";
+        f.rider_name.focus();
         return;
     }
 
@@ -255,8 +255,8 @@ pageEncoding="UTF-8"%>
             <h2>회원가입 riders_insert_form</h2>
           </div>
           <div class="form-group">
-            <label for="riders_name">로그인 시 사용할 이름을 입력해 주세요</label>
-            <input type="text" class="form-control" id="riders_name" name="riders_name" required>
+            <label for="rider_name">로그인 시 사용할 이름을 입력해 주세요</label>
+            <input type="text" class="form-control" id="rider_name" name="rider_name" required>
           </div>
           <div class="form-group">
             <label for="riders_phone">라이더의 전화번호를 입력해 주세요</label>

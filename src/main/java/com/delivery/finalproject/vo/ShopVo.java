@@ -2,8 +2,10 @@ package com.delivery.finalproject.vo;
 
 import lombok.Data;
 import java.util.Date;
+import org.apache.ibatis.type.Alias;
 
 @Data
+@Alias("shop")
 public class ShopVo {
     private int shop_id;
     private String shop_name;

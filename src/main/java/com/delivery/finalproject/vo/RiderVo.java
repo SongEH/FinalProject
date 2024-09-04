@@ -1,8 +1,11 @@
 package com.delivery.finalproject.vo;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Data;
 
 @Data
+@Alias("rider")
 public class RiderVo {
     private int raiders_id;
     private String rider_name;

@@ -4,7 +4,59 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.delivery.finalproject.mapper.RiderMapper">
 
-    <select id="getOrderById" parameterType="int" resultType="com.delivery.finalproject.vo.OrderVo">
+    <!-- 전체조회 -->
+    <select id="selectList" resultType="rider">
+       select * from riders order by raiders_id
+    </select>
+
+
+    <!-- mem_idx 이용해서  MemberVo  구하기 -->
+    <select id="selectOneFromId" parameterType="int" resultType="rider">
+       select * from riders where raiders_id=#{raiders_id}
+    </select>
+
+    <!-- mem_id 이용해서  MemberVo  구하기 -->
+    <select id="selectOneFromEmail" parameterType="String" resultType="rider">
+       select * from riders where riders_email=#{riders_email}
+    </select>
+
+    <!-- 추가  
+        #{mem_name} => vo.getMem_name()
+   -->
+    <insert id="insert" parameterType="rider">
+      INSERT INTO Riders
+      (
+      rider_name,
+      riders_phone,
+      riders_email,
+      riders_pwd,
+      riders_region
+      )
+      VALUES  (
+        #{rider_name},
+        #{riders_phone},
+        #{riders_email},
+        #{riders_pwd},
+        #{riders_region}
+    )
+                                  
+                                  
+    </insert>
+
+    <!-- 삭제  -->
+    <delete id="delete" parameterType="int">
+      delete from riders where raiders_id=#{ raiders_id }
+    </delete>
+
+    <!-- 수정  -->
+    <update id="update" parameterType="rider">
+      update riders 
+             set riders_phone=#{ riders_phone }, riders_pwd=#{ riders_pwd }, riders_region=#{ riders_region}
+      where raiders_id=#{ raiders_id }
+    </update>
+
+
+    <select id="getOrderById" parameterType="int" resultType="order">
         SELECT o.*, s.shop_name AS shopName, s.shop_status AS shopStatus
         FROM Orders o
         JOIN Shop s ON o.shop_id = s.shop_id
@@ -32,7 +84,7 @@
 
 
     <!-- Orders와 Shop을 조인하여 주문과 관련된 가게 정보를 가져옴 -->
-    <select id="findOrdersByStatus" parameterType="string" resultType="com.delivery.finalproject.vo.OrderVo">
+    <select id="findOrdersByStatus" parameterType="string" resultType="order">
         SELECT o.*, s.shop_name AS shop_name, d.deliveries_method AS deliveries_method
         FROM Orders o
         JOIN Shop s ON o.shop_id = s.shop_id
@@ -41,7 +93,7 @@
         ORDER BY orders_id
     </select>
 
-    <select id="findOrdersByRiderAndStatus" parameterType="map" resultType="com.delivery.finalproject.vo.OrderVo">
+    <select id="findOrdersByRiderAndStatus" parameterType="map" resultType="order">
         SELECT o.*, d.deliveries_method AS deliveries_method
         FROM Orders o 
         JOIN Deliveries d ON o.orders_id = d.orders_id 
@@ -55,15 +107,15 @@
         ORDER BY o.orders_id;
     </select>
 
-    <select id="getAddrById" parameterType="int" resultType="com.delivery.finalproject.vo.AddrVo">
+    <select id="getAddrById" parameterType="int" resultType="addr">
         SELECT * FROM Addr WHERE addr_id = #{addr_id}
     </select>
 
-    <select id="getShopById" parameterType="int" resultType="com.delivery.finalproject.vo.ShopVo">
+    <select id="getShopById" parameterType="int" resultType="shop">
         SELECT * FROM Shop WHERE shop_id = #{shop_id}
     </select>
 
-    <select id="findCompletedOrdersByRider" parameterType="int" resultType="com.delivery.finalproject.vo.OrderVo">
+    <select id="findCompletedOrdersByRider" parameterType="int" resultType="order">
         SELECT * FROM Orders o
         JOIN Deliveries d ON o.orders_id = d.orders_id
         JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id

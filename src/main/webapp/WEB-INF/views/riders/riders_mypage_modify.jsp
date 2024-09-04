@@ -50,8 +50,8 @@ pageEncoding="UTF-8"%>
           <input
             class="form-control"
             type="text"
-            name="riders_name"
-            value="${vo.riders_name}"
+            name="rider_name"
+            value="${vo.rider_name}"
             disabled
           />
         </div>

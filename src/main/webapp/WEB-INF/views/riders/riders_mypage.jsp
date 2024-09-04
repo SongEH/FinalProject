@@ -71,7 +71,7 @@ pageEncoding="UTF-8"%>
     </script>
   </head>
   <body>
-    <input type="hidden" name="raiders_id" value="${riders.raiders_id}" />
+    <input type="hidden" name="raiders_id" value="${rider.raiders_id}" />
     <h1>회&nbsp;원&nbsp;정&nbsp;보 여긴riders_mypage</h1>
     <div class="container">
       <div class="mb-4">
@@ -79,7 +79,7 @@ pageEncoding="UTF-8"%>
         <input
           class="form-control"
           type="text"
-          value="${vo.riders_name}"
+          value="${vo.rider_name}"
           readonly
         />
       </div>

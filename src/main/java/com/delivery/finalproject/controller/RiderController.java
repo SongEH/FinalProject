@@ -131,7 +131,7 @@ public class RiderController {
     }
 
     // 마이페이지에서 회원 수정폼 띄우기
-    @RequestMapping("/mypage/modify_form.do")
+    @RequestMapping("mypage/modify_form.do")
     public String myPageUpdateForm(int raiders_id, Model model) {
 
         RiderVo vo = riderMapper.selectOneFromId(raiders_id);
@@ -146,7 +146,7 @@ public class RiderController {
     }
 
     // 회원정보 수정을 처리하는 메소드
-    @RequestMapping("/mypage/modify.do")
+    @RequestMapping("mypage/modify.do")
     public String myPageUpdate(RiderVo vo) {
         // 회원 정보 업데이트
         riderMapper.update(vo);
@@ -166,7 +166,7 @@ public class RiderController {
     }
 
     // 마이페이지에서 회원 탈퇴
-    @RequestMapping("/mypage/delete.do")
+    @RequestMapping("mypage/delete.do")
     public String myPageDelete(@RequestParam("raiders_id") int raiders_id, RedirectAttributes ra) {
         riderMapper.delete(raiders_id);
         session.invalidate(); // 세션 무호화 -> 사용자가 탈퇴할 때 세션에 저장된 정보가 더이상 유효하지 않기에 세션을

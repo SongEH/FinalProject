@@ -119,45 +119,7 @@ pageEncoding="UTF-8"%>
             />
             <label class="form-check-label" for="inlineCheckbox3">인천</label>
           </div>
-        <!-- <div class="mb-4">
-          <label for="riders_region">배달지역:</label>
-          <input
-            class="form-control"
-            type="text"
-            name="riders_region"
-            value="${vo.riders_region}"
-          />
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="inlineCheckbox1"
-              name="riders_region"
-              value="서울"
-            />
-            <label class="form-check-label" for="inlineCheckbox1">서울</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="inlineCheckbox2"
-              name="riders_region"
-              value="경기"
-            />
-            <label class="form-check-label" for="inlineCheckbox2">경기</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="inlineCheckbox3"
-              name="riders_region"
-              value="인천"
-            />
-            <label class="form-check-label" for="inlineCheckbox3">인천</label>
-          </div>
-        </div> -->
+       
 
         <div class="flex justify-end">
           <input type="submit" value="수정하기" />

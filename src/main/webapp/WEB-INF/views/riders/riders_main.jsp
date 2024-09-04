@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -21,48 +22,82 @@ pageEncoding="UTF-8"%>
         background-color: #f9f9f9;
       }
       .login-container {
-        width: 300px;
-        padding: 20px;
+        width: 350px; /* 좀 더 넓게 조정 */
+        padding: 30px;
         background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px; /* 테두리 둥글게 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
         text-align: center;
       }
       .login-container h1 {
         color: #f0a8d0;
         margin-bottom: 20px;
+        font-size: 24px;
       }
       .login-container input[type="email"],
       .login-container input[type="password"] {
-        width: 100%;
-        padding: 10px;
+        width: 100%; /* 입력 필드의 너비를 100%로 설정 */
+        padding: 12px;
         margin: 10px 0;
         border: 1px solid #ddd;
-        border-radius: 4px;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box; /* 패딩 포함하여 너비 계산 */
       }
+
       .login-container button,
       .login-container .btn {
         width: 100%;
-        padding: 10px;
+        padding: 12px;
         background-color: #f0a8d0;
         border: none;
-        border-radius: 4px;
+        border-radius: 5px;
         color: white;
         font-size: 16px;
         cursor: pointer;
-        margin-top: 10px;
+        margin-top: 15px;
+        transition: background-color 0.3s ease;
       }
       .login-container button:hover,
       .login-container .btn:hover {
-        background-color: #f0a8d0;
+        background-color: #e090b5;
       }
       .login-container .link {
-        margin-top: 20px;
+        margin-top: 15px;
         font-size: 14px;
       }
       .login-container .link a {
         color: #f0a8d0;
         text-decoration: none;
+      }
+      .login-container .btn-info {
+        background-color: #f0a8d0;
+        border-color: #e090b5;
+      }
+      .login-container .btn-info:hover {
+        background-color: #e090b5;
+      }
+      /* 반응형 스타일 */
+      @media (max-width: 768px) {
+        .login-container {
+          padding: 20px; /* 모바일에서 패딩 감소 */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-container h1 {
+          font-size: 20px; /* 제목 폰트 사이즈 줄임 */
+        }
+
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+          font-size: 14px; /* 폰트 크기 축소 */
+        }
+
+        .login-container button,
+        .login-container .btn {
+          font-size: 14px; /* 버튼 폰트 사이즈 줄임 */
+        }
       }
     </style>
     <script type="text/javascript">

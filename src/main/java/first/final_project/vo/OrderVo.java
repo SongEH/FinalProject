@@ -3,7 +3,10 @@ package first.final_project.vo;
 import lombok.Data;
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
 @Data
+@Alias("order")
 public class OrderVo {
     private int orders_id;
     private String orders_payment;

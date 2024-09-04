@@ -9,47 +9,34 @@
     function send(f) {
 
       //입력값 검증
-      let menu_name = f.menu_name.value.trim();
-      let menu_content = f.menu_content.value.trim();
-      let menu_category = f.menu_category.value.trim();
-      let menu_price = f.menu_price.value.trim();
-      let photo = f.photo.value;
+      let member_phone = f.member_phone.value.trim();
+      let orders_drequest = f.orders_drequest.value.trim();
+      let orders_srequest = f.orders_srequest.value.trim();
+   
 
-      if (menu_name == '') {
-        alert("메뉴명을 입력하세요!");
-        f.menu_name.value = ""; //지우기
-        f.menu_name.focus();
+      if (member_phone == '') {
+        alert("연락처를 입력하세요!");
+        f.member_phone.value = ""; //지우기
+        f.member_phone.focus();
         return;
       }
 
-      if (menu_content == '') {
-        alert("메뉴설명을 입력하세요!");
-        f.menu_content.value = ""; //지우기
-        f.menu_content.focus();
+      if (orders_drequest == '') {
+        alert("배달 요청사항을 입력하세요!");
+        f.orders_drequest.value = ""; //지우기
+        f.orders_drequest.focus();
         return;
       }
 
-      if (menu_category == '') {
-        alert("카테고리를 입력하세요!");
-        f.menu_category.value = ""; //지우기
-        f.menu_category.focus();
+      if (orders_srequest == '') {
+        alert("가게 요청사항을 입력하세요!");
+        f.orders_srequest.value = ""; //지우기
+        f.orders_srequest.focus();
         return;
       }
-      if (menu_price == '') {
-        alert("가격을 입력하세요!");
-        f.menu_price.value = ""; //지우기
-        f.menu_price.focus();
-        return;
-      }
-
-      if (photo == '') {
-        alert("사진을 선택하세요!");
-        return;
-      }
-
 
       //f.method = "POST";
-      f.action = "insert.do"; //전송대상(PhotoInsertAction)
+      f.action = "insert.do"; 
       f.submit(); //전송
     }
   </script>
@@ -83,138 +70,175 @@
 
 
     <section class="section">
-      <div class="row align-items-top">
+      <div class="row">
         <div class="col-lg-10">
           <div class="card">
             <div class="card-body">
 
-              <!-- Card with an image on left -->
-              <!-- 장바구니 항목 테이블 -->
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>이미지</th>
-                    <th>메뉴명</th>
-                    <th>메뉴개수</th>
-                    <th>메뉴가격</th>
-                    <th>총 가격</th>
-                    <th></th>
-                  </tr>
-                </thead>
+              <h5 class="card-title">Floating labels Form</h5>
+
+              <!-- Floating Labels Form -->
+              <form class="row g-3" method="POST">
+
+                <!-- 추가 필요할 듯...?  -->
+                <!-- <input type="hidden" name="shop_id" value="${shop_id}">
+                <input type="hidden" name="shop_name" value="${shop_name}"> -->
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="기본주소" name="addr_line1" readonly>
+                    <label>기본주소</label>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="상세주소" name="addr_line2" readonly>
+                    <label>상세주소</label>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="연락처" value=${user.getMember_phone()}
+                      name="member_phone">
+                    <label>연락처</label>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="배달요청사항" name="orders_drequest"
+                      style="height: 100px;"></textarea>
+                    <label>배달요청사항</label>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="가게요청사항" name="orders_srequest"
+                      style="height: 100px;"></textarea>
+                    <label>가게요청사항</label>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="결제가격" id="menu_price_all" name="orders_price1111" readonly>
+                    <label>결제가격</label>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="결제방식" value="카카오페이" name="orders_payment" readonly>
+                    <label>결제방식</label>
+                  </div>
+                </div>
 
 
-                <tbody id="cartItems">
-                  <!-- 현재 상점 ID를 저장할 변수 초기화 -->
-                  <c:set var="currentShopId" value="" />
-
-                  <!-- 항목 리스트를 반복 처리 -->
-                  <c:forEach var="vo" items="${list}">
-                    <!-- 상점 ID가 변경되었는지 확인 -->
-                    <c:if test="${currentShopId != vo.shop_id}">
-                      <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
-                      <c:set var="currentShopId" value="${vo.shop_id}" />
-
-                      <!-- 상점 ID를 헤더로 표시 (여기서는 상점 ID를 사용하고 있습니다) -->
-                      <tr>
-                        <th colspan="7" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
-                          가게명 : ${vo.shop_name}
-
-                        </th>
-                      </tr>
-                    </c:if>
-
-                    <!-- 상점 항목 정보를 출력 -->
+                <!-- Card with an image on left -->
+                <!-- 장바구니 항목 테이블 -->
+                <table class="table table-bordered">
+                  <thead>
                     <tr>
-                      <td class="cart_menuimg">
-                        <div>
-                          <img src="../resources/images/${vo.menu_img}" class="img-fluid rounded" alt="..."
-                            width="150px">
-                        </div>
-                      </td>
-                      <td class="cart_menuname">${vo.menu_name}</td>
-
-                      <td class="cart_quantity">
-                        <input type="number" class="form-control quantity-input" id="quantity_${vo.carts_id}"
-                          value="${vo.carts_quantity}" min="1" max="50" disabled>
-                      </td>
-
-                      <td class="cart_price">${vo.menu_price}</td>
-                      <td class="cart_total_price">
-                        ${vo.menu_price * vo.carts_quantity}
-                      </td>
+                      <th>이미지</th>
+                      <th>메뉴명</th>
+                      <th>메뉴개수</th>
+                      <th>메뉴가격</th>
+                      <th>총 가격</th>
                     </tr>
-                  </c:forEach>
-                </tbody>
+                  </thead>
 
 
+                  <tbody id="cartItems">
+                    <!-- 현재 상점 ID를 저장할 변수 초기화 -->
+                    <c:set var="currentShopId" value="" />
 
-                <tfoot>
-                  <tr>
-                    <td colspan="3" class="text-right"><strong>총 개수:</strong></td>
-                    <td id="total_quantity">0</td>
-                    <td colspan="2" class="text-right"><strong>총 가격:</strong></td>
-                    <td id="total_price">0</td>
-                  </tr>
-                </tfoot>
+                    <!-- 항목 리스트를 반복 처리 -->
+                    <c:forEach var="vo" items="${list}">
+                      <!-- 상점 ID가 변경되었는지 확인 -->
+                      <c:if test="${currentShopId != vo.shop_id}">
+                        <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
+                        <c:set var="currentShopId" value="${vo.shop_id}" />
 
+                        <!-- 상점 ID를 헤더로 표시 -->
+                        <tr>
+                          <th colspan="5" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
+                            가게명 : ${vo.shop_name}
+                          </th>
+                        </tr>
+                      </c:if>
 
+                      <!-- 상점 항목 정보를 출력 -->
+                      <tr>
+                        <td class="cart_menuimg">
+                          <div>
+                            <img src="../resources/images/${vo.menu_img}" class="img-fluid rounded" alt="..."
+                              width="150px">
+                          </div>
+                        </td>
+                        <td class="cart_menuname">${vo.menu_name}</td>
+                        <td class="cart_quantity">${vo.carts_quantity}</td> <!-- 수량을 직접 출력 -->
+                        <td class="cart_price">${vo.menu_price}</td>
+                        <td class="cart_total_price">
+                          ${vo.menu_price * vo.carts_quantity}
+                        </td>
+                      </tr>
+                    </c:forEach>
+                  </tbody>
 
-                <h5 class="card-title">Floating labels Form</h5>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2" class="text-right"><strong>총 개수:</strong></td>
+                      <td id="total_quantity">0</td>
+                      <td colspan="1" class="text-right"><strong>총 가격:</strong></td>
+                      <td id="total_price">0</td>
+                    </tr>
+                  </tfoot>
 
-                <!-- Floating Labels Form -->
-                <form class="row g-3" method="POST" enctype="multipart/form-data">
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                      const currencyFormatter = new Intl.NumberFormat('ko-KR', {
+                        style: 'currency',
+                        currency: 'KRW',
+                        minimumFractionDigits: 0
+                      });
 
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" placeholder="기본주소" name="addr_line1">
-                      <label>기본주소</label>
-                    </div>
-                  </div>
+                      function updateTotals() {
+                        let totalQuantity = 0;
+                        let totalPrice = 0;
 
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" placeholder="상세주소" name="addr_line2">
-                      <label>상세주소</label>
-                    </div>
-                  </div>
+                        // 각 행을 순회하며 총 개수와 총 가격 계산
+                        document.querySelectorAll('#cartItems tr').forEach(row => {
+                          const quantityElement = row.querySelector('.cart_quantity');
+                          const priceElement = row.querySelector('.cart_price');
+                          const totalPriceElement = row.querySelector('.cart_total_price');
 
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" placeholder="연락처" name="member_phone">
-                      <label>연락처</label>
-                    </div>
-                  </div>
+                          if (quantityElement && priceElement && totalPriceElement) {
+                            const quantity = parseInt(quantityElement.textContent) || 0;
+                            const price = parseFloat(priceElement.textContent) || 0;
+                            const total = quantity * price;
 
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <textarea class="form-control" placeholder="배달요청사항" name="orders_drequest"
-                        style="height: 100px;"></textarea>
-                      <label>배달요청사항</label>
-                    </div>
-                  </div>
+                            totalQuantity += quantity;
+                            totalPrice += total;
 
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <textarea class="form-control" placeholder="가게요청사항" name="orders_srequest"
-                        style="height: 100px;"></textarea>
-                      <label>가게요청사항</label>
-                    </div>
-                  </div>
+                            totalPriceElement.textContent = currencyFormatter.format(total);
+                          }
+                        });
 
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" placeholder="결제가격" name="menu_price_all">
-                      <label>결제가격</label>
-                    </div>
-                  </div>
+                        // 총 개수와 총 가격 업데이트
+                        document.getElementById('total_quantity').textContent = totalQuantity;
+                        document.getElementById('total_price').textContent = currencyFormatter.format(totalPrice);
 
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" placeholder="결제방식" name="orders_payment">
-                      <label>결제방식</label>
-                    </div>
-                  </div>
+                        // 결제 가격 입력 필드에 총 가격 값을 설정
+                        document.getElementById('menu_price_all').value = currencyFormatter.format(totalPrice);
 
+                      }
+
+                      updateTotals();
+                    });
+                  </script>
 
                   <div class="text-center">
                     <!-- <button type="submit" class="btn btn-primary">Submit</button>
@@ -223,7 +247,16 @@
 
                     <input class="btn btn-primary" type="button" value="결제" onclick="send(this.form);">
                   </div>
-                </form><!-- End floating Labels Form -->
+              </form><!-- End floating Labels Form -->
+
+
+
+
+
+
+
+
+
             </div>
           </div>
           </table>

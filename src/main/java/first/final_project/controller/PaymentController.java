@@ -1,74 +1,50 @@
 package first.final_project.controller;
 
-import java.io.IOException;
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
+import com.fasterxml.jackson.databind.JsonNode;
 
-import first.final_project.service.PaymentServiceImpl;
-import first.final_project.vo.PaymentInVo;
-import jakarta.servlet.http.HttpSession;
+import first.final_project.service.PaymentService;
+import first.final_project.vo.PaymentRequest;
 
-@Controller
+@RestController
+@RequestMapping("/payments")
 public class PaymentController {
 
     @Autowired
-    PaymentServiceImpl paymentService;
+    private PaymentService paymentService;
 
-    private IamportClient api;
+    @RequestMapping("/pay")
+    public String pay() {
 
-    public void init() {
-        this.api = new IamportClient(apiKey, secretKey);
+        return "pay";
     }
 
-    @Value("${imp.api.key}")
-    private String apiKey;
-
-    @Value("${imp.api.secretkey}")
-    private String secretKey;
-
-    @RequestMapping("pay/find_addr.do")
-    public String payment() {
-
-        return "order/pay";
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "payment/verify_iamport/{imp_uid}")
-    public IamportResponse<Payment> paymentByImpUid(
-            Model model, Locale locale, HttpSession session, @PathVariable(value = "imp_uid") String imp_uid)
-            throws IamportResponseException, IOException {
-        System.out.println("여기도착");
-        return api.paymentByImpUid(imp_uid);
-    }
-
-    @PostMapping("payment/complete")
-    public ResponseEntity<String> completePayment(@RequestBody PaymentInVo paymentInVo) {
+    @PostMapping("/complete")
+    public ResponseEntity<JsonNode> completePayment(@RequestBody PaymentRequest paymentRequest) {
         try {
-            boolean paymentSuccess = paymentService.processPayment(paymentInVo.getImpUid());
+            // 액세스 토큰 발급 받기
+            String accessToken = paymentService.getAccessToken();
 
-            if (paymentSuccess) {
-                return ResponseEntity.ok("결제가 완료되었습니다.");
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("결제에 실패하였습니다.");
-            }
+            // imp_uid로 포트원 서버에서 결제 정보 조회
+            JsonNode paymentData = paymentService.getPaymentData(paymentRequest.getImp_uid(), accessToken);
+
+            // 추가 처리 로직
+            // 예: 결제 금액 확인, 주문 상태 업데이트 등
+
+            return ResponseEntity.ok(paymentData);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생하였습니다.");
+            return ResponseEntity.status(400).body(null);
         }
     }
+
 }

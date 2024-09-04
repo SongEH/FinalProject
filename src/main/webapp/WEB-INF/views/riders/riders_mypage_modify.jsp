@@ -43,7 +43,7 @@ pageEncoding="UTF-8"%>
     <h1>회원 정보 수정 여긴 riders_mypage_modify</h1>
     <form action="${pageContext.request.contextPath}/riders/mypage/modify.do">
       <input type="hidden" name="riders_region_hidden" value="${vo.riders_region}" />
-      <input type="hidden" name="riders_id" value="${vo.riders_id}" />
+      <input type="hidden" name="raiders_id" value="${vo.raiders_id}" />
       <div class="container">
         <div class="mb-4">
           <label for="name">이름:</label>

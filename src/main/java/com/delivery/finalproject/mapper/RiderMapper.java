@@ -9,10 +9,25 @@ import org.apache.ibatis.annotations.Param;
 import com.delivery.finalproject.vo.AddrVo;
 import com.delivery.finalproject.vo.DeliveriesVo;
 import com.delivery.finalproject.vo.OrderVo;
+import com.delivery.finalproject.vo.RiderVo;
 import com.delivery.finalproject.vo.ShopVo;
 
 @Mapper
 public interface RiderMapper {
+
+    // =======
+    List<RiderVo> selectList();
+
+    RiderVo selectOneFromId(int raiders_id); // mem_idx
+
+    RiderVo selectOneFromEmail(String riders_email); // mem_id
+
+    int insert(RiderVo vo);
+
+    int update(RiderVo vo);
+
+    int delete(int raiders_id);
+    // ====
 
     OrderVo getOrderById(int orders_id);
 

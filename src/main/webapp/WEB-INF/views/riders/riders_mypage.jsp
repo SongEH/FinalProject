@@ -61,17 +61,17 @@ pageEncoding="UTF-8"%>
 
 
     <script>
-      function del(riders_id) {
+      function del(raiders_id) {
         //console.log(mem_idx,"삭제");
         if (confirm("정말 삭제 하시겠습니까?") == false) return;
 
         //삭제요청
-        location.href = "mypage/delete.do?riders_id=" + riders_id; //MemberDeleteAction
+        location.href = "mypage/delete.do?raiders_id=" + raiders_id; //MemberDeleteAction
       }
     </script>
   </head>
   <body>
-    <input type="hidden" name="riders_id" value="${riders.riders_id}" />
+    <input type="hidden" name="raiders_id" value="${riders.raiders_id}" />
     <h1>회&nbsp;원&nbsp;정&nbsp;보 여긴riders_mypage</h1>
     <div class="container">
       <div class="mb-4">
@@ -126,11 +126,11 @@ pageEncoding="UTF-8"%>
 
 
         <div class="flex justify-end">
-          <c:if test="( user.riders_id eq vo.riders_id )">
+          <c:if test="( user.raiders_id eq vo.raiders_id )">
             <input
               type="button"
               value="회원 수정"
-              onclick="location.href='mypage/modify_form.do?riders_id=${vo.riders_id}'"
+              onclick="location.href='mypage/modify_form.do?raiders_id=${vo.raiders_id}'"
             />
 
             <input
@@ -142,7 +142,7 @@ pageEncoding="UTF-8"%>
             <input
               type="button"
               value="회원 탈퇴"
-              onclick="del('${ vo.riders_id }');"
+              onclick="del('${ vo.raiders_id }');"
             />
           </c:if>
         </div>

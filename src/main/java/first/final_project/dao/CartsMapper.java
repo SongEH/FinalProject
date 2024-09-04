@@ -22,6 +22,9 @@ public interface CartsMapper {
 
     int delete(int carts_id);
 
-    int update(int carts_id, int carts_quantity);
+    int update(int carts_id, int carts_quantity); // 수량만 수정 
+
+    // 메뉴id로 장바구니 검색 검색 
+    CartsVo findByMenuId(int member_id, int shop_id, int menu_id);
 
 }

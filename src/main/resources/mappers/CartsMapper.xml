@@ -4,12 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="first.final_project.dao.CartsMapper">
-  <!-- 전체조회  -->
-  <!-- <select id="selectList" resultType="carts">
+   <!-- 전체조회  -->
+   <!-- <select id="selectList" resultType="carts">
      select * from carts order by carts_id desc
   </select> -->
 
-  <select id="selectList" resultType="carts">
+   <select id="selectList" resultType="carts">
      SELECT 
          c.*,                         -- Carts 테이블의 모든 컬럼을 선택
          s.shop_name   AS shop_name,    -- shop 테이블에서 가게명
@@ -22,11 +22,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          Menu m ON c.menu_id = m.menu_id
       JOIN 
          shop s ON m.shop_id = s.shop_id;
-  </select>
+   </select>
 
 
-  <!-- Paging별 조회 -->
-  <select id="selectPageList" parameterType="Map" resultType="carts">
+   <!-- Paging별 조회 -->
+   <select id="selectPageList" parameterType="Map" resultType="carts">
 	select * from
 	(
 		select
@@ -36,25 +36,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(select * from carts) c
 	) cc
 	where no between #{ start } and #{ end }
-  </select>
+   </select>
 
 
-  <!-- 전체레코드수 구하기 
+   <!-- 전체레코드수 구하기 
        oracle : nvl()
        mysql  : ifnull() -->
-  <select id="selectRowTotal" resultType="int">
+   <select id="selectRowTotal" resultType="int">
      select ifnull(count(*),0) from carts 
-  </select>
+   </select>
 
 
-  <!-- carts_id 에 해당되는 CartsVo 조회  -->
-  <select id="selectOne" parameterType="int" resultType="carts">
+   <!-- carts_id 에 해당되는 CartsVo 조회  -->
+   <select id="selectOne" parameterType="int" resultType="carts">
      select * from carts where carts_id=#{ carts_id }
-  </select>
+   </select>
 
+   <!-- 메뉴id로 장바구니 항목 조회 쿼리 -->
+   <select id="findByMenuId" resultType="carts">
+        SELECT * FROM Carts
+        WHERE member_id = #{member_id}
+        AND shop_id = #{shop_id}
+        AND menu_id = #{menu_id}
+        LIMIT 1
+   </select>
 
-  <!-- 등록 -->
-  <insert id="insert" parameterType="carts">
+   <!-- 등록 -->
+   <insert id="insert" parameterType="carts">
     INSERT INTO Carts(
         carts_quantity, 
         member_id, 
@@ -69,20 +77,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{menu_id}, 
         CURRENT_DATE
     );
-  </insert>
+   </insert>
 
-  <!-- 삭제 -->
-  <delete id="delete" parameterType="int">
+   <!-- 삭제 -->
+   <delete id="delete" parameterType="int">
      delete from carts
      where carts_id=#{carts_id}
-  </delete>
+   </delete>
 
-  <!-- 수량 수정 -->
-  <update id="update" parameterType="carts">
+   <!-- 수량 수정 -->
+   <update id="update" parameterType="carts">
       update carts 
          set carts_quantity=#{ carts_quantity }
        where carts_id=#{ carts_id }
-  </update>
+   </update>
 
 </mapper>
 

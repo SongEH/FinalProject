@@ -80,21 +80,35 @@ public class CartsController {
 
 	@RequestMapping("insert.do")
 	public String insert(
-			@RequestParam("menu_id") int menuId,
-			@RequestParam("shop_id") int shopId,
-			@RequestParam("carts_quantity") int quantity) {
+			@RequestParam("menu_id") int menu_id,
+			@RequestParam("shop_id") int shop_id,
+			@RequestParam("carts_quantity") int carts_quantity) {
 
-		CartsVo vo = new CartsVo();
-		vo.setCarts_quantity(quantity);
-		vo.setMember_id(98); // 현재 로그인한 사용자 id 가져오기
-		vo.setMenu_id(menuId);
-		vo.setShop_id(shopId); // 현재 선택한 가게 id 가져오기
+		int memberId = 98;
 
-		System.out.println("Menu ID: " + vo.getMenu_id());
-		System.out.println("Shop ID: " + vo.getShop_id());
-		System.out.println("Quantity: " + vo.getCarts_quantity());
+		CartsVo existingItem = carts_mapper.findByMenuId(memberId, shop_id, menu_id);
 
-		carts_mapper.insert(vo);
+		if (existingItem != null) {
+			
+			// 동일 메뉴가 장바구니에 존재하면 수량만 업데이트
+			existingItem.setCarts_quantity(existingItem.getCarts_quantity() + carts_quantity);
+
+			carts_mapper.update(existingItem.getCarts_id(), existingItem.getCarts_quantity());
+
+		} else {
+			CartsVo vo = new CartsVo();
+			vo.setCarts_quantity(carts_quantity);
+			vo.setMember_id(memberId); // 현재 로그인한 사용자 id 가져오기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			vo.setMenu_id(menu_id);
+			vo.setShop_id(shop_id); // 현재 선택한 가게 id 가져오기 !!!!!!!!!!!!!!!!!!!!!
+	
+			System.out.println("Menu ID: " + vo.getMenu_id());
+			System.out.println("Shop ID: " + vo.getShop_id());
+			System.out.println("Quantity: " + vo.getCarts_quantity());
+	
+			carts_mapper.insert(vo);
+		}
+		
 
 		return "redirect:list.do";
 	}
@@ -105,7 +119,7 @@ public class CartsController {
 	public String modify(int carts_id, int carts_quantity, RedirectAttributes ra) {
 
 		System.out.println("수정!!!!" + carts_id + " " + carts_quantity);
-		
+
 		int res = carts_mapper.update(carts_id, carts_quantity);
 
 		// ra.addAttribute("page", page);

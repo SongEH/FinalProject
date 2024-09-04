@@ -55,7 +55,6 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>가게명</th>
                 <th>이미지</th>
                 <th>메뉴명</th>
                 <th>메뉴개수</th>
@@ -65,134 +64,147 @@
                 <th></th>
               </tr>
             </thead>
+
+
             <tbody id="cartItems">
+              <!-- 현재 상점 ID를 저장할 변수 초기화 -->
+              <c:set var="currentShopId" value="" />
+
+              <!-- 항목 리스트를 반복 처리 -->
               <c:forEach var="vo" items="${list}">
+                <!-- 상점 ID가 변경되었는지 확인 -->
+                <c:if test="${currentShopId != vo.shop_id}">
+                  <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
+                  <c:set var="currentShopId" value="${vo.shop_id}" />
+
+                  <!-- 상점 ID를 헤더로 표시 (여기서는 상점 ID를 사용하고 있습니다) -->
+                  <tr>
+                    <th colspan="7" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
+                      가게명 : ${vo.shop_name}
+                      <!-- 여기서는 상점 ID를 출력하고 있습니다 -->
+                    </th>
+                  </tr>
+                </c:if>
+
+                <!-- 상점 항목 정보를 출력 -->
                 <tr>
-                  <td id="shop_name">${vo.shop_name}</td>
-                  <td id="cart_menuimg">
+                  <td class="cart_menuimg">
                     <div>
                       <img src="../resources/images/${vo.menu_img}" class="img-fluid rounded" alt="..." width="150px">
                     </div>
                   </td>
-                  <td id="cart_menuname">${vo.menu_name}</td>
+                  <td class="cart_menuname">${vo.menu_name}</td>
 
-                  <td id="cart_quantity">
-                    <input type="number" class="form-control" id="quantity_${vo.carts_id}" value="${vo.carts_quantity}"
-                      min="1" max="50" disabled>
+                  <td class="cart_quantity">
+                    <input type="number" class="form-control quantity-input" id="quantity_${vo.carts_id}"
+                      value="${vo.carts_quantity}" min="1" max="50" disabled>
                   </td>
 
-                  <td id="cart_price">${vo.menu_price}</td>
-                  <td id="cart_total_price">
+                  <td class="cart_price">${vo.menu_price}</td>
+                  <td class="cart_total_price">
                     ${vo.menu_price * vo.carts_quantity}
                   </td>
-                  <td id="cart_cdate">${vo.carts_cdate}</td>
+                  <td class="cart_cdate">${vo.carts_cdate}</td>
 
                   <td>
                     <input class="btn btn-danger" type="button" value="삭제" onclick="delete_carts('${vo.carts_id}');">
-
-                    <!-- Trigger edit mode on quantity input field -->
                     <input class="btn btn-info" type="button" id="edit_${vo.carts_id}" value="수정"
                       onclick="editQuantity('${vo.carts_id}');">
-
-                    <!-- Save button is shown instead of modify button -->
                     <button class="btn btn-success" id="save_${vo.carts_id}" onclick="saveQuantity('${vo.carts_id}')"
                       style="display: none;">저장</button>
                   </td>
                 </tr>
-
               </c:forEach>
             </tbody>
 
+
+
             <tfoot>
               <tr>
-                <td colspan="4" class="text-right"><strong>총 개수:</strong></td>
+                <td colspan="3" class="text-right"><strong>총 개수:</strong></td>
                 <td id="total_quantity">0</td>
                 <td colspan="2" class="text-right"><strong>총 가격:</strong></td>
                 <td id="total_price">0</td>
               </tr>
             </tfoot>
-          </table>
 
-          <script>
-            // DOMContentLoaded 이벤트 안에서 자바스크립트 정의
-            document.addEventListener('DOMContentLoaded', function () {
-
-              // 통화 포맷 설정 (원화 기준으로 설정)
-              const currencyFormatter = new Intl.NumberFormat('ko-KR', {
-                style: 'currency',
-                currency: 'KRW',
-                minimumFractionDigits: 0 // 소수점 없이 정수로 표시
-              });
-
-              function updateTotals() {
-                let totalQuantity = 0;
-                let totalPrice = 0;
-
-                // 각 행을 순회하며 총 개수와 총 가격 계산
-                document.querySelectorAll('#cartItems tr').forEach(row => {
-                  const quantity = parseInt(row.querySelector('input[type="number"]').value) || 0;
-                  const price = parseFloat(row.querySelector('#cart_price').textContent) || 0;
-                  const total = quantity * price;
-
-                  totalQuantity += quantity;
-                  totalPrice += total;
-
-                  row.querySelector('#cart_total_price').textContent = currencyFormatter.format(total);
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                const currencyFormatter = new Intl.NumberFormat('ko-KR', {
+                  style: 'currency',
+                  currency: 'KRW',
+                  minimumFractionDigits: 0
                 });
 
-                // 총 개수와 총 가격 업데이트
-                document.getElementById('total_quantity').textContent = totalQuantity;
-                document.getElementById('total_price').textContent = currencyFormatter.format(totalPrice);
-              }
+                function updateTotals() {
+                  let totalQuantity = 0;
+                  let totalPrice = 0;
 
-              // 페이지 로드 시 총 합계 업데이트
-              updateTotals();
+                  // 각 행을 순회하며 총 개수와 총 가격 계산
+                  document.querySelectorAll('#cartItems tr').forEach(row => {
+                    const quantityInput = row.querySelector('.quantity-input');
+                    const priceElement = row.querySelector('.cart_price');
+                    const totalPriceElement = row.querySelector('.cart_total_price');
 
-              // 수정 버튼 클릭 시 호출되는 함수
-              window.editQuantity = function (id) {
-                const quantityInput = document.getElementById("quantity_" + id);
-                const saveButton = document.getElementById("save_" + id);
-                const editButton = document.getElementById("edit_" + id);
+                    if (quantityInput && priceElement && totalPriceElement) {
+                      const quantity = parseInt(quantityInput.value) || 0;
+                      const price = parseFloat(priceElement.textContent) || 0;
+                      const total = quantity * price;
 
-                if (quantityInput && saveButton) {
-                  quantityInput.disabled = false; // 수량 입력 필드 활성화
-                  saveButton.style.display = 'inline'; // 저장 버튼 표시
-                  editButton.style.display = 'none'; // 수정 버튼 숨김
-                }
-              };
+                      totalQuantity += quantity;
+                      totalPrice += total;
 
-              // 저장 버튼 클릭 시 호출되는 함수
-              window.saveQuantity = function (id) {
-                const quantityInput = document.getElementById("quantity_" + id);
-                const saveButton = document.getElementById("save_" + id);
-                const editButton = document.getElementById("edit_" + id);
-
-                if (quantityInput && saveButton) {
-                  const newQuantity = quantityInput.value;
-
-                  $.ajax({
-                    url: '/carts/modify.do', // 서버에서 수량을 처리할 URL
-                    type: 'POST',
-                    data: {
-                      carts_id: id,
-                      carts_quantity: newQuantity
-                    },
-                    success: function (response) {
-                      quantityInput.disabled = true; // 수량 입력 필드 비활성화
-                      saveButton.style.display = 'none'; // 저장 버튼 숨김
-                      editButton.style.display = 'inline'; // 수정 버튼 표시
-                      updateTotals(); // 총 개수와 총 가격 업데이트
-                    },
-
-                    error: function (xhr, status, error) {
-                      console.error(`Error updating quantity for ID ${id}: ${error}`);
+                      totalPriceElement.textContent = currencyFormatter.format(total);
                     }
-                  }); // end ajax
+                  });
 
+                  document.getElementById('total_quantity').textContent = totalQuantity;
+                  document.getElementById('total_price').textContent = currencyFormatter.format(totalPrice);
                 }
-              };
-            });
-          </script>
+
+                updateTotals();
+
+                window.editQuantity = function (id) {
+                  const quantityInput = document.getElementById("quantity_" + id);
+                  const saveButton = document.getElementById("save_" + id);
+                  const editButton = document.getElementById("edit_" + id);
+
+                  if (quantityInput && saveButton) {
+                    quantityInput.disabled = false;
+                    saveButton.style.display = 'inline';
+                    editButton.style.display = 'none';
+                  }
+                };
+
+                window.saveQuantity = function (id) {
+                  const quantityInput = document.getElementById("quantity_" + id);
+                  const saveButton = document.getElementById("save_" + id);
+                  const editButton = document.getElementById("edit_" + id);
+
+                  if (quantityInput && saveButton) {
+                    const newQuantity = quantityInput.value;
+
+                    $.ajax({
+                      url: '/carts/modify.do',
+                      type: 'POST',
+                      data: {
+                        carts_id: id,
+                        carts_quantity: newQuantity
+                      },
+                      success: function (response) {
+                        quantityInput.disabled = true;
+                        saveButton.style.display = 'none';
+                        editButton.style.display = 'inline';
+                        updateTotals();
+                      },
+                      error: function (xhr, status, error) {
+                        console.error(`Error updating quantity for ID ${id}: ${error}`);
+                      }
+                    });
+                  }
+                };
+              });
+            </script>
 
         </div>
       </div>

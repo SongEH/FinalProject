@@ -1,16 +1,26 @@
 package com.githrd.FinalProject.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.githrd.FinalProject.dao.RidersMapper;
+import com.githrd.FinalProject.service.KakaoMapService;
+import com.githrd.FinalProject.service.RidersService;
+import com.githrd.FinalProject.vo.AddrVo;
+import com.githrd.FinalProject.vo.OrderVo;
 import com.githrd.FinalProject.vo.RidersVo;
+import com.githrd.FinalProject.vo.ShopVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,6 +38,18 @@ public class RidersController {
 
 	@Autowired
 	RidersMapper ridersMapper;
+
+	@Autowired
+	private RidersService ridersService;
+
+	@Autowired
+	private KakaoMapService kakaoMapService;
+
+	@RequestMapping("main.do")
+	public String main() {
+
+		return "riders/riders_main";
+	}
 
 	// 회원 조회
 	@RequestMapping("list.do")
@@ -55,7 +77,7 @@ public class RidersController {
 	@RequestMapping("login_form.do")
 	public String login_form() {
 
-		return "redirect:list.do";
+		return "redirect:main.do";
 		// return "riders/riders_insert_form5";
 	}
 
@@ -68,20 +90,20 @@ public class RidersController {
 		if (user == null) {
 			ra.addAttribute("reason", "fail_id");
 
-			return "redirect:riders/list.do";
+			return "redirect:main.do";
 		}
 
 		if (user.getRiders_pwd().equals(riders_pwd) == false) {
 			ra.addAttribute("reason", "fail_pwd");
 			ra.addAttribute("riders_email", riders_email);
 
-			return "redirect:list.do";
+			return "redirect:main.do";
 		}
 
 		session.setAttribute("user", user);
 		session.setAttribute("isLoggedIn", true);
 
-		return "riders/riders_insert_form5";
+		return "riders/delivery";
 
 	}
 
@@ -91,7 +113,7 @@ public class RidersController {
 
 		session.removeAttribute("user");
 
-		return "redirect:list.do";
+		return "redirect:main.do";
 	}
 
 	@RequestMapping("mypage.do")
@@ -149,7 +171,150 @@ public class RidersController {
 		ridersMapper.delete(riders_id);
 		session.invalidate(); // 세션 무호화 -> 사용자가 탈퇴할 때 세션에 저장된 정보가 더이상 유효하지 않기에 세션을
 		// 무효화 시켜야 한다
-		return "redirect:../list.do";
+		return "redirect:../main.do";
+	}
+
+	// ======================================
+	// 라이더가 주문을 배차 받기
+	@PostMapping("/assign")
+	@ResponseBody
+	public Map<String, Object> assignOrder(
+			@RequestParam(value = "orders_id", required = true) String orderIdStr,
+			@RequestParam(value = "riders_id", required = true) String riderIdStr,
+			@RequestParam(value = "deliveries_method", required = true) String deliveries_method,
+			Model model) {
+
+		Map<String, Object> response = new HashMap<>();
+
+		// 입력 값이 비어있는지 확인
+		if (orderIdStr.isEmpty() || riderIdStr.isEmpty()) {
+			response.put("error", "Order ID 또는 Rider ID가 없습니다.");
+			return response;
+		}
+
+		try {
+			// String 값을 int로 변환
+			int orders_id = Integer.parseInt(orderIdStr);
+			int riders_id = Integer.parseInt(riderIdStr);
+
+			System.out.println("Parsed orders_id: " + orders_id + ", riders_id: " + riders_id);
+
+			// 주문 배차 로직 실행
+			boolean result = ridersService.assignOrderToRider(orders_id, riders_id, deliveries_method);
+			String resultMessage = result ? "주문을 받으셨습니다." : "주문을 받으실 수 없습니다";
+			response.put("resultMessage", resultMessage);
+			response.put("success", result);
+
+			System.out.println("Order assignment result: " + result);
+
+			// 주문 테이블 업테이트 실행
+			if (result) {
+				ridersService.updateOrderStatus(orders_id, "배차 완료");
+				System.out.println("Order status updated to '배차 완료'");
+			}
+
+		} catch (NumberFormatException e) {
+			response.put("error", "Order ID 또는 Rider ID가 잘못되었습니다.");
+			System.out.println("NumberFormatException occurred: " + e.getMessage());
+		}
+
+		return response;
+	}
+
+	// 라이더가 진행 중인 주문 리스트를 표시
+	@GetMapping("/progress")
+	public String getOrderProgress(Model model) {
+		// int riders_id = 1; // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID를 가져와야 함)
+		List<OrderVo> orders = ridersService.getOrdersByRiderAndStatus(1, "배차 완료");
+		if (orders == null || orders.isEmpty()) {
+			model.addAttribute("message", "현재 진행 중인 주문이 없습니다.");
+		} else {
+			model.addAttribute("orders", orders);
+		}
+		return "riders/orderProgress";
+	}
+
+	// 라이더가 주문을 픽업 완료
+	@PostMapping("/pickup")
+	public String pickupOrder(@RequestParam("orders_id") int orders_id, @RequestParam("riders_id") int riders_id) {
+		// 주문 상태를 '픽업 완료'로 변경
+		ridersService.updateOrderStatus(orders_id, "픽업 완료");
+		return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
+	}
+
+	// 라이더가 배달을 완료로 설정
+	@PostMapping("/completeDelivery")
+	public String completeDelivery(@RequestParam("orders_id") int orders_id,
+			@RequestParam("riders_id") int riders_id) {
+		// 주문 상태를 '배송 완료'로 변경
+		ridersService.updateOrderStatus(orders_id, "배송 완료");
+		return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
+	}
+
+	// 배달 경로를 표시하는 메서드
+	@GetMapping("/route")
+	public String showRoute(@RequestParam("orders_id") int orders_id, Model model) {
+		// Order 정보를 가져옴
+		OrderVo order = ridersService.getOrderById(orders_id);
+
+		// Addr 정보를 가져옴 (주소 정보)
+		AddrVo addr = ridersService.getAddrById(order.getAddr_id());
+
+		// Shop 정보를 가져옴 (가게 정보)
+		ShopVo shop = ridersService.getShopById(order.getShop_id());
+
+		try {
+			// 경로 계산을 위한 주소 정보 가져오기
+			String customerAddress = addr.getAddr_line1() + " " + addr.getAddr_line2(); // 주소 1, 2 결합
+			double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
+			double[] customerCoordinates = kakaoMapService.getCoordinates(customerAddress);
+
+			model.addAttribute("shopLat", shopCoordinates[0]);
+			model.addAttribute("shopLng", shopCoordinates[1]);
+			model.addAttribute("customerLat", customerCoordinates[0]);
+			model.addAttribute("customerLng", customerCoordinates[1]);
+		} catch (Exception e) {
+			model.addAttribute("error", "경로를 찾을 수 없습니다: " + e.getMessage());
+		}
+
+		return "route/showRoute";
+	}
+
+	// 라이더가 완료한 배달 내역을 표시
+	@GetMapping("/completed")
+	public String getCompletedDeliveries(Model model) {
+		// 라이더 ID를 고정값으로 설정 (로그인 시스템이 있다면 해당 라이더의 ID를 사용)
+		int riders_id = 1; // 예시로 1번 라이더로 설정
+
+		// 배달 완료된 주문 목록을 가져오기
+		List<OrderVo> completedOrders = ridersService.getCompletedOrdersByRider(riders_id);
+
+		// 주문 목록을 모델에 추가하여 JSP에서 사용 가능하게 설정
+		model.addAttribute("completedOrders", completedOrders);
+
+		return "riders/deliveryCompleted"; // 배달 완료된 주문을 표시하는 JSP로 이동
+	}
+
+	// index에서 delivery.jsp로 이어지도록
+	@GetMapping("/delivery")
+	public String showDeliveryPage() {
+		return "riders/delivery";
+	}
+
+	// 배차 대기 중인 주문 리스트
+	@GetMapping("/waiting-orders")
+	public String getWaitingOrders(Model model) {
+		List<OrderVo> orders = ridersService.getOrdersByStatus("배차 대기");
+
+		if (orders == null || orders.isEmpty()) {
+			// 오류가 발생한 경우를 처리하거나 빈 목록을 반환
+			model.addAttribute("error", "현재 배차 대기 중인 주문이 없습니다.");
+			return "riders/waitingOrders";
+		}
+
+		model.addAttribute("orders", orders);
+		model.addAttribute("riders_id", 1); // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID가 필요)
+		return "riders/waitingOrders";
 	}
 
 }

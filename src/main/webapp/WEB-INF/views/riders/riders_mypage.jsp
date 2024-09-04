@@ -136,7 +136,7 @@ pageEncoding="UTF-8"%>
             <input
             type="button"
             value="메인이동"
-            onclick="location.href='list.do'"
+            onclick="location.href='main.do'"
           />
 
             <input

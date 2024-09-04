@@ -5,54 +5,115 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.githrd.FinalProject.dao.RidersMapper">
 
-  <!-- 전체조회 -->
-  <select id="selectList" resultType="riders">
+      <!-- 전체조회 -->
+      <select id="selectList" resultType="riders">
        select * from riders order by riders_id
-  </select>
+      </select>
 
 
-  <!-- mem_idx 이용해서  MemberVo  구하기 -->
-  <select id="selectOneFromId" parameterType="int" resultType="riders">
+      <!-- mem_idx 이용해서  MemberVo  구하기 -->
+      <select id="selectOneFromId" parameterType="int" resultType="riders">
        select * from riders where riders_id=#{riders_id}
-  </select>
+      </select>
 
-  <!-- mem_id 이용해서  MemberVo  구하기 -->
-  <select id="selectOneFromEmail" parameterType="String" resultType="riders">
+      <!-- mem_id 이용해서  MemberVo  구하기 -->
+      <select id="selectOneFromEmail" parameterType="String" resultType="riders">
        select * from riders where riders_email=#{riders_email}
-  </select>
+      </select>
 
-  <!-- 추가  
+      <!-- 추가  
         #{mem_name} => vo.getMem_name()
    -->
-  <insert id="insert" parameterType="riders">
-      insert into riders (
-        riders_name,
-        riders_email,
-        riders_pwd,
-        riders_phone,
-        riders_region
-    ) values (
+      <insert id="insert" parameterType="riders">
+      INSERT INTO Riders
+      (
+      riders_name,
+      riders_phone,
+      riders_email,
+      riders_pwd,
+      riders_region
+      )
+      VALUES  (
         #{riders_name},
+        #{riders_phone},
         #{riders_email},
         #{riders_pwd},
-        #{riders_phone},
         #{riders_region}
     )
                                   
                                   
-  </insert>
+      </insert>
 
-  <!-- 삭제  -->
-  <delete id="delete" parameterType="int">
+      <!-- 삭제  -->
+      <delete id="delete" parameterType="int">
       delete from riders where riders_id=#{ riders_id }
-  </delete>
+      </delete>
 
-  <!-- 수정  -->
-  <update id="update" parameterType="riders">
+      <!-- 수정  -->
+      <update id="update" parameterType="riders">
       update riders 
-             set riders_pwd=#{ riders_pwd }, riders_phone=#{ riders_phone }, riders_region=#{ riders_region}
+             set riders_phone=#{ riders_phone }, riders_pwd=#{ riders_pwd }, riders_region=#{ riders_region}
       where riders_id=#{ riders_id }
-  </update>
+      </update>
+
+      <select id="getOrderById" parameterType="int" resultType="com.githrd.FinalProject.vo.OrderVo">
+        SELECT o.*, s.shop_name AS shopName, s.shop_status AS shopStatus
+        FROM Orders o
+        JOIN Shop s ON o.shop_id = s.shop_id
+        WHERE  o.orders_id = #{orders_id}
+      </select>
+
+      <update id="updateOrderStatus">
+        UPDATE Orders SET orders_status = #{status} WHERE orders_id = #{orders_id}
+      </update>
+
+      <insert id="assignDelivery">
+        INSERT INTO Deliveries (deliveries_id, raiders_id, deliveries_method, orders_id)
+        VALUES (null, #{raiders_id}, #{deliveries_method}, #{orders_id})
+      </insert>
+
+
+      <insert id="insertDeliveryHistory">
+        INSERT INTO Delivery_history (delivery_history_id, delivery_history_status, deliveries_id)
+        VALUES (null, #{status}, #{deliveries_id})
+      </insert>
+
+
+      <!-- Orders와 Shop을 조인하여 주문과 관련된 가게 정보를 가져옴 -->
+      <select id="findOrdersByStatus" parameterType="string" resultType="order">
+        SELECT o.*, s.shop_name AS shop_name, d.deliveries_method AS deliveries_method
+        FROM Orders o
+        JOIN Shop s ON o.shop_id = s.shop_id
+        LEFT JOIN Deliveries d ON o.orders_id = d.orders_id
+        WHERE o.orders_status = #{status}
+        ORDER BY orders_id
+      </select>
+
+      <select id="findOrdersByRiderAndStatus" parameterType="map" resultType="order">
+        SELECT o.*, s.shop_name AS shop_name, d.deliveries_method AS deliveries_method
+        FROM Orders o
+        JOIN Deliveries d ON o.orders_id = d.orders_id
+        JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+        JOIN Shop s ON o.shop_id = s.shop_id
+        WHERE d.raiders_id = #{raiders_id} AND dh.delivery_history_status = #{status}
+      </select>
+
+      <select id="getAddrById" parameterType="int" resultType="addr">
+        SELECT * FROM Addr WHERE addr_id = #{addr_id}
+      </select>
+
+      <select id="getShopById" parameterType="int" resultType="shopvo">
+        SELECT * FROM Shop WHERE shop_id = #{shop_id}
+      </select>
+
+      <select id="findCompletedOrdersByRider" parameterType="int" resultType="order">
+        SELECT * FROM Orders o
+        JOIN Deliveries d ON o.orders_id = d.orders_id
+        JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+        WHERE d.raiders_id = #{riderId} AND dh.delivery_history_status = '배송 완료'
+      </select>
+
+
 
 
 

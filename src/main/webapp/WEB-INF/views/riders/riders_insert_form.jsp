@@ -308,7 +308,7 @@ pageEncoding="UTF-8"%>
           </div>
         
           <div class="button-group">
-            <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/riders/list.do'">메인으로</button> 
+            <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">로그인 화면 으로</button> 
             <button type="button" class="btn btn-primary" onclick="send(this.form);">가입하기</button> 
           </div>
         </div>

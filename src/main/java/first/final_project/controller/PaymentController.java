@@ -2,27 +2,26 @@ package first.final_project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import first.final_project.service.PaymentService;
 import first.final_project.vo.PaymentRequest;
 
-@RestController
+@Controller
 @RequestMapping("/payments")
 public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
 
-    @RequestMapping("/pay")
+    @RequestMapping("/pay.do")
     public String pay() {
-
-        return "pay";
+        return "/order/pay";
     }
 
     public PaymentController(PaymentService paymentService) {
@@ -31,6 +30,7 @@ public class PaymentController {
 
     @PostMapping("/complete")
     public ResponseEntity<JsonNode> completePayment(@RequestBody PaymentRequest paymentRequest) {
+        System.out.println("---payments/complete 여기옴 ");
         try {
             // 액세스 토큰 발급 받기
             String accessToken = paymentService.getAccessToken();

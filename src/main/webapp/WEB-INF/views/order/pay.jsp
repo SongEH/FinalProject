@@ -79,9 +79,7 @@ pageEncoding="UTF-8"%>
     <title>Sample Payment</title>
   </head>
   <body>
-    <button id="kakaoPay" onclick="handlePayment('kakaopay', 'card')">
-      카카오페이 결제
-    </button>
+    <button id="kakaoPay" onclick="requestPay();">카카오페이 결제</button>
     <!-- 결제하기 버튼 생성 -->
   </body>
 </html>

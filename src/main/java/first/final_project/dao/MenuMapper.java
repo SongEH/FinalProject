@@ -16,11 +16,11 @@ public interface MenuMapper {
 
     int selectRowTotal();
 
-    MenuVo selectOne(int p_idx);
+    MenuVo selectOne(int menu_id);
 
     int insert(MenuVo vo);
 
-    int delete(int p_idx);
+    int delete(int menu_id);
 
     int updateFilename(MenuVo vo);
 

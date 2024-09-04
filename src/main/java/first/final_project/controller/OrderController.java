@@ -1,76 +1,113 @@
-// package first.final_project.controller;
+package first.final_project.controller;
 
-// import org.springframework.stereotype.Controller;
-// import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-// @Controller
-// public class OrderController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-//     // // private final IamportClient iamportClient;
+import first.final_project.dao.CartsMapper;
+import first.final_project.util.MyCommon;
+import first.final_project.util.Paging;
+import first.final_project.vo.CartsVo;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
-//     public Or_derController() {
-//     // // this.iamportClient = new IamportClient("REST_API_KEY", "REST_API_SECRET");
-//     // // }
+@Controller
+@RequestMapping("/order/")
+public class OrderController {
 
-//     // // private PayService paymentService = new PayService
+	@Autowired
+	CartsMapper carts_mapper;
 
-//     @RequestMapping("/order/find_addr")
-//     public String find_addr() {
+	@Autowired
+	HttpServletRequest request;
 
-//         return "order/pay";
-//     }
-// }
+	@Autowired
+	HttpSession session;
 
-// // @RequestMapping("order/pay_do")
-// // public String order_pay (String amount, String token, Model model) {
+	@Autowired
+	ServletContext application;
 
-// // model.addAttribute("amount", amount);
-// // model.addAttribute("token", token);
+	// /menu/list.do
+	// /menu/list.do?page=2
+	// @RequestMapping("list.do")
+	// public String list(@RequestParam(name = "page", defaultValue = "1") int
+	// nowPage,
+	// Model model) {
 
-// // return "order/pay_result";
-// // }
+	// List<CartsVo> list = carts_mapper.selectList();
 
-// // // // @RequestMapping("/order/pay_test.do/{imp_uid}")
-// // // @RequestMapping("/order/pay_test.do")
-// // // // @ResponseBody
-// // // public IamportResponse<Payment>
-// paymentByImpUid(@PathVariable("imp_uid")
-// // String imp_uid)
-// // // throws IamportResponseException, IOException {
-// // // return iamportClient.paymentByImpUid(imp_uid);
-// // // }
+	// // 전체 게시물수
+	// int rowTotal = carts_mapper.selectRowTotal();
 
-// // @ResponseBody
-// // @RequestMapping(value = "/verify_iamport/{imp_uid}", method =
-// // RequestMethod.POST)
-// // public IamportResponse<Payment> verifyIamportPOST(@PathVariable(value =
-// // "imp_uid") String imp_uid) throws IamportResponseException, IOException {
+	// System.out.println(rowTotal);
+	// System.out.println(list);
 
-// // return client.paymentByImpUid(imp_uid);
-// // }
+	// // 결과적으로 request binding
+	// model.addAttribute("list", list);
 
-// // @RequestMapping(value ="complete", method = RequestMethod.POST)
-// // @ResponseBody
-// // public int paymentComplete(String imp_uid, String merchant_uid,String
-// // totalPrice,HttpSession session
-// // ,@RequestBody OrderDTO orderDTO) throws Exception {
+	// return "carts/carts_list";
+	// }
 
-// // String token = payService.getToken();
+	// 주문대기 (주문 전)
+	@RequestMapping("pending_order.do")
+	public String insert(
+			@RequestParam("shop_id") int shop_id,  Model model) {
 
-// // // 결제 완료된 금액
-// // String amount = payService.paymentInfo(orderDTO.getImp_uid(), token);
+		int member_id = 98;
 
-// // int res = 1;
+		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회
 
-// // if (orderDTO.getTotalPrice() != Long.parseLong(amount)) {
-// // res = 0;
-// // // 결제 취소
-// // payService.payMentCancle(token, orderDTO.getImp_uid(), amount,"결제 금액 오류");
-// // return res;
-// // }
-// // orderService.insert_pay(orderDTO);
-// // return res;
+		// 리스트로 반환
+		List<CartsVo> list = carts_mapper.findPendingOrders(member_id, shop_id);
 
-// // }
+		System.out.println(list);
 
-// }
+		// request binding
+		model.addAttribute("list", list);
+
+		return "order/order_pending_list";
+	}
+
+	// // 수정
+	// // /carts/modify.do?carts_id=9&carts_quantity=5
+	// @PostMapping("modify.do")
+	// public String modify(int carts_id, int carts_quantity, RedirectAttributes ra)
+	// {
+
+	// System.out.println("수정!!!!" + carts_id + " " + carts_quantity);
+
+	// int res = carts_mapper.update(carts_id, carts_quantity);
+
+	// // ra.addAttribute("page", page);
+
+	// return "redirect:list.do";
+	// }
+
+	// // 삭제
+	// // /carts/delete.do?carts_id=5
+	// // /carts/delete.do?carts_id=5&page=2
+	// @RequestMapping("delete.do")
+	// public String delete(int carts_id, RedirectAttributes ra) {
+
+	// // CartsVo 정보 얻어온다
+	// CartsVo vo = carts_mapper.selectOne(carts_id);
+
+	// // DB delete
+	// int res = carts_mapper.delete(carts_id);
+
+	// // ra.addAttribute("page", page);
+
+	// return "redirect:list.do";
+
+	// }
+}
+

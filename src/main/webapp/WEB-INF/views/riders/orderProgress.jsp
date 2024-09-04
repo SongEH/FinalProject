@@ -19,7 +19,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             <div><strong>상태:</strong> ${order.orders_status}</div>
             <div><strong>배송 수단:</strong> ${order.deliveries_method}</div>
             <button
-              onclick="window.open('${pageContext.request.contextPath}/riders/route?orderId=${order.orders_id}', '경로보기', 'width=800,height=600');"
+              onclick="window.open('${pageContext.request.contextPath}/riders/route?orders_id=${order.orders_id}', '경로보기', 'width=800,height=600');"
             >
               경로 보기
             </button>

@@ -71,37 +71,7 @@
     <div class="container mx-auto p-5">
       <div class="bg-white border border-black">
         <div class="text-center font-bold p-4 border-b border-black">
-          <!-- 마이페이지 -->
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-expanded="false"
-            >
-              마이페이지
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="mypage.do">회원수정</a>
-              <a class="dropdown-item" href="#">지난배차</a>
-            </div>
-          </div>
-          <!-- 마이페이지 끝 -->
-
           배달 현황
-          <a href="logout.do"
-            ><button
-              class="btn btn-custom"
-              style="
-                background-color: #f0a8d0;
-                border-color: #f0a8d0;
-                color: #fff;
-              "
-            >
-              <p>${user.riders_name}</p>
-              로그아웃
-            </button></a
-          >
         </div>
         <div class="flex">
           <div class="w-1/3 text-center border-r border-black">

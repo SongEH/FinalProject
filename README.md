@@ -1,5 +1,5 @@
 # FinalProject
-글로벌 아이티 7e강의장 Final Project
+글로벌 아이티 7e강의장 Final Project!
 
 풀스택 프레임워크(자바,스프링)기반 데이터 융합SW개발자 과정 (7회차)
 2024.04.04 ~ 2024.10.07

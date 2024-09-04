@@ -8,7 +8,8 @@
 <body>
     <h2>배차 대기 중인 주문</h2>
 
-    <div id="result-message" class="alert alert-info" style="display:none;"></div>
+    <!-- 메시지를 표시할 영역 -->
+    <div id="result-message" class="alert" style="display:none;"></div>
 
     <c:forEach var="order" items="${orders}">
         <div class="order-box">
@@ -18,9 +19,9 @@
                 <div><strong>가격:</strong> ${order.orders_price}원</div>
                 <div><strong>요청사항:</strong> ${order.orders_srequest}</div>
             </div>
-            <form action="${pageContext.request.contextPath}/riders/assign" method="post">
+            <form action="${pageContext.request.contextPath}/riders/assign" method="post" onsubmit="return assignOrder(${order.orders_id}, ${raiders_id}, this);">
                 <input type="hidden" name="orders_id" value="${order.orders_id}" />
-                <input type="hidden" name="riders_id" value="${riders_id}" />
+                <input type="hidden" name="raiders_id" value="${raiders_id}" />
                 <label for="method-${order.orders_id}">배송 수단:</label>
                 <select id="method-${order.orders_id}" name="deliveries_method" required>
                     <option value="오토바이" ${order.deliveries_method == '오토바이' ? 'selected' : ''}>오토바이</option>
@@ -34,39 +35,40 @@
     </c:forEach>
 
     <script>
-        function assignOrder(orders_id, riders_id) {
-            console.log("assignOrder 호출됨");  // 이 부분 추가
-            const method = document.getElementById(`method-${order_id}`).value;
-            fetch('${pageContext.request.contextPath}/riders/assign', {
+        function assignOrder(orders_id, raiders_id, form) {
+            const method = document.getElementById(`method-${orders_id}`).value;
+            fetch(form.action, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: new URLSearchParams({
-                    'orders_id': orders_id,
-                    'riders_id': riders_id,
-                    'deliveries_method': deliveries_method
-                })
+                body: new URLSearchParams(new FormData(form))
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                alert(data.resultMessage); // 메시지를 alert로 표시
+                // 메시지 표시 영역을 업데이트
+                const messageDiv = document.getElementById('result-message');
+                messageDiv.innerText = data.resultMessage;
+                messageDiv.classList.remove('alert-success', 'alert-danger');
+                
                 if (data.success) {
-                    loadPage('${pageContext.request.contextPath}/riders/progress'); // 배차 완료 후 진행 상황 페이지로 이동
+                    messageDiv.classList.add('alert-success');
+                    if (data.redirectUrl) {
+                        window.location.href = data.redirectUrl; // 리다이렉트
+                    }
+                } else {
+                    messageDiv.classList.add('alert-danger');
                 }
+
+                messageDiv.style.display = 'block'; // 메시지 표시
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('배차 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
             });
 
+            return false; // 폼이 실제로 제출되지 않도록 함
         }
-
 
         function loadPage(url) {
             fetch(url)

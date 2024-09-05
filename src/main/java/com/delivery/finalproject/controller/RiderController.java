@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.finalproject.service.KakaoMapService;
 import com.delivery.finalproject.service.RiderService;
@@ -68,7 +67,7 @@ public class RiderController {
             if (result) {
                 riderService.updateOrderStatus(orders_id, "배차 완료");
 
-                return "redirect:/riders/progress"; // 성공 시 진행 상황 페이지로 리다이렉트
+                return "redirect:/riders/delivery"; // 성공 시 진행 상황 페이지로 리다이렉트
                 // System.out.println("Order status updated to '배차 완료'");
             }
 
@@ -77,7 +76,7 @@ public class RiderController {
             // System.out.println("NumberFormatException occurred: " + e.getMessage());
         }
 
-        return "riders/waitingOrders";
+        return "riders/delivery";
     }
 
     // 라이더가 진행 중인 주문 리스트를 표시
@@ -93,20 +92,27 @@ public class RiderController {
         return "riders/orderProgress";
     }
 
-    // 라이더가 주문을 픽업 완료
+    // 픽업 완료 처리
     @PostMapping("/pickup")
-    public String pickupOrder(@RequestParam("orders_id") int orders_id, @RequestParam("raiders_id") int raiders_id) {
-        // 주문 상태를 '픽업 완료'로 변경
-        riderService.updateOrderStatus(orders_id, "픽업 완료");
+    public String pickupOrder(@RequestParam("orders_id") int orders_id) {
+        // 주문 상태를 '배달 중'으로 변경
+        riderService.updateOrderStatus(orders_id, "배달 중");
+
+        // 배달 이력 상태도 '배달 중'으로 업데이트
+        riderService.updateDeliveryHistory(orders_id, "배달 중");
+
         return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
     }
 
-    // 라이더가 배달을 완료로 설정
+    // 배달 완료 처리
     @PostMapping("/completeDelivery")
-    public String completeDelivery(@RequestParam("orders_id") int orders_id,
-            @RequestParam("riders_id") int raiders_id) {
-        // 주문 상태를 '배송 완료'로 변경
-        riderService.updateOrderStatus(orders_id, "배송 완료");
+    public String completeDelivery(@RequestParam("orders_id") int orders_id) {
+        // 주문 상태를 '배달 완료'로 변경
+        riderService.updateOrderStatus(orders_id, "배달 완료");
+
+        // 배달 이력 상태도 '배달 완료'로 업데이트
+        riderService.updateDeliveryHistory(orders_id, "배달 완료");
+
         return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
     }
 

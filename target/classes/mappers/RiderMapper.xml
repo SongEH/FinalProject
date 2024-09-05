@@ -33,24 +33,33 @@
 
     <!-- Orders와 Shop을 조인하여 주문과 관련된 가게 정보를 가져옴 -->
     <select id="findOrdersByStatus" parameterType="string" resultType="com.delivery.finalproject.vo.OrderVo">
-        SELECT o.*, s.shop_name AS shop_name, d.deliveries_method AS deliveries_method
+        SELECT o.*, s.shop_name AS shop_name, s.shop_addr AS shop_addr, 
+            d.deliveries_method AS deliveries_method, 
+            a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, 
+            m.member_nickname AS member_nickname, o.orders_drequest AS orders_drequest
         FROM Orders o
         JOIN Shop s ON o.shop_id = s.shop_id
         LEFT JOIN Deliveries d ON o.orders_id = d.orders_id
+        JOIN Addr a ON o.addr_id = a.addr_id
+        JOIN Member m ON a.member_id = m.member_id
         WHERE o.orders_status = #{status}
         ORDER BY orders_id
     </select>
 
     <select id="findOrdersByRiderAndStatus" parameterType="map" resultType="com.delivery.finalproject.vo.OrderVo">
-        SELECT o.*, d.deliveries_method AS deliveries_method
-        FROM Orders o 
+        SELECT o.*, d.deliveries_method AS deliveries_method, s.shop_name AS shop_name, 
+            s.shop_addr AS shop_addr, m.member_nickname AS member_nickname, 
+            a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, o.orders_drequest
+        FROM Orders o
         JOIN Deliveries d ON o.orders_id = d.orders_id 
         JOIN (
             SELECT deliveries_id, delivery_history_status, delivery_history_id
             FROM Delivery_history
-            WHERE delivery_history_status IN ('배차 완료', '조리중', '조리 완료', '픽업 대기', '배달중')
+            WHERE delivery_history_status IN ('배차 완료', '조리중', '조리 완료', '픽업 대기', '배달 중')
         ) dh ON d.deliveries_id = dh.deliveries_id 
         JOIN Shop s ON o.shop_id = s.shop_id 
+        JOIN Addr a ON o.addr_id = a.addr_id
+        JOIN Member m ON a.member_id = m.member_id
         WHERE d.raiders_id = #{raiders_id}
         ORDER BY o.orders_id;
     </select>
@@ -69,5 +78,10 @@
         JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
         WHERE d.raiders_id = #{riderId} AND dh.delivery_history_status = '배송 완료'
     </select>
+
+    <update id="updateDeliveryHistory">
+        UPDATE Delivery_history SET delivery_history_status = #{status}
+        WHERE deliveries_id = (SELECT deliveries_id FROM Deliveries WHERE orders_id = #{orders_id})
+    </update>
 
 </mapper>

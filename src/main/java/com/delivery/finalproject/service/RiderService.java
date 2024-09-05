@@ -77,4 +77,9 @@ public class RiderService {
         return riderMapper.findCompletedOrdersByRider(raiders_id);
     }
 
+    @Transactional
+    public void updateDeliveryHistory(int orders_id, String status) {
+        riderMapper.updateDeliveryHistory(orders_id, status);
+    }
+
 }

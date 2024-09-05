@@ -102,6 +102,10 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('content').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading page:', error);
+                    document.getElementById('content').innerHTML = '<p>페이지를 불러오는 중 오류가 발생했습니다.</p>';
                 });
         }
     </script>

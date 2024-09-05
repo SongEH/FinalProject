@@ -44,7 +44,7 @@ public class MemberController {
     // 회원가입 폼
     @RequestMapping("insert_form.do")
     public String insert_form() {
-        return "member/member_insert_form";
+        return "insert_form";
     }
 
     // 회원가입
@@ -58,7 +58,7 @@ public class MemberController {
     }
 
     // 아이디 중복 체크
-    @RequestMapping("check_id.do")
+    @RequestMapping("check_member_accountId.do")
     @ResponseBody
     public Map<String, Boolean> check_id(@RequestParam("member_accountId") String member_accountId) {
         MemberVo vo = memberMapper.selectOneFromId(member_accountId);
@@ -69,7 +69,7 @@ public class MemberController {
     }
 
     // 닉네임 중복 체크
-    @RequestMapping("check_nickname.do")
+    @RequestMapping("check_member_nickname.do")
     @ResponseBody
     public Map<String, Boolean> check_nickname(@RequestParam("member_nickname") String member_nickname) {
         MemberVo vo = memberMapper.selectOneFromNickname(member_nickname);
@@ -82,7 +82,7 @@ public class MemberController {
     // 로그인 폼
     @RequestMapping("login_form.do")
     public String login_form() {
-        return "member/member_login_form";
+        return "login_form";
     }
 
     // 로그인
@@ -107,10 +107,14 @@ public class MemberController {
         session.setAttribute("user", user);
         session.setAttribute("isLoggedIn", true);
 
-        if (url == null || url.isEmpty())
-            return "redirect:../main.do";
-        else
-            return "redirect:" + url;
+        // 절대 경로 사용
+        String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
+        return "redirect:" + redirectUrl;
+
+        // if (url == null || url.isEmpty())
+        // return "redirect:/main.do";
+        // else
+        // return "redirect:" + url;
     }
 
     // 로그아웃

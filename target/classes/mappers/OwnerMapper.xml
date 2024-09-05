@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             where owner_id=#{owner_id}
     </update>
 
-    <delete id="delete" parameterType="owner">
+    <delete id="delete" parameterType="int">
         delete from owner where owner_id=#{owner_id}
     </delete>
 

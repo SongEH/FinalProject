@@ -8,7 +8,7 @@ public class AddrVo {
     int addr_id;
     int member_id;
     String addr_zipcode;
-    String adrr_line1;
+    String addr_line1;
     String addr_line2;
     String addr_name;
 
@@ -36,12 +36,12 @@ public class AddrVo {
         this.addr_zipcode = addr_zipcode;
     }
 
-    public String getAdrr_line1() {
-        return adrr_line1;
+    public String getAddr_line1() {
+        return addr_line1;
     }
 
-    public void setAdrr_line1(String adrr_line1) {
-        this.adrr_line1 = adrr_line1;
+    public void setAddr_line1(String addr_line1) {
+        this.addr_line1 = addr_line1;
     }
 
     public String getAddr_line2() {

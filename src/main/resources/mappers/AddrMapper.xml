@@ -6,26 +6,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="first.final_project.dao.AddrMapper">
 
     <select id="selectList" resultType="addr">
-        select * from addr order by addr_id
+        select * from addr where member_id=#{member_id} order by addr_id
     </select>
 
     <select id="selectOneFromIdx" parameterType="int" resultType="addr">
-        select * from addr where addr_id = #{addr_id} order by addr_id
+        select * from addr where addr_id = #{addr_id} 
     </select>
 
     <insert id="insert" parameterType="addr">
         insert into addr(
-            `addr_zipcode`,`addr_line1`,`addr_line2`,`addr_name`
+            `member_id`,`addr_zipcode`,`addr_line1`,`addr_line2`,`addr_name`
         )values(
-            #{addr_zipcode},#{addr_line1},#{addr_line2},#{addr_name}
+            #{member_id},#{addr_zipcode},#{addr_line1},#{addr_line2},#{addr_name}
         )
     </insert>
 
     <update id="update" parameterType="addr">
-        update addr set addr_zipcode=#{addr_zipcode},addr_line1=#{addr_line1}, addr_line2=#{addr_line2},addr_name=#{addr_name}
+        update addr set addr_zipcode=#{addr_zipcode},addr_line1=#{addr_line1}, addr_line2=#{addr_line2},addr_name=#{addr_name} where addr_id=#{addr_id} and member_id=#{member_id}
     </update>
 
-    <delete id="delete" parameterType="addr">
+    <delete id="delete" parameterType="int">
         delete from addr where addr_id=#{addr_id}
     </delete>
 

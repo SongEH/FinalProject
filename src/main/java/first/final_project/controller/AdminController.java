@@ -41,7 +41,7 @@ public class AdminController {
     @RequestMapping("login_form.do")
     public String login_form() {
 
-        return "admin/admin_login_form";
+        return "login_form";
     }
 
     // 로그인

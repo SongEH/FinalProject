@@ -33,7 +33,7 @@ public class OwnerController {
     // 사장 회원가입
     @RequestMapping("insert_form.do")
     public String insert_form() {
-        return "owner/owner_insert_form";
+        return "insert_form";
     }
 
     // 사장 회원가입
@@ -44,7 +44,7 @@ public class OwnerController {
     }
 
     // 아이디 중복 체크
-    @RequestMapping("check_id.do")
+    @RequestMapping("check_owner_accountId.do")
     @ResponseBody
     public Map<String, Boolean> check_id(@RequestParam("owner_accountId") String owner_accountId) {
         OwnerVo vo = ownerMapper.selectOneFromId(owner_accountId);
@@ -57,7 +57,7 @@ public class OwnerController {
     // 로그인 폼
     @RequestMapping("login_form.do")
     public String login_form() {
-        return "owner/owner_login_form";
+        return "login_form";
     }
 
     // 로그인

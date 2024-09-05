@@ -1,50 +1,67 @@
 package first.final_project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import first.final_project.service.PaymentService;
-import first.final_project.vo.PaymentRequest;
 
 @Controller
-@RequestMapping("/payments")
+@RequestMapping("/api/payment")
 public class PaymentController {
-
     @Autowired
-    private PaymentService paymentService;
-
-    @RequestMapping("/pay.do")
-    public String pay() {
-        return "/order/pay";
-    }
+    private final PaymentService paymentService;
 
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
 
-    @PostMapping("/complete")
-    public ResponseEntity<JsonNode> completePayment(@RequestBody PaymentRequest paymentRequest) {
-        System.out.println("---payments/complete 여기옴 ");
+    @RequestMapping("/jsp")
+    public String home() {
+        return "order/pay";
+    }
+
+    @GetMapping("/token")
+    public String getAccessToken() {
         try {
-            // 액세스 토큰 발급 받기
-            String accessToken = paymentService.getAccessToken();
-
-            // imp_uid로 포트원 서버에서 결제 정보 조회
-            JsonNode paymentData = paymentService.getPaymentData(paymentRequest.getImp_uid(), accessToken);
-
-            // 추가 처리 로직
-            // 예: 결제 금액 확인, 주문 상태 업데이트 등
-
-            return ResponseEntity.ok(paymentData);
+            return paymentService.getAccessToken();
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(null);
+            return "Error fetching access token: " + e.getMessage();
         }
     }
 
+    @GetMapping("/data/{impUid}")
+    @ResponseBody
+    public String getPaymentData(@PathVariable String impUid) {
+        System.out.println("도착");
+        System.out.println(impUid);
+
+        try {
+            // accessToken 발급 받기
+            String accessToken = paymentService.getAccessToken();
+            System.out.println("AccessToken: " + accessToken);
+            if (accessToken == null || accessToken.isEmpty()) {
+                System.out.println("AccessToken이 유효하지 않습니다.");
+                return "error/error_page";
+            }
+
+            // 결제 데이터 가져오기
+            JsonNode paymentData = paymentService.getPaymentData(impUid, accessToken);
+            System.out.println("PaymentData: " + paymentData);
+            if (paymentData == null) {
+                System.out.println("결제 데이터가 없습니다.");
+                return "error/error_page";
+            }
+
+            return paymentData.toString();
+        } catch (Exception e) {
+            e.printStackTrace(); // 예외의 스택 트레이스를 콘솔에 출력
+            return "error/error_page";
+        }
+    }
 }

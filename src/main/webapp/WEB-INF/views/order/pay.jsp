@@ -26,44 +26,40 @@ pageEncoding="UTF-8"%>
         // 가맹점 식별코드
         let IMP = window.IMP;
         IMP.init("imp51327214");
-
         IMP.request_pay(
           {
             pg: "kakaopay", // PG사명 단일 문자열로 변경
-            orders_payment: "card", // 결제 방법
+            pay_method: "card", // 결제 방법
             merchant_uid: "order_" + new Date().getTime(), // 고유한 주문번호 생성
-            order_name: "당근 10kg", // 상품 명
-            orders_price: 200, // 금액
+            name: "호박 10kg", // 상품 명
+            amount: 200, // 금액
             // buyer_email: "gildong@gmail.com",            // 이메일 주소
-            member_name: "홍길동", // 회원 이름
-            member_phone: "010-4242-4242", // 회원 번호
-            addr_line1: "서울특별시 강남구 신사동", // 회원 주소
-            addr_line2: "신사로 14길 8로", // 회원 상세 주소
-            orders_srequest: "맛있게해주세요", //가게 요청 사항
-            orders_drequest: "문 앞에 두고 초인종", //배달 요청 사항
-            // buyer_postcode: "01181",
-            orders_id: "1",
+            buyer_name: "홍길동", // 회원 이름
+            buyer_tel: "010-4242-4242", // 회원 번호
+            buyer_addr: "서울특별시 강남구 신사동", // 회원 주소
+            // addr_line2: "신사로 14길 8로", // 회원 상세 주소
+            // orders_srequest: "맛있게해주세요", //가게 요청 사항
+            // orders_drequest: "문 앞에 두고 초인종", //배달 요청 사항
+            // // buyer_postcode: "01181",
+            // orders_id: "1",
           },
           function (rsp) {
             // callback
             if (rsp.success) {
               // 결제 성공 시 서버로 데이터 전송
               $.ajax({
-                url: "/payments/complete", // 서버의 결제 정보를 받는 endpoint
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({
+                url: "/api/payment/data/" + rsp.imp_uid, // 서버의 결제 정보를 받는 endpoint
+                method: "GET",
+                data: {
                   imp_uid: rsp.imp_uid,
                   merchant_uid: rsp.merchant_uid,
-                }),
+                },
                 success: function (response) {
                   // 서버 결제 API 성공 시 로직
-                  console.log(response);
                   alert("결제가 성공적으로 완료되었습니다.");
                 },
                 error: function (error) {
                   // 서버 결제 API 실패 시 로직
-                  console.error(error);
                   alert("서버와의 통신에 실패했습니다.");
                 },
               });

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class PaymentService {
 
@@ -21,19 +23,32 @@ public class PaymentService {
     @Value("${imp.api.secretkey}")
     private String secretKey;
 
-    private final String IMP_KEY = apiKey;
-    private final String IMP_SECRET = secretKey;
+    private String IMP_KEY;
+    private String IMP_SECRET;
 
+    @PostConstruct
+    public void init() {
+        this.IMP_KEY = apiKey;
+        this.IMP_SECRET = secretKey;
+    }
+
+    // Access Token 가져오는 메서드
     public String getAccessToken() throws Exception {
+        // HTTP 클라이언트 생성
         try (CloseableHttpClient client = HttpClients.createDefault()) {
+            // HTTP POST 요청 생성
             HttpPost httpPost = new HttpPost("https://api.iamport.kr/users/getToken");
+            // HTTP POST 요청시 content type 설정 (JSON으로 받기)
             httpPost.setHeader("Content-Type", "application/json");
-
+            // 데이터 형식은 json
+            System.out.println(IMP_KEY);
+            System.out.println(IMP_SECRET);
             String json = "{\"imp_key\":\"" + IMP_KEY + "\",\"imp_secret\":\"" + IMP_SECRET + "\"}";
             StringEntity entity = new StringEntity(json);
             httpPost.setEntity(entity);
 
             try (CloseableHttpResponse response = client.execute(httpPost)) {
+                // JSON데이터를 JAVA로 변환
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(response.getEntity().getContent());
                 return node.get("response").get("access_token").asText();
@@ -41,6 +56,7 @@ public class PaymentService {
         }
     }
 
+    // 결제 데이터 조회 메서드
     public JsonNode getPaymentData(String impUid, String accessToken) throws Exception {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet("https://api.iamport.kr/payments/" + impUid);
@@ -52,4 +68,29 @@ public class PaymentService {
             }
         }
     }
+
+    // // 결제 데이터 검증 ( 고민되는 부분 영역)
+    // public void verifyPayment(String merchantUid, JsonNode payment) throws
+    // Exception {
+    // Order order = orderService.findById(merchantUid);
+
+    // if (order != null && order.getAmount() == payment.get("amount").asInt()) {
+    // switch (payment.get("status").asText()) {
+    // case "ready":
+    // // 가상 계좌 발급 시 처리 로직
+    // System.out.println("가상 계좌 발급 완료");
+    // break;
+    // case "paid":
+    // // 결제 완료 시 처리 로직
+    // System.out.println("결제 완료");
+    // break;
+    // default:
+    // System.out.println("알 수 없는 결제 상태: " + payment.get("status").asText());
+    // break;
+    // }
+    // } else {
+    // // 결제 금액 불일치 시 처리 (위조/변조 시도 의심)
+    // throw new Exception("결제 금액 불일치: 위조/변조 시도 의심");
+    // }
+    // }
 }

@@ -78,20 +78,6 @@ pageEncoding="UTF-8"%>
     </style>
 
     <script type="text/javascript">
-      function updateRidersRegion() {
-        let selectedRegions = [];
-        $("input[name='riders_region']:checked").each(function () {
-          selectedRegions.push($(this).val());
-        });
-        let riders_region = selectedRegions.join(",");
-        $("input[name='riders_region_hidden']").val(riders_region);
-      }
-
-      $("form").submit(function (event) {
-        updateRidersRegion();
-      });
-
-      // 전화번호 포맷팅 함수
       function formatPhoneNumber(input) {
         let riders_phone = input.value.replace(/\D/g, ""); // 숫자만 남기기
         if (riders_phone.length > 11) {
@@ -108,6 +94,20 @@ pageEncoding="UTF-8"%>
           input.value = riders_phone;
         }
       }
+
+      function updateRidersRegion() {
+        let selectedRegions = [];
+        $("input[name='riders_region']:checked").each(function () {
+          selectedRegions.push($(this).val());
+        });
+        let riders_region = selectedRegions.join(",");
+        $("input[name='riders_region_hidden']").val(riders_region);
+      }
+
+      $("form").submit(function (event) {
+        updateRidersRegion();
+      });
+
       $(document).ready(function () {
         let regions = "${vo.riders_region}".split(",");
         regions.forEach(function (region) {

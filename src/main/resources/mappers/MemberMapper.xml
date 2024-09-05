@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.MemberMapper">
+
+    <!-- 전체조회 -->
+    <select id="selectList" resultType="member">
+       select * from member order by member_id
+    </select>
+
+    <!--회원 일련번호 이용해서 MemberVo 구하기-->
+    <select id="selectOneFromIdx" parameterType="int" resultType="member">
+        select * from member where member_id=#{member_id}
+    </select>
+
+    <!--회원 아이디를 이용해서 MemberVo 구하기 -->
+    <select id="selectOneFromId" parameterType="String" resultType="member">
+        select * from member where member_accountId=#{member_accountId}
+    </select>
+
+    <!--회원 닉네임을 이용해서 MemberVo 구하기 -->
+    <select id="selectOneFromNickname" parameterType="String" resultType="member">
+    select * from member where member_nickname=#{member_nickname}
+    </select>
+
+    <!--추가 등록 -->
+    <insert id="insert" parameterType="member">
+        insert into member(`member_name`, 
+                    `member_nickname`, 
+                    `member_accountId`, 
+                    `member_pwd`, 
+                    `member_email`, 
+                    `member_phone` 
+                    )values( 
+                    #{member_name}, 
+                    #{member_nickname}, 
+                    #{member_accountId}, 
+                    #{member_pwd}, 
+                    #{member_email}, 
+                    #{member_phone} 
+                    )
+    </insert>
+
+    <!--수정-->
+    <update id="update" parameterType="member">
+        update member set member_name=#{member_name}, member_nickname=#{member_nickname}, member_pwd=#{member_pwd}, member_email=#{member_email}, member_phone=#{member_phone}
+        where member_id=#{member_id}
+    </update>
+
+    <!--삭제-->
+    <delete id="delete" parameterType="int">
+        delete from member where member_id=#{member_id}
+    </delete>
+
+</mapper>

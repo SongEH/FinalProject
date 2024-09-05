@@ -1,4 +1,4 @@
-package com.delivery.finalproject;
+package first.final_project;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,0 +1,49 @@
+package first.final_project.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import first.final_project.vo.AddrVo;
+import first.final_project.vo.OrderVo;
+import first.final_project.vo.RiderVo;
+import first.final_project.vo.ShopVo;
+
+@Mapper
+public interface RidersMapper {
+
+    List<RiderVo> selectList();
+
+    RiderVo selectOneFromId(int riders_id); // mem_idx
+
+    RiderVo selectOneFromEmail(String riders_email); // mem_id
+
+    int insert(RiderVo vo);
+
+    int update(RiderVo vo);
+
+    int delete(int riders_id);
+
+    // =======
+    OrderVo getOrderById(int orders_id);
+
+    void updateOrderStatus(@Param("orders_id") int orders_id, @Param("status") String status);
+
+    int assignDelivery(@Param("") int riders_id, @Param("deliveries_method") String deliveries_method,
+            @Param("orders_id") int orders_id);
+
+    int insertDeliveryHistory(@Param("status") String status, @Param("deliveries_id") int deliveries_id);
+
+    List<OrderVo> findOrdersByStatus(@Param("status") String status);
+
+    List<OrderVo> findOrdersByRiderAndStatus(Map<String, Object> params);
+
+    AddrVo getAddrById(@Param("addr_id") int addr_id);
+
+    ShopVo getShopById(@Param("shop_id") int shop_id);
+
+    // 라이더가 완료한 배달 내역 가져오기
+    List<OrderVo> findCompletedOrdersByRider(@Param("riders_id") int riders_id);
+}

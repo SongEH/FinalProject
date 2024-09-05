@@ -33,6 +33,8 @@ public interface RiderMapper {
 
     void updateOrderStatus(@Param("orders_id") int orders_id, @Param("status") String status);
 
+    void updateDeliveryHistory(@Param("orders_id") int orders_id, @Param("status") String status);
+
     int assignDelivery(DeliveriesVo deliveriesVo);
 
     int insertDeliveryHistory(@Param("status") String status, @Param("deliveries_id") int deliveries_id);

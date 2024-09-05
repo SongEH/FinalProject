@@ -97,7 +97,7 @@ public class RiderController {
             ra.addAttribute("reason", "fail_pwd");
             ra.addAttribute("riders_email", riders_email);
 
-            return "redirect:/main.do";
+            return "redirect:main.do";
         }
 
         session.setAttribute("user", user);

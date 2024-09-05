@@ -91,12 +91,32 @@ pageEncoding="UTF-8"%>
         updateRidersRegion();
       });
 
-      // $(document).ready(function() {
-      //   let regions = "${vo.riders_region}".split(",");
-      //   regions.forEach(function(region) {
-      //     $("input[name='riders_region'][value='" + region + "']").prop("checked", true);
-      //   });
-      // });
+      // 전화번호 포맷팅 함수
+      function formatPhoneNumber(input) {
+        let riders_phone = input.value.replace(/\D/g, ""); // 숫자만 남기기
+        if (riders_phone.length > 11) {
+          riders_phone = riders_phone.slice(0, 10); // 10자리까지만
+        }
+        if (riders_phone.length > 6) {
+          input.value = riders_phone.replace(
+            /(\d{3})(\d{4})(\d{4})/,
+            "$1-$2-$3"
+          );
+        } else if (riders_phone.length > 3) {
+          input.value = riders_phone.replace(/(\d{3})(\d{0,3})/, "$1-$2");
+        } else {
+          input.value = riders_phone;
+        }
+      }
+      $(document).ready(function () {
+        let regions = "${vo.riders_region}".split(",");
+        regions.forEach(function (region) {
+          $("input[name='riders_region'][value='" + region + "']").prop(
+            "checked",
+            true
+          );
+        });
+      });
     </script>
   </head>
   <body>
@@ -148,6 +168,7 @@ pageEncoding="UTF-8"%>
             type="text"
             name="riders_phone"
             value="${vo.riders_phone}"
+            oninput="formatPhoneNumber(this);"
           />
         </div>
 

@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
 import first.final_project.dao.OrderMapper;
+import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
 import first.final_project.vo.OrderVo;
@@ -26,6 +28,9 @@ public class OrderController {
 
 	@Autowired
 	CartsMapper carts_mapper;
+
+	@Autowired
+	AddrMapper addr_mapper;
 
 	@Autowired
 	HttpServletRequest request;
@@ -59,8 +64,7 @@ public class OrderController {
 
 	// 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
-	public String insert(
-			@RequestParam("shop_id") int shop_id, Model model) {
+	public String insert(int shop_id, String shop_name, Model model) {
 
 		int member_id = 98;
 
@@ -73,6 +77,16 @@ public class OrderController {
 		// request binding
 		model.addAttribute("list", list);
 		model.addAttribute("user", user);
+		model.addAttribute("shop_id", shop_id);
+		
+		model.addAttribute("shop_name", shop_name);
+
+		// 주소 처리 
+		// 1. 현재 로그인한 사용자의 주소목록을 가져옴 
+		List<AddrVo> addr_list = addr_mapper.selectList(user.getMember_id());
+		model.addAttribute("addr_list", addr_list);
+
+		// 2. 등록된 주소 이외의 추가 주소정보 등록 
 
 		return "order/order_pending_list";
 	}

@@ -107,6 +107,7 @@ public class MemberController {
         session.setAttribute("user", user);
         session.setAttribute("isLoggedIn", true);
 
+        
         // 절대 경로 사용
         String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
         return "redirect:" + redirectUrl;

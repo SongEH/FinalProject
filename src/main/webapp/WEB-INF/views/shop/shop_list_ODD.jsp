@@ -15,16 +15,12 @@
       /* *{
         border: 1px solid grey
       } */
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f7f7f7;
-      }
-      .container {
+      .container{
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 5%;
       }
       body {
         background-color: #f8f9fa;
@@ -45,6 +41,34 @@
       .price {
         float: right;
         font-weight: bold;
+      }
+    </style>
+
+    <style>
+      body {
+        background-color: rgb(92, 161, 218);
+      }
+
+      @media (min-width: 768px) {
+        body {
+          background-color: rgb(235, 221, 203);
+        }
+      }
+
+      @media (min-width: 992px) {
+        body {
+          background-color: rgb(221, 162, 162);
+        }
+      }
+
+      @media (min-width: 1200px) {
+        body {
+          background-color: rgb(195, 228, 163);
+        }
+      }
+
+      .menu-item:hover{
+        cursor:pointer;
       }
     </style>
     <script>
@@ -86,7 +110,16 @@
     </script>
   </head>
   <body>
+    <!-- common import -->
+    <%@include file="../common.jsp" %>
 
+    <!-- header import -->
+    <%@include file="../header.jsp" %>
+
+      <!-- side bar import -->
+      <%@include file="../sidebar.jsp" %>
+
+    
     <div class="container">
       <main id="main">
       <div class="menu-section">

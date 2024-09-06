@@ -49,7 +49,11 @@ public class RidersService {
 
     @Transactional
     public synchronized boolean assignOrderToRider(int orders_id, int raiders_id, String deliveries_method) {
+<<<<<<< HEAD
         OrderVo order = riderMapper.getOrderById(orders_id);
+=======
+        OrderVo order = ridersMapper.getOrderById(orders_id);
+>>>>>>> riders-branch
         if (order == null || !order.getOrders_status().equals("배차 대기")) {
             return false; // 이미 수락된 주문이거나 존재하지 않는 경우
         }
@@ -64,7 +68,11 @@ public class RidersService {
         deliveriesVo.setOrders_id(orders_id);
 
         // 배차 정보 삽입 후, MyBatis가 자동 생성된 deliveries_id를 가져옴
+<<<<<<< HEAD
         riderMapper.assignDelivery(deliveriesVo);
+=======
+        ridersMapper.assignDelivery(deliveriesVo);
+>>>>>>> riders-branch
         int deliveries_id = deliveriesVo.getDeliveries_id();
 
         // 배차 이력 생성
@@ -74,7 +82,16 @@ public class RidersService {
     }
 
     public List<OrderVo> getCompletedOrdersByRider(int raiders_id) {
+<<<<<<< HEAD
         return riderMapper.findCompletedOrdersByRider(raiders_id);
+=======
+        return ridersMapper.findCompletedOrdersByRider(raiders_id);
+    }
+
+    @Transactional
+    public void updateDeliveryHistory(int orders_id, String status) {
+        ridersMapper.updateDeliveryHistory(orders_id, status);
+>>>>>>> riders-branch
     }
 
     @Transactional

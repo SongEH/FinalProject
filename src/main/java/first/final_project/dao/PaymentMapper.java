@@ -2,14 +2,14 @@ package first.final_project.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import first.final_project.vo.PayVo;
+import first.final_project.vo.PaymentVo;
 
 @Mapper
-public interface PayMapper {
+public interface PaymentMapper {
 
     // 결제 내역 추가
-    int insert(PayVo vo);
+    int insert(PaymentVo vo);
 
     // 결제 내역 수정
-    int update(PayVo vo);
+    int update(PaymentVo vo);
 }

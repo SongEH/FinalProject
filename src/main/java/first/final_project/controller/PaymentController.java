@@ -3,25 +3,29 @@ package first.final_project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import first.final_project.service.PaymentService;
+import first.final_project.vo.PaymentVo;
 
 @Controller
-@RequestMapping("/api/payment")
 public class PaymentController {
+
     @Autowired
-    private final PaymentService paymentService;
+    PaymentService paymentService;
 
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
+    // public PaymentController(PaymentService paymentService) {
+    // this.paymentService = paymentService;
+    // }
 
-    @RequestMapping("/jsp")
+    @RequestMapping("/payment/jsp")
     public String home() {
         return "order/pay";
     }
@@ -35,7 +39,23 @@ public class PaymentController {
         }
     }
 
-    @GetMapping("/data/{impUid}")
+    // order tabel에 insert
+    @RequestMapping(value = "/payment/insert.do", method = RequestMethod.POST)
+    public String orders_insert(@ModelAttribute PaymentVo vo, RedirectAttributes ra) {
+
+        System.out.println("도착");
+
+        try {
+            int res = paymentService.insert(vo);
+            System.out.println("DB 인서트 완료");
+            return "redirect:jsp";
+        } catch (Exception e) {
+            return "error/error_page";
+        }
+
+    }
+
+    @GetMapping("/api/payment/data/{impUid}")
     @ResponseBody
     public String getPaymentData(@PathVariable String impUid) {
         System.out.println("도착");

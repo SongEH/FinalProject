@@ -1,21 +1,29 @@
 package first.final_project.service;
 
+import java.io.IOException;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import first.final_project.dao.PaymentMapper;
+import first.final_project.vo.PaymentVo;
 import jakarta.annotation.PostConstruct;
 
 @Service
 public class PaymentService {
+
+    @Autowired
+    PaymentMapper paymentMapper;
 
     @Value("${imp.api.key}")
     private String apiKey;
@@ -28,12 +36,15 @@ public class PaymentService {
 
     @PostConstruct
     public void init() {
+        if (apiKey == null || secretKey == null) {
+            throw new IllegalStateException("API KEY and secret key must be set");
+        }
         this.IMP_KEY = apiKey;
         this.IMP_SECRET = secretKey;
     }
 
     // Access Token 가져오는 메서드
-    public String getAccessToken() throws Exception {
+    public String getAccessToken() throws IOException {
         // HTTP 클라이언트 생성
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             // HTTP POST 요청 생성
@@ -57,7 +68,7 @@ public class PaymentService {
     }
 
     // 결제 데이터 조회 메서드
-    public JsonNode getPaymentData(String impUid, String accessToken) throws Exception {
+    public JsonNode getPaymentData(String impUid, String accessToken) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet("https://api.iamport.kr/payments/" + impUid);
             httpGet.setHeader("Authorization", accessToken);
@@ -69,28 +80,33 @@ public class PaymentService {
         }
     }
 
-    // // 결제 데이터 검증 ( 고민되는 부분 영역)
-    // public void verifyPayment(String merchantUid, JsonNode payment) throws
-    // Exception {
-    // Order order = orderService.findById(merchantUid);
+    public int insert(PaymentVo vo) throws Exception {
 
-    // if (order != null && order.getAmount() == payment.get("amount").asInt()) {
-    // switch (payment.get("status").asText()) {
-    // case "ready":
-    // // 가상 계좌 발급 시 처리 로직
-    // System.out.println("가상 계좌 발급 완료");
-    // break;
-    // case "paid":
-    // // 결제 완료 시 처리 로직
-    // System.out.println("결제 완료");
-    // break;
-    // default:
-    // System.out.println("알 수 없는 결제 상태: " + payment.get("status").asText());
-    // break;
-    // }
-    // } else {
-    // // 결제 금액 불일치 시 처리 (위조/변조 시도 의심)
-    // throw new Exception("결제 금액 불일치: 위조/변조 시도 의심");
-    // }
-    // }
+        return paymentMapper.insert(vo);
+    }
+
 }
+// // 결제 데이터 검증 ( 고민되는 부분 영역)
+// public void verifyPayment(String merchantUid, JsonNode payment) throws
+// Exception {
+// Order order = orderService.findById(merchantUid);
+
+// if (order != null && order.getAmount() == payment.get("amount").asInt()) {
+// switch (payment.get("status").asText()) {
+// case "ready":
+// // 가상 계좌 발급 시 처리 로직
+// System.out.println("가상 계좌 발급 완료");
+// break;
+// case "paid":
+// // 결제 완료 시 처리 로직
+// System.out.println("결제 완료");
+// break;
+// default:
+// System.out.println("알 수 없는 결제 상태: " + payment.get("status").asText());
+// break;
+// }
+// } else {
+// // 결제 금액 불일치 시 처리 (위조/변조 시도 의심)
+// throw new Exception("결제 금액 불일치: 위조/변조 시도 의심");
+// }
+// }

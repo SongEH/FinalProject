@@ -61,34 +61,48 @@
           $("#pop_regdate").html(res_data.menu_cdate);
           $("#pop_price").html(res_data.menu_price);
 
-          //버튼 보여지기 유/무
 
-          //버튼숨기기
-          $("#btn_popup_download").hide(); //다운
-          $("#btn_popup_update").hide(); //수정
-          $("#btn_popup_delete").hide(); //삭제
-
-          //로그인된 상태에는 다운로드 가능
-          if ("${ not empty user}" == "true") {
-            $("#btn_popup_download").show();
-          }
-
-          //현재 사진을 올린 유저가 로그인한 유저면(수정/삭제)
-          //alert("${ user.mem_idx }" == res_data.mem_idx);
-          if ("${ user.mem_idx }" == res_data.mem_idx) {
-
-            $("#btn_popup_update").show(); //수정
-            $("#btn_popup_delete").show(); //삭제
-          }
+          // popup modal에 hidden 필드에 넣을 값     
+          $('#pop_hidden_menuid').val(menu_id);
+          $('#pop_hidden_shopid').val(res_data.shop_id);
         },
         error: function (err) {
           alert(err.responseText);
         }
       });
 
+    }
 
 
+    function input_cart() {
 
+      alert("장바구니에 추가되었습니다!");
+
+      // 모달창에서 hidden 태그의 값을 가져온다. 
+      menu_id = document.getElementById("pop_hidden_menuid").value;
+      shop_id = document.getElementById("pop_hidden_shopid").value;
+
+      carts_quantity = document.getElementById("pop_quantity").value;
+
+      // ajax로 장바구니 추가 
+      // 회원ID, 가게ID, 메뉴ID, 수량 추가 
+      $.ajax({
+        url: '/carts/insert.do',
+        type: 'POST',
+        data: {
+          menu_id: menu_id,
+          shop_id: shop_id,
+          carts_quantity: carts_quantity
+        },
+        success: function (response) {
+          // Handle success response
+          console.log("Item added to cart successfully:", response);
+        },
+        error: function (xhr, status, error) {
+          // Handle error response
+          console.error("Error adding item to cart:", error);
+        }
+      });
     }
   </script>
 </head>
@@ -98,10 +112,8 @@
 
   <%@include file="../common.jsp" %>
 
-  <!-- header import -->
   <%@include file="../header.jsp" %>
 
-  <!-- side bar import -->
   <%@include file="../sidebar.jsp" %>
 
   <main id="main" class="main">
@@ -125,8 +137,6 @@
           <c:forEach var="vo" items="${list}">
             <!-- vo.menu_status가 1인 경우만 표시 -->
             <c:if test="${vo.menu_status == 1}">
-
-
 
               <!-- Card with an image on left -->
               <div class="card mb-3">
@@ -169,9 +179,7 @@
                         onclick="delete_menu('${vo.menu_id}');">
                     </div>
                   </div>
-                  <div id="pop_job" style="text-align: center;">
 
-                  </div>
                 </div><!-- End Card with an image on left -->
               </div>
             </c:if>

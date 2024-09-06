@@ -33,7 +33,7 @@ public class OwnerController {
     // 사장 회원가입
     @RequestMapping("insert_form.do")
     public String insert_form() {
-        return "owner/owner_insert_form";
+        return "insert_form";
     }
 
     // 사장 회원가입
@@ -44,7 +44,7 @@ public class OwnerController {
     }
 
     // 아이디 중복 체크
-    @RequestMapping("check_id.do")
+    @RequestMapping("check_owner_accountId.do")
     @ResponseBody
     public Map<String, Boolean> check_id(@RequestParam("owner_accountId") String owner_accountId) {
         OwnerVo vo = ownerMapper.selectOneFromId(owner_accountId);
@@ -57,42 +57,43 @@ public class OwnerController {
     // 로그인 폼
     @RequestMapping("login_form.do")
     public String login_form() {
-        return "owner/owner_login_form";
+        return "login_form";
     }
 
     // 로그인
     @RequestMapping("login.do")
     public String login(String owner_accountId, String owner_pwd, RedirectAttributes ra) {
 
-        OwnerVo owner_user = ownerMapper.selectOneFromId(owner_accountId);
+        OwnerVo user = ownerMapper.selectOneFromId(owner_accountId);
 
-        if (owner_user == null) {
+        if (user == null) {
             ra.addAttribute("reason", "fail_id");
             ra.addAttribute("owner_accountId", owner_accountId);
 
             return "redirect:login_form.do";
         }
 
-        if (owner_user.getOwner_pwd().equals(owner_pwd) == false) {
+        if (user.getOwner_pwd().equals(owner_pwd) == false) {
             ra.addAttribute("reason", "fail_pwd");
             ra.addAttribute("owner_accountId", owner_accountId);
 
             return "redirect:login_form.do";
         }
 
-        if ("PENDING".equals(owner_user.getApproval_status())) {
+        if ("PENDING".equals(user.getApproval_status())) {
             ra.addAttribute("reason", "pending");
 
             return "redirect:login_form.do";
         }
 
-        if ("REJECTED".equals(owner_user.getApproval_status())) {
+        if ("REJECTED".equals(user.getApproval_status())) {
             ra.addAttribute("reason", "rejected");
 
             return "redirect:login_form.do";
         }
 
-        session.setAttribute("owner_user", owner_user);
+        session.setAttribute("user", user);
+        System.out.println(user);
         return "redirect:../main.do";
     }
 

@@ -5,7 +5,7 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="/shop/list.do" class="logo d-flex align-items-center">
         <img src="../resources/assets/img/logo.png" alt="" />
         <span class="d-none d-lg-block">Logo</span>
       </a>
@@ -40,12 +40,16 @@
           </a>
         </li>
         <!-- End Search Icon-->
+        
+        <li class="nav-item dropdown">
+          <a href="/member/login_form.do"><button>Login</button></a>
+        </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span> </a
-          ><!-- End Notification Icon -->
+          > <!-- End Notification Icon -->
 
           <ul
             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"

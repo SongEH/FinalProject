@@ -9,7 +9,7 @@ import first.final_project.vo.AddrVo;
 @Mapper
 public interface AddrMapper {
 
-    List<AddrVo> selectList(int member_id);
+    List<AddrVo> selectList(Integer member_id);
 
     AddrVo selectOneFromIdx(int addr_id); // 주소 일련번호 조회
 
@@ -17,5 +17,5 @@ public interface AddrMapper {
 
     int update(AddrVo vo);
 
-    int delete(AddrVo vo);
+    int delete(int addr_id);
 }

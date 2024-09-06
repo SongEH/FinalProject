@@ -48,7 +48,6 @@ prefix="c" %>
     </style>
   </head>
   <body>
-    
     <div class="content">
       <!-- 회원정보 섹션 -->
       <div id="profileSection" class="section">

@@ -20,6 +20,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             <div><strong>가계 이름:</strong> ${order.shop_name}</div>
             <div><strong>가계 주소:</strong> ${order.shop_addr}</div>
             <div><strong>회원 이름:</strong> ${order.member_nickname}</div>
+            <!-- <div><strong>회원 이름:</strong> ${order.member_nickname}</div> -->
             <div>
               <strong>배달 장소:</strong> ${order.addr_line1}
               ${order.addr_line2}

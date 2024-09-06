@@ -21,5 +21,7 @@ public class OrderVo {
     private String shop_name;
     private String deliveries_method;
     private String shop_status;
+    private String shop_addr;
     private int member_id;
+    private String member_nickname;
 }

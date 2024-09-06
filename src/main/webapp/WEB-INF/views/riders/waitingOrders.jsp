@@ -20,7 +20,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
           <div><strong>음식 가격:</strong> ${order.orders_price}원</div>
           <div><strong>요청 사항:</strong> ${order.orders_srequest}</div>
           <div>
-            <strong>배달 장소:</strong> ${order.addr_line1} ${order.addr_line2}
+            <strong>배달 장소:</strong> ${addr.addr_line1} ${addr.addr_line2}
           </div>
           <div><strong>배달 요청:</strong> ${order.orders_drequest}</div>
         </div>

@@ -84,6 +84,7 @@
 
 
     <!-- Orders와 Shop을 조인하여 주문과 관련된 가게 정보를 가져옴 -->
+    <!-- m.member_nickname AS member_nickname, o.orders_drequest AS orders_drequest -->
     <select id="findOrdersByStatus" parameterType="string" resultType="order">
         SELECT o.*, s.shop_name AS shop_name, s.shop_addr AS shop_addr, 
             d.deliveries_method AS deliveries_method, 
@@ -98,6 +99,8 @@
         ORDER BY orders_id
     </select>
 
+    <!--  s.shop_addr AS shop_addr, m.member_nickname AS member_nickname,  -->
+    <!-- s.shop_addr AS shop_addr, m.member_id AS member_id,  -->
     <select id="findOrdersByRiderAndStatus" parameterType="map" resultType="order">
         SELECT o.*, d.deliveries_method AS deliveries_method, s.shop_name AS shop_name, 
             s.shop_addr AS shop_addr, m.member_nickname AS member_nickname, 

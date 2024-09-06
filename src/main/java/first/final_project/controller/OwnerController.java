@@ -64,35 +64,36 @@ public class OwnerController {
     @RequestMapping("login.do")
     public String login(String owner_accountId, String owner_pwd, RedirectAttributes ra) {
 
-        OwnerVo owner_user = ownerMapper.selectOneFromId(owner_accountId);
+        OwnerVo user = ownerMapper.selectOneFromId(owner_accountId);
 
-        if (owner_user == null) {
+        if (user == null) {
             ra.addAttribute("reason", "fail_id");
             ra.addAttribute("owner_accountId", owner_accountId);
 
             return "redirect:login_form.do";
         }
 
-        if (owner_user.getOwner_pwd().equals(owner_pwd) == false) {
+        if (user.getOwner_pwd().equals(owner_pwd) == false) {
             ra.addAttribute("reason", "fail_pwd");
             ra.addAttribute("owner_accountId", owner_accountId);
 
             return "redirect:login_form.do";
         }
 
-        if ("PENDING".equals(owner_user.getApproval_status())) {
+        if ("PENDING".equals(user.getApproval_status())) {
             ra.addAttribute("reason", "pending");
 
             return "redirect:login_form.do";
         }
 
-        if ("REJECTED".equals(owner_user.getApproval_status())) {
+        if ("REJECTED".equals(user.getApproval_status())) {
             ra.addAttribute("reason", "rejected");
 
             return "redirect:login_form.do";
         }
 
-        session.setAttribute("owner_user", owner_user);
+        session.setAttribute("user", user);
+        System.out.println(user);
         return "redirect:../main.do";
     }
 

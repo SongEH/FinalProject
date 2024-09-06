@@ -199,7 +199,7 @@ public class RiderController {
 			;
 
 			// 주문 배차 로직 실행
-			boolean result = riderService.assignOrderToRider(orders_id, raiders_id, deliveries_method);
+			boolean result = riderService.assignOrderToRider(orders_id, riders_id, deliveries_method);
 			String resultMessage = result ? "주문을 받으셨습니다." : "주문을 받으실 수 없습니다";
 			response.put("resultMessage", resultMessage);
 			response.put("success", result);

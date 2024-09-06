@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import first.final_project.vo.AddrVo;
+import first.final_project.vo.DeliveriesVo;
 import first.final_project.vo.OrderVo;
 import first.final_project.vo.RiderVo;
 import first.final_project.vo.ShopVo;
@@ -31,8 +32,9 @@ public interface RidersMapper {
 
     void updateOrderStatus(@Param("orders_id") int orders_id, @Param("status") String status);
 
-    int assignDelivery(@Param("") int riders_id, @Param("deliveries_method") String deliveries_method,
-            @Param("orders_id") int orders_id);
+    void updateDeliveryHistory(@Param("orders_id") int orders_id, @Param("status") String status);
+
+    int assignDelivery(DeliveriesVo deliveriesVo);
 
     int insertDeliveryHistory(@Param("status") String status, @Param("deliveries_id") int deliveries_id);
 
@@ -45,5 +47,5 @@ public interface RidersMapper {
     ShopVo getShopById(@Param("shop_id") int shop_id);
 
     // 라이더가 완료한 배달 내역 가져오기
-    List<OrderVo> findCompletedOrdersByRider(@Param("riders_id") int riders_id);
+    List<OrderVo> findCompletedOrdersByRider(@Param("raiders_id") int raiders_id);
 }

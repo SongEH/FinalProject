@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.PaymentMapper">
+
+    
+    <insert id="insert" parameterType="payment">
+        insert into orders (
+                            orders_id,
+                            orders_payment,
+                            orders_method,
+                            orders_imp_uid,
+                            orders_merchant_uid,
+                            orders_name,
+                            orders_price,
+                            orders_srequest,
+                            orders_drequest,
+                            orders_cdate,
+                            orders_status
+                    ) values (
+                            null,
+                            #{orders_id},
+                            #{orders_payment},
+                            #{orders_method},
+                            #{orders_imp_uid},
+                            #{orders_merchant_uid},
+                            #{orders_name},
+                            #{orders_price},
+                            #{orders_srequest},
+                            #{orders_drequest},
+                            sysdate(),
+                            #{orders_status}
+                            )  
+    </insert>
+
+
+
+
+
+
+
+
+
+</mapper>

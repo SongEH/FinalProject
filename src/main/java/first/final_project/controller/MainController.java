@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
     @RequestMapping("/main.do")
-    @ResponseBody
     public String main() {
-
         return "main";
     }
 }

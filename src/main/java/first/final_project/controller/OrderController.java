@@ -1,21 +1,18 @@
 package first.final_project.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.CartsMapper;
-import first.final_project.util.MyCommon;
-import first.final_project.util.Paging;
+import first.final_project.dao.OrderMapper;
 import first.final_project.vo.CartsVo;
+import first.final_project.vo.MemberVo;
+import first.final_project.vo.OrderVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +20,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/order/")
 public class OrderController {
+
+	@Autowired
+	OrderMapper order_mapper;
 
 	@Autowired
 	CartsMapper carts_mapper;
@@ -60,54 +60,50 @@ public class OrderController {
 	// 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
 	public String insert(
-			@RequestParam("shop_id") int shop_id,  Model model) {
+			@RequestParam("shop_id") int shop_id, Model model) {
 
 		int member_id = 98;
 
-		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회
-
-		// 리스트로 반환
+		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회한 결과
 		List<CartsVo> list = carts_mapper.findPendingOrders(member_id, shop_id);
 
-		System.out.println(list);
+		// 현재 로그인한 사용자
+		MemberVo user = (MemberVo) session.getAttribute("user");
 
 		// request binding
 		model.addAttribute("list", list);
+		model.addAttribute("user", user);
 
 		return "order/order_pending_list";
 	}
 
-	// // 수정
-	// // /carts/modify.do?carts_id=9&carts_quantity=5
-	// @PostMapping("modify.do")
-	// public String modify(int carts_id, int carts_quantity, RedirectAttributes ra)
-	// {
+	// 주문
+	@RequestMapping("insert.do")
+	public String insert(OrderVo vo) {
 
-	// System.out.println("수정!!!!" + carts_id + " " + carts_quantity);
+		String orders_drequest = vo.getOrders_drequest().replaceAll("\n", "<br>");
+		vo.setOrders_drequest(orders_drequest);
 
-	// int res = carts_mapper.update(carts_id, carts_quantity);
+		String orders_srequest = vo.getOrders_srequest().replaceAll("\n", "<br>");
+		vo.setOrders_srequest(orders_srequest);
 
-	// // ra.addAttribute("page", page);
+		// 아래 수동 setting 한건 추후 수정해야됨
+		vo.setOrders_name("주문테스트");
+		vo.setShop_id(1);
+		vo.setOrders_price(100000);
+		vo.setShop_name("맛집1");
+		vo.setAddr_id(99); // 주소 기능 구현완료 되면 추가하기
 
-	// return "redirect:list.do";
-	// }
+		// 현재 로그인한 사용자
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		vo.setMember_id(user.getMember_id());
 
-	// // 삭제
-	// // /carts/delete.do?carts_id=5
-	// // /carts/delete.do?carts_id=5&page=2
-	// @RequestMapping("delete.do")
-	// public String delete(int carts_id, RedirectAttributes ra) {
+		System.out.println(vo);
 
-	// // CartsVo 정보 얻어온다
-	// CartsVo vo = carts_mapper.selectOne(carts_id);
+		// DB insert
+		int res = order_mapper.insert(vo);
 
-	// // DB delete
-	// int res = carts_mapper.delete(carts_id);
+		return "redirect:list.do";
+	}
 
-	// // ra.addAttribute("page", page);
-
-	// return "redirect:list.do";
-
-	// }
 }
-

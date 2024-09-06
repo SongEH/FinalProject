@@ -1,66 +1,98 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>메인 페이지</title>
-    <style>
-      /* 스타일을 적절히 수정하여 드롭다운 메뉴를 디자인하세요 */
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }
 
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-      }
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    /* *{
+        border: 1px solid grey
+      } */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      margin-top: 5%;
+    }
 
-      .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }
+    body {
+      background-color: #f8f9fa;
+      font-family: "Arial", sans-serif;
+    }
 
-      .dropdown-content a:hover {
-        background-color: #f1f1f1;
-      }
+    .menu-section {
+      margin-bottom: 40px;
+    }
 
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
+    .menu-item {
+      margin-bottom: 20px;
+    }
 
-      .dropdown:hover .dropbtn {
-        background-color: #3e8e41;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>메인 페이지</h1>
+    .menu-item h5 {
+      font-weight: bold;
+    }
 
-    <%-- 로그인 여부 체크 --%> <% Boolean isLoggedIn = (Boolean)
-    session.getAttribute("isLoggedIn"); %> <%-- 로그인 상태일 때만 드롭다운
-    메뉴를 표시 --%> <% if (isLoggedIn != null && isLoggedIn) { %>
-    <div class="dropdown">
-      <button class="dropbtn">회원 기능</button>
-      <div class="dropdown-content">
-        <a href="mypage.do">회원정보</a>
-        <a href="mypage/payment_info.do">결제정보</a>
-        <a href="mypage/address_info.do">주소정보</a>
-        <a href="mypage/cart.do">장바구니</a>
-        <a href="mypage/order_history.do">주문내역</a>
-      </div>
-    </div>
-    <a href="logout.do">로그아웃</a>
-    <% } else { %>
-    <p>로그인 후 이용할 수 있는 기능입니다.</p>
-    <a href="login_form.do">로그인</a>
-    <% } %>
-  </body>
+    .menu-item p {
+      margin-bottom: 0;
+    }
+
+    .price {
+      float: right;
+      font-weight: bold;
+    }
+  </style>
+
+  <style>
+    body {
+      background-color: rgb(92, 161, 218);
+    }
+
+    @media (min-width: 768px) {
+      body {
+        background-color: rgb(235, 221, 203);
+      }
+    }
+
+    @media (min-width: 992px) {
+      body {
+        background-color: rgb(221, 162, 162);
+      }
+    }
+
+    @media (min-width: 1200px) {
+      body {
+        background-color: rgb(195, 228, 163);
+      }
+    }
+
+    .menu-item:hover {
+      cursor: pointer;
+    }
+  </style>
+  
+</head>
+
+<body>
+  <!-- common import -->
+  <%@include file="common.jsp" %>
+
+  <!-- header import -->
+  <%@include file="header.jsp" %>
+
+  <h1>메인 페이지</h1>
+  카테고리를 선택하는 화면이 있어야됨
+
+
+
+</body>
+
 </html>

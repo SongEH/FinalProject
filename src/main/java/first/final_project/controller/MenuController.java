@@ -132,7 +132,7 @@ public class MenuController {
 		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
 		// vo.setShop_id(user.getShop_id()); // 로그인된 계정이 사장계정이어야하고, 사장VO안에 ShopID가 있어야
 		// 한다.
-		vo.setShop_id(99);
+		vo.setShop_id(1);
 
 		// DB insert
 		int res = menu_mapper.insert(vo);

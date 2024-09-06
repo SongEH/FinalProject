@@ -1,76 +1,109 @@
-// package first.final_project.controller;
+package first.final_project.controller;
 
-// import org.springframework.stereotype.Controller;
-// import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
 
-// @Controller
-// public class OrderController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-//     // // private final IamportClient iamportClient;
+import first.final_project.dao.CartsMapper;
+import first.final_project.dao.OrderMapper;
+import first.final_project.vo.CartsVo;
+import first.final_project.vo.MemberVo;
+import first.final_project.vo.OrderVo;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
-//     public Or_derController() {
-//     // // this.iamportClient = new IamportClient("REST_API_KEY", "REST_API_SECRET");
-//     // // }
+@Controller
+@RequestMapping("/order/")
+public class OrderController {
 
-//     // // private PayService paymentService = new PayService
+	@Autowired
+	OrderMapper order_mapper;
 
-//     @RequestMapping("/order/find_addr")
-//     public String find_addr() {
+	@Autowired
+	CartsMapper carts_mapper;
 
-//         return "order/pay";
-//     }
-// }
+	@Autowired
+	HttpServletRequest request;
 
-// // @RequestMapping("order/pay_do")
-// // public String order_pay (String amount, String token, Model model) {
+	@Autowired
+	HttpSession session;
 
-// // model.addAttribute("amount", amount);
-// // model.addAttribute("token", token);
+	@Autowired
+	ServletContext application;
 
-// // return "order/pay_result";
-// // }
+	// /menu/list.do
+	// /menu/list.do?page=2
+	// @RequestMapping("list.do")
+	// public String list(@RequestParam(name = "page", defaultValue = "1") int
+	// nowPage,
+	// Model model) {
 
-// // // // @RequestMapping("/order/pay_test.do/{imp_uid}")
-// // // @RequestMapping("/order/pay_test.do")
-// // // // @ResponseBody
-// // // public IamportResponse<Payment>
-// paymentByImpUid(@PathVariable("imp_uid")
-// // String imp_uid)
-// // // throws IamportResponseException, IOException {
-// // // return iamportClient.paymentByImpUid(imp_uid);
-// // // }
+	// List<CartsVo> list = carts_mapper.selectList();
 
-// // @ResponseBody
-// // @RequestMapping(value = "/verify_iamport/{imp_uid}", method =
-// // RequestMethod.POST)
-// // public IamportResponse<Payment> verifyIamportPOST(@PathVariable(value =
-// // "imp_uid") String imp_uid) throws IamportResponseException, IOException {
+	// // 전체 게시물수
+	// int rowTotal = carts_mapper.selectRowTotal();
 
-// // return client.paymentByImpUid(imp_uid);
-// // }
+	// System.out.println(rowTotal);
+	// System.out.println(list);
 
-// // @RequestMapping(value ="complete", method = RequestMethod.POST)
-// // @ResponseBody
-// // public int paymentComplete(String imp_uid, String merchant_uid,String
-// // totalPrice,HttpSession session
-// // ,@RequestBody OrderDTO orderDTO) throws Exception {
+	// // 결과적으로 request binding
+	// model.addAttribute("list", list);
 
-// // String token = payService.getToken();
+	// return "carts/carts_list";
+	// }
 
-// // // 결제 완료된 금액
-// // String amount = payService.paymentInfo(orderDTO.getImp_uid(), token);
+	// 주문대기 (주문 전)
+	@RequestMapping("pending_order.do")
+	public String insert(
+			@RequestParam("shop_id") int shop_id, Model model) {
 
-// // int res = 1;
+		int member_id = 98;
 
-// // if (orderDTO.getTotalPrice() != Long.parseLong(amount)) {
-// // res = 0;
-// // // 결제 취소
-// // payService.payMentCancle(token, orderDTO.getImp_uid(), amount,"결제 금액 오류");
-// // return res;
-// // }
-// // orderService.insert_pay(orderDTO);
-// // return res;
+		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회한 결과
+		List<CartsVo> list = carts_mapper.findPendingOrders(member_id, shop_id);
 
-// // }
+		// 현재 로그인한 사용자
+		MemberVo user = (MemberVo) session.getAttribute("user");
 
-// }
+		// request binding
+		model.addAttribute("list", list);
+		model.addAttribute("user", user);
+
+		return "order/order_pending_list";
+	}
+
+	// 주문
+	@RequestMapping("insert.do")
+	public String insert(OrderVo vo) {
+
+		String orders_drequest = vo.getOrders_drequest().replaceAll("\n", "<br>");
+		vo.setOrders_drequest(orders_drequest);
+
+		String orders_srequest = vo.getOrders_srequest().replaceAll("\n", "<br>");
+		vo.setOrders_srequest(orders_srequest);
+
+		// 아래 수동 setting 한건 추후 수정해야됨
+		vo.setOrders_name("주문테스트");
+		vo.setShop_id(1);
+		vo.setOrders_price(100000);
+		vo.setShop_name("맛집1");
+		vo.setAddr_id(99); // 주소 기능 구현완료 되면 추가하기
+
+		// 현재 로그인한 사용자
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		vo.setMember_id(user.getMember_id());
+
+		System.out.println(vo);
+
+		// DB insert
+		int res = order_mapper.insert(vo);
+
+		return "redirect:list.do";
+	}
+
+}

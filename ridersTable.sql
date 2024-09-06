@@ -1,3 +1,4 @@
+
 CREATE TABLE Riders (
     raiders_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     rider_name VARCHAR(50) NOT NULL,

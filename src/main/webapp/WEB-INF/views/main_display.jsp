@@ -67,10 +67,11 @@ pageEncoding="UTF-8"%>
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         text-align: center;
         width: 200px;
+        height: 200px;
       }
 
       .card img {
-        width: 80%;
+        width: 50%;
         padding-top: 10px;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;

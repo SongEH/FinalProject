@@ -12,4 +12,10 @@ public class MainDisplayController {
         return "main_display";
     }
 
+    @RequestMapping("/main/display/list")
+    public String go_to_main_list() {
+
+        return "shop/shop_list";
+    }
+
 }

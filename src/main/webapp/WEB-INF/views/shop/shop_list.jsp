@@ -64,7 +64,7 @@ header .login {
   cursor: pointer;
   font-size: 16px;
 }
-/* .menu {
+.menu {
   display: flex;
   justify-content: center;
   background-color: white;
@@ -79,64 +79,8 @@ header .login {
 }
 .menu a:hover{
   cursor: pointer;
-  background-color: gray;
+  color: #ff3366;
 } */
-/* .menu div {
-    background-color: #f1f1f1;
-    padding: 15px 25px;
-    border-radius: 10px;
-    margin: 0 10px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-    border: 1px solid #ddd;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.menu div:hover {
-    background-color: #ff3366;
-    color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.menu div:active {
-    background-color: #e62e5d;
-} */
-.navbar {
-            display: flex;
-            justify-content: center;
-            background-color: #ff3366;
-            padding: 10px 0;
-        }
-
-        /* Box style for navbar items */
-        .navbar div {
-            background-color: #fff;
-            padding: 15px 25px;
-            border-radius: 5px;
-            margin: 0 10px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-
-        .navbar div:hover {
-            background-color: #ff6699;
-            color: white;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar div:active {
-            background-color: #e62e5d;
-        }
-
-        .navbar div a {
-            text-decoration: none;
-            color: inherit;
-        }
 .store-list {
   max-width: 1200px;
   margin: 20px auto;
@@ -228,28 +172,60 @@ header .login {
     <header>
       <div class="logo">오기요</div>
       <a href="#" class="login">로그인</a>
-  </header>
+    </header>
   
-  <div class="search-bar">
-      <input type="text" placeholder="서울특별시 관악구 봉천동 1601-6 족발이세계...">
-      <button>검색</button>
-  </div>
-
-  <nav class="container-fulid">
-    <!-- <div class="menu">
-        <a href="#">전체보기</a>
-        <a href="#">1인분 주문</a>
-        <a href="#">프랜차이즈</a>
-        <a href="#">치킨</a>
-        <a href="#">피자/양식</a>
-        <a href="#">중국집</a>
-        <a href="#">한식</a>
-        <a href="#">일식/돈까스</a>
-        <a href="#">족발/보쌈</a>
-        <a href="#">야식</a>
-    </div> -->
-    
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">?</span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">전체보기</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">족발·보쌈</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">피자</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">치킨</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">돈까스·회·일식</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">한식</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">중식</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">아시안</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">백반·죽·국수</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">분식</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">카페·디저트</a>
+          </li>
+          <li class="nav-item"></li>
+            <a class="nav-link" href="#">패스트푸드</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
   </nav>
+
 
   <div class="container">
   <div class="store-list">

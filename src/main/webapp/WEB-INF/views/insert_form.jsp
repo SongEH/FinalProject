@@ -304,7 +304,7 @@ pageEncoding="UTF-8"%>
       }
 
       // 전화번호 포맷팅 함수
-      function formatMmemberPhoneNumber(input) {
+      function formatMemberPhoneNumber(input) {
         let member_phone = input.value.replace(/\D/g, ""); // 숫자만 남기기
         if (member_phone.length > 11) {
           member_phone = member_phone.slice(0, 10); // 10자리까지만
@@ -327,8 +327,8 @@ pageEncoding="UTF-8"%>
         let member_accountId = f.member_accountId.value.trim();
         let member_pwd = f.member_pwd.value.trim();
         let member_phone = f.member_phone.value.trim();
-        let email_id = $("#email_id").val().trim();
-        let email_domain = $("#email_domain").val().trim();
+        let email_id = $("#member_email_id").val().trim();
+        let email_domain = $("#member_email_domain").val().trim();
 
         if (member_name == "") {
           alert("이름을 입력하시오");
@@ -466,7 +466,7 @@ pageEncoding="UTF-8"%>
           </div>
           <div class="modal-body">
             <form
-              action="${pageContext.request.contextPath}/owner/insert_form.do"
+              action="${pageContext.request.contextPath}/insert_form.do"
               method="post"
             >
               <input type="hidden" name="owner_email" id="owner_email" />
@@ -658,7 +658,7 @@ pageEncoding="UTF-8"%>
           </div>
           <div class="modal-body">
             <form
-              action="${pageContext.request.contextPath}/member/insert_form.do"
+              action="${pageContext.request.contextPath}/insert_form.do"
               method="post"
             >
               <input type="hidden" name="member_email" id="member_email" />

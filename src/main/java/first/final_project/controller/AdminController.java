@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.AdminMapper;
 import first.final_project.dao.MemberMapper;
@@ -37,43 +36,12 @@ public class AdminController {
     @Autowired
     MemberMapper memberMapper;
 
-    // 로그인 폼
-    @RequestMapping("login_form.do")
-    public String login_form() {
-
-        return "login_form";
-    }
-
-    // 로그인
-    @RequestMapping("login.do")
-    public String login(String admin_accountId, String admin_pwd, RedirectAttributes ra) {
-
-        AdminVo user = adminMapper.selectOneFromId(admin_accountId);
-
-        if (user == null) {
-            ra.addAttribute("reason", "fail_id");
-
-            return "redirect:login_form.do";
-        }
-
-        if (user.getAdmin_pwd().equals(admin_pwd) == false) {
-            ra.addAttribute("reason", "fail_pwd");
-            ra.addAttribute("admin_accountId", admin_accountId);
-
-            return "redirect:login_form.do";
-        }
-
-        session.setAttribute("user", user);
-
-        return "redirect:../main.do";
-    }
-
     // 관리자페이지
     @RequestMapping("adminpage.do")
     public String showAdminPage(AdminVo vo, Model model) {
         AdminVo user = (AdminVo) session.getAttribute("user");
         if (user == null) {
-            return "redirect:login_form.do";
+            return "redirect:/login_form.do";
         }
         AdminVo admin = adminMapper.selectOneFromIdx(user.getAdmin_id());
         model.addAttribute("admin", admin);

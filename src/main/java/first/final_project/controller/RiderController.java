@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import first.final_project.service.KakaoMapService;
-
 import first.final_project.dao.RidersMapper;
+import first.final_project.service.KakaoMapService;
 import first.final_project.service.RidersService;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.OrderVo;
@@ -100,6 +98,7 @@ public class RiderController {
 			return "redirect:main.do";
 		}
 
+		// 세션에 사용자 정보 및 로그인 여부 설정
 		session.setAttribute("user", user);
 		session.setAttribute("isLoggedIn", true);
 

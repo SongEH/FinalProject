@@ -26,6 +26,7 @@ public class MemberController {
     @Autowired
     MemberMapper memberMapper;
 
+
     // 마이페이지
     @RequestMapping("mypage.do")
     public String showMyPage(MemberVo vo, Model model) {

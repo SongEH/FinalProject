@@ -297,8 +297,9 @@ public class RiderController {
 
 		try {
 			// 경로 계산을 위한 주소 정보 가져오기
-			String customerAddress = addr.getAdrr_line1() + " " + addr.getAddr_line2(); // 주소 1, 2 결합
+			String customerAddress = addr.getAddr_line1() + " " + addr.getAddr_line2(); // 주소 1, 2 결합
 			String shopAddress = shop.getShop_addr();
+
 			double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
 			double[] customerCoordinates = kakaoMapService.getCoordinates(customerAddress);
 

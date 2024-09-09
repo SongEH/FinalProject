@@ -135,13 +135,6 @@ INSERT INTO Orders (orders_payment, orders_price, orders_srequest, orders_dreque
 ('카카오페이', 20000, '노피클', '집앞에두세요', '2024-08-27', '배차 대기', 1, 1),
 ('토스페이', 12000, '치즈폭탄추가', '링링링링마벨', '2024-08-27', '배차 대기', 2, 2);
 
-
--- Deliveries 테이블 더미 데이터
-INSERT INTO Deliveries (raiders_id, deliveries_method, orders_id)
-VALUES 
-(1, '자전거', 1),
-(2, '오토바이', 2);
-
 -- Delivery_history 테이블 더미 데이터
 INSERT INTO Delivery_history (delivery_history_status, deliveries_id) VALUES
 ('배차 대기', 1),

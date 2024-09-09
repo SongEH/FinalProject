@@ -110,7 +110,7 @@
         JOIN (
             SELECT deliveries_id, delivery_history_status, delivery_history_id
             FROM Delivery_history
-            WHERE delivery_history_status IN ('배차 완료', '조리중', '조리 완료', '픽업 대기', '배달 중')
+            WHERE delivery_history_status IN ('배차 완료', '픽업 대기', '배달 중')
         ) dh ON d.deliveries_id = dh.deliveries_id 
         JOIN Shop s ON o.shop_id = s.shop_id 
         JOIN Addr a ON o.addr_id = a.addr_id
@@ -128,10 +128,12 @@
     </select>
 
     <select id="findCompletedOrdersByRider" parameterType="int" resultType="order">
-        SELECT * FROM Orders o
+        SELECT * 
+        FROM Orders o
         JOIN Deliveries d ON o.orders_id = d.orders_id
         JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-        WHERE d.raiders_id = #{raiders_id} AND dh.delivery_history_status = '배송 완료'
+        JOIN Shop s ON o.shop_id = s.shop_id
+        WHERE d.raiders_id = #{raiders_id} AND dh.delivery_history_status = '배달 완료'
     </select>
 
     <update id="updateDeliveryHistory">

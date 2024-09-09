@@ -40,17 +40,21 @@ public class PaymentController {
     }
 
     // order tabel에 insert
-    @RequestMapping(value = "/payment/insert.do", method = RequestMethod.POST)
-    public String orders_insert(@ModelAttribute PaymentVo vo, RedirectAttributes ra) {
+    @RequestMapping(value = "/payment/insert.do")
+    @ResponseBody
+    public void orders_insert(PaymentVo vo, RedirectAttributes ra) {
 
         System.out.println("도착");
 
+        System.out.println(vo);
+
+        System.out.println("DB 인서트 전!!!");
         try {
             int res = paymentService.insert(vo);
             System.out.println("DB 인서트 완료");
-            return "redirect:jsp";
         } catch (Exception e) {
-            return "error/error_page";
+
+            e.printStackTrace();
         }
 
     }

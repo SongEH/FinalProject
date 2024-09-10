@@ -11,7 +11,6 @@
       function send(f){
 
         let shop_id = f.shop_id.value;
-        alert(f.shop_id.value)
         
         f.action = "modify.do";
         f.submit();

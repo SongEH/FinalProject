@@ -277,7 +277,7 @@ header .login {
         <div class="store" onclick="selectOne('${vo.shop_id}');">
             <div class="store-left">
                 <div class="store-logo">
-                  <img src="${pageContext.request.contextPath}/sources/images/${vo.shop_img}"  alt="Store 1 Logo" />
+                  <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Store 1 Logo">
                 </div>
                 <div class="store-info">
                     <strong>${vo.shop_name}</strong>

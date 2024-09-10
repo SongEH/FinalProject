@@ -23,8 +23,8 @@ public class ShopVo {
     private String shop_hours;
     private String shop_close_day;
     private String shop_area;
-    private String shop_create_day;
-    private String shop_modify_day;
+    private String shop_cdate;
+    private String shop_mdate;
     private String shop_status;
     private int owner_id;
 

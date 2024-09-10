@@ -54,7 +54,7 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <textarea class="form-control" placeholder="소개글" name="shop_content" value="${vo.shop_content}"
-                                style="height: 100px;"></textarea>
+                                style="height: 100px;">${vo.shop_content}</textarea>
                               <label>가게소개글 </label>
                             </div>
                           </div>
@@ -82,15 +82,8 @@
     
                           <div class="col-md-12">
                             <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="영업시작시간" name="shop_open_time" value="${vo.shop_open_time}">
-                              <label>영업시작시간</label>
-                            </div>
-                          </div>
-    
-                          <div class="col-md-12">
-                            <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="영업마감시간" name="shop_close_time" value="${vo.shop_close_time}">
-                              <label>영업마감시간</label>
+                              <input type="text" class="form-control" placeholder="영업시간" name="shop_hours" value="${vo.shop_hours}">
+                              <label>영업시간</label>
                             </div>
                           </div>
     

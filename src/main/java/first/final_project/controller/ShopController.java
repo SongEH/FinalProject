@@ -80,7 +80,7 @@ public class ShopController {
         String shop_img = "no_file";
 
         String absPath = application.getRealPath("/resources/images/");
-
+        
         // com.final_project.common.Util.createDirectoryIfNotExists(directoryPath);
 
         if (!photo.isEmpty()) {
@@ -125,15 +125,20 @@ public class ShopController {
     @RequestMapping("/shop/modify_form.do")
     public String shop_modify(Model model) {
 
+        try {
         OwnerVo user = (OwnerVo) session.getAttribute("user");
         int owner_id = user.getOwner_id();
         System.out.println("owner_id : " + owner_id);
 
         ShopVo vo = shop_Service.select_modify_owner_id(owner_id);
         System.out.println("수행");
-        System.out.println(vo.getShop_id());
+        // System.out.println(vo.getShop_id());
         model.addAttribute("vo", vo);
         return "shop/shop_modify_form";
+        } catch (Exception e) {
+            return "error/error_page";
+        }
+        
     }
 
     // 가게 정보 수정 업데이트

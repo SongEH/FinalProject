@@ -97,6 +97,12 @@ CREATE TABLE Delivery_history (
     CONSTRAINT Delivery_history_deliveries_id FOREIGN KEY (deliveries_id) REFERENCES Deliveries(deliveries_id) ON DELETE CASCADE
 );
 
+CREATE TABLE Commissions (
+    commissions_id INT AUTO_INCREMENT PRIMARY KEY,
+    raiders_id INT NOT NULL,
+    commission DOUBLE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 
 

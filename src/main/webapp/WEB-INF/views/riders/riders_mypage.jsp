@@ -133,6 +133,12 @@ pageEncoding="UTF-8"%>
             value="회원 수정"
             onclick="location.href='mypage/modify_form.do?raiders_id=${vo.raiders_id}'"
           />
+          <input
+            type="button"
+            value="내역보기"
+            onclick="location.href='mypage/commission.do?raiders_id=${vo.raiders_id}'"
+          />
+
           <a href="${pageContext.request.contextPath}/riders/delivery">
             <input type="button" value="메인이동" />
           </a>

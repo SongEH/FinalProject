@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="first.final_project.dao.CommissionMapper">
+
+
+    <select id="getCompletedDeliveriesWithCommission" parameterType="int" resultType="map">
+    SELECT 
+        d.deliveries_id,
+        r.rider_name,
+        o.orders_id,
+        o.orders_price,
+        dh.delivery_history_status,
+        o.orders_cdate,
+        s.shop_name,
+        a.addr_line1,
+        a.addr_line2
+    FROM 
+        Deliveries d
+    JOIN 
+        Riders r ON d.raiders_id = r.raiders_id
+    JOIN 
+        Orders o ON d.orders_id = o.orders_id
+    JOIN 
+        Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN 
+        Shop s ON o.shop_id = s.shop_id
+    JOIN 
+        Addr a ON o.addr_id = a.addr_id
+    WHERE 
+        d.raiders_id = #{raiders_id}
+        AND dh.delivery_history_status = '배달 완료';
+    </select>
+
+    <insert id="insertCommission" parameterType="map">
+        INSERT INTO Commissions (raiders_id, commission)
+        VALUES (#{raiders_id}, #{commission})
+    </insert>
+
+
+</mapper>

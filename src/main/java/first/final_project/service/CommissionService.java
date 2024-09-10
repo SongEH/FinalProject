@@ -1,20 +1,32 @@
 package first.final_project.service;
 
-import first.final_project.dao.RidersMapper;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import first.final_project.dao.CommissionMapper;
+import first.final_project.vo.CompletedDeliveryVo;
 
 @Service
 public class CommissionService {
 
-    private final RidersMapper ridersMapper;
+    private final CommissionMapper commissionMapper;
 
-    public CommissionService(RidersMapper ridersMapper) {
-        this.ridersMapper = ridersMapper;
+    public CommissionService(CommissionMapper commissionMapper) {
+        this.commissionMapper = commissionMapper;
     }
 
-    // 이 메소드는 raiders_id에 따라 라이더의 총 3% 수수료를 계산합니다.
-    public double calculateTotalCommission(@RequestParam(name = "raiders_id") int raiders_id) {
-        return ridersMapper.getTotalCommissionByRiderId(raiders_id);
+    public List<CompletedDeliveryVo> getCompletedDeliveriesWithCommission(int raiders_id) {
+        return commissionMapper.getCompletedDeliveriesWithCommission(raiders_id);
     }
+
+    public void saveCommission(int raiders_id, double commission) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("raiders_id", raiders_id);
+        params.put("commission", commission);
+        commissionMapper.insertCommission(params);
+    }
+
 }

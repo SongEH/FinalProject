@@ -43,24 +43,23 @@ public class OrderController {
 
 	// /menu/list.do
 	// /menu/list.do?page=2
-	// @RequestMapping("list.do")
-	// public String list(@RequestParam(name = "page", defaultValue = "1") int
-	// nowPage,
-	// Model model) {
+	@RequestMapping("list.do")
+	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
+			Model model) {
 
-	// List<CartsVo> list = carts_mapper.selectList();
+		List<OrderVo> list = order_mapper.selectList();
 
-	// // 전체 게시물수
-	// int rowTotal = carts_mapper.selectRowTotal();
+		// 전체 게시물수
+		// int rowTotal = order_mapper.selectRowTotal();
 
-	// System.out.println(rowTotal);
-	// System.out.println(list);
+		// System.out.println(rowTotal);
+		System.out.println(list);
 
-	// // 결과적으로 request binding
-	// model.addAttribute("list", list);
+		// 결과적으로 request binding
+		model.addAttribute("list", list);
 
-	// return "carts/carts_list";
-	// }
+		return "order/order_list";
+	}
 
 	// 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
@@ -78,12 +77,12 @@ public class OrderController {
 		model.addAttribute("shop_id", shop_id);
 		model.addAttribute("shop_name", shop_name);
 
-		// 주소 처리 
-		// 1. 현재 로그인한 사용자의 주소목록을 가져옴 
+		// 주소 처리
+		// 1. 현재 로그인한 사용자의 주소목록을 가져옴
 		List<AddrVo> addr_list = addr_mapper.selectList(user.getMember_id());
 		model.addAttribute("addr_list", addr_list);
 
-		// 2. 등록된 주소 이외의 추가 주소정보 등록 
+		// 2. 등록된 주소 이외의 추가 주소정보 등록
 
 		return "order/order_pending_list";
 	}
@@ -92,29 +91,29 @@ public class OrderController {
 	// @RequestMapping("insert.do")
 	// public String insert(OrderVo vo) {
 
-	// 	String orders_drequest = vo.getOrders_drequest().replaceAll("\n", "<br>");
-	// 	vo.setOrders_drequest(orders_drequest);
+	// String orders_drequest = vo.getOrders_drequest().replaceAll("\n", "<br>");
+	// vo.setOrders_drequest(orders_drequest);
 
-	// 	String orders_srequest = vo.getOrders_srequest().replaceAll("\n", "<br>");
-	// 	vo.setOrders_srequest(orders_srequest);
+	// String orders_srequest = vo.getOrders_srequest().replaceAll("\n", "<br>");
+	// vo.setOrders_srequest(orders_srequest);
 
-	// 	// 아래 수동 setting 한건 추후 수정해야됨
-	// 	vo.setOrders_name("주문테스트");
-	// 	vo.setShop_id(1);
-	// 	vo.setOrders_price(100000);
-	// 	vo.setShop_name("맛집1");
-	// 	vo.setAddr_id(99); // 주소 기능 구현완료 되면 추가하기
+	// // 아래 수동 setting 한건 추후 수정해야됨
+	// vo.setOrders_name("주문테스트");
+	// vo.setShop_id(1);
+	// vo.setOrders_price(100000);
+	// vo.setShop_name("맛집1");
+	// vo.setAddr_id(99); // 주소 기능 구현완료 되면 추가하기
 
-	// 	// 현재 로그인한 사용자
-	// 	MemberVo user = (MemberVo) session.getAttribute("user");
-	// 	vo.setMember_id(user.getMember_id());
+	// // 현재 로그인한 사용자
+	// MemberVo user = (MemberVo) session.getAttribute("user");
+	// vo.setMember_id(user.getMember_id());
 
-	// 	System.out.println(vo);
+	// System.out.println(vo);
 
-	// 	// DB insert
-	// 	int res = order_mapper.insert(vo);
+	// // DB insert
+	// int res = order_mapper.insert(vo);
 
-	// 	return "redirect:list.do";
+	// return "redirect:list.do";
 	// }
 
 }

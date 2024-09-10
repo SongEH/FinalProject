@@ -50,5 +50,6 @@ public interface RidersMapper {
     List<OrderVo> findCompletedOrdersByRider(@Param("raiders_id") int raiders_id);
 
     // 특정 라이더의 3% 총 수수료를 가져오는 메소드
+
     double getTotalCommissionByRiderId(int raiders_id);
 }

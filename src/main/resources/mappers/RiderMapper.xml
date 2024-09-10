@@ -24,7 +24,7 @@
         #{mem_name} => vo.getMem_name()
    -->
     <insert id="insert" parameterType="rider">
-      INSERT INTO Riders
+      INSERT INTO riders
       (
       rider_name,
       riders_phone,
@@ -58,13 +58,13 @@
 
     <select id="getOrderById" parameterType="int" resultType="order">
         SELECT o.*, s.shop_name AS shopName, s.shop_status AS shopStatus
-        FROM Orders o
-        JOIN Shop s ON o.shop_id = s.shop_id
+        FROM orders o
+        JOIN shop s ON o.shop_id = s.shop_id
         WHERE  o.orders_id = #{orders_id}
     </select>
 
     <update id="updateOrderStatus">
-        UPDATE Orders SET orders_status = #{status} WHERE orders_id = #{orders_id}
+        UPDATE orders SET orders_status = #{status} WHERE orders_id = #{orders_id}
     </update>
 
     <!-- <insert id="assignDelivery">
@@ -73,12 +73,12 @@
     </insert> -->
 
     <insert id="assignDelivery" useGeneratedKeys="true" keyProperty="deliveries_id">
-        INSERT INTO Deliveries (raiders_id, deliveries_method, orders_id)
+        INSERT INTO deliveries (raiders_id, deliveries_method, orders_id)
         VALUES (#{raiders_id}, #{deliveries_method}, #{orders_id})
     </insert>
 
     <insert id="insertDeliveryHistory">
-        INSERT INTO Delivery_history (delivery_history_id, delivery_history_status, deliveries_id)
+        INSERT INTO delivery_history (delivery_history_id, delivery_history_status, deliveries_id)
         VALUES (null, #{status}, #{deliveries_id})
     </insert>
 
@@ -89,12 +89,12 @@
         d.deliveries_method AS deliveries_method, 
         a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, 
         m.member_nickname AS member_nickname, o.orders_drequest AS orders_drequest
-    FROM Orders o
-    JOIN Shop s ON o.shop_id = s.shop_id
-    LEFT JOIN Deliveries d ON o.orders_id = d.orders_id
-    JOIN Addr a ON o.addr_id = a.addr_id
-    JOIN Member m ON a.member_id = m.member_id
-    JOIN Riders r ON r.raiders_id = #{raiders_id}
+    FROM orders o
+    JOIN shop s ON o.shop_id = s.shop_id
+    LEFT jOIN Deliveries d ON o.orders_id = d.orders_id
+    JOIN addr a ON o.addr_id = a.addr_id
+    JOIN member m ON a.member_id = m.member_id
+    JOIN riders r ON r.raiders_id = #{raiders_id}
     WHERE o.orders_status = #{status}
     AND (
         r.riders_region IS NULL
@@ -110,40 +110,40 @@
         SELECT o.*, d.deliveries_method AS deliveries_method, s.shop_name AS shop_name, 
             s.shop_addr AS shop_addr, m.member_nickname AS member_nickname, 
             a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, o.orders_drequest
-        FROM Orders o
-        JOIN Deliveries d ON o.orders_id = d.orders_id 
+        FROM orders o
+        JOIN deliveries d ON o.orders_id = d.orders_id 
         JOIN (
             SELECT deliveries_id, delivery_history_status, delivery_history_id
-            FROM Delivery_history
+            FROM delivery_history
             WHERE delivery_history_status IN ('배차 완료', '픽업 대기', '배달 중')
         ) dh ON d.deliveries_id = dh.deliveries_id 
-        JOIN Shop s ON o.shop_id = s.shop_id 
-        JOIN Addr a ON o.addr_id = a.addr_id
-        JOIN Member m ON a.member_id = m.member_id
+        JOIN shop s ON o.shop_id = s.shop_id 
+        JOIN addr a ON o.addr_id = a.addr_id
+        JOIN member m ON a.member_id = m.member_id
         WHERE d.raiders_id = #{raiders_id}
         ORDER BY o.orders_id;
     </select>
 
     <select id="getAddrById" parameterType="int" resultType="addr">
-        SELECT * FROM Addr WHERE addr_id = #{addr_id}
+        SELECT * FROM addr WHERE addr_id = #{addr_id}
     </select>
 
     <select id="getShopById" parameterType="int" resultType="shop">
-        SELECT * FROM Shop WHERE shop_id = #{shop_id}
+        SELECT * FROM shop WHERE shop_id = #{shop_id}
     </select>
 
     <select id="findCompletedOrdersByRider" parameterType="int" resultType="order">
         SELECT * 
-        FROM Orders o
-        JOIN Deliveries d ON o.orders_id = d.orders_id
-        JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-        JOIN Shop s ON o.shop_id = s.shop_id
+        FROM orders o
+        JOIN deliveries d ON o.orders_id = d.orders_id
+        JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+        JOIN shop s ON o.shop_id = s.shop_id
         WHERE d.raiders_id = #{raiders_id} AND dh.delivery_history_status = '배달 완료'
     </select>
 
     <update id="updateDeliveryHistory">
-        UPDATE Delivery_history SET delivery_history_status = #{status}
-        WHERE deliveries_id = (SELECT deliveries_id FROM Deliveries WHERE orders_id = #{orders_id})
+        UPDATE delivery_history SET delivery_history_status = #{status}
+        WHERE deliveries_id = (SELECT deliveries_id FROM deliveries WHERE orders_id = #{orders_id})
     </update>
 
 
@@ -151,8 +151,8 @@
     <!-- 수수료TEST-->
     <select id="getTotalCommissionByRiderId" parameterType="int" resultType="double">
     SELECT SUM(orders_price * 0.03) 
-    FROM Orders o
-    JOIN Deliveries d ON o.orders_id = d.orders_id
+    FROM orders o
+    JOIN deliveries d ON o.orders_id = d.orders_id
     WHERE d.raiders_id = #{raiders_id}
     </select>
 

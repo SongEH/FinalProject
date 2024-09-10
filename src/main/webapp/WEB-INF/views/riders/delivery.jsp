@@ -137,19 +137,30 @@
         padding: 20px;
       }
 
+      .order-progress-box,
+      .completed-order-box,
       .order-box {
         padding: 15px;
         margin: 10px 0;
         background-color: #ffebd4;
         border: 1px solid #ddd;
         border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* 모바일에서의 재배치 */ 
       }
 
+      .order-progress-info div,
+      .completed-order-info div,
       .order-info div {
+        flex: 1;
         margin-bottom: 5px;
       }
 
       .assign-button {
+        width: 200px;
+        height: 100px;
         padding: 10px 15px;
         background-color: #f0a8d0;
         color: white;
@@ -157,6 +168,7 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        font-size: 30px;
       }
 
       .assign-button:hover {
@@ -170,13 +182,41 @@
         border-radius: 5px;
       }
 
-      .order-progress-box,
-      .completed-order-box {
-        padding: 20px;
-        background-color: #ffebd4;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 200px;
+      }
+
+      select {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 5px;
+      }
+
+      /* 작은 창 환경에서만 배달 수단이 버튼 위로 */
+      @media (max-width: 600px) {
+        .order-box {
+        }
+
+        form {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .assign-button {
+          margin-top: 10px;
+          height: 75px;
+          align-items: center;
+          width: 70%;
+        }
+
+        select {
+          width: 80%;
+          margin-bottom: 10px;
+        }
       }
 
       /* Responsive styles */
@@ -294,6 +334,7 @@
     </div>
 
     <script>
+
       function loadPage(url) {
         fetch(url)
           .then((response) => response.text())

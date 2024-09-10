@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import first.final_project.dao.CartsMapper;
 import first.final_project.service.PaymentService;
 import first.final_project.vo.PaymentVo;
 
@@ -20,6 +21,9 @@ public class PaymentController {
 
     @Autowired
     PaymentService paymentService;
+
+    @Autowired
+	CartsMapper carts_mapper;
 
     // public PaymentController(PaymentService paymentService) {
     // this.paymentService = paymentService;
@@ -42,21 +46,22 @@ public class PaymentController {
     // order tabel에 insert
     @RequestMapping(value = "/payment/insert.do")
     @ResponseBody
-    public void orders_insert(PaymentVo vo, RedirectAttributes ra) {
-
-        System.out.println("도착");
-
+    public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {
+        
         System.out.println(vo);
 
-        System.out.println("DB 인서트 전!!!");
         try {
-            int res = paymentService.insert(vo);
-            System.out.println("DB 인서트 완료");
-        } catch (Exception e) {
+            paymentService.insert(vo);      
 
+            Integer orders_id = vo.getOrders_id();
+            System.out.println(orders_id);
+            
+            // 주문 후에는 장바구니 테이블에 주문 id 부여 (더이상 장바구니에 표시안되도록)
+            // carts_mapper.updateOrderId(orders_id, shop_id, member_id);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @GetMapping("/api/payment/data/{impUid}")

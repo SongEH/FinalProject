@@ -26,10 +26,10 @@ public class AddrController {
   HttpServletRequest request;
 
   @Autowired
-  AddrMapper addrMapper;
+  AddrMapper addr_mapper;
 
   @Autowired
-  MemberMapper memberMapper;
+  MemberMapper member_mapper;
 
   // 주소 조회
   @RequestMapping("addr_list.do")
@@ -44,7 +44,7 @@ public class AddrController {
 
     Integer member_id = user.getMember_id();
 
-    List<AddrVo> addr_list = addrMapper.selectList(member_id);
+    List<AddrVo> addr_list = addr_mapper.selectList(member_id);
 
     model.addAttribute("addr_list", addr_list);
 
@@ -72,7 +72,7 @@ public class AddrController {
 
     vo.setMember_id(user.getMember_id());
 
-    addrMapper.insert(vo);
+    addr_mapper.insert(vo);
 
     session.setAttribute("vo", vo);
 
@@ -87,7 +87,7 @@ public class AddrController {
       return "redirect:/member/login_form.do";
     }
 
-    AddrVo addr = addrMapper.selectOneFromIdx(addr_id);
+    AddrVo addr = addr_mapper.selectOneFromIdx(addr_id);
 
     if (addr == null) {
       return "redirect:/addr/addr_list.do";
@@ -118,7 +118,7 @@ public class AddrController {
     vo.setAddr_name(addr_name);
     vo.setMember_id(user.getMember_id());
 
-    addrMapper.update(vo);
+    addr_mapper.update(vo);
 
     return "redirect:/addr/addr_list.do";
   }
@@ -131,7 +131,7 @@ public class AddrController {
       return "redirect:/member/login_form.do";
     }
 
-    addrMapper.delete(addr_id);
+    addr_mapper.delete(addr_id);
 
     session.setAttribute("addr_id", addr_id);
     session.setAttribute("user", user);

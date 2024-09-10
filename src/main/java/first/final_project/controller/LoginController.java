@@ -29,13 +29,13 @@ public class LoginController {
     HttpSession session;
 
     @Autowired
-    MemberMapper memberMapper;
+    MemberMapper member_mapper;
 
     @Autowired
-    OwnerMapper ownerMapper;
+    OwnerMapper owner_mapper;
 
     @Autowired
-    AdminMapper adminMapper;
+    AdminMapper admin_mapper;
 
     // 회원가입 폼
     @RequestMapping("insert_form.do")
@@ -46,7 +46,7 @@ public class LoginController {
     // 회원가입
     @RequestMapping("/member/insert.do")
     public String insert(MemberVo vo) {
-        memberMapper.insert(vo);
+        member_mapper.insert(vo);
 
         session.setAttribute("vo", vo);
 
@@ -56,7 +56,7 @@ public class LoginController {
     // 사장 회원가입
     @RequestMapping("/owner/insert.do")
     public String insert(OwnerVo vo) {
-        ownerMapper.insert(vo);
+        owner_mapper.insert(vo);
         return "redirect:/login_form.do";
     }
 
@@ -70,7 +70,7 @@ public class LoginController {
     @RequestMapping("/member/login.do")
     public String member_login(String member_accountId, String member_pwd, String url, RedirectAttributes ra) {
 
-        MemberVo user = memberMapper.selectOneFromId(member_accountId);
+        MemberVo user = member_mapper.selectOneFromId(member_accountId);
 
         if (user == null) {
             ra.addAttribute("reason", "fail_id");
@@ -102,7 +102,7 @@ public class LoginController {
     @RequestMapping("/member/check_member_accountId.do")
     @ResponseBody
     public Map<String, Boolean> check_member_id(@RequestParam("member_accountId") String member_accountId) {
-        MemberVo vo = memberMapper.selectOneFromId(member_accountId);
+        MemberVo vo = member_mapper.selectOneFromId(member_accountId);
         boolean bResult = (vo == null);
         Map<String, Boolean> map = new HashMap<>();
         map.put("result", bResult);
@@ -113,7 +113,7 @@ public class LoginController {
     @RequestMapping("/member/check_member_nickname.do")
     @ResponseBody
     public Map<String, Boolean> check_nickname(@RequestParam("member_nickname") String member_nickname) {
-        MemberVo vo = memberMapper.selectOneFromNickname(member_nickname);
+        MemberVo vo = member_mapper.selectOneFromNickname(member_nickname);
         boolean bResult = (vo == null);
         Map<String, Boolean> map = new HashMap<>();
         map.put("result", bResult);
@@ -124,7 +124,7 @@ public class LoginController {
     @RequestMapping("/owner/login.do")
     public String owner_login(String owner_accountId, String owner_pwd, RedirectAttributes ra) {
 
-        OwnerVo user = ownerMapper.selectOneFromId(owner_accountId);
+        OwnerVo user = owner_mapper.selectOneFromId(owner_accountId);
 
         if (user == null) {
             ra.addAttribute("reason", "fail_id");
@@ -161,7 +161,7 @@ public class LoginController {
     @RequestMapping("/owner/check_owner_accountId.do")
     @ResponseBody
     public Map<String, Boolean> check_owner_id(@RequestParam("owner_accountId") String owner_accountId) {
-        OwnerVo vo = ownerMapper.selectOneFromId(owner_accountId);
+        OwnerVo vo = owner_mapper.selectOneFromId(owner_accountId);
         boolean bResult = (vo == null);
         Map<String, Boolean> map = new HashMap<>();
         map.put("result", bResult);
@@ -172,7 +172,7 @@ public class LoginController {
     @RequestMapping("/admin/login.do")
     public String admin_login(String admin_accountId, String admin_pwd, RedirectAttributes ra) {
 
-        AdminVo user = adminMapper.selectOneFromId(admin_accountId);
+        AdminVo user = admin_mapper.selectOneFromId(admin_accountId);
 
         if (user == null) {
             ra.addAttribute("reason", "fail_id");
@@ -189,7 +189,7 @@ public class LoginController {
 
         session.setAttribute("user", user);
 
-        return "redirect:../main.do";
+        return "redirect:/main.do";
     }
 
     // 로그아웃

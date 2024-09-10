@@ -1,12 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %> <%@ page import="first.final_project.vo.OwnerVo" %> <%@
-page import="first.final_project.vo.MemberVo" %> <%@ page
-import="first.final_project.vo.AdminVo" %> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %> <% // 세션에서 user 객체를 가져옴
-Object user = session.getAttribute("user"); // 사용자 객체 타입에 따라 문자열을
-설정합니다 String userType = "UNKNOWN"; if (user instanceof AdminVo) { userType
-= "ADMIN"; } else if (user instanceof MemberVo) { userType = "MEMBER"; } else if
-(user instanceof OwnerVo) { userType = "OWNER"; } %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> 
+
+<%@ page import="first.final_project.vo.OwnerVo" %> 
+
+<%@ page import="first.final_project.vo.MemberVo" %> 
+
+<%@ page import="first.final_project.vo.AdminVo" %> 
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
+<% // 세션에서 user 객체를 가져옴
+Object user = session.getAttribute("user"); 
+// 사용자 객체 타입에 따라 문자열을 설정합니다 
+String userType = "UNKNOWN"; 
+if (user instanceof AdminVo) { userType = "ADMIN"; } 
+else if (user instanceof MemberVo) { userType = "MEMBER"; } 
+else if (user instanceof OwnerVo) { userType = "OWNER"; } %>
 
 <!DOCTYPE html>
 
@@ -23,8 +31,8 @@ Object user = session.getAttribute("user"); // 사용자 객체 타입에 따라
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
       <!--------------------- 사용자 로그인 시 --------------------->
-      <% // switch 문을 사용하여 userType에 따라 다르게 처리 switch (userType) {
-      case "MEMBER": %>
+      <% // switch 문을 사용하여 userType에 따라 다르게 처리 
+      switch (userType) {case "MEMBER": %>
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
           <a class="nav-link collapsed" href="/main.do">

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
@@ -78,15 +77,15 @@ public class OrderController {
 		model.addAttribute("list", list);
 		model.addAttribute("user", user);
 		model.addAttribute("shop_id", shop_id);
-		
+
 		model.addAttribute("shop_name", shop_name);
 
-		// 주소 처리 
-		// 1. 현재 로그인한 사용자의 주소목록을 가져옴 
+		// 주소 처리
+		// 1. 현재 로그인한 사용자의 주소목록을 가져옴
 		List<AddrVo> addr_list = addr_mapper.selectList(user.getMember_id());
 		model.addAttribute("addr_list", addr_list);
 
-		// 2. 등록된 주소 이외의 추가 주소정보 등록 
+		// 2. 등록된 주소 이외의 추가 주소정보 등록
 
 		return "order/order_pending_list";
 	}
@@ -119,5 +118,7 @@ public class OrderController {
 
 		return "redirect:list.do";
 	}
+
+
 
 }

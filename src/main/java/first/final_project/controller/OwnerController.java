@@ -22,7 +22,7 @@ public class OwnerController {
     HttpSession session;
 
     @Autowired
-    OwnerMapper ownerMapper;
+    OwnerMapper owner_mapper;
 
     // 사장의 마이페이지
     @RequestMapping("ownerpage.do")
@@ -31,7 +31,7 @@ public class OwnerController {
         if (user == null) {
             return "redirect:/login_form.do";
         }
-        OwnerVo owner = ownerMapper.selectOneFromIdx(user.getOwner_id());
+        OwnerVo owner = owner_mapper.selectOneFromIdx(user.getOwner_id());
         model.addAttribute("owner", owner);
 
         return "owner/owner_page";
@@ -45,7 +45,7 @@ public class OwnerController {
             return "redirect:/login_form.do";
         }
 
-        OwnerVo owner = ownerMapper.selectOneFromIdx(user.getOwner_id());
+        OwnerVo owner = owner_mapper.selectOneFromIdx(user.getOwner_id());
         model.addAttribute("owner", owner);
         return "owner/ownerpage_modify";
 
@@ -54,7 +54,7 @@ public class OwnerController {
     // 사장의 마이페이지에서 수정을 처리하는 메소드
     @RequestMapping(value = "ownerpage/modify.do", method = RequestMethod.POST)
     public String ownerPageEdit(OwnerVo vo) {
-        ownerMapper.update(vo);
+        owner_mapper.update(vo);
         session.setAttribute("owner", vo);
         return "redirect:/owner/ownerpage.do";
     }
@@ -62,7 +62,7 @@ public class OwnerController {
     // 사장의 마이페이지에서 회원 탈퇴
     @RequestMapping(value = "ownerpage/delete.do", method = RequestMethod.GET)
     public String ownerPageDelete(@RequestParam int owner_id) {
-        ownerMapper.delete(owner_id);
+        owner_mapper.delete(owner_id);
         session.invalidate();
         return "redirect:/main.do";
     }

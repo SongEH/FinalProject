@@ -74,12 +74,13 @@ pageEncoding="UTF-8"%>
             readonly
           />
         </div>
-        <div class="mb-4">
-          <lable for="grade">회원등급:</lable>
+        
+        <div class="mb-4"></div>
+          <lable for="cdate">가입날짜:</lable>
           <input
             class="form-control"
-            type="icon"
-            value="${member.member_grade}"
+            type="text"
+            value="${member.member_cdate}"
             readonly
           />
         </div>

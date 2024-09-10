@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        select * from member order by member_id
     </select>
 
-    <!--회원 일련번호 이용해서 MemberVo 구하기-->
+    <!-- 회원 일련번호 이용해서 MemberVo 구하기 -->
     <select id="selectOneFromIdx" parameterType="int" resultType="member">
         select * from member where member_id=#{member_id}
     </select>
@@ -53,5 +53,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="delete" parameterType="int">
         delete from member where member_id=#{member_id}
     </delete>
+
+    <!-- 09/10 수정 -->
+    <!-- 회원의 주문 건수를 업데이트 -->
+    <update id="updateOrderCount">
+        UPDATE member
+        SET member_monthOrder = #{orderCount}
+        WHERE member_id = #{member_id}
+    </update>
+
+    <!-- 모든 회원의 주문 건수를 초기화 -->
+    <update id="resetOrderCounts">
+        UPDATE member
+        SET member_monthOrder = 0
+    </update>
+
+    <!-- 모든 회원의 등급을 업데이트 -->
+    <update id="resetGrades">
+        UPDATE member
+        SET grade_id = #{grade_id}
+    </update>
 
 </mapper>

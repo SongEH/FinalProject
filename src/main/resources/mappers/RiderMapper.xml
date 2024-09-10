@@ -146,4 +146,15 @@
         WHERE deliveries_id = (SELECT deliveries_id FROM Deliveries WHERE orders_id = #{orders_id})
     </update>
 
+
+
+    <!-- 수수료TEST-->
+    <select id="getTotalCommissionByRiderId" parameterType="int" resultType="double">
+    SELECT SUM(orders_price * 0.03) 
+    FROM Orders o
+    JOIN Deliveries d ON o.orders_id = d.orders_id
+    WHERE d.raiders_id = #{raiders_id}
+    </select>
+
+
 </mapper>

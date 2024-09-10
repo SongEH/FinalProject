@@ -230,7 +230,7 @@ header .login {
 
   <div class="container">
     <div class="store-list" >
-      <c:forEach var="vo" items="${list}"></c:forEach>
+      <c:forEach var="vo" items="${list}">
         <div class="store" onclick="selectOne('${vo.shop_id}');">
             <div class="store-left">
                 <div class="store-logo">
@@ -252,33 +252,6 @@ header .login {
     </div>
   </div>
       <!-- Add more stores similarly -->
-<!--   
-    <div class="container">
-      <main id="main">
-      <div class="menu-section">
-          <div class="row">
-            <c:forEach var="vo" items="${list}">
-            <div class="col-md-6 col-sm-12 menu-item" onclick="selectOne('${vo.shop_id}');">
-              <div class="row">
-                <div class="row-md2 col-sm-4">
-                  <img
-                    src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Shop Image"
-                    style="height: 100px" width="100%"
-                  />
-                </div>
-                <div class="row-md10 col-sm-8">
-                  <h2>${vo.shop_name}</h2>
-                  <p>${vo.shop_rate} | ${vo.shop_review_count}</p>
-                  <p>${vo.shop_min_price}</p>
-                </div>
-              </div>
-            </div>
-          </c:forEach>
-          </div>
-        
-      </div>
-  </main>
-  <div> -->
     <div id="insert_form_display"></div>
   </div>
   <div>

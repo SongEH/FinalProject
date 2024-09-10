@@ -7,11 +7,11 @@
     <!-- <insert id="insert" parameterType="first.final_project.vo.ShopVo"> -->
     <insert id="insert" parameterType="shop"> insert into shop ( shop_id, shop_name, shop_img,
         shop_addr, food_category, shop_call, shop_content, shop_min_price, shop_rate,
-        shop_stemp_count, shop_review_count, shop_open_time, shop_close_time, shop_close_day,
-        shop_area, shop_cdate, shop_mdate, shop_status ) values ( null, #{shop_name}, #{shop_img},
+        shop_stemp_count, shop_review_count, shop_hours, shop_close_day,
+        shop_area, shop_cdate, shop_mdate, shop_status, owner_id ) values ( null, #{shop_name}, #{shop_img},
         #{shop_addr}, #{food_category}, #{shop_call}, #{shop_content}, #{shop_min_price}, default,
-        default, default, #{shop_open_time}, #{shop_close_time}, #{shop_close_day}, #{shop_area},
-        default, default, #{shop_status} ) </insert>
+        default, default, #{shop_hours}, #{shop_close_day}, #{shop_area},
+        default, default, #{shop_status}, #{owner_id} ) </insert>
 
     <!-- 전체 리스트 조회  -->
     <select id="selectList" parameterType="String" resultType="shop"> select * from shop <where>

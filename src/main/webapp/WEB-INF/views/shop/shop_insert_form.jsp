@@ -11,34 +11,31 @@
         alert("도착 ");
 
         let shop_name = f.shop_name.value.trim();
-        console.log(f.shop_name.value);
+        // alert(f.shop_name.value);
         let shop_content = f.shop_content.value.trim();
-        console.log(f.shop_content.value);
+        // alert(f.shop_content.value);
         let shop_addr = f.shop_addr.value.trim();
-        console.log(f.shop_addr.value);
+        // alert(f.shop_addr.value);
         let shop_call= f.shop_call.value.trim();
-        console.log(f.shop_call.value);
+        // alert(f.shop_call.value);
         let shop_min_price = f.shop_min_price.value.trim();
-        console.log(f.shop_min_price.value);
-        let shop_open_time = f.shop_open_time.value.trim();
-        console.log(f.shop_open_time.value);
-        let shop_close_time = f.shop_close_time.value.trim();
-        console.log(f.shop_close_time.value);
+        // alert(f.shop_min_price.value);
+        let shop_hours = f.shop_hours.value.trim();
+        // alert(f.shop_hours.value);
         let shop_close_day = f.shop_close_day.value.trim();
-        console.log(f.shop_close_day.value);
+        // alert(f.shop_close_day.value);
         let shop_area = f.shop_area.value.trim();
-        console.log(f.shop_area.value);
+        // alert(f.shop_area.value);
         let food_category = f.food_category.value;
-        console.log(f.food_category.value);
+        // alert(f.food_category.value);
         let shop_status = f.shop_status.value;
-        console.log(f.shop_status.value);
+        // alert(f.shop_status.value);
+
+        alert("도착");
 
         if(f.shop_name==""){
           alert("가게 이름을 작성해주세요")
         }
-
-
-        alert(shop_status)
 
         f.action = "insert.do";
         f.submit();
@@ -77,6 +74,7 @@
 
                         <!-- Floating Labels Form -->
                         <form class="row g-3" method="POST" action="insert.do" enctype="multipart/form-data">
+                          <!-- <input type="hidden" value="" /> -->
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="상호명" name="shop_name">
@@ -87,7 +85,7 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <textarea class="form-control" placeholder="소개글" name="shop_content"
-                                tyle="height: 100px;"></textarea>
+                                style="height: 100px;"></textarea>
                               <label>가게소개글 </label>
                             </div>
                           </div>
@@ -112,18 +110,10 @@
                               <label>최소주문금액</label>
                             </div>
                           </div>
-    
                           <div class="col-md-12">
                             <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="영업시작시간" name="shop_open_time">
-                              <label>영업시작시간</label>
-                            </div>
-                          </div>
-    
-                          <div class="col-md-12">
-                            <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="영업마감시간" name="shop_close_time">
-                              <label>영업마감시간</label>
+                              <input type="text" class="form-control" placeholder="영업마감시간" name="shop_hours">
+                              <label>영업시간</label>
                             </div>
                           </div>
     

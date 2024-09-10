@@ -69,6 +69,8 @@ public class ShopController {
     public String shop_insert(ShopVo vo, RedirectAttributes ra, @RequestParam(name = "photo") MultipartFile photo)
             throws Exception {
 
+        
+        System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
 
         String absPath = application.getRealPath("/resources/images/");
@@ -86,6 +88,7 @@ public class ShopController {
         }
 
         vo.setShop_img(shop_img);
+        vo.setOwner_id(1);
         int res = shop_Service.insert(vo);
 
         return "redirect:list.do";
@@ -99,15 +102,15 @@ public class ShopController {
         System.out.println(shop_id);
         ShopVo shop_vo;
 
-        // try {
+        try {
             shop_vo = shop_Service.selectOne(shop_id);
             List<MenuVo> menu_list = menuMapper.selectList();
             model.addAttribute("shop_vo", shop_vo);
             model.addAttribute("menu_list", menu_list);
-        // } catch (Exception e) {
-        //     model.addAttribute("errorMessage", "fail_select_one");
-        //     return "error/error_page";
-        // }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "fail_select_one");
+            return "error/error_page";
+        }
 
         return "shop/shop_listOne";
     }

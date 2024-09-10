@@ -22,9 +22,15 @@ public class ShopServiceImpl implements ShopService {
     }
 
     // 가게 전체 리스트
+    // @Override
+    // public List<ShopVo> selectList() {
+    // return shopMapper.selectList();
+    // }
+
+    // 가게 카테고리별 출력
     @Override
-    public List<ShopVo> selectList() {
-        return shopMapper.selectList();
+    public List<ShopVo> selectList(String food_category) {
+        return shopMapper.selectList(food_category);
     }
 
     // 가게 1개 상세보기

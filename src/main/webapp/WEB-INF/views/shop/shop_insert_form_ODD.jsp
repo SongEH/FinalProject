@@ -118,16 +118,16 @@ pageEncoding="UTF-8"%>
                       <div class="col-md-12">
                         <div class="form-floating">
                           <select class="form-control" placeholder="음식카테고리" name="food_category">
-                            <option class="form-control" value="pork_trotters">족발 보쌈</option>
-                            <option class="form-control" value="korea_food">한식</option>
-                            <option class="form-control" value="japanese_food">돈까스 회 일식</option>
-                            <option class="form-control" value="west_food">피자/양식</option>
+                            <option class="form-control" value="pork_trotters">족발·보쌈</option>
+                            <option class="form-control" value="pizza">피자</option>
                             <option class="form-control" value="chicken">치킨</option>
+                            <option class="form-control" value="japanese_food">돈까스·회·일식</option>
+                            <option class="form-control" value="korea_food">한식</option>
                             <option value="chinese_food">중식</option>
                             <option value="asian_food">아시안</option>
-                            <option value="porridge_noodle">백반 죽 국수</option>
+                            <option value="porridge_noodle">백반·죽·국수</option>
                             <option value="snack_food">분식</option>
-                            <option value="desserts">디저트</option>
+                            <option value="desserts">카페·디저트</option>
                             <option value="fast_food">패스트푸드</option>
                           </select>
                         </div>

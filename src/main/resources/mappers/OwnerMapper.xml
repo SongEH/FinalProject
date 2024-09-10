@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insert" parameterType="owner">
-        INSERT INTO `Owner`(
+        INSERT INTO `owner`(
             `owner_name`,
             `owner_accountId`,
             `owner_pwd`,

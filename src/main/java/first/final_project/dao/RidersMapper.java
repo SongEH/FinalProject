@@ -38,7 +38,7 @@ public interface RidersMapper {
 
     int insertDeliveryHistory(@Param("status") String status, @Param("deliveries_id") int deliveries_id);
 
-    List<OrderVo> findOrdersByStatus(@Param("status") String status);
+    List<OrderVo> findOrdersByStatus(@Param("status") String status, @Param("raiders_id") int raiders_id);
 
     List<OrderVo> findOrdersByRiderAndStatus(Map<String, Object> params);
 

@@ -36,8 +36,8 @@ public class RidersService {
         return ridersMapper.getShopById(shop_id);
     }
 
-    public List<OrderVo> getOrdersByStatus(String status) {
-        return ridersMapper.findOrdersByStatus(status);
+    public List<OrderVo> getOrdersByStatus(String status, int raiders_id) {
+        return ridersMapper.findOrdersByStatus(status, raiders_id);
     }
 
     public List<OrderVo> getOrdersByRiderAndStatus(int raiders_id, String status) {

@@ -98,7 +98,6 @@ public class RiderController {
 			return "redirect:main.do";
 		}
 
-		// 세션에 사용자 정보 및 로그인 여부 설정
 		session.setAttribute("user", user);
 		session.setAttribute("isLoggedIn", true);
 
@@ -224,11 +223,19 @@ public class RiderController {
 	// 배차 대기 중인 주문 리스트
 	@GetMapping("/waiting-orders")
 	public String getWaitingOrders(Model model) {
-		List<OrderVo> orders = riderService.getOrdersByStatus("배차 대기");
+		// 세션에서 라이더 정보를 가져옴
 		HttpSession session = request.getSession();
 		RiderVo user = (RiderVo) session.getAttribute("user");
 
+		// 라이더 정보가 없을 경우
+		if (user == null) {
+			// 로그인 화면으로 리다이렉트
+			return "redirect:login_form.do";
+		}
+
 		int raiders_id = user.getRaiders_id();
+
+		List<OrderVo> orders = riderService.getOrdersByStatus("배차 대기", raiders_id);
 
 		if (orders == null || orders.isEmpty()) {
 			// 오류가 발생한 경우를 처리하거나 빈 목록을 반환

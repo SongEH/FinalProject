@@ -8,8 +8,6 @@
     </head>
      <script>
       function send(f) {
-        alert("도착 ");
-
         let shop_name = f.shop_name.value.trim();
         // alert(f.shop_name.value);
         let shop_content = f.shop_content.value.trim();
@@ -30,8 +28,6 @@
         // alert(f.food_category.value);
         let shop_status = f.shop_status.value;
         // alert(f.shop_status.value);
-
-        alert("도착");
 
         if(f.shop_name==""){
           alert("가게 이름을 작성해주세요")

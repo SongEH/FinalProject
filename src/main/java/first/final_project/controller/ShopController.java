@@ -41,11 +41,12 @@ public class ShopController {
 
     // 메인화면
     @RequestMapping("/shop/list.do")
-    public String shop_list(Model model) {
+    public String shop_list(String food_category, Model model) {
 
         List<ShopVo> list;
+        System.out.println(food_category);
         try {
-            list = shop_Service.selectList();
+            list = shop_Service.selectList(food_category);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_shop_list");
 
@@ -68,6 +69,8 @@ public class ShopController {
     public String shop_insert(ShopVo vo, RedirectAttributes ra, @RequestParam(name = "photo") MultipartFile photo)
             throws Exception {
 
+        
+        System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
 
         String absPath = application.getRealPath("/resources/images/");
@@ -85,41 +88,11 @@ public class ShopController {
         }
 
         vo.setShop_img(shop_img);
+        vo.setOwner_id(1);
         int res = shop_Service.insert(vo);
 
         return "redirect:list.do";
     }
-
-    // -------------------------------------------------------------------------------------------------------------
-    // @RequestMapping("/shop/insert.do")
-    // public String shop_insert(ShopVo vo, RedirectAttributes ra,
-    // @RequestParam(name="photo")List<MultipartFile> photo_list) {
-    // int res = 0 ;
-
-    // List<String> filename_list = new ArrayList<String>();
-
-    // String shop_img = null;
-
-    // for (MultipartFile photo : photo_list){
-    // if(!photo.isEmpty()){
-    // shop_img = photo.getOriginalFilename();
-    // File f = new File(filedir, shop_img);
-
-    // if(f.exists()){
-    // long tm = System.currentTimeMillis();
-    // shop_img = String.format("%d_%s", tm, shop_img);
-
-    // f = new File(filedir, shop_img);
-    // }
-
-    // photo.transferTo(f);
-    // filename_list.add(shop_img);
-    // }
-    // }
-
-    // return "redirect:list.do";
-    // }
-    // -------------------------------------------------------------------------------------------------------------
 
     // 가게 하나 선택
     @RequestMapping("/shop/select_one.do")

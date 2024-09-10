@@ -82,11 +82,13 @@
 </head>
 
 <body>
-  <!-- common import -->
   <%@include file="common.jsp" %>
 
   <!-- header import -->
   <%@include file="header.jsp" %>
+
+  <!-- side bar import -->
+  <%@include file="sidebar.jsp" %>
 
   <h1>메인 페이지</h1>
   카테고리를 선택하는 화면이 있어야됨

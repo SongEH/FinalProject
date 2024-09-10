@@ -99,15 +99,15 @@ public class ShopController {
         System.out.println(shop_id);
         ShopVo shop_vo;
 
-        try {
+        // try {
             shop_vo = shop_Service.selectOne(shop_id);
             List<MenuVo> menu_list = menuMapper.selectList();
             model.addAttribute("shop_vo", shop_vo);
             model.addAttribute("menu_list", menu_list);
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "fail_select_one");
-            return "error/error_page";
-        }
+        // } catch (Exception e) {
+        //     model.addAttribute("errorMessage", "fail_select_one");
+        //     return "error/error_page";
+        // }
 
         return "shop/shop_listOne";
     }

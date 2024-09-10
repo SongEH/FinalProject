@@ -151,6 +151,7 @@ header .login {
 
       function selectOne(shop_id){
 
+        alert(shop_id);
         $.ajax({
           url     :     "/shop/select_one.do",
           data    :      {"shop_id": shop_id},
@@ -228,78 +229,26 @@ header .login {
 
 
   <div class="container">
-  <div class="store-list">
-      <div class="store">
-          <div class="store-left">
-              <div class="store-logo">
-                  <img src="store1-logo.png" alt="Store 1 Logo">
-              </div>
-              <div class="store-info">
-                  <strong>고돼지-관악본점</strong>
-                  <div>
-                      <span class="rating">★ 4.8</span>
-                      리뷰 4142 · 사장님댓글 1352
-                  </div>
-                  <div>11,000원 이상 배달</div>
-                  <div class="delivery-time">47~62분</div>
-              </div>
-          </div>
-          <div class="coupon">2,000원 할인</div>
-      </div>
-  
-      <div class="store">
-          <div class="store-left">
-              <div class="store-logo">
-                  <img src="store2-logo.png" alt="Store 2 Logo">
-              </div>
-              <div class="store-info">
-                  <strong>청년피자-사당방배점</strong>
-                  <div>
-                      <span class="rating">★ 4.9</span>
-                      리뷰 7562 · 사장님댓글 706
-                  </div>
-                  <div>17,900원 이상 배달</div>
-                  <div class="delivery-time">37~52분</div>
-              </div>
-          </div>
-          <div class="coupon">4,000원 할인</div>
-      </div>
-  
-      <div class="store">
-          <div class="store-left">
-              <div class="store-logo">
-                  <img src="store3-logo.png" alt="Store 3 Logo">
-              </div>
-              <div class="store-info">
-                  <strong>또래오래-봉천2호점</strong>
-                  <div>
-                      <span class="rating">★ 4.7</span>
-                      리뷰 4543 · 사장님댓글 305
-                  </div>
-                  <div>19,000원 이상 배달</div>
-                  <div class="delivery-time">52~67분</div>
-              </div>
-          </div>
-          <div class="coupon">4,000원 할인</div>
-      </div>
-  
-      <div class="store">
-          <div class="store-left">
-              <div class="store-logo">
-                  <img src="store4-logo.png" alt="Store 4 Logo">
-              </div>
-              <div class="store-info">
-                  <strong>치킨플러스-서울대역점</strong>
-                  <div>
-                      <span class="rating">★ 4.6</span>
-                      리뷰 162 · 사장님댓글 26
-                  </div>
-                  <div>15,900원 이상 배달</div>
-                  <div class="delivery-time">38~53분</div>
-              </div>
-          </div>
-          <div class="coupon">3,000원 할인</div>
-      </div>
+    <div class="store-list" >
+      <c:forEach var="vo" items="${list}"></c:forEach>
+        <div class="store" onclick="selectOne('${vo.shop_id}');">
+            <div class="store-left">
+                <div class="store-logo">
+                    <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Store 1 Logo">
+                </div>
+                <div class="store-info">
+                    <strong>${vo.shop_name}</strong>
+                    <div>
+                        <span class="rating">★ ${vo.shop_rate}</span>
+                        ${vo.shop_review_count}리뷰 4142 · 사장님댓글 1352
+                    </div>
+                    <div>${vo.shop_min_price} 11,000원 이상 배달</div>
+                    <div class="delivery-time">47~62분</div>
+                </div>
+            </div>
+            <div class="coupon">2,000원 할인</div>
+        </div>
+      </c:forEach>
     </div>
   </div>
       <!-- Add more stores similarly -->

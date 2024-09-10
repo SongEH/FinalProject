@@ -1,8 +1,6 @@
 package first.final_project.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.CartsMapper;
-import first.final_project.util.MyCommon;
-import first.final_project.util.Paging;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
 import jakarta.servlet.ServletContext;
@@ -43,35 +39,11 @@ public class CartsController {
 	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
 
-		// 게시물의 범위 계산(start/end)
-		// int start = (nowPage - 1) * MyCommon.Menu.BLOCK_LIST + 1;
-		// int end = start + MyCommon.Menu.BLOCK_LIST - 1;
-
-		// Map<String, Object> map = new HashMap<String, Object>();
-		// map.put("start", start);
-		// map.put("end", end);
-
-		// // 페이징된 리스트를 가져온다
-		// List<CartsVo> list = carts_mapper.selectPageList(map);
-
 		List<CartsVo> list = carts_mapper.selectList();
-
-		// 전체 게시물수
-		int rowTotal = carts_mapper.selectRowTotal();
-
-		System.out.println(rowTotal);
 		System.out.println(list);
 
-		// pageMenu만들기
-		// String pageMenu = Paging.getPaging("list.do", // pageURL
-		// nowPage, // 현재페이지
-		// rowTotal, // 전체게시물수
-		// MyCommon.Menu.BLOCK_LIST, // 한화면에 보여질 게시물수
-		// MyCommon.Menu.BLOCK_PAGE); // 한화면에 보여질 페이지수
-
-		// 결과적으로 request binding
+		// request binding
 		model.addAttribute("list", list);
-		// model.addAttribute("pageMenu", pageMenu);
 
 		return "carts/carts_list";
 	}
@@ -102,11 +74,7 @@ public class CartsController {
 
 			vo.setMember_id(member_id);
 			vo.setMenu_id(menu_id);
-			vo.setShop_id(shop_id); // 현재 선택한 가게 id 가져오기 !!!!!!!!!!!!!!!!!!!!!
-
-			System.out.println("Menu ID: " + vo.getMenu_id());
-			System.out.println("Shop ID: " + vo.getShop_id());
-			System.out.println("Quantity: " + vo.getCarts_quantity());
+			vo.setShop_id(shop_id);
 
 			carts_mapper.insert(vo);
 		}
@@ -118,12 +86,7 @@ public class CartsController {
 	// /carts/modify.do?carts_id=9&carts_quantity=5
 	@PostMapping("modify.do")
 	public String modify(int carts_id, int carts_quantity, RedirectAttributes ra) {
-
-		System.out.println("수정!!!!" + carts_id + " " + carts_quantity);
-
-		int res = carts_mapper.update(carts_id, carts_quantity);
-
-		// ra.addAttribute("page", page);
+		carts_mapper.update(carts_id, carts_quantity);
 
 		return "redirect:list.do";
 	}
@@ -137,10 +100,7 @@ public class CartsController {
 		// CartsVo 정보 얻어온다
 		CartsVo vo = carts_mapper.selectOne(carts_id);
 
-		// DB delete
-		int res = carts_mapper.delete(carts_id);
-
-		// ra.addAttribute("page", page);
+		carts_mapper.delete(carts_id);
 
 		return "redirect:list.do";
 

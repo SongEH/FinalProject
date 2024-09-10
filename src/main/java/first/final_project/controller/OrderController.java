@@ -66,19 +66,16 @@ public class OrderController {
 	@RequestMapping("pending_order.do")
 	public String insert(int shop_id, String shop_name, Model model) {
 
-		int member_id = 98;
-
-		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회한 결과
-		List<CartsVo> list = carts_mapper.findPendingOrders(member_id, shop_id);
-
 		// 현재 로그인한 사용자
 		MemberVo user = (MemberVo) session.getAttribute("user");
+
+		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회한 결과
+		List<CartsVo> list = carts_mapper.findPendingOrders(user.getMember_id(), shop_id);
 
 		// request binding
 		model.addAttribute("list", list);
 		model.addAttribute("user", user);
 		model.addAttribute("shop_id", shop_id);
-		
 		model.addAttribute("shop_name", shop_name);
 
 		// 주소 처리 
@@ -92,32 +89,32 @@ public class OrderController {
 	}
 
 	// 주문
-	@RequestMapping("insert.do")
-	public String insert(OrderVo vo) {
+	// @RequestMapping("insert.do")
+	// public String insert(OrderVo vo) {
 
-		String orders_drequest = vo.getOrders_drequest().replaceAll("\n", "<br>");
-		vo.setOrders_drequest(orders_drequest);
+	// 	String orders_drequest = vo.getOrders_drequest().replaceAll("\n", "<br>");
+	// 	vo.setOrders_drequest(orders_drequest);
 
-		String orders_srequest = vo.getOrders_srequest().replaceAll("\n", "<br>");
-		vo.setOrders_srequest(orders_srequest);
+	// 	String orders_srequest = vo.getOrders_srequest().replaceAll("\n", "<br>");
+	// 	vo.setOrders_srequest(orders_srequest);
 
-		// 아래 수동 setting 한건 추후 수정해야됨
-		vo.setOrders_name("주문테스트");
-		vo.setShop_id(1);
-		vo.setOrders_price(100000);
-		vo.setShop_name("맛집1");
-		vo.setAddr_id(99); // 주소 기능 구현완료 되면 추가하기
+	// 	// 아래 수동 setting 한건 추후 수정해야됨
+	// 	vo.setOrders_name("주문테스트");
+	// 	vo.setShop_id(1);
+	// 	vo.setOrders_price(100000);
+	// 	vo.setShop_name("맛집1");
+	// 	vo.setAddr_id(99); // 주소 기능 구현완료 되면 추가하기
 
-		// 현재 로그인한 사용자
-		MemberVo user = (MemberVo) session.getAttribute("user");
-		vo.setMember_id(user.getMember_id());
+	// 	// 현재 로그인한 사용자
+	// 	MemberVo user = (MemberVo) session.getAttribute("user");
+	// 	vo.setMember_id(user.getMember_id());
 
-		System.out.println(vo);
+	// 	System.out.println(vo);
 
-		// DB insert
-		int res = order_mapper.insert(vo);
+	// 	// DB insert
+	// 	int res = order_mapper.insert(vo);
 
-		return "redirect:list.do";
-	}
+	// 	return "redirect:list.do";
+	// }
 
 }

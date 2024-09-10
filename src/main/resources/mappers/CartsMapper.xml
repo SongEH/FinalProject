@@ -92,7 +92,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        where carts_id=#{ carts_id }
    </update>
 
-   
+   <!-- 주문한 메뉴는 장바구니 테이블에서 주문ID 추가  -->
+   <update id="updateOrderId" parameterType="Map">
+      update carts 
+         set orders_id=#{ orders_id }
+      where 
+         shop_id=#{ shop_id }
+         and member_id=#{ member_id }
+   </update>
 
    <!-- 조건에 맞는 장바구니 항목 조회 쿼리 -->
    <select id="findPendingOrders" resultType="carts">
@@ -103,9 +110,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          m.menu_img    AS menu_img,     -- Menu 테이블에서 메뉴 이미지명
          m.menu_price  AS menu_price    -- Menu 테이블에서 메뉴 가격
       FROM 
-         Carts c
+         carts c
       JOIN 
-         Menu m ON c.menu_id = m.menu_id
+         menu m ON c.menu_id = m.menu_id
       JOIN 
          shop s ON m.shop_id = s.shop_id
       WHERE 

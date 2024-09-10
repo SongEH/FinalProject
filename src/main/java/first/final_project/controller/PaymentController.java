@@ -1,5 +1,8 @@
 package first.final_project.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +26,7 @@ public class PaymentController {
     PaymentService paymentService;
 
     @Autowired
-	CartsMapper carts_mapper;
+    CartsMapper carts_mapper;
 
     // public PaymentController(PaymentService paymentService) {
     // this.paymentService = paymentService;
@@ -47,18 +50,23 @@ public class PaymentController {
     @RequestMapping(value = "/payment/insert.do")
     @ResponseBody
     public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {
-        
+
         System.out.println(vo);
 
         try {
-            paymentService.insert(vo);      
+            paymentService.insert(vo);
 
             Integer orders_id = vo.getOrders_id();
-            System.out.println(orders_id);
-            
-            // 주문 후에는 장바구니 테이블에 주문 id 부여 (더이상 장바구니에 표시안되도록)
-            // carts_mapper.updateOrderId(orders_id, shop_id, member_id);
+            System.out.println("orders_id : " + orders_id);
 
+            // 주문 후에는 장바구니 테이블에 주문 id 부여 
+            Map<String, Object> map = new HashMap<>();
+            map.put("orders_id", orders_id);
+            map.put("shop_id", shop_id);
+            map.put("member_id", member_id);
+
+            // update 메서드 호출
+            carts_mapper.updateOrderId(map);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -103,9 +103,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          m.menu_img    AS menu_img,     -- Menu 테이블에서 메뉴 이미지명
          m.menu_price  AS menu_price    -- Menu 테이블에서 메뉴 가격
       FROM 
-         Carts c
+         carts c
       JOIN 
-         Menu m ON c.menu_id = m.menu_id
+         menu m ON c.menu_id = m.menu_id
       JOIN 
          shop s ON m.shop_id = s.shop_id
       WHERE 

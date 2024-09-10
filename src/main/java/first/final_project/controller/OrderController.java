@@ -66,13 +66,11 @@ public class OrderController {
 	@RequestMapping("pending_order.do")
 	public String insert(int shop_id, String shop_name, Model model) {
 
-		int member_id = 98;
-
-		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회한 결과
-		List<CartsVo> list = carts_mapper.findPendingOrders(member_id, shop_id);
-
 		// 현재 로그인한 사용자
 		MemberVo user = (MemberVo) session.getAttribute("user");
+
+		// 장바구니 테이블에서 => 가게ID와 + 현재 사용자ID와 + orderID가 없는 것을 조회한 결과
+		List<CartsVo> list = carts_mapper.findPendingOrders(user.getMember_id(), shop_id);
 
 		// request binding
 		model.addAttribute("list", list);

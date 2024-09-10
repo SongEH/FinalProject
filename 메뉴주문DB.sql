@@ -3,7 +3,7 @@ create database finalproject;
 use finalproject;
 
 -- -------------------------------- 테이블 생성
-CREATE TABLE `Menu` (
+CREATE TABLE `menu` (
     `menu_id` INT NOT NULL AUTO_INCREMENT,
     `menu_category` VARCHAR(30) NOT NULL,
     `menu_name` VARCHAR(50) NOT NULL,
@@ -19,7 +19,8 @@ CREATE TABLE `Menu` (
     PRIMARY KEY (`menu_id`)
 );
 
-CREATE TABLE `Orders` (
+
+CREATE TABLE `orders` (
 	`orders_id`	INT	NOT NULL primary key auto_increment,
 	`orders_payment`	VARCHAR(30)	NOT NULL	COMMENT '간편결제(카카오페이,토스페이)',
 	`orders_method`	VARCHAR(30)	NOT NULL	DEFAULT "card",
@@ -41,8 +42,7 @@ CREATE TABLE `Orders` (
 	`member_id`	INT	NOT NULL
 );
 
-
-CREATE TABLE `Carts` (
+CREATE TABLE `carts` (
     `carts_id` INT NOT NULL AUTO_INCREMENT,
     `carts_quantity` INT NOT NULL DEFAULT 1,
     `member_id` INT NOT NULL,
@@ -52,6 +52,7 @@ CREATE TABLE `Carts` (
     `carts_cdate` DATE NOT NULL DEFAULT (CURRENT_DATE),
     PRIMARY KEY (`carts_id`)
 );
+
 
 CREATE TABLE `shop` (
     `shop_id` int not null primary key auto_increment,
@@ -75,15 +76,20 @@ CREATE TABLE `shop` (
 );
 
 -- -------------------------------- 조회
-SELECT * FROM MENU;
-SELECT * FROM Carts;
+SELECT * FROM member;
+SELECT * FROM owner;
+SELECT * FROM menu;
+SELECT * FROM carts;
 SELECT * FROM shop;
+SELECT * FROM orders;
+
 -- -------------------------------- 
 Drop table MENU;
-Drop table Carts;
+Drop table carts;
 Drop table shop;
+Drop table orders;
 
-
+-- -------------------------------- 
 delete from menu;
 delete from carts;
 delete from shop;
@@ -250,6 +256,12 @@ INSERT INTO `Carts` (
 -- --------------------------------------------------------
 
 
+SELECT * 
+        FROM Carts
+        WHERE member_id = 98
+          AND shop_id = 1
+          AND orders_id IS NULL;
+          
 SELECT 
 	 c.*,                  -- Carts 테이블의 모든 컬럼을 선택
 	 s.shop_name AS shop_name, -- shop 테이블에서 가게명

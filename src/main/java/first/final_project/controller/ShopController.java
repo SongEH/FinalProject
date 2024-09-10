@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.MenuMapper;
 import first.final_project.service.ShopService;
+import first.final_project.vo.MemberVo;
 import first.final_project.vo.MenuVo;
+import first.final_project.vo.OwnerVo;
 import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -69,6 +71,10 @@ public class ShopController {
     public String shop_insert(ShopVo vo, RedirectAttributes ra, @RequestParam(name = "photo") MultipartFile photo)
             throws Exception {
 
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        int owner_id = user.getOwner_id();
+        System.out.println(owner_id);
+        
         
         System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
@@ -88,7 +94,7 @@ public class ShopController {
         }
 
         vo.setShop_img(shop_img);
-        vo.setOwner_id(1);
+        vo.setOwner_id(owner_id);
         int res = shop_Service.insert(vo);
 
         return "redirect:list.do";
@@ -117,25 +123,26 @@ public class ShopController {
 
     // 가게 정보 수정
     @RequestMapping("/shop/modify_form.do")
-    public String shop_modify(@RequestParam(value = "shop_id") int shop_id, Model model) {
+    public String shop_modify(Model model) {
 
-        try {
-            ShopVo vo = shop_Service.select_modify_shop_id(shop_id);
-            model.addAttribute("vo", vo);
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "fail_select_one");
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        int owner_id = user.getOwner_id();
+        System.out.println("owner_id : " + owner_id);
 
-        }
+        ShopVo vo = shop_Service.select_modify_owner_id(owner_id);
+        System.out.println("수행");
+        System.out.println(vo.getShop_id());
+        model.addAttribute("vo", vo);
         return "shop/shop_modify_form";
     }
 
     // 가게 정보 수정 업데이트
     @RequestMapping("/shop/modify.do")
-    public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
+    public String shop_modify(ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
             Model model) {
         // 기존 이미지 불러오기
-        System.out.println(shop_id);
-        String filename = shop_Service.selectOne(shop_id).getShop_img();
+        System.out.println();
+        String filename = shop_Service.selectOne(vo.getShop_id()).getShop_img();
         System.out.println("vo.getShop_img filename = " + filename);
 
         String shop_img = "no_file";

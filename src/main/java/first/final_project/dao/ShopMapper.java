@@ -22,7 +22,7 @@ public interface ShopMapper {
     ShopVo selectOne(int shop_id);
 
     // 가게 정보 수정
-    ShopVo select_modify_shop_id(int shop_id);
+    ShopVo select_modify_owner_id(int owner_id);
 
     // 가게 정보 수정 업데이트
     int update(ShopVo vo);

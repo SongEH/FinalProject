@@ -40,9 +40,10 @@ public class ShopServiceImpl implements ShopService {
     }
 
     // 가게 1개 정보 가져와서 수정하기
+    
     @Override
-    public ShopVo select_modify_shop_id(int shop_id) {
-        return shopMapper.select_modify_shop_id(shop_id);
+    public ShopVo select_modify_owner_id(int owner_id) {
+        return shopMapper.select_modify_owner_id(owner_id);
     }
 
     // 가게 업데이트
@@ -56,4 +57,6 @@ public class ShopServiceImpl implements ShopService {
     public int delete(int shop_id) {
         return shopMapper.delete(shop_id);
     }
+
+   
 }

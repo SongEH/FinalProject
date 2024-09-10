@@ -80,8 +80,53 @@ header .login {
 .menu a:hover{
   cursor: pointer;
   color: #ff3366;
-} */
+}
 .store-list {
+    display: flex;
+    flex-wrap: wrap; /* This allows the stores to wrap to the next line if needed */
+    justify-content: space-between; /* Distribute space evenly between stores */
+    gap: 20px; /* Adds space between items */
+}
+
+/* Each store block */
+.store {
+    width: calc(50% - 10px); /* Each store takes 50% of the container's width, minus spacing */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Flex properties for the store info */
+.store-left {
+    display: flex;
+    flex-direction: row;
+}
+
+.store-logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.store-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.store .coupon {
+    background-color: #ff5f5f;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* .store-list {
   max-width: 1200px;
   margin: 20px auto;
   display: grid;
@@ -124,7 +169,7 @@ header .login {
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px;
-}
+} */
 .delivery-time {
   color: gray;
   font-size: 12px;
@@ -159,7 +204,7 @@ header .login {
                 alert("성공")
                 $("#select_one_display").html(res_data);
                 $("#insert_form_display").hide();
-                $("#main").hide();
+                $("#store-list").hide();
           },
           error   :   function(err){
             alert(error.responseText);
@@ -229,7 +274,7 @@ header .login {
 
 
   <div class="container">
-    <div class="store-list" >
+    <div class="store-list" id="store-list" >
       <c:forEach var="vo" items="${list}">
         <div class="store" onclick="selectOne('${vo.shop_id}');">
             <div class="store-left">

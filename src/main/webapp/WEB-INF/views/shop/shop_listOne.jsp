@@ -12,8 +12,9 @@ pageEncoding="UTF-8"%>
       body{
         width: 100%;
       }
-      .container{
+      .container-custom{
         margin:auto;
+        width: 1000px;
         /* justify-content: space-between; */
         /* padding: 20px 0;
         width: 1200px; 
@@ -33,33 +34,36 @@ pageEncoding="UTF-8"%>
         width: 70%;
       }
       .panel-right {
-        width: 330px;
+        /* width: 330px; */
         position: sticky;
         top: 30px;
       }
-       .store{
-        width: 1000px;
+       .shop{
+        /* width: 1000px; */
         margin: auto;
       }
       
-      .store-info {
-        width: 600px;
-      } 
-      .store-info h1 {
+      /* .shop-info { */
+        /* width: 600px; */
+      /* } */
+      .col-custom{
+        width:66.66667%;
+      }
+      .shop-info h1 {
           font-size: 20px;
           margin-bottom: 10px;
       }
-      .store-info img{
+      .shop-info img{
         width: 60px;
         height: 60px;
         padding-left: 10px;
       }
-      .store-info .rating {
+      .shop-info .rating {
         width: 100%;
           display: flex;
           align-items: center;
       }
-      .store-info .rating span {
+      .shop-info .rating span {
           font-size: 16px;
           margin-left: 5px;
       }
@@ -88,6 +92,12 @@ pageEncoding="UTF-8"%>
       .shop_info_list{
         border: 1px solid grey;
       }
+      .menu-tab input[type="button"] {
+        width: 100%;
+        height: 40px;
+        background-color: white;
+        border: 1px solid gray;
+      }
       .menu-section {
           width: 100%;
           margin-top: 20px;
@@ -104,8 +114,11 @@ pageEncoding="UTF-8"%>
 
       .menu-tab input[type="button"] {
         flex-shrink: 0;
+        padding:0;
       }
-
+      #menuButton:focus {
+        outline: none;
+      }
       .menu-tab .badge {
         margin-left: 10px;
       }
@@ -116,8 +129,26 @@ pageEncoding="UTF-8"%>
       .right-panel h2 {
           font-size: 20px;
       }
+      .menu-tab input:hover,
+      .menu-tab input:focus {
+        color : #F0A8D0;
+        font-size: 14px;
+        font-weight: bold;
+        border-bottom: 5px solid #F0A8D0;
+        transform: scale(1.05); /* Make button slightly larger on hover */
+      }
   </style>
+  <script>
+    function get_menu(shop_id){
+      alert(shop_id);
+    //   $.ajax({
+    //     url     :   
+
+    //   })
+    }
+  </script>
     <script>
+      // 특정 가게 삭제 
       function shop_del(shop_id){
         alert(shop_id);
         if(confirm("삭제하면 복구되지 않습니다?\n 정말 삭제하시겠습니까? ")==false) return;
@@ -137,14 +168,13 @@ pageEncoding="UTF-8"%>
     </script>
 
     <script>
+      // 선택한 가게 수정 
       function shop_modi(f){
-
         alert("여기?");
         alert(f.shop_id.value);
         f.action="modify_form.do";
         f.submit();
       }
-
     </script>
   </head>
   <body>
@@ -152,12 +182,12 @@ pageEncoding="UTF-8"%>
   <!-- 표현은 하지않고 활용하기 위한 데이터  -->
    <input type="hidden" name="shop_id" value="${shop_vo.shop_id}"/>
    
-<div class="container">
-  <div class="store">
+<div class="container-custom">
+  <div class="shop">
     <div class="row">
-        <!-- Left Panel (Store Information) -->
-        <div class="col-sm-8">
-            <div class="store-info">
+        <!-- Left Panel (shop Information) -->
+        <div class="col-md-8 col-sm-12 col-custom">
+            <div class="shop-info">
                 <div id="shop_name">${shop_vo.shop_name}</div>
                 
                 <div class="rating" id="shop_info">
@@ -173,25 +203,27 @@ pageEncoding="UTF-8"%>
                 </div>
                 <div id="shop_content">${shop_vo.shop_content}</div>
             </div>
-          <div class="row border" style="width:100%;">
-            <div class="col-sm-4">
+            
+          <div class="row" style="width:100%; margin-top: 30px;">
+            <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" value="메뉴 ${shop_vo.shop_stemp_count}" style="width: 100%;">
+                <input type="button" id="menuButton" value="메뉴 ${shop_vo.shop_stemp_count}"
+                onclick="get_menu('${shop_vo.shop_id}')">
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" value="클린리뷰"/>
+                <input type="button" id="reviewButton" value="클린리뷰"/>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" value="정보"/>
+                <input type="button" id="infoButton" value="정보"/>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4 col-sm-12">
           <div class="order_info">
           <!-- <div class="right-panel text-center p-3"> -->
             <div style="background-color:black; color:white; padding: 7px;">

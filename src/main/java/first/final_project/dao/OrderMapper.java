@@ -17,6 +17,5 @@ public interface OrderMapper {
 
     int delete(int carts_id);
 
-    // 회원의 모든 주문을 조회
-    List<OrderVo> selectOrderById(int member_id);
+
 }

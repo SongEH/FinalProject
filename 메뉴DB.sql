@@ -20,6 +20,7 @@ CREATE TABLE `Menu` (
 );
 
 CREATE TABLE `Orders` (
+<<<<<<< HEAD:메뉴DB.sql
     `orders_id` INT NOT NULL AUTO_INCREMENT,
     `orders_payment` VARCHAR(30) NOT NULL DEFAULT 'Easy Payment' COMMENT '간편결제(카카                            오페이, 토스페이)',
     `orders_price` INT NOT NULL,
@@ -34,6 +35,30 @@ CREATE TABLE `Orders` (
     PRIMARY KEY (`orders_id`)
 );
 
+=======
+	`orders_id`	INT	NOT NULL primary key auto_increment,
+	`orders_payment`	VARCHAR(30)	NOT NULL	COMMENT '간편결제(카카오페이,토스페이)',
+	`orders_method`	VARCHAR(30)	NOT NULL	DEFAULT "card",
+	`orders_imp_uid`	VARCHAR(30)	NOT NULL,
+	`orders_merchant_uid`	VARCHAR(20)	NOT NULL,
+	`orders_name`	VARCHAR(50)	NOT NULL,
+	`orders_price`	INT	NOT NULL,
+	`orders_srequest`	VARCHAR(255)	NULL,
+	`orders_drequest`	VARCHAR(255)	NULL,
+	`orders_cdate`	DATE	NOT NULL	DEFAULT (CURRENT_DATE),
+	`orders_status` VARCHAR(20) NOT NULL DEFAULT 'Order Confirmed' COMMENT 'Order Confirmed, 
+		Order Received, 
+		Cooking Started, 
+		Cooking Finished, 
+		Delivery Picked Up, 
+		Delivery Delivered',
+	`shop_id`	INT	NOT NULL,
+	`addr_id`	INT	NOT NULL,
+	`member_id`	INT	NOT NULL
+);
+
+
+>>>>>>> parent of b45aac4 (Merge pull request #35 from SongEH/한지혜브랜치2):메뉴주문DB.sql
 CREATE TABLE `Carts` (
     `carts_id` INT NOT NULL AUTO_INCREMENT,
     `carts_quantity` INT NOT NULL DEFAULT 1,

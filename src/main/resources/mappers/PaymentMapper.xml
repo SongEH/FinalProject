@@ -5,8 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="first.final_project.dao.PaymentMapper">
 
-    
-    <insert id="insert" parameterType="payment">
+    <insert id="insert" parameterType="payment" useGeneratedKeys="true" keyProperty="orders_id">
         insert into orders (
                             orders_id,
                             orders_payment,

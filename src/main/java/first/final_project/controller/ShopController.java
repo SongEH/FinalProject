@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.MenuMapper;
 import first.final_project.service.ShopService;
+import first.final_project.vo.MemberVo;
 import first.final_project.vo.MenuVo;
+import first.final_project.vo.OwnerVo;
 import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,11 +43,12 @@ public class ShopController {
 
     // 메인화면
     @RequestMapping("/shop/list.do")
-    public String shop_list(Model model) {
+    public String shop_list(String food_category, Model model) {
 
         List<ShopVo> list;
+        System.out.println(food_category);
         try {
-            list = shop_Service.selectList();
+            list = shop_Service.selectList(food_category);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_shop_list");
 
@@ -68,6 +71,12 @@ public class ShopController {
     public String shop_insert(ShopVo vo, RedirectAttributes ra, @RequestParam(name = "photo") MultipartFile photo)
             throws Exception {
 
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        int owner_id = user.getOwner_id();
+        System.out.println(owner_id);
+        
+        
+        System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
 
         String absPath = application.getRealPath("/resources/images/");
@@ -85,41 +94,11 @@ public class ShopController {
         }
 
         vo.setShop_img(shop_img);
+        vo.setOwner_id(owner_id);
         int res = shop_Service.insert(vo);
 
         return "redirect:list.do";
     }
-
-    // -------------------------------------------------------------------------------------------------------------
-    // @RequestMapping("/shop/insert.do")
-    // public String shop_insert(ShopVo vo, RedirectAttributes ra,
-    // @RequestParam(name="photo")List<MultipartFile> photo_list) {
-    // int res = 0 ;
-
-    // List<String> filename_list = new ArrayList<String>();
-
-    // String shop_img = null;
-
-    // for (MultipartFile photo : photo_list){
-    // if(!photo.isEmpty()){
-    // shop_img = photo.getOriginalFilename();
-    // File f = new File(filedir, shop_img);
-
-    // if(f.exists()){
-    // long tm = System.currentTimeMillis();
-    // shop_img = String.format("%d_%s", tm, shop_img);
-
-    // f = new File(filedir, shop_img);
-    // }
-
-    // photo.transferTo(f);
-    // filename_list.add(shop_img);
-    // }
-    // }
-
-    // return "redirect:list.do";
-    // }
-    // -------------------------------------------------------------------------------------------------------------
 
     // 가게 하나 선택
     @RequestMapping("/shop/select_one.do")
@@ -144,25 +123,26 @@ public class ShopController {
 
     // 가게 정보 수정
     @RequestMapping("/shop/modify_form.do")
-    public String shop_modify(@RequestParam(value = "shop_id") int shop_id, Model model) {
+    public String shop_modify(Model model) {
 
-        try {
-            ShopVo vo = shop_Service.select_modify_shop_id(shop_id);
-            model.addAttribute("vo", vo);
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "fail_select_one");
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        int owner_id = user.getOwner_id();
+        System.out.println("owner_id : " + owner_id);
 
-        }
+        ShopVo vo = shop_Service.select_modify_owner_id(owner_id);
+        System.out.println("수행");
+        System.out.println(vo.getShop_id());
+        model.addAttribute("vo", vo);
         return "shop/shop_modify_form";
     }
 
     // 가게 정보 수정 업데이트
     @RequestMapping("/shop/modify.do")
-    public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
+    public String shop_modify(ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
             Model model) {
         // 기존 이미지 불러오기
-        System.out.println(shop_id);
-        String filename = shop_Service.selectOne(shop_id).getShop_img();
+        System.out.println();
+        String filename = shop_Service.selectOne(vo.getShop_id()).getShop_img();
         System.out.println("vo.getShop_img filename = " + filename);
 
         String shop_img = "no_file";

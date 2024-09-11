@@ -6,18 +6,19 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import first.final_project.dao.CartsMapper;
+import first.final_project.service.MemberService;
 import first.final_project.service.PaymentService;
+import first.final_project.vo.MemberVo;
 import first.final_project.vo.PaymentVo;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PaymentController {
@@ -25,6 +26,12 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
+    // 09/10 유정 - MemberService & HttpSession 추가 자동 연결
+    @Autowired
+    MemberService member_service;
+
+    @Autowired
+    HttpSession session;
     @Autowired
     CartsMapper carts_mapper;
 
@@ -54,6 +61,18 @@ public class PaymentController {
         System.out.println(vo);
 
         try {
+
+            int res = paymentService.insert(vo);
+
+            // 현재 로그인한 사용자 정보를 가져옴
+            MemberVo user = (MemberVo) session.getAttribute("user");
+            if (user != null) {
+                // 회원의 주문 수를 업데이트
+                member_service.updateMemberOrder(user.getMember_id());
+            }
+            
+            System.out.println("DB 인서트 완료");
+        } catch (Exception e) {
             paymentService.insert(vo);
 
             Integer orders_id = vo.getOrders_id();

@@ -14,8 +14,10 @@ public class MemberVo {
     String member_phone;
     int member_monthOrder;
     String member_cdate;
-    String member_grade;
-    boolean member_active;
+    int grade_id;
+    String grade_name;
+
+    
 
     public MemberVo() {
     }
@@ -92,20 +94,20 @@ public class MemberVo {
         this.member_cdate = member_cdate;
     }
 
-    public String getMember_grade() {
-        return member_grade;
+    public int getGrade_id() {
+        return grade_id;
     }
 
-    public void setMember_grade(String member_grade) {
-        this.member_grade = member_grade;
+    public void setGrade_id(int grade_id) {
+        this.grade_id = grade_id;
     }
 
-    public boolean isMember_active() {
-        return member_active;
+    public String getGrade_name() {
+        return grade_name;
     }
 
-    public void setMember_active(boolean member_active) {
-        this.member_active = member_active;
+    public void setGrade_name(String grade_name) {
+        this.grade_name = grade_name;
     }
 
 }

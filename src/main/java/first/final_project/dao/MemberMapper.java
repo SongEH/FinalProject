@@ -3,6 +3,7 @@ package first.final_project.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.repository.query.Param;
 
 import first.final_project.vo.MemberVo;
 
@@ -22,6 +23,15 @@ public interface MemberMapper {
 
     int delete(int member_id);
 
-    void deactivate(int member_id);
+    // 09/10 수정
+    void updateOrderCount(@Param("member_id") int member_id, @Param("orderCount") int orderCount);
+
+    void resetOrderCounts();
+
+    void resetGrades(@Param("grade_id") int grade_id);
+
+
+
+
 
 }

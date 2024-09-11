@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.GradeMapper">
+
+    <select id="selectList" resultType="grade">
+        select * from grade order by grade_id
+    </select>
+
+    <select id="selectOne" parameterType="String" resultType="grade">
+        select * from grade where grade_name=#{grade_name}
+    </select>
+
+</mapper>
+
+

@@ -1,8 +1,5 @@
 package first.final_project.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +24,7 @@ public class PaymentController {
     PaymentService paymentService;
 
     @Autowired
-    CartsMapper carts_mapper;
+	CartsMapper carts_mapper;
 
     // 09/10 유정 - MemberService & HttpSession 추가 자동 연결
     @Autowired
@@ -57,14 +54,20 @@ public class PaymentController {
     // order tabel에 insert
     @RequestMapping(value = "/payment/insert.do")
     @ResponseBody
+<<<<<<< HEAD
     public void orders_insert(PaymentVo vo, RedirectAttributes ra,int shop_id,int member_id) {
 
         System.out.println("도착");
 
+=======
+    public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {
+        
+>>>>>>> parent of b45aac4 (Merge pull request #35 from SongEH/한지혜브랜치2)
         System.out.println(vo);
 
         System.out.println("DB 인서트 전!!!");
         try {
+<<<<<<< HEAD
 
             int res = paymentService.insert(vo);
 
@@ -77,10 +80,17 @@ public class PaymentController {
             
             System.out.println("DB 인서트 완료");
         } catch (Exception e) {
+=======
+            paymentService.insert(vo);      
+>>>>>>> parent of b45aac4 (Merge pull request #35 from SongEH/한지혜브랜치2)
 
             Integer orders_id = vo.getOrders_id();
-            System.out.println("orders_id : " + orders_id);
+            System.out.println(orders_id);
+            
+            // 주문 후에는 장바구니 테이블에 주문 id 부여 (더이상 장바구니에 표시안되도록)
+            // carts_mapper.updateOrderId(orders_id, shop_id, member_id);
 
+<<<<<<< HEAD
             // 주문 후에는 장바구니 테이블에 주문 id 부여 
             Map<String, Object> map = new HashMap<>();
             map.put("orders_id", orders_id);
@@ -90,6 +100,11 @@ public class PaymentController {
             // update 메서드 호출
             carts_mapper.updateOrderId(map);
         } 
+=======
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+>>>>>>> parent of b45aac4 (Merge pull request #35 from SongEH/한지혜브랜치2)
     }
 
     @GetMapping("/api/payment/data/{impUid}")

@@ -77,7 +77,11 @@ public class OrderController {
 		model.addAttribute("list", list);
 		model.addAttribute("user", user);
 		model.addAttribute("shop_id", shop_id);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> parent of b45aac4 (Merge pull request #35 from SongEH/한지혜브랜치2)
 		model.addAttribute("shop_name", shop_name);
 
 		// 주소 처리
@@ -112,6 +116,7 @@ public class OrderController {
 		vo.setMember_id(user.getMember_id());
 
 		System.out.println(vo);
+<<<<<<< HEAD
 
 		// DB insert
 		int res = order_mapper.insert(vo);
@@ -120,5 +125,13 @@ public class OrderController {
 	}
 
 
+=======
+
+		// DB insert
+		int res = order_mapper.insert(vo);
+
+		return "redirect:list.do";
+	}
+>>>>>>> parent of b45aac4 (Merge pull request #35 from SongEH/한지혜브랜치2)
 
 }

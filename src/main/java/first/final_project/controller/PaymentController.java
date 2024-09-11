@@ -86,9 +86,7 @@ public class PaymentController {
 
             // update 메서드 호출
             carts_mapper.updateOrderId(map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } 
     }
 
     @GetMapping("/api/payment/data/{impUid}")

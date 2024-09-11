@@ -26,7 +26,7 @@ prefix="c" %>
     <input
       type="button"
       value="주소 등록"
-      onclick="location.href='/addr/addr_insert_form.do'"
+      onclick="location.href='/addr/addr_insert_form.do?nextPath=addr_list'"
     />
 
     <table border="1">

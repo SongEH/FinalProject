@@ -1,11 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="delivery.jsp" />
 <!DOCTYPE html>
 <html>
   <head>
     <title>진행 중인 주문</title>
   </head>
   <body>
+    <div class="container">
+    <div class="content-wrapper">
+    <div id="content">
     <h2>진행 중인 주문</h2>
 
     <c:choose>
@@ -95,5 +99,8 @@
         </c:forEach>
       </c:otherwise>
     </c:choose>
+  </div>
+  </div>
+  </div>
   </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,9 @@ public class RiderController {
 
 	@Autowired
 	private KakaoMapService kakaoMapService;
+
+	@Autowired
+	private SimpMessagingTemplate messagingTemplate;
 
 	// ==========
 	@RequestMapping("main.do")
@@ -208,7 +212,10 @@ public class RiderController {
 			if (result) {
 				riderService.updateOrderStatus(orders_id, "배차 완료");
 
-				return "redirect:/riders/delivery"; // 성공 시 진행 상황 페이지로 리다이렉트
+				// WebSocket을 통해 클라이언트에 실시간 알림 전송
+				messagingTemplate.convertAndSend("/topic/orders", "Order " + orders_id + " has been assigned.");
+
+				return "redirect:/riders/orderProgress"; // 성공 시 진행 상황 페이지로 리다이렉트
 				// System.out.println("Order status updated to '배차 완료'");
 			}
 
@@ -274,7 +281,7 @@ public class RiderController {
 		// 배달 이력 상태도 '배달 중'으로 업데이트
 		riderService.updateDeliveryHistory(orders_id, "배달 중");
 
-		return "redirect:/riders/delivery"; // 진행 상황 페이지로 리다이렉트
+		return "redirect:/riders/orderProgress"; // 진행 상황 페이지로 리다이렉트
 	}
 
 	// 배달 완료 처리
@@ -286,7 +293,7 @@ public class RiderController {
 		// 배달 이력 상태도 '배달 완료'로 업데이트
 		riderService.updateDeliveryHistory(orders_id, "배달 완료");
 
-		return "redirect:/riders/delivery"; // 진행 상황 페이지로 리다이렉트
+		return "redirect:/riders/deliveryCompleted"; // 진행 상황 페이지로 리다이렉트
 	}
 
 	// 배달 경로를 표시하는 메서드
@@ -352,7 +359,12 @@ public class RiderController {
 			@RequestParam("delivery_time") String delivery_time) {
 		// riderService.setDeliveryTime(orders_id, delivery_time);
 		riderService.updateDeliveryHistory(orders_id, "배차 완료");
-		return "redirect:/riders/delivery";
+		return "redirect:/riders/orderProgress";
+	}
+
+	// 라이더가 배차를 받았을 때 클라이언트에게 알림 전송
+	public void notifyOrderUpdate(int ordersId, String status) {
+		messagingTemplate.convertAndSend("/topic/status", status);
 	}
 
 }

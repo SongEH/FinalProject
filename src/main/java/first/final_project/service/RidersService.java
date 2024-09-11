@@ -6,6 +6,7 @@ import first.final_project.vo.DeliveriesVo;
 import first.final_project.vo.OrderVo;
 import first.final_project.vo.ShopVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +20,16 @@ public class RidersService {
     @Autowired
     private RidersMapper ridersMapper;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     @Transactional
     public void updateOrderStatus(int orders_id, String status) {
+        // 주문 상태 업데이트
         ridersMapper.updateOrderStatus(orders_id, status);
+
+        // WebSocket으로 실시간 메시지 전송
+        messagingTemplate.convertAndSend("/topic/orders", "배차 완료!");
     }
 
     public OrderVo getOrderById(int orders_id) {

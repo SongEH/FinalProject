@@ -21,7 +21,6 @@
       .container {
         max-width: 900px;
         margin: 0 auto;
-        padding: 20px;
       }
 
       .content-wrapper {
@@ -238,6 +237,10 @@
           flex-direction: column;
         }
 
+        .route-button{
+          margin-bottom: 10px;
+        }
+
         .assign-button {
           margin-top: 10px;
           height: 75px;
@@ -246,7 +249,7 @@
         }
 
         .delivery-time-button {
-          margin-top: 10px;
+          margin-top: 5px;
           height: 75px;
           align-items: center;
           width: 70%;
@@ -261,7 +264,8 @@
       /* Responsive styles */
       @media (max-width: 768px) {
         .container {
-          padding: 15px;
+          padding-left: 15px;
+          padding-right: 15px;
         }
 
         .header {
@@ -350,37 +354,22 @@
 
         <div class="navigation">
           <button
-            onclick="loadPage('${pageContext.request.contextPath}/riders/waiting-orders')"
+            onclick="window.location.href='${pageContext.request.contextPath}/riders/waiting-orders'"
           >
             주문 대기
           </button>
           <button
-            onclick="loadPage('${pageContext.request.contextPath}/riders/progress')"
+            onclick="window.location.href='${pageContext.request.contextPath}/riders/progress'"
           >
             진행 상황
           </button>
           <button
-            onclick="loadPage('${pageContext.request.contextPath}/riders/completed')"
+            onclick="window.location.href='${pageContext.request.contextPath}/riders/completed'"
           >
             배달 완료
           </button>
         </div>
-
-        <div id="content">
-          <!-- Content will be loaded here -->
-        </div>
       </div>
     </div>
-
-    <script>
-
-      function loadPage(url) {
-        fetch(url)
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("content").innerHTML = data;
-          });
-      }
-    </script>
   </body>
 </html>

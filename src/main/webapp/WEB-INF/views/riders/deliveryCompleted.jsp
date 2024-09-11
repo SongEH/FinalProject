@@ -1,12 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="delivery.jsp" />
 <!DOCTYPE html>
 <html>
   <head>
     <title>배달 완료 내역</title>
   </head>
   <body>
+    <div class="container">
+    <div class="content-wrapper">
+    <div id="content">
     <h2>배달 완료 내역</h2>
 
     <c:forEach var="order" items="${completedOrders}">
@@ -23,5 +27,8 @@
         </div>
       </div>
     </c:forEach>
+  </div>
+  </div>
+  </div>
   </body>
 </html>

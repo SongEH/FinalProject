@@ -72,17 +72,8 @@ public class CartsController {
 			vo.setCarts_quantity(carts_quantity);
 			vo.setMember_id(memberId); // 현재 로그인한 사용자 id 가져오기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			vo.setMenu_id(menu_id);
-<<<<<<< HEAD
 			vo.setShop_id(shop_id);
 
-=======
-			vo.setShop_id(shop_id); // 현재 선택한 가게 id 가져오기 !!!!!!!!!!!!!!!!!!!!!
-	
-			System.out.println("Menu ID: " + vo.getMenu_id());
-			System.out.println("Shop ID: " + vo.getShop_id());
-			System.out.println("Quantity: " + vo.getCarts_quantity());
-	
->>>>>>> parent of df4ad24 (Merge branch '손유정브랜치' of https://github.com/SongEH/FinalProject into 손유정브랜치)
 			carts_mapper.insert(vo);
 		}
 		

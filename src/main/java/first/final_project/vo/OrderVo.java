@@ -25,4 +25,5 @@ public class OrderVo {
     private String member_nickname; // 추가
     private String addr_line1; // 추가
     private String addr_line2; // 추가
+    private String delivery_history_status; // 추가
 }

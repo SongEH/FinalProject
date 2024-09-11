@@ -346,4 +346,13 @@ public class RiderController {
 		return "riders/delivery";
 	}
 
+	// 라이더가 예상 배달 시간 선택
+	@PostMapping("/setDeliveryTime")
+	public String setDeliveryTime(@RequestParam("orders_id") int orders_id,
+			@RequestParam("delivery_time") String delivery_time) {
+		// riderService.setDeliveryTime(orders_id, delivery_time);
+		riderService.updateDeliveryHistory(orders_id, "배차 완료");
+		return "redirect:/riders/delivery";
+	}
+
 }

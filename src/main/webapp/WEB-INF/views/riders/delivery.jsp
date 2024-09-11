@@ -175,6 +175,40 @@
         background-color: #e090b5;
       }
 
+      .route-button {
+        width: 80px;
+        height: 40px;
+        padding: 10px 15px;
+        background-color: #f0a8d0;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 11px;
+      }
+
+      .route-button:hover {
+        background-color: #e090b5;
+      }
+
+      .delivery-time-button {
+        width: 200px;
+        height: 100px;
+        padding: 10px 15px;
+        background-color: #f0a8d0;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 25px;
+      }
+
+      .delivery-time-button:hover {
+        background-color: #e090b5;
+      }
+
       .alert {
         margin-bottom: 20px;
         padding: 15px;
@@ -198,8 +232,6 @@
 
       /* 작은 창 환경에서만 배달 수단이 버튼 위로 */
       @media (max-width: 600px) {
-        .order-box {
-        }
 
         form {
           width: 100%;
@@ -207,6 +239,13 @@
         }
 
         .assign-button {
+          margin-top: 10px;
+          height: 75px;
+          align-items: center;
+          width: 70%;
+        }
+
+        .delivery-time-button {
           margin-top: 10px;
           height: 75px;
           align-items: center;

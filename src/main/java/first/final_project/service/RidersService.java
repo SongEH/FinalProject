@@ -68,7 +68,7 @@ public class RidersService {
         int deliveries_id = deliveriesVo.getDeliveries_id();
 
         // 배차 이력 생성
-        int delivery_history_id = ridersMapper.insertDeliveryHistory("배차 완료", deliveries_id);
+        int delivery_history_id = ridersMapper.insertDeliveryHistory("배달 예상 시간 입력 중", deliveries_id);
 
         return delivery_history_id > 0;
     }

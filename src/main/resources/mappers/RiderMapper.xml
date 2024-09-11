@@ -109,13 +109,14 @@
     <select id="findOrdersByRiderAndStatus" parameterType="map" resultType="order">
         SELECT o.*, d.deliveries_method AS deliveries_method, s.shop_name AS shop_name, 
             s.shop_addr AS shop_addr, m.member_nickname AS member_nickname, 
-            a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, o.orders_drequest
+            a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, o.orders_drequest,
+            dh.delivery_history_status as delivery_history_status
         FROM orders o
         JOIN deliveries d ON o.orders_id = d.orders_id 
         JOIN (
             SELECT deliveries_id, delivery_history_status, delivery_history_id
             FROM delivery_history
-            WHERE delivery_history_status IN ('배차 완료', '픽업 대기', '배달 중')
+            WHERE delivery_history_status IN ('배달 예상 시간 입력 중','배차 완료', '픽업 대기', '배달 중')
         ) dh ON d.deliveries_id = dh.deliveries_id 
         JOIN shop s ON o.shop_id = s.shop_id 
         JOIN addr a ON o.addr_id = a.addr_id
@@ -145,9 +146,5 @@
         UPDATE delivery_history SET delivery_history_status = #{status}
         WHERE deliveries_id = (SELECT deliveries_id FROM deliveries WHERE orders_id = #{orders_id})
     </update>
-
-
-
-
 
 </mapper>

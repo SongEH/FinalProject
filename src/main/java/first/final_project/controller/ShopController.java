@@ -105,13 +105,12 @@ public class ShopController {
     // @ResponseBody
     public String shop_selectOne(int shop_id, Model model) {
 
-        System.out.println(shop_id);
-        ShopVo shop_vo;
-
+        System.out.println("shop_id : " + shop_id);
+        ShopVo vo;
         try {
-            shop_vo = shop_Service.selectOne(shop_id);
-            List<MenuVo> menu_list = menuMapper.selectList();
-            model.addAttribute("shop_vo", shop_vo);
+            vo = shop_Service.selectOne(shop_id);
+            List<MenuVo> menu_list = menuMapper.selectMenuList(shop_id);
+            model.addAttribute("vo", vo);
             model.addAttribute("menu_list", menu_list);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_select_one");

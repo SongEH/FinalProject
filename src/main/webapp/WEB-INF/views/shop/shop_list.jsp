@@ -194,9 +194,8 @@ header .login {
     </script>
     
     <script>
-
       function selectOne(shop_id){
-
+        
         $.ajax({
           url     :     "/shop/select_one.do",
           data    :      {"shop_id": shop_id},
@@ -204,7 +203,7 @@ header .login {
                 $("#select_one_display").html(res_data);
                 $("#insert_form_display").hide();
                 $("#store-list").hide();
-                // $('#menuButton').click();
+                $('#menuButton').click();
                 $('#menuButton').focus();
           },
           error   :   function(err){
@@ -212,7 +211,6 @@ header .login {
           }
         });
       }
-
     </script>
   </head>
   <body>

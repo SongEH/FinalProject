@@ -157,7 +157,7 @@ public class MenuController {
 		if (user == null) {
 		// response.sendRedirect("../member/login_form.do?reason=session_timeout");
 			ra.addAttribute("reason", "session_timeout");
-			return "redirect:../member/login_form.do";
+			return "redirect:../member/login.do";
 		}
 		// owner_id 가져오기 
 		int owner_id = user.getOwner_id();
@@ -198,7 +198,8 @@ public class MenuController {
 		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
 		// vo.setShop_id(user.getShop_id()); // 로그인된 계정이 사장계정이어야하고, 사장VO안에 ShopID가 있어야
 		// 한다.
-		vo.setShop_id(1);
+		System.out.println(shop_id);
+		vo.setShop_id(shop_id);
 
 		// DB insert
 		int res = menu_mapper.insert(vo);

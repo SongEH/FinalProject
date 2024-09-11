@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -60,12 +61,19 @@ pageEncoding="UTF-8"%>
       }
       .shop-info .rating {
         width: 100%;
-          display: flex;
-          align-items: center;
+        display: flex;
+        align-items: center;
       }
       .shop-info .rating span {
-          font-size: 16px;
-          margin-left: 5px;
+        font-size: 16px;
+        margin-left: 5px;
+      }
+      .menu-item img{
+        width: 80px;
+        height: 80px;
+        padding-right: 10px;
+        display: flex;
+        align-items: center;
       }
       .order_info{
         width: 300px;
@@ -141,46 +149,46 @@ pageEncoding="UTF-8"%>
   <script>
     function get_menu(shop_id){
       alert(shop_id);
-    //   $.ajax({
-    //     url     :   
+      // $.ajax({
+      //   url     :   
 
-    //   })
+      // })
     }
   </script>
-    <script>
-      // 특정 가게 삭제 
-      function shop_del(shop_id){
-        alert(shop_id);
-        if(confirm("삭제하면 복구되지 않습니다?\n 정말 삭제하시겠습니까? ")==false) return;
+  <script>
+    // 특정 가게 삭제 
+    function shop_del(shop_id){
+      alert(shop_id);
+      if(confirm("삭제하면 복구되지 않습니다?\n 정말 삭제하시겠습니까? ")==false) return;
 
-        $.ajax({
-        url     :     "/shop/delete.do",
-        data    :      {"shop_id": shop_id},
-        success :   function(res_data){
-                  alert("삭제 성공")
-                  location.href="/shop/list.do";
-          },
-        error   :   function(err){
-        alert(error.responseText)
-          }
-        });
-      }
-    </script>
+      $.ajax({
+      url     :     "/shop/delete.do",
+      data    :      {"shop_id": shop_id},
+      success :   function(res_data){
+                alert("삭제 성공")
+                location.href="/shop/list.do";
+        },
+      error   :   function(err){
+      alert(error.responseText)
+        }
+      });
+    }
+  </script>
 
-    <script>
-      // 선택한 가게 수정 
-      function shop_modi(f){
-        alert("여기?");
-        alert(f.shop_id.value);
-        f.action="modify_form.do";
-        f.submit();
-      }
-    </script>
-  </head>
-  <body>
+  <script>
+    // 선택한 가게 수정 
+    function shop_modi(f){
+      alert("여기?");
+      alert(f.shop_id.value);
+      f.action="modify_form.do";
+      f.submit();
+    }
+  </script>
+</head>
+<body>
   <form method="post">
   <!-- 표현은 하지않고 활용하기 위한 데이터  -->
-   <input type="hidden" name="shop_id" value="${shop_vo.shop_id}"/>
+   <input type="hidden" name="shop_id" value="${vo.shop_id}"/>
    
 <div class="container-custom">
   <div class="shop">
@@ -188,27 +196,31 @@ pageEncoding="UTF-8"%>
         <!-- Left Panel (shop Information) -->
         <div class="col-md-8 col-sm-12 col-custom">
             <div class="shop-info">
-                <div id="shop_name">${shop_vo.shop_name}</div>
+                <div id="shop_name">${vo.shop_name}</div>
                 
                 <div class="rating" id="shop_info">
-                    <img src="${pageContext.request.contextPath }/resources/images/${shop_vo.shop_img}" alt="Rating Star" width="20"> 
-                    <span>${shop_vo.shop_stemp_count}
+                    <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Rating Star" width="20"> 
+                    <span>${vo.shop_stemp_count}
                       <div class="details">
                         <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
-                        <div>최소 주문 금액: <strong>${shop_vo.shop_min_price}</strong></div>
+                        <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>
                         <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
                         <button class="btn btn-danger">4,000원 할인</button>
                       </div>
                     </span>
                 </div>
-                <div id="shop_content">${shop_vo.shop_content}</div>
+                <div id="shop_content">${vo.shop_content}</div>
             </div>
+
+            <!-- menu_list 공간 -->
             
+
+            <!-- 메뉴 / 클린리뷰 / 정보  -->
           <div class="row" style="width:100%; margin-top: 30px;">
             <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" id="menuButton" value="메뉴 ${shop_vo.shop_stemp_count}"
-                onclick="get_menu('${shop_vo.shop_id}')">
+                <input type="button" id="menuButton" value="메뉴 ${vo.shop_stemp_count}"
+                onclick="get_menu('${vo.shop_id}')">
               </div>
             </div>
             <div class="col-sm-4" style="padding:0px">
@@ -222,7 +234,23 @@ pageEncoding="UTF-8"%>
               </div>
             </div>
           </div>
+
+          <!--menu_list 출력 공간 -->
+          <div class="row" style="margin-top:30px;">
+            <c:forEach var="item" items="${menu_list}">
+              <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center;">
+                <div>
+                  <div>${item.menu_name}</div>
+                  <div>${item.menu_content}</div>
+                  <div><strong>${item.menu_price}</strong></div>
+                </div>
+                <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
+              </div>
+            </c:forEach>
+          </div>
         </div>
+
+        <!-- 주문 영역 출력 공간  -->
         <div class="col-md-4 col-sm-12">
           <div class="order_info">
           <!-- <div class="right-panel text-center p-3"> -->
@@ -240,20 +268,23 @@ pageEncoding="UTF-8"%>
         </div>
     </div>
   </div>
-</div>
+
   <!-- Sample Menu List -->
-      <div class="row">
-              <div class="menu-item">
-                  <img src="image_url" alt="menu_image" class="img-fluid">
-                  <p>(New)맵단짠 칩</p>
-                  <p><strong>19,900원</strong></p>
-              </div>
-          <!-- Add more menu items in a similar fashion -->
+  <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">
+    <c:forEach var="item" items="${menu_list}">
+      <div class="row col-md-8 col-sm-12 col-custom">
+        <div class="menu-item" style="border: 1px solid gray; width:75%;">
+          <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="float:right">
+          <div>${item.menu_name}</div>
+          <div>${item.menu_content}</div>
+          <div><strong>${item.menu_price}</strong></div>
+        </div>
       </div>
-    <div>
-      <div id="menu_list"></div>
-    </div>
-  
+    </c:forEach>
+  </div> -->
+  <!-- <div>
+    <div id="menu_list"></div>
+  </div> -->
 </div>
-  </body>
+</body>
 </html>

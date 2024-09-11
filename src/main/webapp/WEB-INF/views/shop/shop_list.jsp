@@ -219,7 +219,7 @@ header .login {
       <a href="#" class="login">로그인</a>
     </header>
   
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-10" id="nav">
     <div class="container">
      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">?</span>
@@ -271,9 +271,9 @@ header .login {
     </div>
   </nav>
 
-
+<main style="margin-top: 30px;">
   <div class="container">
-    <div class="store-list" id="store-list" >
+    <div class="store-list mt-10" id="store-list" >
       <c:forEach var="vo" items="${list}">
         <div class="store" onclick="selectOne('${vo.shop_id}');">
             <div class="store-left">
@@ -301,7 +301,7 @@ header .login {
   <div>
     <div id="select_one_display"></div>
   </div>
-
+</main>
 </head>
 <body>
 

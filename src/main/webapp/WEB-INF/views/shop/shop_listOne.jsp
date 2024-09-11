@@ -9,16 +9,42 @@ pageEncoding="UTF-8"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
+      body{
+        width: 100%;
+      }
       .container{
         margin:auto;
-        justify-content: center;
-        padding: 0px;
-        width: 100%; 
+        /* justify-content: space-between; */
+        /* padding: 20px 0;
+        width: 1200px; 
+        display: flex;
+        margin: 0;
+        position: relative; */
       }
       .row{
         margin: 0;
       }
+      panel-left, .panel-right {
+        padding: 10px;
+        /* border: 1px solid gray; */
+        /* background-color: #f9f9f9; */
+      }
+      .panel-left {
+        width: 70%;
+      }
+      .panel-right {
+        width: 330px;
+        position: sticky;
+        top: 30px;
+      }
+       .store{
+        width: 1000px;
+        margin: auto;
+      }
       
+      .store-info {
+        width: 600px;
+      } 
       .store-info h1 {
           font-size: 20px;
           margin-bottom: 10px;
@@ -36,6 +62,9 @@ pageEncoding="UTF-8"%>
       .store-info .rating span {
           font-size: 16px;
           margin-left: 5px;
+      }
+      .order_info{
+        width: 300px;
       }
       #shop_name{
         font-size: 16px;
@@ -67,6 +96,22 @@ pageEncoding="UTF-8"%>
       .menu-section .menu-title {
           font-size: 18px;
           margin-bottom: 5px;
+      }
+      .menu-tab {
+        display: flex;
+        align-items: center;
+      }
+
+      .menu-tab input[type="button"] {
+        flex-shrink: 0;
+      }
+
+      .menu-tab .badge {
+        margin-left: 10px;
+      }
+      .right-panel{
+        position: sticky;
+        top: 30px;
       }
       .right-panel h2 {
           font-size: 20px;
@@ -107,12 +152,12 @@ pageEncoding="UTF-8"%>
   <!-- 표현은 하지않고 활용하기 위한 데이터  -->
    <input type="hidden" name="shop_id" value="${shop_vo.shop_id}"/>
    
-
-   <div class="container my-2">
+<div class="container">
+  <div class="store">
     <div class="row">
         <!-- Left Panel (Store Information) -->
-        <div class="col-lg-8 col-md-8 col-sm-12">
-            <div class="store-info  p-3 ">
+        <div class="col-sm-8">
+            <div class="store-info">
                 <div id="shop_name">${shop_vo.shop_name}</div>
                 
                 <div class="rating" id="shop_info">
@@ -128,40 +173,43 @@ pageEncoding="UTF-8"%>
                 </div>
                 <div id="shop_content">${shop_vo.shop_content}</div>
             </div>
+          <div class="row border" style="width:100%;">
+            <div class="col-sm-4">
+              <div class="menu-tab border">
+                <input type="button" value="메뉴 ${shop_vo.shop_stemp_count}" style="width: 100%;">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="menu-tab border">
+                <input type="button" value="클린리뷰"/>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="menu-tab border">
+                <input type="button" value="정보"/>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-4 col-md-4 ">
-          <div class="right-panel text-center p-3">
+        <div class="col-sm-4">
+          <div class="order_info">
+          <!-- <div class="right-panel text-center p-3"> -->
             <div style="background-color:black; color:white; padding: 7px;">
-              <h2>주문표</h2>
+              <h5>주문표</h5>
             </div>
               <div style="border:1px solid gray; height:auto; min-height: 155px;">
-                <div>주문표에 담긴 메뉴가 없습니다.</div>
+                주문표에 담긴 메뉴가 없습니다.
+              </div>
               <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
               <button class="btn btn-secondary" disabled>주문하기</button>
             </div>
-        </div>
-        <div class="row border mt-10" style="width:66%;">
-          <div class="col-lg-4 col-md-4">
-            <div class="menu-tab border">
-                <input type="button" value="메뉴"><span class="badge bg-secondary">83</span>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-            <div class="menu-tab border">
-                <input type="button" value="클린리뷰"/><span class="badge bg-secondary">10039</span>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-            <div class="menu-tab border">
-                <input type="button" value="정보"/>
-            </div>
-        </div>
+          <!-- </div> -->
+          </div>
         </div>
     </div>
   </div>
-
+</div>
   <!-- Sample Menu List -->
-  <div class="container mt-3">
       <div class="row">
               <div class="menu-item">
                   <img src="image_url" alt="menu_image" class="img-fluid">
@@ -170,10 +218,10 @@ pageEncoding="UTF-8"%>
               </div>
           <!-- Add more menu items in a similar fashion -->
       </div>
-  </div>
     <div>
       <div id="menu_list"></div>
     </div>
-  </div>
+  
+</div>
   </body>
 </html>

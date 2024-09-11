@@ -3,7 +3,7 @@ create database finalproject;
 use finalproject;
 
 -- -------------------------------- 테이블 생성
-CREATE TABLE `menu` (
+CREATE TABLE `Menu` (
     `menu_id` INT NOT NULL AUTO_INCREMENT,
     `menu_category` VARCHAR(30) NOT NULL,
     `menu_name` VARCHAR(50) NOT NULL,
@@ -19,30 +19,22 @@ CREATE TABLE `menu` (
     PRIMARY KEY (`menu_id`)
 );
 
-
-CREATE TABLE `orders` (
-	`orders_id`	INT	NOT NULL primary key auto_increment,
-	`orders_payment`	VARCHAR(30)	NOT NULL	COMMENT '간편결제(카카오페이,토스페이)',
-	`orders_method`	VARCHAR(30)	NOT NULL	DEFAULT "card",
-	`orders_imp_uid`	VARCHAR(30)	NOT NULL,
-	`orders_merchant_uid`	VARCHAR(20)	NOT NULL,
-	`orders_name`	VARCHAR(50)	NOT NULL,
-	`orders_price`	INT	NOT NULL,
-	`orders_srequest`	VARCHAR(255)	NULL,
-	`orders_drequest`	VARCHAR(255)	NULL,
-	`orders_cdate`	DATE	NOT NULL	DEFAULT (CURRENT_DATE),
-	`orders_status` VARCHAR(20) NOT NULL DEFAULT 'Order Confirmed' COMMENT 'Order Confirmed, 
-		Order Received, 
-		Cooking Started, 
-		Cooking Finished, 
-		Delivery Picked Up, 
-		Delivery Delivered',
-	`shop_id`	INT	NOT NULL,
-	`addr_id`	INT	NOT NULL,
-	`member_id`	INT	NOT NULL
+CREATE TABLE `Orders` (
+    `orders_id` INT NOT NULL AUTO_INCREMENT,
+    `orders_payment` VARCHAR(30) NOT NULL DEFAULT 'Easy Payment' COMMENT '간편결제(카카                            오페이, 토스페이)',
+    `orders_price` INT NOT NULL,
+    `orders_srequest` VARCHAR(255) NULL,
+    `orders_drequest` VARCHAR(255) NULL,
+    `orders_cdate` DATE NOT NULL DEFAULT (CURRENT_DATE),
+    `orders_status` VARCHAR(20) NOT NULL DEFAULT 'Processing Order' COMMENT '주문확인중, 주문접수, 조리시작, 조리완료, 배송픽업, 배송완료',
+    `shop_id` INT NOT NULL,
+    `addr_id` INT NOT NULL,
+    `orders_name` VARCHAR(50) NOT NULL,
+    `member_id` INT NOT NULL, 
+    PRIMARY KEY (`orders_id`)
 );
 
-CREATE TABLE `carts` (
+CREATE TABLE `Carts` (
     `carts_id` INT NOT NULL AUTO_INCREMENT,
     `carts_quantity` INT NOT NULL DEFAULT 1,
     `member_id` INT NOT NULL,
@@ -52,7 +44,6 @@ CREATE TABLE `carts` (
     `carts_cdate` DATE NOT NULL DEFAULT (CURRENT_DATE),
     PRIMARY KEY (`carts_id`)
 );
-
 
 CREATE TABLE `shop` (
     `shop_id` int not null primary key auto_increment,
@@ -76,20 +67,15 @@ CREATE TABLE `shop` (
 );
 
 -- -------------------------------- 조회
-SELECT * FROM member;
-SELECT * FROM owner;
-SELECT * FROM menu;
-SELECT * FROM carts;
+SELECT * FROM MENU;
+SELECT * FROM Carts;
 SELECT * FROM shop;
-SELECT * FROM orders;
-
 -- -------------------------------- 
 Drop table MENU;
-Drop table carts;
+Drop table Carts;
 Drop table shop;
-Drop table orders;
 
--- -------------------------------- 
+
 delete from menu;
 delete from carts;
 delete from shop;
@@ -256,12 +242,6 @@ INSERT INTO `Carts` (
 -- --------------------------------------------------------
 
 
-SELECT * 
-        FROM Carts
-        WHERE member_id = 98
-          AND shop_id = 1
-          AND orders_id IS NULL;
-          
 SELECT 
 	 c.*,                  -- Carts 테이블의 모든 컬럼을 선택
 	 s.shop_name AS shop_name, -- shop 테이블에서 가게명

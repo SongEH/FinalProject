@@ -26,14 +26,15 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
+    @Autowired
+    CartsMapper carts_mapper;
+
     // 09/10 유정 - MemberService & HttpSession 추가 자동 연결
     @Autowired
     MemberService member_service;
 
     @Autowired
     HttpSession session;
-    @Autowired
-    CartsMapper carts_mapper;
 
     // public PaymentController(PaymentService paymentService) {
     // this.paymentService = paymentService;
@@ -56,10 +57,13 @@ public class PaymentController {
     // order tabel에 insert
     @RequestMapping(value = "/payment/insert.do")
     @ResponseBody
-    public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {
+    public void orders_insert(PaymentVo vo, RedirectAttributes ra,int shop_id,int member_id) {
+
+        System.out.println("도착");
 
         System.out.println(vo);
 
+        System.out.println("DB 인서트 전!!!");
         try {
 
             int res = paymentService.insert(vo);
@@ -73,7 +77,6 @@ public class PaymentController {
             
             System.out.println("DB 인서트 완료");
         } catch (Exception e) {
-            paymentService.insert(vo);
 
             Integer orders_id = vo.getOrders_id();
             System.out.println("orders_id : " + orders_id);
@@ -86,9 +89,7 @@ public class PaymentController {
 
             // update 메서드 호출
             carts_mapper.updateOrderId(map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } 
     }
 
     @GetMapping("/api/payment/data/{impUid}")

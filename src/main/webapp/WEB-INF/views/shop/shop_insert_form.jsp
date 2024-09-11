@@ -8,30 +8,37 @@
     </head>
      <script>
       function send(f) {
+        alert("도착 ");
+
         let shop_name = f.shop_name.value.trim();
-        // alert(f.shop_name.value);
+        console.log(f.shop_name.value);
         let shop_content = f.shop_content.value.trim();
-        // alert(f.shop_content.value);
+        console.log(f.shop_content.value);
         let shop_addr = f.shop_addr.value.trim();
-        // alert(f.shop_addr.value);
+        console.log(f.shop_addr.value);
         let shop_call= f.shop_call.value.trim();
-        // alert(f.shop_call.value);
+        console.log(f.shop_call.value);
         let shop_min_price = f.shop_min_price.value.trim();
-        // alert(f.shop_min_price.value);
-        let shop_hours = f.shop_hours.value.trim();
-        // alert(f.shop_hours.value);
+        console.log(f.shop_min_price.value);
+        let shop_open_time = f.shop_open_time.value.trim();
+        console.log(f.shop_open_time.value);
+        let shop_close_time = f.shop_close_time.value.trim();
+        console.log(f.shop_close_time.value);
         let shop_close_day = f.shop_close_day.value.trim();
-        // alert(f.shop_close_day.value);
+        console.log(f.shop_close_day.value);
         let shop_area = f.shop_area.value.trim();
-        // alert(f.shop_area.value);
+        console.log(f.shop_area.value);
         let food_category = f.food_category.value;
-        // alert(f.food_category.value);
+        console.log(f.food_category.value);
         let shop_status = f.shop_status.value;
-        // alert(f.shop_status.value);
+        console.log(f.shop_status.value);
 
         if(f.shop_name==""){
           alert("가게 이름을 작성해주세요")
         }
+
+
+        alert(shop_status)
 
         f.action = "insert.do";
         f.submit();
@@ -70,7 +77,6 @@
 
                         <!-- Floating Labels Form -->
                         <form class="row g-3" method="POST" action="insert.do" enctype="multipart/form-data">
-                          <!-- <input type="hidden" value="" /> -->
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="상호명" name="shop_name">
@@ -81,7 +87,7 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <textarea class="form-control" placeholder="소개글" name="shop_content"
-                                style="height: 100px;"></textarea>
+                                tyle="height: 100px;"></textarea>
                               <label>가게소개글 </label>
                             </div>
                           </div>
@@ -106,10 +112,18 @@
                               <label>최소주문금액</label>
                             </div>
                           </div>
+    
                           <div class="col-md-12">
                             <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="영업마감시간" name="shop_hours">
-                              <label>영업시간</label>
+                              <input type="text" class="form-control" placeholder="영업시작시간" name="shop_open_time">
+                              <label>영업시작시간</label>
+                            </div>
+                          </div>
+    
+                          <div class="col-md-12">
+                            <div class="form-floating">
+                              <input type="text" class="form-control" placeholder="영업마감시간" name="shop_close_time">
+                              <label>영업마감시간</label>
                             </div>
                           </div>
     
@@ -130,17 +144,17 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <select class="form-control" placeholder="음식카테고리" name="food_category">
-                                <option class="form-control" value="pork_trotters">족발·보쌈</option>
-                                <option class="form-control" value="pizza">피자</option>
-                                <option class="form-control" value="chicken">치킨</option>
-                                <option class="form-control" value="japanese_food">돈까스·회·일식</option>
+                                <option class="form-control" value="pork_trotters">족발 보쌈</option>
                                 <option class="form-control" value="korea_food">한식</option>
-                                <option class="form-control" value="chinese_food">중식</option>
-                                <option class="form-control" value="asian_food">아시안</option>
-                                <option class="form-control" value="porridge_noodle">백반·죽·국수</option>
-                                <option class="form-control" value="snack_food">분식</option>
-                                <option class="form-control" value="desserts">카페·디저트</option>
-                                <option class="form-control" value="fast_food">패스트푸드</option>
+                                <option class="form-control" value="japanese_food">돈까스 회 일식</option>
+                                <option class="form-control" value="west_food">피자/양식</option>
+                                <option class="form-control" value="chicken">치킨</option>
+                                <option value="chinese_food">중식</option>
+                                <option value="asian_food">아시안</option>
+                                <option value="porridge_noodle">백반 죽 국수</option>
+                                <option value="snack_food">분식</option>
+                                <option value="desserts">디저트</option>
+                                <option value="fast_food">패스트푸드</option>
                               </select>
                             </div>
                           </div>

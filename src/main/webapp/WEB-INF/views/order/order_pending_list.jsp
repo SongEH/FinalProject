@@ -18,31 +18,6 @@
   <meta charset="UTF-8" />
 
   <script type="text/javascript">
-    let order_name = '';
-    // 주문 이름 생성 
-    // 메뉴 개수가 1개 = 메뉴 이름 
-    // 메뉴 개수가 2개 이상 = 처음 메뉴 이름과 그외 메뉴 개수 표시 (예: 김치찌게 외 3개)
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-
-      // 모든 cart_menuname 클래스를 가진 td 요소 선택
-      const menuElements = document.querySelectorAll('.cart_menuname');
-
-      // 메뉴 요소가 하나 이상 존재하는 경우
-      if (menuElements.length > 0) {
-        // 첫 번째 메뉴 이름
-        order_name = menuElements[0].textContent.trim();
-
-        // 총 개수가 2개 이상일 경우
-        if (menuElements.length > 1) {
-          // 첫 번째 메뉴 이름과 나머지 메뉴 개수
-          order_name += " 외 " + (menuElements.length - 1) + "개";
-        }
-      }
-      console.log(order_name);
-    });
-
     function requestPay(f) {
 
       // 입력값 검증
@@ -54,7 +29,7 @@
       let orders_srequest = f.orders_srequest.value.trim();
 
       let shop_id = f.shop_id.value;
-
+      
 
       // 주소
       let selectElement = document.getElementById('addr_select');
@@ -64,8 +39,9 @@
       // addr_all 변수에 합쳐서 저장
       const addrLine1 = selectedOption.getAttribute('data-addr-line1');
       const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-      const addrAll = addrLine1 + " " + addrLine2;
+      const addrAll = addrLine1 + " "  + addrLine2;
 
+      
       // 총 가격
       // total_price의 텍스트 값을 가져와서 orders_price에 저장
       const totalPriceElement = document.getElementById('total_price');
@@ -77,7 +53,7 @@
       // console.log('orders_price : ', orders_price);
       // console.log('Addr All:', addrAll);
       // console.log('shop_id:', shop_id);
-
+      
 
       if (member_phone == '') {
         alert("연락처를 입력하세요!");
@@ -102,18 +78,22 @@
 
       // -------------------------- 결제 --------------------
 
+
+
+
+
       // 가맹점 식별코드
       let IMP = window.IMP;
       IMP.init("imp51327214");
       IMP.request_pay({
           pg: "kakaopay", // PG사명 단일 문자열로 변경
-          // pay_method: "card",   // 결제 방법
+          // pay_method: "card", // 결제 방법
           merchant_uid: "order_" + new Date().getTime(), // 고유한 주문번호 생성
-          name: order_name, // 상품 명                      
+          name: "호박 10kg", // 상품 명                       // 여기 수정
           amount: orders_price, // 금액                                
           buyer_name: member_name, // 회원 이름
           buyer_tel: member_phone, // 회원 번호
-          buyer_addr: addrAll,
+          buyer_addr: addrAll, 
           // buyer_postcode: "04024", // 회원 주소 
         },
         function (rsp) {
@@ -131,25 +111,30 @@
                 "orders_method": rsp.pay_method,
                 "orders_imp_uid": rsp.imp_uid,
                 "orders_merchant_uid": rsp.merchant_uid,
-                "orders_name": rsp.name,
-                "orders_price": orders_price,
-                "member_name": rsp.buyer_name,
-                "member_phone": rsp.buyer_tel,
-                "orders_srequest": orders_srequest,
-                "orders_drequest": orders_drequest,
-                "shop_id": shop_id,
-                "addr_id": addr_id,
-                "member_id": member_id
+                "orders_name": rsp.name, //
+                "orders_price": orders_price, // 완료
+                "member_name": rsp.buyer_name, // 완료
+                "member_phone": rsp.buyer_tel, // 완료
+                "orders_srequest": orders_srequest, // 완료
+                "orders_drequest": orders_drequest, // 완료
+                "shop_id": shop_id, // 완료
+                "addr_id": addr_id, // 완료
+                "member_id": member_id // 완료
               },
               success: function (response) {
+                // 서버 결제 API 성공 시 로직
                 alert("결제가 성공적으로 완료되었습니다.");
+
+                // 주문내역 확인 화면으로 이동 
                 window.location.href = '/main.do';
               },
               error: function (error) {
+                // 서버 결제 API 실패 시 로직
                 alert("서버와의 통신에 실패했습니다.");
               },
             });
           } else {
+            // 결제 실패 시 로직
             alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
           }
         }
@@ -184,6 +169,7 @@
     </div><!-- End Page Title -->
 
 
+
     <section class="section">
       <div class="row">
         <div class="col-lg-10">
@@ -208,8 +194,7 @@
                         <!-- <input type="text" class="form-control" placeholder="기본주소" name="addr_line1"
                         value="${addr.addr_line1}" readonly>
                       <label>${addr.addr_name}</label> -->
-                        <option value="${addr.addr_id}" data-addr-name="${addr.addr_name}"
-                          data-addr-line1="${addr.addr_line1}" data-addr-line2="${addr.addr_line2}">
+                        <option value="${addr.addr_id}" data-addr-name="${addr.addr_name}" data-addr-line1="${addr.addr_line1}" data-addr-line2="${addr.addr_line2}">
                           ${addr.addr_name} : ${addr.addr_line1} ${addr.addr_line2}
                         </option>
                       </c:forEach>
@@ -218,7 +203,22 @@
                   </div>
                 </div>
 
-                <input type="button" value="주소 등록" onclick="location.href='/addr/addr_insert_form.do?nextPath=order_pending_list'" />
+                <input type="button" value="주소 등록" onclick="location.href='/addr/addr_insert_form.do'" />
+
+                <!-- <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="기본주소" name="addr_line1" readonly>
+                    <label>기본주소</label>
+
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="상세주소" name="addr_line2" readonly>
+                    <label>상세주소</label>
+                  </div>
+                </div> -->
 
                 <div class="col-md-12">
                   <div class="form-floating">
@@ -260,6 +260,8 @@
                   </div>
                 </div>
 
+
+                <!-- Card with an image on left -->
                 <!-- 장바구니 항목 테이블 -->
                 <table class="table table-bordered">
                   <thead>
@@ -271,6 +273,7 @@
                       <th>총 가격</th>
                     </tr>
                   </thead>
+
 
                   <tbody id="cartItems">
                     <!-- 현재 상점 ID를 저장할 변수 초기화 -->
@@ -300,7 +303,7 @@
                           </div>
                         </td>
                         <td class="cart_menuname">${vo.menu_name}</td>
-                        <td class="cart_quantity">${vo.carts_quantity}</td>
+                        <td class="cart_quantity">${vo.carts_quantity}</td> <!-- 수량을 직접 출력 -->
                         <td class="cart_price">${vo.menu_price}</td>
                         <td class="cart_total_price">
                           ${vo.menu_price * vo.carts_quantity}
@@ -367,19 +370,35 @@
                   </script>
 
                   <div class="text-center">
-
+                    <!-- <button type="submit" class="btn btn-primary">Submit</button>
+                          <button type="reset" class="btn btn-secondary">Reset</button> -->
                     <input class="btn btn-success" type="button" value="메인화면" onclick="location.href='list.do'">
 
-                    <input type="button" id="kakaoPay" onclick="requestPay(this.form);" value="결제">
+                    <!-- <input class="btn btn-primary" type="button" value="결제" onclick="send(this.form);"> -->
+
+                    <input type="button" id="kakaoPay" onclick="requestPay(this.form);">카카오페이 결제</button>
+                    <!-- 결제하기 버튼 생성 -->
                   </div>
-              </form>
+              </form><!-- End floating Labels Form -->
+
+
+
+
+
+
+
+
+
             </div>
           </div>
           </table>
         </div>
       </div>
     </section>
-  </main>
+
+
+  </main><!-- End #main -->
+
 </body>
 
 </html>

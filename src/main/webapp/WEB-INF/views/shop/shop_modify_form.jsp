@@ -38,10 +38,8 @@
                       <div class="card-body">
                         <h5 class="card-title">Floating labels Form</h5>
                         
-                        
                         <!-- Floating Labels Form -->
                         <form class="row g-3" method="POST" action="modify.do" enctype="multipart/form-data">
-                          
                           <!-- 가게 ID -->
                           <input type="hidden" name="shop_id" value="${vo.shop_id}">
                           <div class="col-md-12">
@@ -54,7 +52,7 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <textarea class="form-control" placeholder="소개글" name="shop_content" value="${vo.shop_content}"
-                                style="height: 100px;"></textarea>
+                                tyle="height: 100px;"></textarea>
                               <label>가게소개글 </label>
                             </div>
                           </div>

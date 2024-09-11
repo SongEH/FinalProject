@@ -92,6 +92,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        where carts_id=#{ carts_id }
    </update>
 
+   <!-- 주문한 메뉴는 장바구니 테이블에서 주문ID 추가  -->
+   <update id="updateOrderId" parameterType="Map">
+      update carts 
+         set orders_id=#{ orders_id }
+      where 
+         shop_id=#{ shop_id }
+         and member_id=#{ member_id }
+   </update>
+
    <!-- 조건에 맞는 장바구니 항목 조회 쿼리 -->
    <select id="findPendingOrders" resultType="carts">
       SELECT 

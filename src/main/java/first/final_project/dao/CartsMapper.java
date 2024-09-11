@@ -29,5 +29,7 @@ public interface CartsMapper {
 
     List<CartsVo> findPendingOrders(int member_id, int shop_id);
 
+    void updateOrderId(Map<String, Object> map);
+
 
 }

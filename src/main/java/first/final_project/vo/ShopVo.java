@@ -20,13 +20,13 @@ public class ShopVo {
     private String shop_rate;
     private int shop_stemp_count;
     private int shop_review_count;
-    private String shop_open_time;
-    private String shop_close_time;
+    private String shop_hours;
     private String shop_close_day;
     private String shop_area;
-    private String shop_create_day;
-    private String shop_modify_day;
+    private String shop_cdate;
+    private String shop_mdate;
     private String shop_status;
+    private int owner_id;
 
     List<MenuVo> menu_list;
 

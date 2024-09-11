@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
@@ -14,6 +15,7 @@ import first.final_project.dao.OrderMapper;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
+import first.final_project.vo.MenuVo;
 import first.final_project.vo.OrderVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,11 +45,14 @@ public class OrderController {
 
 	// /menu/list.do
 	// /menu/list.do?page=2
+	// 주문 내역 확인
 	@RequestMapping("list.do")
 	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
 
-		List<OrderVo> list = order_mapper.selectList();
+		MemberVo user = (MemberVo) session.getAttribute("user");
+
+		List<OrderVo> list = order_mapper.selectList(user.getMember_id());
 
 		// 전체 게시물수
 		// int rowTotal = order_mapper.selectRowTotal();
@@ -85,6 +90,29 @@ public class OrderController {
 		// 2. 등록된 주소 이외의 추가 주소정보 등록
 
 		return "order/order_pending_list";
+	}
+
+	
+	@RequestMapping(value = "order_show.do")
+	public String order_show(int orders_id, Model model) {
+
+		OrderVo vo = order_mapper.selectOne(orders_id);
+		model.addAttribute("vo", vo);
+
+		return "order/order_show";
+
+		// VO -> JSON객체 생성
+		// JSONObject json = new JSONObject();
+		// json.put("p_idx", vo.getP_idx());
+		// json.put("p_title", vo.getP_title());
+		// json.put("p_content", vo.getP_content());
+		// json.put("p_filename", vo.getP_filename());
+		// json.put("p_regdate", vo.getP_regdate());
+		// json.put("p_ip", vo.getP_ip());
+		// json.put("mem_idx", vo.getMem_idx());
+		// json.put("mem_name", vo.getMem_name());
+
+		// return json.toString();
 	}
 
 	// 주문

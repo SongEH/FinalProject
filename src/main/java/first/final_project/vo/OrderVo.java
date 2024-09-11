@@ -17,11 +17,13 @@ public class OrderVo {
     private Date orders_cdate;
     private String orders_status;
     private int shop_id;
+    private String shop_name;
+    private String shop_status;
+    private String shop_img;
     private int addr_id;
     private String addr1;
     private String addr2;
-    private String shop_name;
     private String deliveries_method;
-    private String shop_status;
     private int member_id;
+    private int menu_count;
 }

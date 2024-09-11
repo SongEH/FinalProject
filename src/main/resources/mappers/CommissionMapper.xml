@@ -3,9 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="first.final_project.dao.CommissionMapper">
-
-
-    <select id="getCompletedDeliveriesWithCommission" parameterType="int" resultType="map">
+    <select id="selectList" parameterType="int" resultType="first.final_project.vo.CompletedDeliveryVo">
     SELECT 
         d.deliveries_id,
         r.rider_name,
@@ -15,7 +13,8 @@
         o.orders_cdate,
         s.shop_name,
         a.addr_line1,
-        a.addr_line2
+        a.addr_line2,
+        COALESCE(c.commission, 0) AS commission  -- 존재하지 않으면 수수료를 0으로 가져옴
     FROM 
         Deliveries d
     JOIN 
@@ -28,14 +27,39 @@
         Shop s ON o.shop_id = s.shop_id
     JOIN 
         Addr a ON o.addr_id = a.addr_id
+    LEFT JOIN 
+        Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id  -- 수수료 값이 있으면 가져옴
     WHERE 
         d.raiders_id = #{raiders_id}
-        AND dh.delivery_history_status = '배달 완료';
+        AND dh.delivery_history_status = '배달 완료'
+        
+    ORDER BY 
+        o.orders_cdate DESC;
     </select>
 
+
+    <select id="selectTotalCommission" parameterType="int" resultType="double">
+      SELECT COALESCE(SUM(commission), 0) 
+    FROM Commissions 
+    WHERE raiders_id = #{raiders_id}
+    </select>
+
+    <select id="commissionExists" parameterType="map" resultType="int">
+    SELECT COUNT(*) 
+    FROM Commissions
+    WHERE raiders_id = #{raiders_id}
+    AND deliveries_id = #{deliveries_id}
+    </select>
+    <!-- <select id="commissionExists" parameterType="map" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM Commissions
+    WHERE raiders_id = #{raiders_id}
+    AND deliveries_id = #{deliveries_id}
+    </select> -->
+
     <insert id="insertCommission" parameterType="map">
-        INSERT INTO Commissions (raiders_id, commission)
-        VALUES (#{raiders_id}, #{commission})
+    INSERT INTO Commissions (raiders_id, deliveries_id, commission)
+    VALUES (#{raiders_id}, #{deliveries_id}, #{commission})
     </insert>
 
 

@@ -78,7 +78,7 @@ else if (user instanceof OwnerVo) { userType = "OWNER"; } %>
             </a>
           </li>
           <li>
-            <a href="/addr/addr_list.do">
+            <a href="/order/list.do">
               <i class="bi bi-circle"></i><span>주문내역</span>
             </a>
           </li>

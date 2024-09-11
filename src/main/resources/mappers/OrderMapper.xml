@@ -11,17 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
    <select id="selectList" resultType="order">
      SELECT 
-         c.*,                         -- Carts 테이블의 모든 컬럼을 선택
-         s.shop_name   AS shop_name,    -- shop 테이블에서 가게명
-         m.menu_name   AS menu_name,    -- Menu 테이블에서 메뉴명
-         m.menu_img    AS menu_img,   -- Menu 테이블에서 메뉴이미지명
-         m.menu_price  AS menu_price  -- Menu 테이블에서 메뉴가격
+         *
       FROM 
+
          orders c
       JOIN 
          Menu m ON c.menu_id = m.menu_id
       JOIN 
-         shop s ON m.shop_id = s.shop_id; 
+         shop s ON m.shop_id = s.shop_id;
    </select>
 
    <!-- 회원의 모든 주문을 조회한다 -->
@@ -37,9 +34,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-   <!-- 등록 -->
-   <insert id="insert" parameterType="order">
+
+
+  
+    
+
+   <!-- 등록  -->
+ <insert id="insert" parameterType="order">
     INSERT INTO orders(
+
         orders_payment, 
         orders_price, 
         orders_srequest,

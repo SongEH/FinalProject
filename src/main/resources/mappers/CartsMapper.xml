@@ -21,7 +21,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       JOIN 
          menu m ON c.menu_id = m.menu_id
       JOIN 
-         shop s ON m.shop_id = s.shop_id;
+         shop s ON m.shop_id = s.shop_id
+      WHERE
+        c.orders_id IS NULL
    </select>
 
 
@@ -58,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE member_id = #{member_id}
         AND shop_id = #{shop_id}
         AND menu_id = #{menu_id}
+        and orders_id IS NULL
         LIMIT 1
    </select>
 
@@ -90,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       update carts 
          set carts_quantity=#{ carts_quantity }
        where carts_id=#{ carts_id }
+       and orders_id IS NULL
    </update>
 
    <!-- 주문한 메뉴는 장바구니 테이블에서 주문ID 추가  -->

@@ -82,12 +82,13 @@
 </head>
 
 <body>
+  <!-- common import -->
   <%@include file="common.jsp" %>
 
   <!-- header import -->
   <%@include file="header.jsp" %>
 
-  <!-- side bar import -->
+  <!-- sidebar import  -->
   <%@include file="sidebar.jsp" %>
 
   <h1>메인 페이지</h1>

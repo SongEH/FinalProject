@@ -167,7 +167,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="modal-body">
               <form
-                action="${pageContext.request.contextPath}/login_form.do"
+                action="${pageContext.request.contextPath}/admin/login_form.do"
                 method="post"
               >
                 <input type="hidden" name="url" value="${param.url}" />
@@ -230,7 +230,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="modal-body">
               <form
-                action="${pageContext.request.contextPath}/login_form.do"
+                action="${pageContext.request.contextPath}/owner/login_form.do"
                 method="post"
               >
                 <input type="hidden" name="url" value="${param.url}" />
@@ -295,7 +295,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="modal-body">
               <form
-                action="${pageContext.request.contextPath}/login_form.do"
+                action="${pageContext.request.contextPath}/member/login_form.do"
                 method="post"
               >
                 <input type="hidden" name="url" value="${param.url}" />

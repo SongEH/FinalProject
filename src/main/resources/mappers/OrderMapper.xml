@@ -13,36 +13,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      SELECT 
          *
       FROM 
-
-         orders c
-      JOIN 
-         Menu m ON c.menu_id = m.menu_id
-      JOIN 
-         shop s ON m.shop_id = s.shop_id;
+         orders
    </select>
 
-   <!-- 회원의 모든 주문을 조회한다 -->
-   <select id="selectOrderById" parameterType="int" resultType="order">
-       select * from order where member_id=#{member_id}
-   </select>
 
 
    <!-- carts_id 에 해당되는 CartsVo 조회  -->
    <select id="selectOne" parameterType="int" resultType="order">
-     select * from orders where order_id=#{ order_id }
+     select * from Orders where order_id=#{ order_id }
    </select>
 
+   
 
-
-
-
-  
-    
-
-   <!-- 등록  -->
- <insert id="insert" parameterType="order">
-    INSERT INTO orders(
-
+   <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
+   <!-- <insert id="insert" parameterType="order">
+    INSERT INTO Orders(
         orders_payment, 
         orders_price, 
         orders_srequest,
@@ -64,11 +49,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{orders_name},
         #{member_id}
     );
-   </insert>
+   </insert> -->
 
    <!-- 삭제 -->
    <delete id="delete" parameterType="int">
-     delete from orders
+     delete from Orders
      where order_id=#{order_id}
    </delete>
 

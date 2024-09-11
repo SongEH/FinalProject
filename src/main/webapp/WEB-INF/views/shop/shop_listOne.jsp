@@ -10,6 +10,9 @@ pageEncoding="UTF-8"%>
       /* *{
         border : 1px  solid rgb(126, 125, 125);
       } */
+      .container{
+        margin: auto;
+      }
       .restaurant-info img{
         width: 100px;
         height: 100px;
@@ -76,7 +79,8 @@ pageEncoding="UTF-8"%>
 
     </script>
   </head>
-  <body class="container">
+  <body>
+  <div class="container">
   <form method="post">
   <!-- 표현은 하지않고 활용하기 위한 데이터  -->
    <input type="hidden" name="shop_id" value="${shop_vo.shop_id}"/>
@@ -190,5 +194,6 @@ pageEncoding="UTF-8"%>
     <div>
       <div id="modify_form_display"></div>
     </div>
+  </div>
   </body>
 </html>

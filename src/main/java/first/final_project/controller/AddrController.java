@@ -26,10 +26,10 @@ public class AddrController {
   HttpServletRequest request;
 
   @Autowired
-  AddrMapper addr_mapper;
+  AddrMapper addrMapper;
 
   @Autowired
-  MemberMapper member_mapper;
+  MemberMapper memberMapper;
 
   // 주소 조회
   @RequestMapping("addr_list.do")
@@ -44,7 +44,7 @@ public class AddrController {
 
     Integer member_id = user.getMember_id();
 
-    List<AddrVo> addr_list = addr_mapper.selectList(member_id);
+    List<AddrVo> addr_list = addrMapper.selectList(member_id);
 
     model.addAttribute("addr_list", addr_list);
 
@@ -52,31 +52,43 @@ public class AddrController {
   }
 
   @RequestMapping("addr_insert_form.do")
-  public String addr_insert_form() {
+  public String addr_insert_form(String nextPath, Model model) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
       return "redirect:/member/login_form.do";
     }
+
+    System.out.println(nextPath);
+
+    model.addAttribute("nextPath", nextPath);
 
     return "addr/addr_insert_form";
   }
 
   @RequestMapping("addr_insert.do")
-  public String addr_insert(AddrVo vo) {
+  public String addr_insert(AddrVo vo, String nextPath) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
       return "redirect:/member/login_form.do";
     }
 
+    //
+    System.out.println(nextPath);
+
     vo.setMember_id(user.getMember_id());
 
-    addr_mapper.insert(vo);
+    addrMapper.insert(vo);
 
     session.setAttribute("vo", vo);
 
-    return "redirect:/addr/addr_list.do";
+    if (nextPath.equals("addr_list")) {
+      return "redirect:/addr/addr_list.do";
+    } else {
+      return "redirect:/order/order_pending_list.do";
+    }
+
   }
 
   @RequestMapping("addr_modify_form.do")
@@ -87,7 +99,7 @@ public class AddrController {
       return "redirect:/member/login_form.do";
     }
 
-    AddrVo addr = addr_mapper.selectOneFromIdx(addr_id);
+    AddrVo addr = addrMapper.selectOneFromIdx(addr_id);
 
     if (addr == null) {
       return "redirect:/addr/addr_list.do";
@@ -118,7 +130,7 @@ public class AddrController {
     vo.setAddr_name(addr_name);
     vo.setMember_id(user.getMember_id());
 
-    addr_mapper.update(vo);
+    addrMapper.update(vo);
 
     return "redirect:/addr/addr_list.do";
   }
@@ -131,7 +143,7 @@ public class AddrController {
       return "redirect:/member/login_form.do";
     }
 
-    addr_mapper.delete(addr_id);
+    addrMapper.delete(addr_id);
 
     session.setAttribute("addr_id", addr_id);
     session.setAttribute("user", user);

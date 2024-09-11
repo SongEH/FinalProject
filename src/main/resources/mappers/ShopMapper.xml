@@ -12,18 +12,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shop_id,
             shop_name, shop_img, shop_addr, food_category, shop_call, 
             shop_content, shop_min_price,  shop_rate, 
-            shop_stemp_count, shop_review_count, shop_open_time, 
-            shop_close_time,
+            shop_stemp_count, shop_review_count,
+            shop_hours,
             shop_close_day,
-            shop_area, shop_cdate, shop_mdate, shop_status
+            shop_area, shop_cdate, shop_mdate, shop_status, owner_id
         ) values (
             null,
             #{shop_name}, #{shop_img}, #{shop_addr}, #{food_category}, #{shop_call}, 
             #{shop_content}, #{shop_min_price}, default, 
-            default, default, #{shop_open_time}, 
-            #{shop_close_time},
+            default, default, #{shop_hours},
             #{shop_close_day},
-            #{shop_area}, default, default, #{shop_status}
+            #{shop_area}, default, default, #{shop_status}, #{owner_id}
         )
     </insert>
 
@@ -51,11 +50,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <!-- 가게 수정하기 -->
-    <select id="select_modify_shop_id" parameterType="int" resultType="shop">
-        select * from shop where shop_id = #{shop_id}
+    <!-- 가게 데이터 불러오기 -->
+    <select id="select_modify_owner_id" parameterType="int" resultType="shop">
+        select * from shop where owner_id = 1
     </select>
 
+    <!-- 가게 정보 업데이트 -->
     <update id="update" parameterType="shop">
         update shop set shop_name=#{shop_name},
                         shop_content=#{shop_content},

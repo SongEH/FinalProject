@@ -24,7 +24,7 @@ public class MemberController {
     HttpSession session;
 
     @Autowired
-    MemberMapper memberMapper;
+    MemberMapper member_mapper;
 
 
     // 마이페이지
@@ -34,7 +34,7 @@ public class MemberController {
         if (user == null) {
             return "redirect:/login_form.do";
         }
-        MemberVo member = memberMapper.selectOneFromIdx(user.getMember_id());
+        MemberVo member = member_mapper.selectOneFromIdx(user.getMember_id());
         model.addAttribute("member", member);
         // 다른 데이터 모델 추가
         return "member/member_mypage";
@@ -48,7 +48,7 @@ public class MemberController {
             return "redirect:/login_form.do";
         }
         // 로그인한 유저의 정보를 가져옴
-        MemberVo member = memberMapper.selectOneFromIdx(user.getMember_id());
+        MemberVo member = member_mapper.selectOneFromIdx(user.getMember_id());
         model.addAttribute("member", member);
         return "member/mypage_modify"; // 수정 폼 JSP 페이지
     }
@@ -57,7 +57,7 @@ public class MemberController {
     @RequestMapping(value = "mypage/modify.do", method = RequestMethod.POST)
     public String myPageEdit(MemberVo vo) {
         // 회원 정보 업데이트
-        memberMapper.update(vo);
+        member_mapper.update(vo);
 
         // 세션의 사용자 정보도 업데이트
         session.setAttribute("user", vo);
@@ -68,7 +68,7 @@ public class MemberController {
     // 마이페이지에서 회원 탈퇴
     @RequestMapping(value = "mypage/delete.do", method = RequestMethod.GET)
     public String myPageDelete(@RequestParam int member_id) {
-        memberMapper.delete(member_id);
+        member_mapper.delete(member_id);
         session.invalidate(); // 세션 무호화 -> 사용자가 탈퇴할 때 세션에 저장된 정보가 더이상 유효하지 않기에 세션을 무효화 시켜야 한다
         return "redirect:/main.do";
     }

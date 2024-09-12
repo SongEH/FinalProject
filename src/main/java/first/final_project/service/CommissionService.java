@@ -76,49 +76,45 @@ public class CommissionService {
 
     // // <!-- 라이더 배달내역에 따른 월별,일별 수입 TEST -->
     // 라이더의 날짜 필터링된 배달 내역과 총 수수료 계산
-    // public Map<String, Object> getFilteredDeliveries(int raiders_id, String
-    // startDate, String endDate, int page) {
-    // int blockList = 3; // 한 페이지당 보여줄 배달 내역 개수
-    // int blockPage = 5; // 한 번에 보여줄 페이지 번호 개수
+    public Map<String, Object> getFilteredDeliveries(int raiders_id, String startDate, String endDate, int page) {
+        int blockList = 10; // 한 페이지당 보여줄 배달 내역 개수
+        int blockPage = 5; // 한 번에 보여줄 페이지 번호 개수
 
-    // // 총 배달 건수를 계산 (필터링된 날짜 범위 내에서)
-    // int rowTotal = commissionMapper.getTotalCount(raiders_id);
+        // 총 배달 건수를 계산 (필터링된 날짜 범위 내에서)
+        int rowTotal = commissionMapper.getTotalCount(raiders_id);
 
-    // // 페이지 처리
-    // int totalPage = (rowTotal + blockList - 1) / blockList;
-    // if (page < 1)
-    // page = 1;
-    // if (page > totalPage)
-    // page = totalPage;
+        // 페이지 처리
+        int totalPage = (rowTotal + blockList - 1) / blockList;
+        if (page < 1)
+            page = 1;
+        if (page > totalPage)
+            page = totalPage;
 
-    // int offset = (page - 1) * blockList;
+        int offset = (page - 1) * blockList;
 
-    // // 날짜 범위 및 페이징을 위한 파라미터 설정
-    // Map<String, Object> params = new HashMap<>();
-    // params.put("raiders_id", raiders_id);
-    // params.put("startDate", startDate);
-    // params.put("endDate", endDate);
-    // params.put("offset", offset);
-    // params.put("blockList", blockList);
+        // 날짜 범위 및 페이징을 위한 파라미터 설정
+        Map<String, Object> params = new HashMap<>();
+        params.put("raiders_id", raiders_id);
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        params.put("offset", offset);
+        params.put("blockList", blockList);
 
-    // // 필터링된 배달 내역을 가져옴
-    // List<CompletedDeliveryVo> deliveries =
-    // commissionMapper.selectFilteredDeliveries(params);
+        // 필터링된 배달 내역을 가져옴
+        List<CompletedDeliveryVo> deliveries = commissionMapper.selectFilteredDeliveries(params);
 
-    // // 필터링된 기간의 총 수수료 계산
-    // double totalCommission =
-    // commissionMapper.selectTotalCommissionByDate(params);
+        // 필터링된 기간의 총 수수료 계산
+        double totalCommission = commissionMapper.selectTotalCommissionByDate(params);
 
-    // // 페이징 메뉴 생성
-    // String pageMenu = Paging.getPaging("list.do?raiders_id=" + raiders_id, page,
-    // rowTotal, blockList, blockPage);
+        // 페이징 메뉴 생성
+        String pageMenu = Paging.getPaging("list.do?raiders_id=" + raiders_id, page, rowTotal, blockList, blockPage);
 
-    // // 결과 데이터 반환
-    // Map<String, Object> result = new HashMap<>();
-    // result.put("deliveries", deliveries);
-    // result.put("totalCommission", totalCommission);
-    // result.put("pageMenu", pageMenu);
+        // 결과 데이터 반환
+        Map<String, Object> result = new HashMap<>();
+        result.put("deliveries", deliveries);
+        result.put("totalCommission", totalCommission);
+        result.put("pageMenu", pageMenu);
 
-    // return result;
-    // }
+        return result;
+    }
 }

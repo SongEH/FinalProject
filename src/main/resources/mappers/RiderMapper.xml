@@ -138,6 +138,7 @@
         JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
         JOIN shop s ON o.shop_id = s.shop_id
         WHERE d.raiders_id = #{raiders_id} AND dh.delivery_history_status = '배달 완료'
+        ORDER BY o.orders_id DESC;
     </select>
 
     <update id="updateDeliveryHistory">

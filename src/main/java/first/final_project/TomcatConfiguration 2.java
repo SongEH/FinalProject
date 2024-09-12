@@ -7,17 +7,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.catalina.Context;
 
-@Configuration
-public class TomcatConfiguration {
-    @Bean
-    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> servletContainerCustomizer() {
-        return (TomcatServletWebServerFactory container) -> {
-            container.addContextCustomizers((Context context) -> {
-                  // This configuration is used to allow symlink on resources
-                   StandardRoot sr = new StandardRoot();
-                   sr.setAllowLinking(true);
-                   context.setResources(sr);
-            });
-        };
-    }
-}
+// @Configuration
+// public class TomcatConfiguration {
+//     @Bean
+//     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> servletContainerCustomizer() {
+//         return (TomcatServletWebServerFactory container) -> {
+//             container.addContextCustomizers((Context context) -> {
+//                   // This configuration is used to allow symlink on resources
+//                    StandardRoot sr = new StandardRoot();
+//                    sr.setAllowLinking(true);
+//                    context.setResources(sr);
+//             });
+//         };
+//     }
+// }

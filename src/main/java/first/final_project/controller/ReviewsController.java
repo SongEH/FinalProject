@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import first.final_project.dao.ReviewsMapper;
 import first.final_project.vo.MemberVo;
 import first.final_project.vo.ReviewsImageVo;
 import first.final_project.vo.ReviewsVo;
@@ -29,6 +30,9 @@ public class ReviewsController {
 
     @Autowired
     ServletContext application;
+
+    @Autowired
+    ReviewsMapper reviewsMapper;
     
     @RequestMapping("/insert_form.do")
     public String insert_form(){
@@ -37,12 +41,9 @@ public class ReviewsController {
     }
 
     @RequestMapping("insert.do")
-    public String insert(@RequestParam(name="photo")List<MultipartFile> photo_list, Model model, RedirectAttributes ra) throws IllegalStateException, IOException{
+    public String insert(ReviewsVo vo, ReviewsImageVo imgvo,@RequestParam(name="photo")List<MultipartFile> photo_list, Model model, RedirectAttributes ra) {
 
         System.out.println("도착");
-
-        ReviewsVo vo;
-        ReviewsImageVo imgvo;
 
         MemberVo user = (MemberVo) session.getAttribute("user");
 
@@ -63,7 +64,12 @@ public class ReviewsController {
                 UUID uuid = UUID.randomUUID();
                 reviews_img = uuid + "_" + photo.getOriginalFilename();
                 File f = new File(absPath, reviews_img);
-                photo.transferTo(f);
+                
+                try {
+                    photo.transferTo(f);
+                } catch (IOException e) {
+                    return "redirect:error/error_page";
+                }
             }
             filename_list.add(reviews_img);
         }
@@ -71,23 +77,21 @@ public class ReviewsController {
         // reviews DB 에 인서트
         vo.setMember_id(user.getMember_id());
         vo.setShop_id(1);
+        vo.setMenu_id(1);
 
         // reviews 등록 
-        int res = 
+        int res = reviewsMapper.insert(vo);
 
         // reviews 의 id 받아오기 
         int reviews_id = 1;
-        imgvo.setReviews_id(reviews_img);
+        imgvo.setReviews_id(reviews_id);
         // 이미지 insert
         for (String filename : filename_list){
             reviews_img = filename;
-            imgvo.setReviews_ima_name(reviews_img);
+            imgvo.setReviews_img(reviews_img);
+
+            res = reviewsMapper.insert_img(imgvo);
         }
-
-
-
-
-
-        return "reviews";
+        return "redirect:shop/list.do";
     }
 }

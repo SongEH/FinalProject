@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.ReviewsMapper">
+
+
+    <select id="insert" parameterType="vo" resultType="reviews">
+        insert into reviews (reviews_id,
+                            reviews_rating,
+                            reviews_content,
+                            reviews_cdate,
+                            member_id,
+                            menu_id,
+                            shop_id
+                    values (null,
+                            #{reviews_rating},
+                            #{reviews_content},
+                            sysdate(),
+                            #{member_id},
+                            #{menu_id},
+                            #{shop_id}
+
+    </select>
+
+</mapper>

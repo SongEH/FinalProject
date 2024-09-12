@@ -133,27 +133,27 @@ pageEncoding='UTF-8'%>
     <div class="container" style="width: 1000px; margin-top: 30px">
         <form method="post" action="insert.do" enctype="multipart/form-data">
             <div id="reviews_info">
-                <div class="reviews_feature">피자가게</div>
+                <div name="shop_name" class="reviews_feature">피자가게</div>
                 <hr />
-                <div class="reviews_feature" >모짜렐라피자</div>
+                <div name="menu_name" class="reviews_feature">모짜렐라피자</div>
                 <hr />
                 <div class="reviews_feature" >이 가게를 추천하시겠어요?</div>
                 <fieldset class="reviews_feature"  >
                     <span class="text-bold">별점을 선택해주세요</span>
-                    <input type="radio" name="reviewStar" value="5" id="rate1" />
+                    <input type="radio" name="reviews_rating" value="5" id="rate1" />
                     <label for="rate1">★</label>
-                    <input type="radio" name="reviewStar" value="4" id="rate2" />
+                    <input type="radio" name="reviews_rating" value="4" id="rate2" />
                     <label for="rate2">★</label>
-                    <input type="radio" name="reviewStar" value="3" id="rate3" />
+                    <input type="radio" name="reviews_rating" value="3" id="rate3" />
                     <label for="rate3">★</label>
-                    <input type="radio" name="reviewStar" value="2" id="rate4" />
+                    <input type="radio" name="reviews_rating" value="2" id="rate4" />
                     <label for="rate4">★</label>
-                    <input type="radio" name="reviewStar" value="1" id="rate5" />
+                    <input type="radio" name="reviews_rating" value="1" id="rate5" />
                     <label for="rate5">★</label>
                 </fieldset>
                 <div class="reviews_feature" >상세한 리뷰를 남겨주세요</div>
                 <div class="reviews_feature">
-                    <textarea class="col-auto form-control" type="text"
+                    <textarea name="reviews_content" class="col-auto form-control" type="text"
                     id="reviewContents" placeholder="리뷰를 남기면 적립금을 드립니다."></textarea>
                 </div>
             </div>
@@ -167,7 +167,7 @@ pageEncoding='UTF-8'%>
             <div id="file-list" class="file_list"></div>
             <div class="reviews_feature" style="text-align: center;">
                 <span id="file-count"></span>
-                <input type="submit" value="등록완료" onclick="" />
+                <input type="submit" value="등록완료"/>
             </div>
         </form>
     </div>

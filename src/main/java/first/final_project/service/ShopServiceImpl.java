@@ -58,5 +58,11 @@ public class ShopServiceImpl implements ShopService {
         return shopMapper.delete(shop_id);
     }
 
+    // Owner_id로 shop_id 찾아오기 
+    @Override
+    public int select_one_shop_id(int owner_id) {
+        return shopMapper.select_one_shop_id(owner_id);
+    }
+
    
 }

@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE
         d.raiders_id = #{raiders_id}
         AND dh.delivery_history_status = '배달 완료'
-                        <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
+                                        <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
         <if test="startDate != null and endDate != null">
             AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
         </if>
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE
         d.raiders_id = #{raiders_id}
         AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료')
-                        <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
+                                        <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
         <if test="startDate != null and endDate != null">
             AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
         </if>
@@ -73,11 +73,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT COUNT(*)
     FROM Deliveries d
     JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN Orders o ON d.orders_id = o.orders_id          <!-- Orders 테이블을 JOIN -->
+    JOIN Orders o ON d.orders_id = o.orders_id                          <!-- Orders 테이블을 JOIN -->
     WHERE
         d.raiders_id = #{raiders_id}
         AND dh.delivery_history_status = '배달 완료'
-                <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
+                                <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
         <if test="startDate != null and endDate != null">
             AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
         </if>
@@ -204,5 +204,16 @@ VALUES (#{raiders_id}, #{deliveries_id}, #{commission})  -- 수수료 데이터�
     WHERE d.raiders_id = #{raiders_id}
     AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
     AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
+    </select>
+
+    <!-- 특정 라이더의 필터링된 배달 내역 건수를 조회하는 쿼리 -->
+    <select id="getFilteredCount" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM Deliveries d
+    JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN Orders o ON d.orders_id = o.orders_id
+    WHERE d.raiders_id = #{raiders_id}
+    AND dh.delivery_history_status = '배달 완료'
+    AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
     </select>
 </mapper>

@@ -100,13 +100,14 @@ CREATE TABLE Delivery_history (
 CREATE TABLE Commissions (
     commissions_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- Primary Key
     raiders_id INT NOT NULL,  -- Foreign Key to Riders
-    deliveries_id INT NOT NULL,  -- Foreign Key to Deliveries (추가된 컬럼)
-    commission DOUBLE NOT NULL,  -- 수수료 값
-    created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 생성 시간 (기본값: 현재 시간)
-    CONSTRAINT fk_raiders_commissions FOREIGN KEY (raiders_id) REFERENCES Riders(raiders_id) ON DELETE CASCADE,  -- 라이더 외래 키
-    CONSTRAINT fk_deliveries_commissions FOREIGN KEY (deliveries_id) REFERENCES Deliveries(deliveries_id) ON DELETE CASCADE,  -- 배달 외래 키 (추가됨)
-    CONSTRAINT unique_commission UNIQUE (raiders_id, deliveries_id)  -- 라이더와 배달 ID의 조합이 유일해야 함
+    commission DOUBLE NOT NULL,
+    created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_raiders_commissions FOREIGN KEY (raiders_id) REFERENCES Riders(raiders_id) ON DELETE CASCADE
 );
+
+ALTER TABLE Commissions ADD COLUMN deliveries_id INT;
+ALTER TABLE Commissions ADD CONSTRAINT unique_commission UNIQUE (raiders_id, deliveries_id);
+
 
 
 -- Riders 테이블 더미 데이터

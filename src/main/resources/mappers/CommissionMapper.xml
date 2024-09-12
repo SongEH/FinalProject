@@ -19,7 +19,10 @@ SELECT
     s.shop_name,                -- 가게 이름
     a.addr_line1,               -- 주소 1
     a.addr_line2,               -- 주소 2
-    COALESCE(c.commission, 0) AS commission  -- 수수료가 없으면 0으로 반환
+    CASE
+        WHEN c.commission IS NOT NULL THEN c.commission
+        ELSE o.orders_price * 0.03  -- 주문 금액의 3%를 수수료로 계산
+    END AS commission
 FROM
     Deliveries d
 JOIN
@@ -38,7 +41,7 @@ WHERE
     d.raiders_id = #{raiders_id}  -- 특정 라이더의 배달 목록을 가져옴
     AND dh.delivery_history_status = '배달 완료'  -- 완료된 배달만 조회
 ORDER BY
-    o.orders_cdate DESC;  -- 주문 생성 날짜 기준으로 내림차순 정렬
+    o.orders_cdate DESC;
     </select>
 
     <!--
@@ -46,10 +49,19 @@ ORDER BY
     raiders_id를 기준으로 해당 라이더의 모든 배달 수수료를 합산.
 -->
     <select id="selectTotalCommission" parameterType="int" resultType="double">
-  SELECT COALESCE(SUM(commission), 0)  -- 수수료가 없으면 0을 반환
-FROM Commissions
-WHERE raiders_id = #{raiders_id}  -- 특정 라이더의 총 수수료를 계산
+SELECT COALESCE(SUM(
+    CASE
+        WHEN c.commission IS NOT NULL THEN c.commission
+        ELSE o.orders_price * 0.03  -- 주문 금액의 3%를 수수료로 계산
+    END
+), 0)
+FROM Deliveries d
+JOIN Orders o ON d.orders_id = o.orders_id
+LEFT JOIN Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+WHERE d.raiders_id = #{raiders_id} 
+AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
     </select>
+
 
     <!--
     라이더와 특정 배달 건에 대해 수수료가 이미 존재하는지 확인하는 쿼리.
@@ -76,37 +88,37 @@ VALUES (#{raiders_id}, #{deliveries_id}, #{commission})  -- 수수료 데이터�
     특정 라이더의 완료된 배달 목록을 페이징 처리하여 조회.
 -->
     <select id="selectPageList" parameterType="map" resultType="first.final_project.vo.CompletedDeliveryVo">
-    SELECT 
-        d.deliveries_id,
-        r.rider_name,
-        o.orders_id,
-        o.orders_price,
-        dh.delivery_history_status,
-        o.orders_cdate,
-        s.shop_name,
-        a.addr_line1,
-        a.addr_line2,
-        COALESCE(c.commission, 0) AS commission
-    FROM 
-        Deliveries d
-    JOIN 
-        Riders r ON d.raiders_id = r.raiders_id
-    JOIN 
-        Orders o ON d.orders_id = o.orders_id
-    JOIN 
-        Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN 
-        Shop s ON o.shop_id = s.shop_id
-    JOIN 
-        Addr a ON o.addr_id = a.addr_id
-    LEFT JOIN 
-        Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
-    WHERE 
-        d.raiders_id = #{raiders_id}
-        AND dh.delivery_history_status = '배달 완료'
-    ORDER BY 
-        o.orders_cdate DESC
-    LIMIT #{offset}, #{blockList}
+SELECT
+    d.deliveries_id,            -- 배달 ID
+    r.rider_name,               -- 라이더 이름
+    o.orders_id,                -- 주문 ID
+    o.orders_price,             -- 주문 금액
+    dh.delivery_history_status, -- 배달 상태
+    o.orders_cdate,             -- 주문 생성 날짜
+    s.shop_name,                -- 가게 이름
+    a.addr_line1,               -- 주소 1
+    a.addr_line2,               -- 주소 2
+    COALESCE(c.commission, 0) AS commission  -- 수수료가 없으면 0으로 반환
+FROM
+    Deliveries d
+JOIN
+    Riders r ON d.raiders_id = r.raiders_id
+JOIN
+    Orders o ON d.orders_id = o.orders_id
+JOIN
+    Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+JOIN
+    Shop s ON o.shop_id = s.shop_id
+JOIN
+    Addr a ON o.addr_id = a.addr_id
+LEFT JOIN
+    Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+WHERE
+    d.raiders_id = #{raiders_id}  -- 특정 라이더의 배달 목록을 가져옴
+    AND dh.delivery_history_status = '배달 완료'  -- 완료된 배달만 조회
+ORDER BY
+    o.orders_cdate DESC  -- 주문 생성 날짜 기준 내림차순 정렬
+LIMIT #{offset}, #{blockList}  -- 페이징 처리 (가져올 시작 위치와 개수)
     </select>
 
     <!--

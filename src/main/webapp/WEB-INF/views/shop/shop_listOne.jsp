@@ -183,6 +183,21 @@ pageEncoding="UTF-8"%>
       f.action="modify_form.do";
       f.submit();
     }
+
+    function reviews_list(){
+      $.ajax({
+        url     :   "reviews/list.do",
+        method  :   "POST",
+        success :   function(res_data){
+          alert("성공");
+          ("#review_display").html(display);
+          ("#menu_display").hide();
+        },
+        error   :   function(err){
+          alert(error.responseText);
+        }
+      });
+    }
   </script>
 </head>
 <body>
@@ -225,7 +240,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" id="reviewButton" value="클린리뷰"/>
+                <input type="button" id="reviewButton" value="클린리뷰(리뷰갯수카운트값)" onclick="reviews_list();"/>
               </div>
             </div>
             <div class="col-sm-4" style="padding:0px">
@@ -236,17 +251,19 @@ pageEncoding="UTF-8"%>
           </div>
 
           <!--menu_list 출력 공간 -->
-          <div class="row" style="margin-top:30px;">
-            <c:forEach var="item" items="${menu_list}">
-              <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center;">
-                <div>
-                  <div>${item.menu_name}</div>
-                  <div>${item.menu_content}</div>
-                  <div><strong>${item.menu_price}</strong></div>
+          <div id="menu_display">
+            <div class="row" style="margin-top:30px;">
+              <c:forEach var="item" items="${menu_list}">
+                <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center;">
+                  <div>
+                    <div>${item.menu_name}</div>
+                    <div>${item.menu_content}</div>
+                    <div><strong>${item.menu_price}</strong></div>
+                  </div>
+                  <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
                 </div>
-                <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
-              </div>
-            </c:forEach>
+              </c:forEach>
+            </div>
           </div>
         </div>
 

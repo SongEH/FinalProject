@@ -1,5 +1,6 @@
 package first.final_project.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.type.Alias;
@@ -17,10 +18,12 @@ public class ReviewsVo {
     private String reviews_img;
     private String reviews_cdate;
 
-    List<ReviewsImageVo> reviews_img_list;
+
 
     // foreign key 
     private int member_id;
     private int menu_id;
     private int shop_id;
+
+    List<ReviewsImageVo> reviews_img_list = new ArrayList<>();
 }

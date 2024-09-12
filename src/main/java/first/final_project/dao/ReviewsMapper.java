@@ -5,10 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 import first.final_project.vo.ReviewsImageVo;
 import first.final_project.vo.ReviewsVo;
 
+
+
 @Mapper
 public interface ReviewsMapper {
     
     int insert(ReviewsVo vo);
 
-    int insert_img(ReviewsImageVo imgvo);
+    int insert_img(ReviewsImageVo imgVo);
 }

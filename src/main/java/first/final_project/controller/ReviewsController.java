@@ -49,7 +49,7 @@ public class ReviewsController {
 
         if(user==null){
             ra.addAttribute("reason", "session_timeout");
-			return "redirect:../member/login_form.do";
+			return "redirect:../member/login.do";
         }
 
         // 이미지 저장 경로 
@@ -92,6 +92,6 @@ public class ReviewsController {
 
             res = reviewsMapper.insert_img(imgvo);
         }
-        return "redirect:shop/list.do";
+        return "redirect:../shop/list.do";
     }
 }

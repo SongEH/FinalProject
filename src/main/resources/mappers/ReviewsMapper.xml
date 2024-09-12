@@ -6,22 +6,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="first.final_project.dao.ReviewsMapper">
 
 
-    <select id="insert" parameterType="vo" resultType="reviews">
-        insert into reviews (reviews_id,
+    <insert id="insert" parameterType="reviews">
+        insert into reviews (
                             reviews_rating,
                             reviews_content,
                             reviews_cdate,
                             member_id,
                             menu_id,
                             shop_id
-                    values (null,
+                    )values (
                             #{reviews_rating},
                             #{reviews_content},
                             sysdate(),
                             #{member_id},
                             #{menu_id},
                             #{shop_id}
+                            )
+    </insert>
 
-    </select>
+    <insert id="insert_img" parameterType="reviewsImage">
+        insert into reviews_imges (reviews_img, reviews_id) values(#{reviews_img}, #{reviews_id})
+    </insert>
 
 </mapper>

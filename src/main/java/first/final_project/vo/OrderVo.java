@@ -18,6 +18,7 @@ public class OrderVo {
     private String orders_status;
     private int shop_id;
     private int addr_id;
+    private int delivery_time;
     private String shop_name; // 추가
     private String deliveries_method; // 추가
     private String shop_status; // 추가

@@ -85,26 +85,24 @@
 
     <!-- Orders와 Shop을 조인하여 주문과 관련된 가게 정보를 가져옴 -->
     <select id="findOrdersByStatus" parameterType="map" resultType="order">
-    SELECT o.*, s.shop_name AS shop_name, s.shop_addr AS shop_addr, 
-        d.deliveries_method AS deliveries_method, 
-        a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, 
-        m.member_nickname AS member_nickname, o.orders_drequest AS orders_drequest
-    FROM orders o
-    JOIN shop s ON o.shop_id = s.shop_id
-    LEFT jOIN Deliveries d ON o.orders_id = d.orders_id
-    JOIN addr a ON o.addr_id = a.addr_id
-    JOIN member m ON a.member_id = m.member_id
-    JOIN riders r ON r.raiders_id = #{raiders_id}
-    WHERE o.orders_status = #{status}
-    AND (
-        r.riders_region IS NULL
-        OR r.riders_region = ''
-        OR s.shop_addr REGEXP REPLACE(r.riders_region, ',', '|')
-    )
-    ORDER BY orders_id
+        SELECT o.*, s.shop_name AS shop_name, s.shop_addr AS shop_addr, 
+            d.deliveries_method AS deliveries_method, 
+            a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, 
+            m.member_nickname AS member_nickname, o.orders_drequest AS orders_drequest
+        FROM orders o
+        JOIN shop s ON o.shop_id = s.shop_id
+        LEFT jOIN Deliveries d ON o.orders_id = d.orders_id
+        JOIN addr a ON o.addr_id = a.addr_id
+        JOIN member m ON a.member_id = m.member_id
+        JOIN riders r ON r.raiders_id = #{raiders_id}
+        WHERE o.orders_status = #{status}
+        AND (
+            r.riders_region IS NULL
+            OR r.riders_region = ''
+            OR s.shop_addr REGEXP REPLACE(r.riders_region, ',', '|')
+        )
+        ORDER BY orders_id
     </select>
-
-
 
     <select id="findOrdersByRiderAndStatus" parameterType="map" resultType="order">
         SELECT o.*, d.deliveries_method AS deliveries_method, s.shop_name AS shop_name, 
@@ -147,4 +145,7 @@
         WHERE deliveries_id = (SELECT deliveries_id FROM deliveries WHERE orders_id = #{orders_id})
     </update>
 
+    <update id="updateDeliveryTime">
+        UPDATE orders SET delivery_time = #{delivery_time} WHERE orders_id = #{orders_id}
+    </update>
 </mapper>

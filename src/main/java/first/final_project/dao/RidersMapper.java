@@ -46,10 +46,11 @@ public interface RidersMapper {
 
     ShopVo getShopById(@Param("shop_id") int shop_id);
 
+    void updateDeliveryTime(@Param("orders_id") int orders_id, @Param("delivery_time") int delivery_time);
+
     // 라이더가 완료한 배달 내역 가져오기
     List<OrderVo> findCompletedOrdersByRider(@Param("raiders_id") int raiders_id);
 
     // 특정 라이더의 3% 총 수수료를 가져오는 메소드
-
     double getTotalCommissionByRiderId(int raiders_id);
 }

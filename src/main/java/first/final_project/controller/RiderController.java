@@ -261,6 +261,12 @@ public class RiderController {
 		HttpSession session = request.getSession();
 		RiderVo user = (RiderVo) session.getAttribute("user");
 
+		// 라이더 정보가 없을 경우
+		if (user == null) {
+			// 로그인 화면으로 리다이렉트
+			return "redirect:login_form.do";
+		}
+
 		int raiders_id = user.getRaiders_id();
 		List<OrderVo> orders = riderService.getOrdersByRiderAndStatus(raiders_id, "배차 완료");
 		if (orders == null || orders.isEmpty()) {
@@ -336,6 +342,12 @@ public class RiderController {
 		HttpSession session = request.getSession();
 		RiderVo user = (RiderVo) session.getAttribute("user");
 
+		// 라이더 정보가 없을 경우
+		if (user == null) {
+			// 로그인 화면으로 리다이렉트
+			return "redirect:login_form.do";
+		}
+
 		int raiders_id = user.getRaiders_id();
 
 		// 배달 완료된 주문 목록을 가져오기
@@ -356,10 +368,10 @@ public class RiderController {
 	// 라이더가 예상 배달 시간 선택
 	@PostMapping("/setDeliveryTime")
 	public String setDeliveryTime(@RequestParam("orders_id") int orders_id,
-			@RequestParam("delivery_time") String delivery_time) {
-		// riderService.setDeliveryTime(orders_id, delivery_time);
+			@RequestParam("delivery_time") int delivery_time) {
+		riderService.updateDeliveryTime(orders_id, delivery_time);
 		riderService.updateDeliveryHistory(orders_id, "배차 완료");
-		return "redirect:/riders/orderProgress";
+		return "redirect:/riders/progress";
 	}
 
 	// 라이더가 배차를 받았을 때 클라이언트에게 알림 전송

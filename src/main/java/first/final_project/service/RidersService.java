@@ -90,4 +90,8 @@ public class RidersService {
         ridersMapper.updateDeliveryHistory(orders_id, status);
     }
 
+    public void updateDeliveryTime(int orders_id, int delivery_time) {
+        ridersMapper.updateDeliveryTime(orders_id, delivery_time);
+    }
+
 }

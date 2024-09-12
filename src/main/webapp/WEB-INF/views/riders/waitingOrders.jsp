@@ -64,7 +64,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               location.reload(); // 페이지를 새로고침하여 새로운 데이터를 반영
           });
       });
-  </script>
+    </script>
   </div>
   </div>
   </div>

@@ -7,133 +7,126 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import first.final_project.dao.CommissionMapper;
+import first.final_project.util.MyCommon;
+import first.final_project.util.Paging;
 import first.final_project.vo.CompletedDeliveryVo;
 
 @Service
 public class CommissionService {
 
+    // 의존성 주입을 통한 데이터베이스 매핑 객체
     private final CommissionMapper commissionMapper;
 
+    // 생성자를 통해 CommissionMapper를 주입받아 사용
     public CommissionService(CommissionMapper commissionMapper) {
         this.commissionMapper = commissionMapper;
     }
 
-    public List<CompletedDeliveryVo> selectList(int raiders_id) {
-        // 완료된 배달 목록과 함께 수수료를 가져옴
-        List<CompletedDeliveryVo> completedDeliveries = commissionMapper.selectList(raiders_id);
+    // 라이더 ID와 페이지 번호를 기반으로 페이징 처리된 배달 데이터를 가져오는 메서드
+    public Map<String, Object> getPagedDeliveries(int raiders_id, int page) {
+        // 한 페이지당 보여질 배달 목록의 개수 (BLOCK_LIST)
+        int blockList = MyCommon.Commission.BLOCK_LIST;
+        // 한 화면에 보여질 페이지 번호의 개수 (BLOCK_PAGE)
+        int blockPage = MyCommon.Commission.BLOCK_PAGE;
 
-        // 데이터베이스에 수수료가 저장되지 않은 경우에만 수수료를 계산
-        for (CompletedDeliveryVo delivery : completedDeliveries) {
-            if (delivery.getCommission() == 0.0) { // 수수료가 0인 경우 계산하고 저장
-                double commission = delivery.getOrders_price() * 0.03;
-                delivery.setCommission(commission); // VO에 수수료 값을 설정
-                saveCommission(raiders_id, delivery.getDeliveries_id(), commission); // 수수료 저장
-            }
-        }
+        // 전체 데이터 개수(배달 건수)를 가져옴
+        int rowTotal = commissionMapper.getTotalCount(raiders_id);
 
-        return completedDeliveries;
-    }
+        // 전체 페이지 수를 계산 (총 배달 건수를 한 페이지당 보여줄 목록 수로 나눈 값)
+        int totalPage = (rowTotal + blockList - 1) / blockList;
 
-    public void saveCommission(int raiders_id, int deliveries_id, double commission) {
+        // 경계 처리: 페이지 값이 1보다 작으면 1로 설정, 페이지 값이 전체 페이지 수보다 크면 마지막 페이지로 설정
+        if (page < 1)
+            page = 1;
+        if (page > totalPage)
+            page = totalPage;
+
+        // 페이지 번호에 따른 데이터 가져오기: 몇 번째 데이터부터 가져올지 계산 (offset)
+        int offset = (page - 1) * blockList;
+
+        // 데이터베이스 쿼리에서 사용할 파라미터를 Map에 담아 전달
         Map<String, Object> params = new HashMap<>();
-        params.put("raiders_id", raiders_id);
-        params.put("deliveries_id", deliveries_id);
-        params.put("commission", commission);
-        commissionMapper.insertCommission(params);
+        params.put("raiders_id", raiders_id); // 라이더 ID
+        params.put("offset", offset); // 시작 지점 (offset)
+        params.put("blockList", blockList); // 한 페이지당 보여줄 데이터 수 (limit)
+
+        // 페이징 처리된 배달 데이터를 가져옴
+        List<CompletedDeliveryVo> deliveries = commissionMapper.selectPageList(params);
+
+        // 페이징 메뉴 생성 (화면 하단에 페이지 번호를 표시하기 위한 HTML 생성)
+        String pageMenu = Paging.getPaging("list.do?raiders_id=" + raiders_id, page, rowTotal, blockList, blockPage);
+
+        // 라이더의 총 수수료 계산
+        double totalCommission = commissionMapper.selectTotalCommission(raiders_id);
+
+        // 최종적으로 JSP로 반환할 데이터를 Map에 담아 반환
+        Map<String, Object> result = new HashMap<>();
+        result.put("deliveries", deliveries); // 배달 목록 데이터
+        result.put("totalCommission", totalCommission); // 총 수수료 데이터
+        result.put("pageMenu", pageMenu); // 페이징 메뉴
+
+        return result; // JSP로 전달될 데이터 Map
     }
 
-    public boolean commissionExists(int raiders_id, int deliveries_id) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("raiders_id", raiders_id);
-        params.put("deliveries_id", deliveries_id);
-
-        // 쿼리 결과가 0보다 크면 true를 반환
-        int count = commissionMapper.commissionExists(params);
-        return count > 0;
-    }
 }
-// @Service
-// public class CommissionService {
 
-// private final CommissionMapper commissionMapper;
-
-// public CommissionService(CommissionMapper commissionMapper) {
-// this.commissionMapper = commissionMapper;
+// public Map<String, Object> getPagedDeliveries(int raiders_id, int page) {
+// // TODO Auto-generated method stub
+// throw new UnsupportedOperationException("Unimplemented method
+// 'getPagedDeliveries'");
 // }
 
-// public List<CompletedDeliveryVo> selectList(int raiders_id) {
-// // Fetch the completed deliveries
-// List<CompletedDeliveryVo> completedDeliveries =
-// commissionMapper.selectList(raiders_id);
+// 라이더 ID와 페이지 번호를 기반으로 페이징 처리된 배달 데이터를 가져오는 메서드
+// public Map<String, Object> getPagedDeliveries(int raiders_id, int page) {
+// // 한 페이지당 보여질 배달 목록의 개수 (BLOCK_LIST)
+// int blockList = MyCommon.Commission.BLOCK_LIST;
+// // 한 화면에 보여질 페이지 번호의 개수 (BLOCK_PAGE)
+// int blockPage = MyCommon.Commission.BLOCK_PAGE;
 
-// // Calculate commission only if it has not been inserted already
-// for (CompletedDeliveryVo delivery : completedDeliveries) {
-// boolean commissionExists = commissionMapper.commissionExists(raiders_id,
-// delivery.getDeliveries_id());
+// // 전체 데이터 개수(배달 건수)를 가져옴
+// int rowTotal = commissionMapper.getTotalCount(raiders_id);
 
-// if (!commissionExists) {
-// double commission = delivery.getOrders_price() * 0.03;
-// delivery.setCommission(commission); // Set commission value in VO
-// saveCommission(raiders_id, delivery.getDeliveries_id(), commission); // Save
-// the commission
-// }
-// }
+// // 전체 페이지 수를 계산 (총 배달 건수를 한 페이지당 보여줄 목록 수로 나눈 값)
+// int totalPage = (rowTotal + blockList - 1) / blockList;
 
-// return completedDeliveries;
-// }
+// // 경계 처리: 페이지 값이 1보다 작으면 1로 설정, 페이지 값이 전체 페이지 수보다 크면 마지막 페이지로 설정
+// if (page < 1)
+// page = 1;
+// if (page > totalPage)
+// page = totalPage;
 
-// public void saveCommission(int raiders_id, int deliveries_id, double
-// commission) {
+// // 페이지 번호에 따른 데이터 가져오기: 몇 번째 데이터부터 가져올지 계산 (offset)
+// int offset = (page - 1) * blockList;
+
+// // 데이터베이스 쿼리에서 사용할 파라미터를 Map에 담아 전달
 // Map<String, Object> params = new HashMap<>();
-// params.put("raiders_id", raiders_id);
-// params.put("deliveries_id", deliveries_id);
-// params.put("commission", commission);
-// commissionMapper.insertCommission(params);
+// params.put("raiders_id", raiders_id); // 라이더 ID
+// params.put("offset", offset); // 시작 지점 (offset)
+// params.put("blockList", blockList); // 한 페이지당 보여줄 데이터 수 (limit)
+
+// // 페이징 처리된 배달 데이터를 가져옴
+// List<CompletedDeliveryVo> deliveries =
+// commissionMapper.selectPageList(params);
+
+// // 페이징 메뉴 생성 (화면 하단에 페이지 번호를 표시하기 위한 HTML 생성)
+// String pageMenu = Paging.getPaging("list.do?raiders_id=" + raiders_id, page,
+// rowTotal, blockList, blockPage);
+
+// // 라이더의 총 수수료 계산
+// double totalCommission = commissionMapper.selectTotalCommission(raiders_id);
+
+// // 최종적으로 JSP로 반환할 데이터를 Map에 담아 반환
+// Map<String, Object> result = new HashMap<>();
+// result.put("deliveries", deliveries); // 배달 목록 데이터
+// result.put("totalCommission", totalCommission); // 총 수수료 데이터
+// result.put("pageMenu", pageMenu); // 페이징 메뉴
+
+// return result; // JSP로 전달될 데이터 Map
 // }
 
-// public List<CompletedDeliveryVo> selectList(int raiders_id) {
-// // 라이더의 완료된 배달 목록을 가져옴
-// List<CompletedDeliveryVo> completedDeliveries =
-// commissionMapper.selectList(raiders_id);
-
-// // 각 주문의 수수료를 계산하여 DB에 저장
-// for (CompletedDeliveryVo delivery : completedDeliveries) {
-// double commission = delivery.getOrders_price() * 0.03;
-// delivery.setCommission(commission); // VO에 수수료 값 설정
-// saveCommission(raiders_id, commission); // DB에 수수료 저장
-// }
-
-// return completedDeliveries;
-// }
-
-// public void saveCommission(int raiders_id, double commission) {
-// Map<String, Object> params = new HashMap<>();
-// params.put("raiders_id", raiders_id);
-// params.put("commission", commission);
-// commissionMapper.insertCommission(params);
-// }
-
-// test
-// public void saveCommissionsBatch(int raiders_id, List<Double> commissions) {
-// List<Map<String, Object>> batchParams = new ArrayList<>();
-
-// for (double commission : commissions) {
-// Map<String, Object> params = new HashMap<>();
-// params.put("raiders_id", raiders_id);
-// params.put("commission", commission);
-// batchParams.add(params);
-// }
-
-// commissionMapper.insertCommissionsBatch(batchParams); // Assuming a batch
-// insert method is in the mapper
-// }
-
-// public double getTotalCommission(int raiders_id) {
-// return commissionMapper.selectTotalCommission(raiders_id);
-// }
-
-// public List<Map<String, Object>> getCommissionHistory(int raiders_id, Date
-// startDate, Date endDate) {
-// return commissionMapper.selectCommissionHistory(raiders_id, startDate,
-// endDate);
+// public List<CompletedDeliveryVo> getPagedDeliveries(Map<String, Object>
+// params) {
+// // TODO Auto-generated method stub
+// throw new UnsupportedOperationException("Unimplemented method
+// 'getPagedDeliveries'");
 // }

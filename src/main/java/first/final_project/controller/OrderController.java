@@ -96,8 +96,15 @@ public class OrderController {
 	@RequestMapping(value = "order_show.do")
 	public String order_show(int orders_id, Model model) {
 
+		// 주문 1건 조회
 		OrderVo vo = order_mapper.selectOne(orders_id);
+
+		// 주문ID를 가진 장바구니 목록 
+		List<CartsVo> list = carts_mapper.selectOrdersById(orders_id);
+
+		System.out.println(list);
 		model.addAttribute("vo", vo);
+		model.addAttribute("list", list);
 
 		return "order/order_show";
 

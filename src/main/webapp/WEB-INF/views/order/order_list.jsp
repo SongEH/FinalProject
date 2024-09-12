@@ -53,7 +53,7 @@
                           <h5 class="card-title">
                             ${vo.shop_name}
                           </h5>
-                          <p class="card-text">${vo.orders_name}, ${vo.menu_count}</p>
+                          <p class="card-text">${vo.orders_name}, ${vo.menu_count}개</p>
                           <p class="card-text">가격 ${vo.orders_price}원</p>
                 </td>
                 <td>

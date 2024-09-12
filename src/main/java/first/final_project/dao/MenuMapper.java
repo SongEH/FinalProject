@@ -10,11 +10,7 @@ import first.final_project.vo.MenuVo;
 @Mapper
 public interface MenuMapper {
 
-    List<MenuVo> selectList();
-
-    List<MenuVo> selectPageList(Map<String, Object> map);
-
-    int selectRowTotal();
+    List<MenuVo> selectList(int shop_id);
 
     MenuVo selectOne(int menu_id);
 

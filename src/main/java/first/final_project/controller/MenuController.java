@@ -16,10 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.MenuMapper;
+import first.final_project.dao.ShopMapper;
 import first.final_project.util.MyCommon;
 import first.final_project.util.Paging;
 import first.final_project.vo.MenuVo;
-
+import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +31,9 @@ public class MenuController {
 
 	@Autowired
 	MenuMapper menu_mapper;
+
+	@Autowired
+	ShopMapper shop_mapper;
 
 	@Autowired
 	HttpServletRequest request;
@@ -43,33 +47,18 @@ public class MenuController {
 	// /menu/list.do
 	// /menu/list.do?page=2
 	@RequestMapping("list.do")
-	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
-			Model model) {
+	public String list(Model model) {
 
-		// 게시물의 범위 계산(start/end)
-		int start = (nowPage - 1) * MyCommon.Menu.BLOCK_LIST + 1;
-		int end = start + MyCommon.Menu.BLOCK_LIST - 1;
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("start", start);
-		map.put("end", end);
-
+		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+		int owner_id = user.getOwner_id();
+		int shop_id = shop_mapper.selectShopIdByOwnerId(owner_id);
+		
 		// 페이징된 리스트를 가져온다
-		List<MenuVo> list = menu_mapper.selectPageList(map);
-
-		// 전체 게시물수
-		int rowTotal = menu_mapper.selectRowTotal();
-
-		// pageMenu만들기
-		String pageMenu = Paging.getPaging("list.do", // pageURL
-				nowPage, // 현재페이지
-				rowTotal, // 전체게시물수
-				MyCommon.Menu.BLOCK_LIST, // 한화면에 보여질 게시물수
-				MyCommon.Menu.BLOCK_PAGE); // 한화면에 보여질 페이지수
+		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
 		// 결과적으로 request binding
 		model.addAttribute("list", list);
-		model.addAttribute("pageMenu", pageMenu);
 
 		return "menu/menu_list";
 	}
@@ -130,12 +119,14 @@ public class MenuController {
 		vo.setMenu_content(menu_content);
 
 		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
-		// vo.setShop_id(user.getShop_id()); // 로그인된 계정이 사장계정이어야하고, 사장VO안에 ShopID가 있어야
-		// 한다.
-		vo.setShop_id(1);
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+		int owner_id = user.getOwner_id();
+		int shop_id = shop_mapper.selectShopIdByOwnerId(owner_id);
+
+		vo.setShop_id(shop_id);
 
 		// DB insert
-		int res = menu_mapper.insert(vo);
+		menu_mapper.insert(vo);
 
 		return "redirect:list.do";
 	}

@@ -44,4 +44,6 @@ public interface CommissionMapper {
 
     // 라이더의 날짜 범위에 따른 총 수수료 조회
     double selectTotalCommissionByDate(Map<String, Object> params);
+
+    int getFilteredCount(int raiders_id, String startDate, String endDate);
 }

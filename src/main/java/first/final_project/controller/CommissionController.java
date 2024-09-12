@@ -31,17 +31,13 @@ public class CommissionController {
             @RequestParam(name = "page", defaultValue = "1") int page,
             Model model) {
 
-        // 기본 날짜 범위 설정 (필요 시)
-        if (startDate == null || endDate == null) {
-            LocalDate today = LocalDate.now();
-            startDate = today.withDayOfMonth(1).toString(); // 이번 달의 첫날
-            endDate = today.toString(); // 오늘 날짜
-        }
+        // blockList는 필요에 따라 조정할 수 있음. 예: 한 페이지에 3개씩 보여줌.
+        int blockList = 3;
 
-        // 서비스로부터 필터링된 배달 내역과 총 수수료를 가져옴
-        Map<String, Object> result = commissionService.getFilteredDeliveries(raiders_id, startDate, endDate, page);
+        // 서비스 호출: 필터링 여부에 따라 배달 내역 및 총 수수료를 가져옴
+        Map<String, Object> result = commissionService.getDeliveries(raiders_id, startDate, endDate, page, blockList);
 
-        // 데이터를 모델에 추가하여 JSP로 전달
+        // 모델에 데이터를 추가하여 JSP로 전달
         model.addAttribute("completedDeliveries", result.get("deliveries"));
         model.addAttribute("totalCommission", result.get("totalCommission"));
         model.addAttribute("pageMenu", result.get("pageMenu"));

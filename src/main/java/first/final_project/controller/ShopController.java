@@ -82,11 +82,8 @@ public class ShopController {
 
         if (!photo.isEmpty()) {
             UUID uuid = UUID.randomUUID();
-
             shop_img = uuid + "_" + photo.getOriginalFilename();
-
             File f = new File(absPath, shop_img);
-
             photo.transferTo(f);
         }
 

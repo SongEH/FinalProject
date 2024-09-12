@@ -177,3 +177,9 @@ CREATE TABLE `answer` (
 alter table shop
 add constraint fk_owner_id foreign key (owner_id) 
                             references owner (owner_id) 
+
+
+-- 메뉴에 가게 ID 외래키 설정 
+alter table menu
+add constraint fk_shop_id foreign key (shop_id) 
+                            references shop (shop_id) on delete casacade

@@ -1,7 +1,6 @@
 package first.final_project.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.MenuMapper;
 import first.final_project.service.ShopService;
-import first.final_project.vo.MemberVo;
 import first.final_project.vo.MenuVo;
 import first.final_project.vo.OwnerVo;
 import first.final_project.vo.ShopVo;
@@ -74,13 +72,12 @@ public class ShopController {
         OwnerVo user = (OwnerVo) session.getAttribute("user");
         int owner_id = user.getOwner_id();
         System.out.println(owner_id);
-        
-        
+
         System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
 
         String absPath = application.getRealPath("/resources/images/");
-        
+
         // com.final_project.common.Util.createDirectoryIfNotExists(directoryPath);
 
         if (!photo.isEmpty()) {
@@ -125,19 +122,19 @@ public class ShopController {
     public String shop_modify(Model model) {
 
         try {
-        OwnerVo user = (OwnerVo) session.getAttribute("user");
-        int owner_id = user.getOwner_id();
-        System.out.println("owner_id : " + owner_id);
+            OwnerVo user = (OwnerVo) session.getAttribute("user");
+            int owner_id = user.getOwner_id();
+            System.out.println("owner_id : " + owner_id);
 
-        ShopVo vo = shop_Service.select_modify_owner_id(owner_id);
-        System.out.println("수행");
-        // System.out.println(vo.getShop_id());
-        model.addAttribute("vo", vo);
-        return "shop/shop_modify_form";
+            ShopVo vo = shop_Service.select_modify_owner_id(owner_id);
+            System.out.println("수행");
+            // System.out.println(vo.getShop_id());
+            model.addAttribute("vo", vo);
+            return "shop/shop_modify_form";
         } catch (Exception e) {
             return "error/error_page";
         }
-        
+
     }
 
     // 가게 정보 수정 업데이트
@@ -172,22 +169,22 @@ public class ShopController {
             }
             System.out.println("이미지 삭제 완료");
             // if (!result) {
-            //     model.addAttribute("errorMessage", "Failed to delete the old image");
-            //     return "error/error_page";
+            // model.addAttribute("errorMessage", "Failed to delete the old image");
+            // return "error/error_page";
             // }
 
             System.out.println(shop_img);
             // 새로운 이미지 파일 저장
             vo.setShop_img(shop_img);
             File f = new File(absPath, shop_img);
-            
+
             try {
                 photo.transferTo(f);
                 System.out.println("이미지 저장 완료");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         }
 
         try {
@@ -198,7 +195,7 @@ public class ShopController {
             return "error/error_page";
         }
         // return "redirect:modify_form.do?shop_id=" + shop_id;
-        
+
     }
 
     // 가게 삭제

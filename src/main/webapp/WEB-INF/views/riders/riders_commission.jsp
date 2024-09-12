@@ -44,5 +44,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <div style="text-align: center; margin-top: 20px; font-size: 15px">
       ${pageMenu}
     </div>
+
+    <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
+    <input type="hidden" name="startDate" value="${param.startDate}" />
+    <input type="hidden" name="endDate" value="${param.endDate}" />
   </body>
 </html>

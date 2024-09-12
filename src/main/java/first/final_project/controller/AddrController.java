@@ -110,7 +110,7 @@ public class AddrController {
     return "addr/addr_modify_form";
   }
 
-  @RequestMapping("addr_modify.do") // 수정중(09/05)
+  @RequestMapping("addr_modify.do") 
   public String addr_modify(@RequestParam("addr_id") int addr_id,
       @RequestParam("addr_zipcode") String addr_zipcode,
       @RequestParam("addr_line1") String addr_line1,

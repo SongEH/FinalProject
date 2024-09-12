@@ -47,9 +47,7 @@ public class LoginController {
     @RequestMapping("/member/insert.do")
     public String insert(MemberVo vo) {
         member_mapper.insert(vo);
-
         session.setAttribute("vo", vo);
-
         return "redirect:/login_form.do";
     }
 
@@ -57,6 +55,7 @@ public class LoginController {
     @RequestMapping("/owner/insert.do")
     public String insert(OwnerVo vo) {
         owner_mapper.insert(vo);
+        session.setAttribute("vo", vo);
         return "redirect:/login_form.do";
     }
 

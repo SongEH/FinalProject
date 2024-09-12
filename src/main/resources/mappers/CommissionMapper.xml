@@ -8,45 +8,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     라이더의 완료된 배달 목록을 가져오는 쿼리.
     raiders_id를 기준으로 해당 라이더의 배달 정보, 주문 정보, 수수료 정보를 조회하여 반환.
 -->
-    <select id="selectDeliveries" parameterType="map" resultType="first.final_project.vo.CompletedDeliveryVo">
-    SELECT
-        d.deliveries_id,
-        r.rider_name,
-        o.orders_id,
-        o.orders_price,
-        dh.delivery_history_status,
-        o.orders_cdate,
-        s.shop_name,
-        a.addr_line1,
-        a.addr_line2,
-        COALESCE(c.commission, o.orders_price * 0.03) AS commission
-    FROM
-        Deliveries d
-    JOIN
-        Riders r ON d.raiders_id = r.raiders_id
-    JOIN
-        Orders o ON d.orders_id = o.orders_id
-    JOIN
-        Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN
-        Shop s ON o.shop_id = s.shop_id
-    JOIN
-        Addr a ON o.addr_id = a.addr_id
-    LEFT JOIN
-        Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
-    WHERE
-        d.raiders_id = #{raiders_id}
-        AND dh.delivery_history_status = '배달 완료'
-                                        <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
-        <if test="startDate != null and endDate != null">
-            AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
-        </if>
-    ORDER BY
-        o.orders_cdate DESC
-    LIMIT #{offset}, #{blockList};
+    <select id="selectList" parameterType="int" resultType="first.final_project.vo.CompletedDeliveryVo">
+SELECT
+    d.deliveries_id,            -- 배달 ID
+    r.rider_name,               -- 라이더 이름
+    o.orders_id,                -- 주문 ID
+    o.orders_price,             -- 주문 금액
+    dh.delivery_history_status, -- 배달 상태
+    o.orders_cdate,             -- 주문 생성 날짜
+    s.shop_name,                -- 가게 이름
+    a.addr_line1,               -- 주소 1
+    a.addr_line2,               -- 주소 2
+    CASE
+        WHEN c.commission IS NOT NULL THEN c.commission
+        ELSE o.orders_price * 0.03  -- 주문 금액의 3%를 수수료로 계산
+    END AS commission
+FROM
+    Deliveries d
+JOIN
+    Riders r ON d.raiders_id = r.raiders_id
+JOIN
+    Orders o ON d.orders_id = o.orders_id
+JOIN
+    Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+JOIN
+    Shop s ON o.shop_id = s.shop_id
+JOIN
+    Addr a ON o.addr_id = a.addr_id
+LEFT JOIN
+    Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id  -- 수수료 정보가 없으면 LEFT JOIN으로 0을 반환
+WHERE
+    d.raiders_id = #{raiders_id}  -- 특정 라이더의 배달 목록을 가져옴
+    AND dh.delivery_history_status = '배달 완료'  -- 완료된 배달만 조회
+ORDER BY
+    o.orders_cdate DESC;
     </select>
 
-    <select id="selectTotalCommission" parameterType="map" resultType="double">
+    <!-- 총 수수료 계산 -->
+    <select id="selectTotalCommission" parameterType="int" resultType="double">
     SELECT COALESCE(SUM(
         CASE
             WHEN c.commission IS NOT NULL THEN c.commission
@@ -59,29 +58,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         Orders o ON d.orders_id = o.orders_id
     LEFT JOIN
         Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
-    WHERE
-        d.raiders_id = #{raiders_id}
-        AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료')
-                                        <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
-        <if test="startDate != null and endDate != null">
-            AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
-        </if>
+    WHERE d.raiders_id = #{raiders_id}
+    AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
     </select>
 
     <!-- 완료된 배달 건수 조회 -->
-    <select id="getTotalCount" parameterType="map" resultType="int">
+    <select id="getTotalCount" parameterType="int" resultType="int">
     SELECT COUNT(*)
     FROM Deliveries d
     JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN Orders o ON d.orders_id = o.orders_id                          <!-- Orders 테이블을 JOIN -->
-    WHERE
-        d.raiders_id = #{raiders_id}
-        AND dh.delivery_history_status = '배달 완료'
-                                <!-- 날짜 필터링이 있을 경우에만 조건 추가 -->
-        <if test="startDate != null and endDate != null">
-            AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
-        </if>
+    WHERE d.raiders_id = #{raiders_id}
+    AND dh.delivery_history_status = '배달 완료';
     </select>
+
 
     <!--
     라이더와 특정 배달 건에 대해 수수료가 이미 존재하는지 확인하는 쿼리.
@@ -141,79 +130,9 @@ VALUES (#{raiders_id}, #{deliveries_id}, #{commission})  -- 수수료 데이터�
     LIMIT #{offset}, #{blockList}
     </select>
 
-    <!-- 총 수수료를 저장하는 쿼리 -->
-    <insert id="insertTotalCommission" parameterType="map">
-    INSERT INTO TotalCommission (raiders_id, total_commission)
-    VALUES (#{raiders_id}, #{totalCommission})
-    ON DUPLICATE KEY UPDATE total_commission = #{totalCommission}
-    </insert>
+    <!--
+    특정 라이더의 완료된 배달 건수를 조회하는 쿼리.
+    페이징 처리에 필요한 전체 데이터 개수를 가져옴.
+-->
 
-
-    <!-- 라이더 배달내역에 따른 월별,일별 수입 TEST -->
-
-    <!-- 라이더의 일별 또는 월별 배달 완료 내역을 조회하고 수수료를 계산하는 쿼리 -->
-    <select id="selectFilteredDeliveries" parameterType="map" resultType="first.final_project.vo.CompletedDeliveryVo">
-    SELECT
-        d.deliveries_id,
-        r.rider_name,
-        o.orders_id,
-        o.orders_price,
-        dh.delivery_history_status,
-        o.orders_cdate,
-        s.shop_name,
-        a.addr_line1,
-        a.addr_line2,
-        COALESCE(c.commission, o.orders_price * 0.03) AS commission
-    FROM
-        Deliveries d
-    JOIN
-        Riders r ON d.raiders_id = r.raiders_id
-    JOIN
-        Orders o ON d.orders_id = o.orders_id
-    JOIN
-        Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN
-        Shop s ON o.shop_id = s.shop_id
-    JOIN
-        Addr a ON o.addr_id = a.addr_id
-    LEFT JOIN
-        Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
-    WHERE
-        d.raiders_id = #{raiders_id}
-        AND dh.delivery_history_status = '배달 완료'
-        AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}         
-    ORDER BY
-        o.orders_cdate DESC
-    LIMIT #{offset}, #{blockList};
-    </select>
-
-    <!-- 라이더의 특정 기간의 총 수수료를 계산하는 쿼리 -->
-    <select id="selectTotalCommissionByDate" parameterType="map" resultType="double">
-    SELECT COALESCE(SUM(
-        CASE
-            WHEN c.commission IS NOT NULL THEN c.commission
-            ELSE o.orders_price * 0.03
-        END
-    ), 0)
-    FROM
-        Deliveries d
-    JOIN
-        Orders o ON d.orders_id = o.orders_id
-    LEFT JOIN
-        Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
-    WHERE d.raiders_id = #{raiders_id}
-    AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
-    AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
-    </select>
-
-    <!-- 특정 라이더의 필터링된 배달 내역 건수를 조회하는 쿼리 -->
-    <select id="getFilteredCount" parameterType="map" resultType="int">
-    SELECT COUNT(*)
-    FROM Deliveries d
-    JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN Orders o ON d.orders_id = o.orders_id
-    WHERE d.raiders_id = #{raiders_id}
-    AND dh.delivery_history_status = '배달 완료'
-    AND o.orders_cdate BETWEEN #{startDate} AND #{endDate}
-    </select>
 </mapper>

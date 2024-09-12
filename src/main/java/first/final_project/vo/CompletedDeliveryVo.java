@@ -20,4 +20,5 @@ public class CompletedDeliveryVo {
     private String addr_line2;
     private String delivery_history_status;
     private double commission;
+
 }

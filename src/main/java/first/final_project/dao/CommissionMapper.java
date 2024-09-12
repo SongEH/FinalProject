@@ -35,4 +35,13 @@ public interface CommissionMapper {
     // 특정 라이더의 완료된 배달 목록을 Map 형태로 전달된 파라미터를 기반으로 페이징 처리하여 가져오는 메서드
     List<CompletedDeliveryVo> selectPageList(Map<String, Object> params);
 
+    // 총 수수료를 저장하는 메서드
+    void insertTotalCommission(Map<String, Object> params);
+
+    // <!-- 라이더 배달내역에 따른 월별,일별 수입 TEST -->
+    // 라이더의 날짜 범위에 따른 배달 내역 조회
+    List<CompletedDeliveryVo> selectFilteredDeliveries(Map<String, Object> params);
+
+    // 라이더의 날짜 범위에 따른 총 수수료 조회
+    double selectTotalCommissionByDate(Map<String, Object> params);
 }

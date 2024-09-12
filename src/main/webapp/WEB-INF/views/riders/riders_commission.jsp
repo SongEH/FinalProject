@@ -13,8 +13,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <body>
-    <h1>완료된 배달 정보</h1>
-
     <!-- 완료된 배달 정보 테이블 -->
     <table border="1" id="delivery-table">
       <thead>
@@ -39,9 +37,10 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
       </tbody>
     </table>
 
+    <!-- 총 수수료 -->
     <h3>총 수입: ${totalCommission} 원</h3>
 
-    <!-- 페이징 -->
+    <!-- 페이징 처리 -->
     <div style="text-align: center; margin-top: 20px; font-size: 15px">
       ${pageMenu}
     </div>

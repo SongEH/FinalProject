@@ -215,7 +215,7 @@ public class RiderController {
 				// WebSocket을 통해 클라이언트에 실시간 알림 전송
 				messagingTemplate.convertAndSend("/topic/orders", "Order " + orders_id + " has been assigned.");
 
-				return "redirect:/riders/orderProgress"; // 성공 시 진행 상황 페이지로 리다이렉트
+				return "redirect:/riders/progress"; // 성공 시 진행 상황 페이지로 리다이렉트
 				// System.out.println("Order status updated to '배차 완료'");
 			}
 
@@ -287,7 +287,7 @@ public class RiderController {
 		// 배달 이력 상태도 '배달 중'으로 업데이트
 		riderService.updateDeliveryHistory(orders_id, "배달 중");
 
-		return "redirect:/riders/orderProgress"; // 진행 상황 페이지로 리다이렉트
+		return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
 	}
 
 	// 배달 완료 처리
@@ -299,7 +299,7 @@ public class RiderController {
 		// 배달 이력 상태도 '배달 완료'로 업데이트
 		riderService.updateDeliveryHistory(orders_id, "배달 완료");
 
-		return "redirect:/riders/deliveryCompleted"; // 진행 상황 페이지로 리다이렉트
+		return "redirect:/riders/completed"; // 배달 완료 페이지로 리다이렉트
 	}
 
 	// 배달 경로를 표시하는 메서드

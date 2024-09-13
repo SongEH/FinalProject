@@ -155,6 +155,18 @@ pageEncoding="UTF-8"%>
       // })
     }
   </script>
+
+  <script>
+    // 장바구니 담기 하면 장바구니에 표시
+    function get_menu(shop_id){
+      alert(shop_id);
+      // $.ajax({
+      //   url     :   
+
+      // })
+    }
+  </script>
+
   <script>
     // 특정 가게 삭제 
     function shop_del(shop_id){
@@ -248,10 +260,12 @@ pageEncoding="UTF-8"%>
           <div class="order_info">
           <!-- <div class="right-panel text-center p-3"> -->
             <div style="background-color:black; color:white; padding: 7px;">
-              <h5>주문표</h5>
+              <h5>장바구니</h5>
             </div>
               <div style="border:1px solid gray; height:auto; min-height: 155px;">
-                주문표에 담긴 메뉴가 없습니다.
+                장바구니에 담긴 메뉴가 없습니다.
+
+                <div id="cart_list"></div>
               </div>
               <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
               <button class="btn btn-secondary" disabled>주문하기</button>

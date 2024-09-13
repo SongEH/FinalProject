@@ -31,8 +31,13 @@ pageEncoding="UTF-8" %>
     }
 
 
-    function menu_modal(menu_id) {
+    function menu_modal(menu_id, menu_soldout) {
 
+      if(menu_soldout == 1) {
+        alert("품절 상품은 담을 수 없습니다.");
+        return;
+      }
+      
       // Show the modal
       var myModal = new bootstrap.Modal(document.getElementById('menuModal'), {
         backdrop: 'static',
@@ -108,66 +113,69 @@ pageEncoding="UTF-8" %>
 <body>
 
   <%@include file="popup.jsp" %>
-
+  <c:set var="userType" value="${sessionScope.userType}" />
   <section class="section" style="margin: auto;">
     <!-- <div class="row align-items-top"> -->
-      <div class="row">
+    <div class="row">
       <div class="col-lg-6">
         <c:forEach var="item" items="${menu_list}">
           <!-- item.menu_status가 1인 경우만 표시 -->
           <c:if test="${item.menu_status == 1}">
+            <!-- userType이 'MEMBER'일 때만 menu_hidden이 0인 경우를 표시합니다 -->
+            <c:if test="${userType == 'MEMBER' ? item.menu_hidden == 0 : true}">
+              <!-- Card with an image on left -->
+              <div class="card mb-3">
+                <div class="row g-0" lass="photo">
+                  <!-- popup:Modal -->
 
-            <!-- Card with an image on left -->
-            <div class="card mb-3">
-              <div class="row g-0" lass="photo" >
-                <!-- popup:Modal -->
-
-                <div class="col-md-4">
-                  <img src="../resources/images/${item.menu_img}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <div style="color:red;">
-                        <c:choose>
-                          <c:when test="${item.menu_popularity == 1}">
-                            인기
-                          </c:when>
-                          <c:when test="${item.menu_hidden == 1}">
-                            숨김
-                          </c:when>
-                          <c:when test="${item.menu_soldout == 1}">
-                            품절
-                          </c:when>
-                          <c:otherwise>
-                            <!-- 아무 조건에도 해당하지 않으면 빈 문자열 -->
-                          </c:otherwise>
-
-                        </c:choose>
-                      </div>
-                      메뉴명 (${item.menu_id})
-                      ${item.menu_name}
-                    </h5>
-                    <p class="card-text">설명 ${item.menu_content}</p>
-                    <p class="card-text">가격 ${item.menu_price}</p>
-
-                    <c:set var="userType" value="${sessionScope.userType}" />
-                    <c:if test="${userType == 'MEMBER'}">
-                    <input class="btn btn-info" type="button"  value="장바구니담기" onclick="menu_modal('${ item.menu_id }');">
-                    </c:if>
-                    <c:if test="${userType == 'OWNER'}">
-                    <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
-                      onclick="show_menu('${item.menu_id}');">
-                    <input class="btn btn-info" type="button" id="btn_popup_update" value="수정"
-                      onclick="modify_menu('${item.menu_id}');">
-                    <input class="btn btn-danger" type="button" id="btn_popup_delete" value="삭제"
-                      onclick="delete_menu('${item.menu_id}');">
-                    </c:if>
+                  <div class="col-md-4">
+                    <img src="../resources/images/${item.menu_img}" class="img-fluid rounded-start" alt="...">
                   </div>
-                </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <div style="color:red;">
+                          <c:choose>
+                            <c:when test="${item.menu_popularity == 1}">
+                              인기
+                            </c:when>
+                            <c:when test="${item.menu_hidden == 1}">
+                              숨김
+                            </c:when>
+                            <c:when test="${item.menu_soldout == 1}">
+                              품절
+                            </c:when>
+                            <c:otherwise>
+                              <!-- 아무 조건에도 해당하지 않으면 빈 문자열 -->
+                            </c:otherwise>
 
-              </div><!-- End Card with an image on left -->
-            </div>
+                          </c:choose>
+                        </div>
+                        메뉴명 (${item.menu_id})
+                        ${item.menu_name}
+                      </h5>
+                      <p class="card-text">설명 ${item.menu_content}</p>
+                      <p class="card-text">가격 ${item.menu_price}</p>
+
+
+                      <c:if test="${userType == 'MEMBER'}">
+                        <input class="btn btn-info" type="button" value="장바구니담기"
+                          onclick="menu_modal('${ item.menu_id }', '${ item.menu_soldout }');">
+                      </c:if>
+                      <c:if test="${userType == 'OWNER'}">
+                        <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
+                          onclick="show_menu('${item.menu_id}');">
+                        <input class="btn btn-info" type="button" id="btn_popup_update" value="수정"
+                          onclick="modify_menu('${item.menu_id}');">
+                        <input class="btn btn-danger" type="button" id="btn_popup_delete" value="삭제"
+                          onclick="delete_menu('${item.menu_id}');">
+                      </c:if>
+                    </div>
+                  </div>
+
+                </div><!-- End Card with an image on left -->
+              </div>
+            </c:if>
           </c:if>
         </c:forEach>
       </div>

@@ -30,7 +30,7 @@ public interface ShopMapper {
     // 가게 삭제
     int delete(int shop_id);
 
-    // 사장ID로 가게ID검색 
-    int selectShopIdByOwnerId(int owner_id);
+    // ownerid로 shopid 검색
+    int select_one_shop_id(int owner_id);
 
 }

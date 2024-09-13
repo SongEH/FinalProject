@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.MenuMapper;
 import first.final_project.dao.ShopMapper;
+import first.final_project.service.ShopService;
 import first.final_project.util.MyCommon;
 import first.final_project.util.Paging;
 import first.final_project.vo.MenuVo;
@@ -55,7 +56,7 @@ public class MenuController {
 		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
 		OwnerVo user = (OwnerVo) session.getAttribute("user");
 		int owner_id = user.getOwner_id();
-		int shop_id = shop_mapper.selectShopIdByOwnerId(owner_id);
+		int shop_id = shop_service.select_one_shop_id(owner_id);
 		
 		// 페이징된 리스트를 가져온다
 		List<MenuVo> list = menu_mapper.selectList(shop_id);

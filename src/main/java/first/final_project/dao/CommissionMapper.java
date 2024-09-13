@@ -35,4 +35,10 @@ public interface CommissionMapper {
     // 특정 라이더의 완료된 배달 목록을 Map 형태로 전달된 파라미터를 기반으로 페이징 처리하여 가져오는 메서드
     List<CompletedDeliveryVo> selectPageList(Map<String, Object> params);
 
+    int getTotalCountByDate(int raiders_id, String startDate, String endDate);
+
+    List<CompletedDeliveryVo> selectPageListByDate(Map<String, Object> params);
+
+    double selectTotalCommissionByDate(int raiders_id, String startDate, String endDate);
+
 }

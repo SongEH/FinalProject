@@ -14,14 +14,8 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
   <body>
     <!-- 날짜 필터링 폼 -->
-    <form
-      action="list.do"
-      method="get"
-      class="form-inline"
-      style="margin-bottom: 20px"
-    >
+    <form action="list.do" method="get" class="form-inline">
       <input type="hidden" name="raiders_id" value="${param.raiders_id}" />
-
       <div class="form-group">
         <label for="startDate">시작 날짜:</label>
         <input
@@ -32,7 +26,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
           class="form-control"
         />
       </div>
-
       <div class="form-group" style="margin-left: 10px">
         <label for="endDate">종료 날짜:</label>
         <input
@@ -43,12 +36,10 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
           class="form-control"
         />
       </div>
-
       <button type="submit" class="btn btn-primary" style="margin-left: 10px">
         필터 적용
       </button>
     </form>
-
     <!-- 완료된 배달 정보 테이블 -->
     <table border="1" id="delivery-table" class="table table-striped">
       <thead>

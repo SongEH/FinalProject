@@ -17,15 +17,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select> -->
 
     <select id="selectList" resultType="reviews">
+        select * from reviews
+    </select>
+
+    <!-- <select id="selectList" resultType="reviews">
         select 
             r.* , o.orders_name 
         from 
             reviews as r
-        inner join
-            orders as o on  r.orders_id = o.orders_id
-        inner join 
-            shop as s   on  o.shop_id = s.shop_id 
-    </select>
+        join
+            orders as o on r.orders_id = o.orders_id
+        join 
+            shop as s on o.shop_id = s.shop_id 
+    </select> -->
 
     <!-- reviews table insert -->
     <insert id="insert" parameterType="reviews">

@@ -1,5 +1,7 @@
 package first.final_project.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import first.final_project.vo.ReviewsImgesVo;
@@ -14,5 +16,5 @@ public interface ReviewsMapper {
 
     int insert_img(ReviewsImgesVo imgVo);
 
-    ReviewsVo selectList();
+    List<ReviewsVo> selectList();
 }

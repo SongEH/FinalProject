@@ -43,7 +43,7 @@ public class ReviewsController {
     @RequestMapping("list.do")
     public String list(Model model){
         
-        ReviewsVo vo = new ReviewsVo();
+        List<ReviewsVo> vo;
 
         vo = reviewsMapper.selectList();
 

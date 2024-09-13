@@ -1,4 +1,4 @@
-package com.delivery.finalproject.service;
+package first.final_project.service;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

@@ -1,4 +1,4 @@
-package com.delivery.finalproject.mapper;
+package first.final_project.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -6,11 +6,11 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.delivery.finalproject.vo.AddrVo;
-import com.delivery.finalproject.vo.DeliveriesVo;
-import com.delivery.finalproject.vo.OrderVo;
-import com.delivery.finalproject.vo.RiderVo;
-import com.delivery.finalproject.vo.ShopVo;
+import first.final_project.vo.AddrVo;
+import first.final_project.vo.DeliveriesVo;
+import first.final_project.vo.OrderVo;
+import first.final_project.vo.RiderVo;
+import first.final_project.vo.ShopVo;
 
 @Mapper
 public interface RiderMapper {

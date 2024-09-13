@@ -1,4 +1,4 @@
-package com.delivery.finalproject.controller;
+package first.final_project.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.delivery.finalproject.mapper.RiderMapper;
-import com.delivery.finalproject.service.KakaoMapService;
-import com.delivery.finalproject.service.RiderService;
-import com.delivery.finalproject.vo.AddrVo;
-import com.delivery.finalproject.vo.OrderVo;
-import com.delivery.finalproject.vo.RiderVo;
-import com.delivery.finalproject.vo.ShopVo;
-
+import first.final_project.dao.RiderMapper;
+import first.final_project.service.KakaoMapService;
+import first.final_project.service.RiderService;
+import first.final_project.vo.AddrVo;
+import first.final_project.vo.OrderVo;
+import first.final_project.vo.RiderVo;
+import first.final_project.vo.ShopVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 

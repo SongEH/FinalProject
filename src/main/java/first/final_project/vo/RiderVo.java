@@ -1,4 +1,4 @@
-package com.delivery.finalproject.vo;
+package first.final_project.vo;
 
 import org.apache.ibatis.type.Alias;
 

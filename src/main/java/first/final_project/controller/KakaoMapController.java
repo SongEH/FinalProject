@@ -1,4 +1,4 @@
-package com.delivery.finalproject.controller;
+package first.final_project.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.delivery.finalproject.service.KakaoMapService;
+import first.final_project.service.KakaoMapService;
 
 @Controller
 @RequestMapping("/map")

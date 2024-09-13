@@ -1,17 +1,18 @@
-package com.delivery.finalproject.service;
-
-import com.delivery.finalproject.mapper.RiderMapper;
-import com.delivery.finalproject.vo.AddrVo;
-import com.delivery.finalproject.vo.DeliveriesVo;
-import com.delivery.finalproject.vo.OrderVo;
-import com.delivery.finalproject.vo.ShopVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package first.final_project.service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import first.final_project.dao.RiderMapper;
+import first.final_project.vo.AddrVo;
+import first.final_project.vo.DeliveriesVo;
+import first.final_project.vo.OrderVo;
+import first.final_project.vo.ShopVo;
 
 @Service
 public class RiderService {

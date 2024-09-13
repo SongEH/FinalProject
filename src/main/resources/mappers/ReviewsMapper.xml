@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="first.final_project.dao.ReviewsMapper">
 
-    <!-- <resultMap id="reviewsMap" type="reviews">
+    <resultMap id="reviewsMap" type="reviews">
         <result property="reviews_id" column="reviews_id"/>
         <collection property="reviews_img_list"
                     column="reviews_id = reviews_id"
@@ -14,13 +14,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectImgList" resultType="reviewsImges">
         select * from reviews_imges where reviews_id = #{reviews_id}
-    </select> -->
-
-    <select id="selectList" resultType="reviews">
-        select * from reviews
     </select>
 
     <!-- <select id="selectList" resultType="reviews">
+        select * from reviews
+    </select> -->
+
+    <select id="selectList" resultMap="reviewsMap">
         select 
             r.* , o.orders_name 
         from 
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             orders as o on r.orders_id = o.orders_id
         join 
             shop as s on o.shop_id = s.shop_id 
-    </select> -->
+    </select>
 
     <!-- reviews table insert -->
     <insert id="insert" parameterType="reviews">

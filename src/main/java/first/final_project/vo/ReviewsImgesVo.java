@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Alias("reviewsImges")
+
 public class ReviewsImgesVo {
     private int reviews_images_id;
     private String reviews_img;

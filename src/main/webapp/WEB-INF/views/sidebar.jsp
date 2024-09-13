@@ -17,7 +17,10 @@ String userType = "UNKNOWN";
 if (user instanceof AdminVo) { 
   userType = "ADMIN"; 
 } else if (user instanceof MemberVo) { userType = "MEMBER"; } 
-else if (user instanceof OwnerVo) { userType = "OWNER"; } %>
+else if (user instanceof OwnerVo) { userType = "OWNER"; } 
+
+session.setAttribute("userType",userType);
+%>
 
 <!DOCTYPE html>
 

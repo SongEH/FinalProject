@@ -85,8 +85,6 @@
                 <c:if test="${currentShopId != vo.shop_id}">
                   <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
                   <c:set var="currentShopId" value="${vo.shop_id}" />
-
-                  <!-- 상점 ID를 헤더로 표시 (여기서는 상점 ID를 사용하고 있습니다) -->
                   <tr>
                     <th colspan="7" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
                       가게명 : ${vo.shop_name}

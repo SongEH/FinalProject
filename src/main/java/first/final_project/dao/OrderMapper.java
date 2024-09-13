@@ -9,13 +9,13 @@ import first.final_project.vo.OrderVo;
 @Mapper
 public interface OrderMapper {
 
-    List<OrderVo> selectList();
+    List<OrderVo> selectList(int i);
 
-    OrderVo selectOne(int carts_id);
+    OrderVo selectOne(int orders_id);
 
     int insert(OrderVo vo);
 
-    int delete(int carts_id);
+    int delete(int orders_id);
 
 
 }

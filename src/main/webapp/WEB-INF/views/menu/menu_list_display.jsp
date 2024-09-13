@@ -109,8 +109,9 @@ pageEncoding="UTF-8" %>
 
   <%@include file="popup.jsp" %>
 
-  <section class="section">
-    <div class="row align-items-top">
+  <section class="section" style="margin: auto;">
+    <!-- <div class="row align-items-top"> -->
+      <div class="row">
       <div class="col-lg-6">
         <c:forEach var="item" items="${menu_list}">
           <!-- item.menu_status가 1인 경우만 표시 -->

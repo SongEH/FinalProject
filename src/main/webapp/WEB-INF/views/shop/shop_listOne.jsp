@@ -237,9 +237,7 @@ pageEncoding="UTF-8"%>
 
           <!--menu_list 출력 공간 --> 
           
-          <div class="row" style="margin-top:30px;">
-            <%@include file="../menu/menu_list_display.jsp" %>
-          </div>
+          
 
           </div>
 
@@ -280,6 +278,11 @@ pageEncoding="UTF-8"%>
   <!-- <div>
     <div id="menu_list"></div>
   </div> -->
+</div>
+<div class="container" style="margin:auto">
+  <div class="row" style="margin-top:30px;" >
+    <%@include file="../menu/menu_list_display.jsp" %>
+  </div>
 </div>
 </body>
 </html>

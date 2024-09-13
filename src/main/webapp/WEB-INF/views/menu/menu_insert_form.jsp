@@ -45,7 +45,7 @@
 
 
         function send(f) {
-
+          
           //입력값 검증
           let menu_name = f.menu_name.value.trim();
           let menu_content = f.menu_content.value.trim();

@@ -32,4 +32,5 @@ public interface ShopMapper {
 
     // 사장ID로 가게ID검색 
     int selectShopIdByOwnerId(int owner_id);
+
 }

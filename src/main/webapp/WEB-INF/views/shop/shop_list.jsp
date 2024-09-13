@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -193,25 +194,23 @@ header .login {
     </script>
     
     <script>
-
       function selectOne(shop_id){
-
-        alert(shop_id);
+        
         $.ajax({
           url     :     "/shop/select_one.do",
           data    :      {"shop_id": shop_id},
           success :   function(res_data){
-                alert("성공")
                 $("#select_one_display").html(res_data);
                 $("#insert_form_display").hide();
                 $("#store-list").hide();
+                $('#menuButton').click();
+                $('#menuButton').focus();
           },
           error   :   function(err){
             alert(error.responseText);
           }
         });
       }
-
     </script>
   </head>
   <body>
@@ -220,7 +219,7 @@ header .login {
       <a href="#" class="login">로그인</a>
     </header>
   
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-10" id="nav">
     <div class="container">
      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">?</span>
@@ -272,14 +271,14 @@ header .login {
     </div>
   </nav>
 
-
+<main style="margin-top: 30px;">
   <div class="container">
-    <div class="store-list" id="store-list" >
+    <div class="store-list mt-10" id="store-list" >
       <c:forEach var="vo" items="${list}">
         <div class="store" onclick="selectOne('${vo.shop_id}');">
             <div class="store-left">
                 <div class="store-logo">
-                    <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Store 1 Logo">
+                  <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Store 1 Logo">
                 </div>
                 <div class="store-info">
                     <strong>${vo.shop_name}</strong>
@@ -302,7 +301,7 @@ header .login {
   <div>
     <div id="select_one_display"></div>
   </div>
-
+</main>
 </head>
 <body>
 

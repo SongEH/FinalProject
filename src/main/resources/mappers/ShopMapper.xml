@@ -52,8 +52,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 가게 데이터 불러오기 -->
     <select id="select_modify_owner_id" parameterType="int" resultType="shop">
-        select * from shop where owner_id = 1
+        select * from shop where owner_id = #{onwer_id}
     </select>
+
+    <!-- shop_id 구하기 -->
+    <select id="select_one_shop_id" parameterType="int">
+        select shop_id from shop where owner_id = #{owner_id}
+    </select>
+
 
     <!-- 가게 정보 업데이트 -->
     <update id="update" parameterType="shop">
@@ -62,8 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                         shop_addr=#{shop_addr},
                         shop_call=#{shop_call},
                         shop_min_price=#{shop_min_price},
-                        shop_open_time=#{shop_open_time},
-                        shop_close_time=#{shop_close_time},
+                        shop_hours=#{shop_hours},
                         shop_close_day=#{shop_close_day},
                         shop_area=#{shop_area},
                         food_category=#{food_category},
@@ -83,4 +88,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select shop_id from shop where owner_id = #{owner_id}
     </select>
     
+
 </mapper>

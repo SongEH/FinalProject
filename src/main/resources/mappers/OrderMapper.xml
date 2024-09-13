@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.OrderMapper">
+  <select id="selectList" parameterType="int" resultType="order">
+        SELECT 
+            o.*,  -- orders 테이블의 모든 컬럼
+            s.shop_name, 
+            s.shop_img,
+            COUNT(c.menu_id) AS menu_count
+        FROM orders o
+        JOIN shop s ON o.shop_id = s.shop_id
+        LEFT JOIN carts c ON o.orders_id = c.orders_id
+        LEFT JOIN addr a ON o.addr_id = a.addr_id 
+        WHERE o.member_id = #{member_id}
+        GROUP BY o.orders_id, s.shop_name, s.shop_img
+  </select>
+
+  <select id="selectOne" parameterType="int" resultType="order">
+      SELECT
+          o.*,  
+          s.shop_name AS shop_name,
+          s.shop_img AS shop_img,
+          COUNT(c.menu_id) AS menu_count,
+          a.addr_line1,    
+          a.addr_line2,    
+          m.member_phone  
+      FROM orders o
+      JOIN shop s ON o.shop_id = s.shop_id
+      LEFT JOIN carts c ON o.orders_id = c.orders_id
+      LEFT JOIN addr a ON o.addr_id = a.addr_id
+      LEFT JOIN member m ON o.member_id = m.member_id  
+      WHERE o.orders_id = #{orders_id}
+      GROUP BY o.orders_id, s.shop_name, s.shop_img, a.addr_line1, a.addr_line2, m.member_phone
+  </select>
+
+  <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
+  <!-- <insert id="insert" parameterType="order">
+    INSERT INTO Orders(
+        orders_payment, 
+        orders_price, 
+        orders_srequest,
+        orders_drequest, 
+        orders_cdate,
+        shop_id,
+        addr_id,
+        orders_name,
+        member_id 
+    )
+    VALUES (
+        #{orders_payment}, 
+        #{orders_price}, 
+        #{orders_srequest}, 
+        #{orders_drequest}, 
+        CURRENT_DATE,
+        #{shop_id}, 
+        #{addr_id}, 
+        #{orders_name},
+        #{member_id}
+    );
+   </insert> -->
+
+  <!-- 삭제 -->
+  <delete id="delete" parameterType="int">
+     delete from Orders
+     where order_id=#{order_id}
+  </delete>
+
+  <select id="getAcceptOrderList" parameterType="map" resultType="order">
+      SELECT o.*, a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, m.member_nickname AS member_nickname, m.member_nickname AS member_nickname, m.member_phone AS member_phone
+      FROM orders o
+      JOIN shop s ON o.shop_id = s.shop_id
+      JOIN owner ow ON s.owner_id = ow.owner_id
+      JOIN addr a ON o.addr_id = a.addr_id
+      JOIN member m ON a.member_id = m.member_id
+      WHERE ow.owner_id = #{owner_id}
+      ORDER BY o.orders_id
+  </select>
+
+  <update id="updateOrderStatus">
+      UPDATE orders SET orders_status = #{status}
+      WHERE orders_id = #{orders_id}
+  </update>
+
+  <delete id="deleteOrder">
+     DELETE from orders
+     WHERE orders_id = #{orders_id}
+  </delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

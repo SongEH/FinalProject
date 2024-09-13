@@ -22,10 +22,9 @@
 
 
     // 주문 
-    function orderFromShop(shop_id) {
-      console.log("Order from shop ID:", shop_id);
-
-      location.href = "/order/pending_order.do?shop_id=" + shop_id;
+    function orderFromShop(shop_id, shop_name) {
+  
+      location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
 
     }
   </script>
@@ -86,13 +85,11 @@
                 <c:if test="${currentShopId != vo.shop_id}">
                   <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
                   <c:set var="currentShopId" value="${vo.shop_id}" />
-
-                  <!-- 상점 ID를 헤더로 표시 (여기서는 상점 ID를 사용하고 있습니다) -->
                   <tr>
                     <th colspan="7" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
                       가게명 : ${vo.shop_name}
                       <!-- 주문 버튼 추가 -->
-                      <button class="btn btn-primary" onclick="orderFromShop('${vo.shop_id}')">주문</button>
+                      <button class="btn btn-primary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문</button>
                     </th>
                   </tr>
                 </c:if>

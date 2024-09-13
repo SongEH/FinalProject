@@ -1,5 +1,5 @@
 /*
-CREATE TABLE `Owner` (
+CREATE TABLE `owner` (
 	`owner_id`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`owner_name`	VARCHAR(50)	NOT NULL,
 	`owner_accountId`	VARCHAR(100)	NOT NULL,

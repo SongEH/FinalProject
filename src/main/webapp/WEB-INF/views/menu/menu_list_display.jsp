@@ -78,8 +78,6 @@ pageEncoding="UTF-8" %>
 
     function input_cart() {
 
-      alert("장바구니에 추가되었습니다!");
-
       // 모달창에서 hidden 태그의 값을 가져온다. 
       menu_id = document.getElementById("pop_hidden_menuid").value;
       shop_id = document.getElementById("pop_hidden_shopid").value;
@@ -97,12 +95,27 @@ pageEncoding="UTF-8" %>
           carts_quantity: carts_quantity
         },
         success: function (response) {
-          // Handle success response
+          updateCartList();
+          alert("장바구니에 추가되었습니다!");
           console.log("Item added to cart successfully:", response);
         },
         error: function (xhr, status, error) {
-          // Handle error response
-          console.error("Error adding item to cart:", error);
+          alert("장바구니에 아이템을 추가하는 데 실패했습니다: " + xhr.responseText);
+        }
+      });
+    }
+
+    function updateCartList() {
+      // 장바구니 목록을 업데이트하기 위한 AJAX 요청 - 한지혜
+      $.ajax({
+        url: '/carts/list2.do',
+        type: 'GET',
+        success: function (response) {
+          // 응답으로 받은 HTML을 장바구니 목록에 업데이트
+          $('#cart_list').html(response);
+        },
+        error: function (xhr, status, error) {
+          alert("장바구니 목록을 불러오는 데 실패했습니다: " + xhr.responseText);
         }
       });
     }

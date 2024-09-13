@@ -39,13 +39,33 @@ public class CartsController {
 	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
 
-		List<CartsVo> list = carts_mapper.selectList();
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		int member_id = user.getMember_id();
+
+		List<CartsVo> list = carts_mapper.selectList(member_id);
 		System.out.println(list);
 
 		// request binding
 		model.addAttribute("list", list);
 
 		return "carts/carts_list";
+	}
+
+	@RequestMapping("list2.do")
+	public String list2(@RequestParam(name = "page", defaultValue = "1") int nowPage,
+			Model model) {
+
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		int member_id = user.getMember_id();
+
+		List<CartsVo> list = carts_mapper.selectList(member_id);
+		System.out.println(list);
+
+		// request binding
+		model.addAttribute("list", list);
+
+		return "carts/carts_display"; // 반환할 뷰 이름
+
 	}
 
 	// 장바구니에 메뉴 추가
@@ -63,7 +83,7 @@ public class CartsController {
 
 		if (existingItem != null) {
 
-			// 동일 메뉴가 장바구니에 존재하면 수량만 업데이트
+			// 동일 메뉴면 수량만 업데이트
 			existingItem.setCarts_quantity(existingItem.getCarts_quantity() + carts_quantity);
 
 			carts_mapper.update(existingItem.getCarts_id(), existingItem.getCarts_quantity());
@@ -71,11 +91,9 @@ public class CartsController {
 		} else {
 			CartsVo vo = new CartsVo();
 			vo.setCarts_quantity(carts_quantity);
-
 			vo.setMember_id(member_id);
 			vo.setMenu_id(menu_id);
 			vo.setShop_id(shop_id);
-
 			carts_mapper.insert(vo);
 		}
 

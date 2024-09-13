@@ -64,7 +64,7 @@ else if (user instanceof OwnerVo) { userType = "OWNER"; } %>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>??</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>장바구니</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
@@ -85,6 +85,11 @@ else if (user instanceof OwnerVo) { userType = "OWNER"; } %>
           <li>
             <a href="/carts/list.do">
               <i class="bi bi-circle"></i><span>장바구니</span>
+            </a>
+          </li>
+          <li>
+            <a href="/reviews/list.do">
+              <i class="bi bi-circle"></i><span>리뷰내역</span>
             </a>
           </li>
         </ul>

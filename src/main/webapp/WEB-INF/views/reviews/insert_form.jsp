@@ -1,5 +1,6 @@
 <%@ page language='java' contentType='text/html; charset=UTF-8'
 pageEncoding='UTF-8'%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN''http://www.w3.org/TR/html4/loose.dtd'>
 <html>
 <head>
@@ -115,6 +116,19 @@ pageEncoding='UTF-8'%>
 }
 </style>
 <script>
+    function reviews_insert(f){
+        let shop_name = document.querySelector("div[name='shop_name']").textContent.trim();
+        let menu_name = document.querySelector("div[name='menu_name']").textContent.trim();
+        let reviews_rating = f.reviews_rating.value;
+        alert(reviews_rating);
+        let reviews_content = f.reviews_content.value.trim();
+        alert(reviews_content);
+
+        f.action="insert.do";
+        f.submit();
+    }
+</script>
+<script>
     function fileCount(){
         let fileInput = document.getElementById('file-input');
         let fileCountDisplay = document.getElementById('file-count');
@@ -131,7 +145,7 @@ pageEncoding='UTF-8'%>
 </head>
 <body>
     <div class="container" style="width: 1000px; margin-top: 30px">
-        <form method="post" action="insert.do" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             <div id="reviews_info">
                 <div name="shop_name" class="reviews_feature">피자가게</div>
                 <hr />
@@ -167,7 +181,8 @@ pageEncoding='UTF-8'%>
             <div id="file-list" class="file_list"></div>
             <div class="reviews_feature" style="text-align: center;">
                 <span id="file-count"></span>
-                <input type="submit" value="등록완료"/>
+                <!-- <input type="submit" value="등록완료"/> -->
+                <input type="button" value="등록완료" onclick="reviews_insert(this.form);" />
             </div>
         </form>
     </div>

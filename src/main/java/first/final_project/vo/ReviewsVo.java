@@ -18,12 +18,9 @@ public class ReviewsVo {
     private String reviews_img;
     private String reviews_cdate;
 
-
-
     // foreign key 
-    private int member_id;
-    private int menu_id;
-    private int shop_id;
+    private int orders_id;
 
-    List<ReviewsImageVo> reviews_img_list = new ArrayList<>();
+    // 이미지 저장 
+    List<ReviewsImgesVo> reviews_img_list = new ArrayList<>();
 }

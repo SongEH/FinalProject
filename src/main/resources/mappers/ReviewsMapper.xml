@@ -5,25 +5,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="first.final_project.dao.ReviewsMapper">
 
+    <resultMap id="reviewsMap" type="reviews">
+        <result property="reviews_id" column="reviews_id"/>
+        <collection property="reviews_img_list"
+                    column="reviews_id = reviews_id"
+                    select="selectImgList"/>
+    </resultMap>
+    
+    <select id="selectImgList" resultType="reviewsImges">
+        select * from reviews_imges where reviews_id = #{reviews_id}
+    </select>
 
+    <select id="selectList" resultMap="reviewsMap">
+        select * from reviews
+        select 
+            r.* , o.orders_name 
+        from 
+            reviews as r
+        inner join
+            orders as o on  r.orders_id = o.orders_id
+        inner join 
+            shop as s   on  o.shop_id = s.shop_id 
+    </select>
+
+    <!-- reviews table insert -->
     <insert id="insert" parameterType="reviews">
         insert into reviews (
                             reviews_rating,
                             reviews_content,
                             reviews_cdate,
-                            member_id,
-                            menu_id,
-                            shop_id
+                            orders_id
                     )values (
                             #{reviews_rating},
                             #{reviews_content},
                             sysdate(),
-                            #{member_id},
-                            #{menu_id},
-                            #{shop_id}
+                            #{orders_id}
                             )
     </insert>
 
+    <!-- reviews_images table insert -->
     <insert id="insert_img" parameterType="reviewsImage">
         insert into reviews_imges (reviews_img, reviews_id) values(#{reviews_img}, #{reviews_id})
     </insert>

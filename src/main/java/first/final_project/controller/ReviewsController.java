@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.ReviewsMapper;
 import first.final_project.vo.MemberVo;
-import first.final_project.vo.ReviewsImageVo;
+import first.final_project.vo.ReviewsImgesVo;
 import first.final_project.vo.ReviewsVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
@@ -40,8 +40,21 @@ public class ReviewsController {
         return "reviews/insert_form";
     }
 
+    @RequestMapping("list.do")
+    public String list(Model model){
+        
+        ReviewsVo vo = new ReviewsVo();
+
+        vo = reviewsMapper.selectList();
+
+        model.addAttribute("vo", vo);
+        
+        return "reviews/list";
+    }
+
+    // reivews insert & reviews_images insert 
     @RequestMapping("insert.do")
-    public String insert(ReviewsVo vo, ReviewsImageVo imgvo,@RequestParam(name="photo")List<MultipartFile> photo_list, Model model, RedirectAttributes ra) {
+    public String insert(ReviewsVo vo, ReviewsImgesVo imgVo, @RequestParam(name="photo")List<MultipartFile> photo_list, Model model, RedirectAttributes ra) {
 
         System.out.println("도착");
 
@@ -75,23 +88,25 @@ public class ReviewsController {
         }
 
         // reviews DB 에 인서트
-        vo.setMember_id(user.getMember_id());
-        vo.setShop_id(1);
-        vo.setMenu_id(1);
+        
+        vo.setOrders_id(1);
 
         // reviews 등록 
         int res = reviewsMapper.insert(vo);
 
         // reviews 의 id 받아오기 
         int reviews_id = 1;
-        imgvo.setReviews_id(reviews_id);
+        imgVo.setReviews_id(reviews_id);
         // 이미지 insert
         for (String filename : filename_list){
             reviews_img = filename;
-            imgvo.setReviews_img(reviews_img);
+            imgVo.setReviews_img(reviews_img);
 
-            res = reviewsMapper.insert_img(imgvo);
+            res = reviewsMapper.insert_img(imgVo);
         }
-        return "redirect:../shop/list.do";
+
+        // ra.addAttribute("shop_id", shop_id);
+
+        return "redirect:list.do";
     }
 }

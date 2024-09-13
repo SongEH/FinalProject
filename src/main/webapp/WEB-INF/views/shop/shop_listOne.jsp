@@ -148,11 +148,9 @@ pageEncoding="UTF-8"%>
   </style>
   <script>
     function get_menu(shop_id){
-      alert(shop_id);
-      // $.ajax({
-      //   url     :   
+      $('#menu_display').html();
+      $('#reviews_display').hide();
 
-      // })
     }
   </script>
   <script>
@@ -184,14 +182,16 @@ pageEncoding="UTF-8"%>
       f.submit();
     }
 
-    function reviews_list(){
+    function reviews_list(shop_id){
+      alert("도착");
       $.ajax({
-        url     :   "reviews/list.do",
+        url     :   "../reviews/list.do",
         method  :   "POST",
+        data    :   {"shop_id": shop_id},
         success :   function(res_data){
           alert("성공");
-          ("#review_display").html(display);
-          ("#menu_display").hide();
+          $("#reviews_display").html(res_data);
+          $("#menu_display").hide();
         },
         error   :   function(err){
           alert(error.responseText);
@@ -240,7 +240,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" id="reviewButton" value="클린리뷰(리뷰갯수카운트값)" onclick="reviews_list();"/>
+                <input type="button" id="reviewButton" value="클린리뷰(리뷰갯수카운트값)" onclick="reviews_list('${vo.shop_id}');"/>
               </div>
             </div>
             <div class="col-sm-4" style="padding:0px">
@@ -250,11 +250,12 @@ pageEncoding="UTF-8"%>
             </div>
           </div>
 
-          <!--menu_list 출력 공간 -->
-          <div id="menu_display">
-            <div class="row" style="margin-top:30px;">
+          
+          <div class="row" style="margin-top:30px;">
+            <!--menu_list 출력 공간 -->
+            <div id="menu_display" style="padding: 0;">
               <c:forEach var="item" items="${menu_list}">
-                <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center;">
+                <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center; padding: 10px;">
                   <div>
                     <div>${item.menu_name}</div>
                     <div>${item.menu_content}</div>
@@ -263,6 +264,16 @@ pageEncoding="UTF-8"%>
                   <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
                 </div>
               </c:forEach>
+            </div>
+
+            <!-- review list 출력 공간 -->
+            <div>
+              <div id="reviews_display"></div>
+            </div>
+            
+            <!-- shop_info_list 출력 공간 -->
+            <div id="shop_info_display">
+
             </div>
           </div>
         </div>

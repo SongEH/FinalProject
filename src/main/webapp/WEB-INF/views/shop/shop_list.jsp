@@ -203,6 +203,7 @@ header .login {
                 $("#select_one_display").html(res_data);
                 $("#insert_form_display").hide();
                 $("#store-list").hide();
+                $('#menu_display').hide();
                 $('#menuButton').click();
                 $('#menuButton').focus();
           },

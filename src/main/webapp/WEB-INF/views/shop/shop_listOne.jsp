@@ -235,19 +235,14 @@ pageEncoding="UTF-8"%>
             </div>
           </div>
 
-          <!--menu_list 출력 공간 -->
+          <!--menu_list 출력 공간 --> 
+          
           <div class="row" style="margin-top:30px;">
-            <c:forEach var="item" items="${menu_list}">
-              <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center;">
-                <div>
-                  <div>${item.menu_name}</div>
-                  <div>${item.menu_content}</div>
-                  <div><strong>${item.menu_price}</strong></div>
-                </div>
-                <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
-              </div>
-            </c:forEach>
+            <%@include file="../menu/menu_list_display.jsp" %>
           </div>
+
+          </div>
+
         </div>
 
         <!-- 주문 영역 출력 공간  -->

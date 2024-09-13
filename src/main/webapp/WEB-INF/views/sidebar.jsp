@@ -1,25 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %> 
+pageEncoding="UTF-8" %>
 
-<%@ page import="first.final_project.vo.OwnerVo" %> 
+<%@ page import="first.final_project.vo.OwnerVo" %>
+<%@ page import="first.final_project.vo.MemberVo" %>
+<%@ page import="first.final_project.vo.AdminVo" %>
 
-<%@ page import="first.final_project.vo.MemberVo" %> 
-<%@ page import="first.final_project.vo.AdminVo" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<% 
+  // 세션에서 user 객체를 가져옴
+  Object user = session.getAttribute("user"); 
 
-<% // 세션에서 user 객체를 가져옴
-Object user = session.getAttribute("user"); 
+  // 사용자 객체 타입에 따라 문자열을설정합니다 
 
-// 사용자 객체 타입에 따라 문자열을설정합니다 
+  String userType = "UNKNOWN"; 
+  if (user instanceof AdminVo) { userType = "ADMIN"; } 
+  else if (user instanceof MemberVo) { userType = "MEMBER"; } 
+  else if (user instanceof OwnerVo) { userType = "OWNER"; } 
 
-String userType = "UNKNOWN"; 
-if (user instanceof AdminVo) { 
-  userType = "ADMIN"; 
-} else if (user instanceof MemberVo) { userType = "MEMBER"; } 
-else if (user instanceof OwnerVo) { userType = "OWNER"; } 
-
-session.setAttribute("userType",userType);
+  session.setAttribute("userType",userType);
 %>
 
 <!DOCTYPE html>

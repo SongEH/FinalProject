@@ -100,8 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <update id="updateOrderId" parameterType="Map">
       update carts 
          set orders_id=#{ orders_id }
-      where 
-         shop_id=#{ shop_id }
+      where shop_id=#{ shop_id }
          and member_id=#{ member_id }
    </update>
 
@@ -125,6 +124,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          AND c.orders_id IS NULL;
    </select>
 
+   <!-- 주문 ID가 같은 장바구니 목록 -->
+   <select id="selectOrdersById" parameterType="int" resultType="carts">
+      SELECT 
+         c.*,                         -- Carts 테이블의 모든 컬럼을 선택
+         m.menu_name   AS menu_name,    -- Menu 테이블에서 메뉴명
+         m.menu_img    AS menu_img,     -- Menu 테이블에서 메뉴 이미지명
+         m.menu_price  AS menu_price    -- Menu 테이블에서 메뉴 가격
+      FROM 
+         carts c
+      JOIN 
+         menu m ON c.menu_id = m.menu_id
+      WHERE 
+         c.orders_id = #{orders_id}
+   </select>
 </mapper>
 
 

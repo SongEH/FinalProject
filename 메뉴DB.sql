@@ -41,7 +41,6 @@ CREATE TABLE `Orders` (
 	`member_id`	INT	NOT NULL
 );
 
-
 CREATE TABLE `Carts` (
     `carts_id` INT NOT NULL AUTO_INCREMENT,
     `carts_quantity` INT NOT NULL DEFAULT 1,

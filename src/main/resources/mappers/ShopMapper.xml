@@ -83,6 +83,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from shop where shop_id = #{shop_id}
     </delete>
 
+    <!-- 로그인한 사장의 ownerId로 shopId검색-->
+    <select id="selectShopIdByOwnerId" parameterType="int" resultType="int">
+        select shop_id from shop where owner_id = #{owner_id}
+    </select>
     
 
 </mapper>

@@ -4,8 +4,8 @@ import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
 
-@Alias("owner")
 @Data
+@Alias("owner")
 public class OwnerVo {
     int owner_id;
     String owner_name;

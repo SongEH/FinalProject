@@ -24,4 +24,10 @@ public interface MemberMapper {
 
     void deactivate(int member_id);
 
+    void updateOrderCount(int member_id, int newOrderCount);
+
+    void resetOrderCounts();
+
+    void resetGrades(int grade_id);
+
 }

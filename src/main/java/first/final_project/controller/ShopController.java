@@ -1,7 +1,6 @@
 package first.final_project.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import first.final_project.dao.MenuMapper;
 import first.final_project.service.ShopService;
 import first.final_project.vo.MenuVo;
+import first.final_project.vo.OwnerVo;
 import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,11 +41,12 @@ public class ShopController {
 
     // 메인화면
     @RequestMapping("/shop/list.do")
-    public String shop_list(Model model) {
+    public String shop_list(String food_category, Model model) {
 
         List<ShopVo> list;
+        System.out.println(food_category);
         try {
-            list = shop_Service.selectList();
+            list = shop_Service.selectList(food_category);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_shop_list");
 
@@ -68,6 +69,11 @@ public class ShopController {
     public String shop_insert(ShopVo vo, RedirectAttributes ra, @RequestParam(name = "photo") MultipartFile photo)
             throws Exception {
 
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        int owner_id = user.getOwner_id();
+        System.out.println(owner_id);
+
+        System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
 
         String absPath = application.getRealPath("/resources/images/");
@@ -85,54 +91,23 @@ public class ShopController {
         }
 
         vo.setShop_img(shop_img);
+        vo.setOwner_id(owner_id);
         int res = shop_Service.insert(vo);
 
         return "redirect:list.do";
     }
-
-    // -------------------------------------------------------------------------------------------------------------
-    // @RequestMapping("/shop/insert.do")
-    // public String shop_insert(ShopVo vo, RedirectAttributes ra,
-    // @RequestParam(name="photo")List<MultipartFile> photo_list) {
-    // int res = 0 ;
-
-    // List<String> filename_list = new ArrayList<String>();
-
-    // String shop_img = null;
-
-    // for (MultipartFile photo : photo_list){
-    // if(!photo.isEmpty()){
-    // shop_img = photo.getOriginalFilename();
-    // File f = new File(filedir, shop_img);
-
-    // if(f.exists()){
-    // long tm = System.currentTimeMillis();
-    // shop_img = String.format("%d_%s", tm, shop_img);
-
-    // f = new File(filedir, shop_img);
-    // }
-
-    // photo.transferTo(f);
-    // filename_list.add(shop_img);
-    // }
-    // }
-
-    // return "redirect:list.do";
-    // }
-    // -------------------------------------------------------------------------------------------------------------
 
     // 가게 하나 선택
     @RequestMapping("/shop/select_one.do")
     // @ResponseBody
     public String shop_selectOne(int shop_id, Model model) {
 
-        System.out.println(shop_id);
-        ShopVo shop_vo;
-
+        System.out.println("shop_id : " + shop_id);
+        ShopVo vo;
         try {
-            shop_vo = shop_Service.selectOne(shop_id);
-            List<MenuVo> menu_list = menuMapper.selectList();
-            model.addAttribute("shop_vo", shop_vo);
+            vo = shop_Service.selectOne(shop_id);
+            List<MenuVo> menu_list = menuMapper.selectMenuList(shop_id);
+            model.addAttribute("vo", vo);
             model.addAttribute("menu_list", menu_list);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_select_one");
@@ -144,30 +119,37 @@ public class ShopController {
 
     // 가게 정보 수정
     @RequestMapping("/shop/modify_form.do")
-    public String shop_modify(@RequestParam(value = "shop_id") int shop_id, Model model) {
+    public String shop_modify(Model model) {
 
         try {
-            ShopVo vo = shop_Service.select_modify_shop_id(shop_id);
-            model.addAttribute("vo", vo);
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "fail_select_one");
+            OwnerVo user = (OwnerVo) session.getAttribute("user");
+            int owner_id = user.getOwner_id();
+            System.out.println("owner_id : " + owner_id);
 
+            ShopVo vo = shop_Service.select_modify_owner_id(owner_id);
+            System.out.println("수행");
+            // System.out.println(vo.getShop_id());
+            model.addAttribute("vo", vo);
+            return "shop/shop_modify_form";
+        } catch (Exception e) {
+            return "error/error_page";
         }
-        return "shop/shop_modify_form";
+
     }
 
     // 가게 정보 수정 업데이트
     @RequestMapping("/shop/modify.do")
-    public String shop_modify(int shop_id, ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
+    public String shop_modify(ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
             Model model) {
         // 기존 이미지 불러오기
-        System.out.println(shop_id);
-        String filename = shop_Service.selectOne(shop_id).getShop_img();
+        System.out.println();
+        String filename = shop_Service.selectOne(vo.getShop_id()).getShop_img();
         System.out.println("vo.getShop_img filename = " + filename);
 
         String shop_img = "no_file";
         // 이미지 저장할 경로
         String absPath = application.getRealPath("/resources/images/");
+        System.out.println(absPath);
         // 새로운 이미지 UUID 부여
         if (!photo.isEmpty()) {
             UUID uuid = UUID.randomUUID();
@@ -175,31 +157,45 @@ public class ShopController {
 
             // 기존 이미지 확인 및 삭제
             File oldFile = new File(absPath, filename);
-            boolean result = oldFile.delete();
-            if (!result) {
-                model.addAttribute("errorMessage", "Failed to delete the old image");
-                return "error/error_page";
+            if (oldFile.exists()) {
+                boolean result = oldFile.delete();
+                if (result) {
+                    System.out.println("파일이 성공적으로 삭제되었습니다.");
+                } else {
+                    System.out.println("파일 삭제에 실패했습니다.");
+                }
+            } else {
+                System.out.println("파일이 존재하지 않습니다.");
             }
+            System.out.println("이미지 삭제 완료");
+            // if (!result) {
+            // model.addAttribute("errorMessage", "Failed to delete the old image");
+            // return "error/error_page";
+            // }
 
             System.out.println(shop_img);
             // 새로운 이미지 파일 저장
             vo.setShop_img(shop_img);
             File f = new File(absPath, shop_img);
+
             try {
                 photo.transferTo(f);
+                System.out.println("이미지 저장 완료");
             } catch (Exception e) {
-                return "error/error_page";
+                e.printStackTrace();
             }
+
         }
 
         try {
             int res = shop_Service.update(vo);
+            return "redirect:list.do";
             // shop_id = vo.getShop_id();
         } catch (Exception e) {
             return "error/error_page";
         }
         // return "redirect:modify_form.do?shop_id=" + shop_id;
-        return "redirect:list.do";
+
     }
 
     // 가게 삭제

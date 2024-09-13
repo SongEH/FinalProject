@@ -16,10 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.MenuMapper;
+import first.final_project.dao.ShopMapper;
+import first.final_project.service.ShopService;
 import first.final_project.util.MyCommon;
 import first.final_project.util.Paging;
 import first.final_project.vo.MenuVo;
-
+import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -32,6 +34,9 @@ public class MenuController {
 	MenuMapper menu_mapper;
 
 	@Autowired
+	ShopMapper shop_mapper;
+
+	@Autowired
 	HttpServletRequest request;
 
 	@Autowired
@@ -40,36 +45,24 @@ public class MenuController {
 	@Autowired
 	ServletContext application;
 
+	@Autowired
+	ShopService shop_service;
+
 	// /menu/list.do
 	// /menu/list.do?page=2
 	@RequestMapping("list.do")
-	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
-			Model model) {
+	public String list(Model model) {
 
-		// 게시물의 범위 계산(start/end)
-		int start = (nowPage - 1) * MyCommon.Menu.BLOCK_LIST + 1;
-		int end = start + MyCommon.Menu.BLOCK_LIST - 1;
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("start", start);
-		map.put("end", end);
+		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+		int owner_id = user.getOwner_id();
+		int shop_id = shop_service.select_one_shop_id(owner_id);
 
 		// 페이징된 리스트를 가져온다
-		List<MenuVo> list = menu_mapper.selectPageList(map);
-
-		// 전체 게시물수
-		int rowTotal = menu_mapper.selectRowTotal();
-
-		// pageMenu만들기
-		String pageMenu = Paging.getPaging("list.do", // pageURL
-				nowPage, // 현재페이지
-				rowTotal, // 전체게시물수
-				MyCommon.Menu.BLOCK_LIST, // 한화면에 보여질 게시물수
-				MyCommon.Menu.BLOCK_PAGE); // 한화면에 보여질 페이지수
+		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
 		// 결과적으로 request binding
 		model.addAttribute("list", list);
-		model.addAttribute("pageMenu", pageMenu);
 
 		return "menu/menu_list";
 	}
@@ -80,25 +73,92 @@ public class MenuController {
 
 		return "menu/menu_insert_form";
 	}
+	/*
+	 * 지혜님이 작성한 것
+	 * // 메뉴등록
+	 * // 요청 Parameter이름과 받는 변수명이 동일하면 @RequestParam(name="")의 name속성은 생략가능
+	 * 
+	 * @RequestMapping("insert.do")
+	 * public String insert(MenuVo vo,
+	 * 
+	 * @RequestParam(name = "photo") MultipartFile photo,
+	 * RedirectAttributes ra) throws Exception, IOException {
+	 * 
+	 * // 세션에서 가져오기....
+	 * // MemberVo user = (MemberVo) session.getAttribute("user");
+	 * 
+	 * // session timeout
+	 * // if (user == null) {
+	 * 
+	 * // //
+	 * response.sendRedirect("../member/login_form.do?reason=session_timeout");
+	 * // ra.addAttribute("reason", "session_timeout");
+	 * // return "redirect:../member/login_form.do";
+	 * // }
+	 * 
+	 * // 파일업로드
+	 * String absPath = application.getRealPath("/resources/images/");
+	 * 
+	 * String menu_img = "no_file";
+	 * if (!photo.isEmpty()) {
+	 * 
+	 * // 업로드 화일이름 얻어오기
+	 * menu_img = photo.getOriginalFilename();
+	 * 
+	 * File f = new File(absPath, menu_img);
+	 * 
+	 * if (f.exists()) {
+	 * // 저장경로에 동일한 화일이 존재하면=>다른이름을 화일명 변경
+	 * // 변경화일명 = 시간_원래화일명
+	 * long tm = System.currentTimeMillis();
+	 * menu_img = String.format("%d_%s", tm, menu_img);
+	 * 
+	 * f = new File(absPath, menu_img);
+	 * }
+	 * 
+	 * // 임시화일=>내가 지정한 위치로 복사
+	 * photo.transferTo(f);
+	 * 
+	 * }
+	 * // 업로드된 화일이름
+	 * vo.setMenu_img(menu_img);
+	 * 
+	 * String menu_content = vo.getMenu_content().replaceAll("\n", "<br>");
+	 * vo.setMenu_content(menu_content);
+	 * 
+	 * // Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
+	 * OwnerVo user = (OwnerVo) session.getAttribute("user");
+	 * int owner_id = user.getOwner_id();
+	 * int shop_id = shop_mapper.selectShopIdByOwnerId(owner_id);
+	 * 
+	 * vo.setShop_id(shop_id);
+	 * 
+	 * // DB insert
+	 * menu_mapper.insert(vo);
+	 * 
+	 * return "redirect:list.do";
+	 * }
+	 */
 
-	// 메뉴등록
-	// 요청 Parameter이름과 받는 변수명이 동일하면 @RequestParam(name="")의 name속성은 생략가능
 	@RequestMapping("insert.do")
 	public String insert(MenuVo vo,
 			@RequestParam(name = "photo") MultipartFile photo,
 			RedirectAttributes ra) throws Exception, IOException {
 
 		// 세션에서 가져오기....
-		// MemberVo user = (MemberVo) session.getAttribute("user");
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
 
 		// session timeout
-		// if (user == null) {
-
-		// // response.sendRedirect("../member/login_form.do?reason=session_timeout");
-		// ra.addAttribute("reason", "session_timeout");
-		// return "redirect:../member/login_form.do";
-		// }
-
+		if (user == null) {
+			// response.sendRedirect("../member/login_form.do?reason=session_timeout");
+			ra.addAttribute("reason", "session_timeout");
+			return "redirect:../member/login.do";
+		}
+		// owner_id 가져오기
+		int owner_id = user.getOwner_id();
+		System.out.println(owner_id);
+		// owner_id로 shop_id 구하기
+		int shop_id = shop_service.select_one_shop_id(owner_id);
 		// 파일업로드
 		String absPath = application.getRealPath("/resources/images/");
 
@@ -132,7 +192,8 @@ public class MenuController {
 		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
 		// vo.setShop_id(user.getShop_id()); // 로그인된 계정이 사장계정이어야하고, 사장VO안에 ShopID가 있어야
 		// 한다.
-		vo.setShop_id(1);
+		System.out.println(shop_id);
+		vo.setShop_id(shop_id);
 
 		// DB insert
 		int res = menu_mapper.insert(vo);

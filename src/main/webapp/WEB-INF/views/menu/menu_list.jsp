@@ -30,10 +30,6 @@
 
     function menu_modal(menu_id) {
 
-      //alert(p_idx + " 그림정보 조회");
-
-      console.log("Menu ID:", menu_id);
-
       // Show the modal
       var myModal = new bootstrap.Modal(document.getElementById('menuModal'), {
         backdrop: 'static',

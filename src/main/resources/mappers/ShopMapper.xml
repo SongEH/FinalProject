@@ -7,23 +7,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 가게추가 -->
     <!-- <insert id="insert" parameterType="first.final_project.vo.ShopVo"> -->
-        <insert id="insert" parameterType="shop">
+    <insert id="insert" parameterType="shop">
         insert into shop (
             shop_id,
             shop_name, shop_img, shop_addr, food_category, shop_call, 
             shop_content, shop_min_price,  shop_rate, 
-            shop_stemp_count, shop_review_count, shop_open_time, 
-            shop_close_time,
+            shop_stemp_count, shop_review_count,
+            shop_hours,
             shop_close_day,
-            shop_area, shop_cdate, shop_mdate, shop_status
+            shop_area, shop_cdate, shop_mdate, shop_status, owner_id
         ) values (
             null,
             #{shop_name}, #{shop_img}, #{shop_addr}, #{food_category}, #{shop_call}, 
             #{shop_content}, #{shop_min_price}, default, 
-            default, default, #{shop_open_time}, 
-            #{shop_close_time},
+            default, default, #{shop_hours},
             #{shop_close_day},
-            #{shop_area}, default, default, #{shop_status}
+            #{shop_area}, default, default, #{shop_status}, #{owner_id}
         )
     </insert>
 
@@ -35,10 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 가게 1개 상세보기 + menu 호출  -->
     <resultMap id="shopMap" type="shop">
-      <result property="shop_id"  column="shop_id"/>
-      <collection property="menu_list"
-                  column="shop_id=shop_id" 
-                  select="selectMenuList" />
+        <result property="shop_id" column="shop_id"/>
+        <collection property="menu_list" column="shop_id=shop_id" select="selectMenuList" />
     </resultMap>
 
     <select id="selectMenuList" resultType="menu">
@@ -51,24 +48,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <!-- 가게 수정하기 -->
-    <select id="select_modify_shop_id" parameterType="int" resultType="shop">
-        select * from shop where shop_id = #{shop_id}
+    <!-- 가게 데이터 불러오기 -->
+    <select id="select_modify_owner_id" parameterType="int" resultType="shop">
+        select * from shop where owner_id = #{onwer_id}
     </select>
 
+    <!-- shop_id 구하기 -->
+    <select id="select_one_shop_id" parameterType="int">
+        select shop_id from shop where owner_id = #{owner_id}
+    </select>
+
+
+    <!-- 가게 정보 업데이트 -->
     <update id="update" parameterType="shop">
-        update shop set shop_name=#{shop_name},
-                        shop_content=#{shop_content},
-                        shop_addr=#{shop_addr},
-                        shop_call=#{shop_call},
-                        shop_min_price=#{shop_min_price},
-                        shop_open_time=#{shop_open_time},
-                        shop_close_time=#{shop_close_time},
-                        shop_close_day=#{shop_close_day},
-                        shop_area=#{shop_area},
-                        food_category=#{food_category},
-                        shop_status=#{shop_status},
-                        shop_img=#{shop_img}
+        update shop set shop_name=#{shop_name}, shop_content=#{shop_content}, shop_addr=#{shop_addr}, shop_call=#{shop_call}, shop_min_price=#{shop_min_price}, shop_hours=#{shop_hours}, shop_close_day=#{shop_close_day}, shop_area=#{shop_area}, food_category=#{food_category}, shop_status=#{shop_status}, shop_img=#{shop_img}
                     where shop_id = #{shop_id}
     </update>
 
@@ -77,5 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="delete" parameterType="int">
         delete from shop where shop_id = #{shop_id}
     </delete>
+
+
 
 </mapper>

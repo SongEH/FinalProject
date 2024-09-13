@@ -169,128 +169,21 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </div>
                   </div>
 
-          //f.method = "POST";
-          f.action = "insert.do";//전송대상(PhotoInsertAction)
-          f.submit(); //전송
-        }
-      </script>
-    </head>
-
-    <body>
-      <%@include file="../common.jsp" %>
-
-        <!-- header import -->
-        <%@include file="../header.jsp" %>
-
-          <!-- side bar import -->
-          <%@include file="../sidebar.jsp" %>
-
-
-            <main id="main" class="main">
-              <div class="pagetitle">
-
-                <h1>Form Layouts</h1>
-
-                <nav>
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Forms</li>
-                    <li class="breadcrumb-item active">Layouts</li>
-                  </ol>
-                </nav>
-
-              </div><!-- End Page Title -->
-              <section class="section">
-                <div class="row">
-                  <div class="col-lg-10">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title">Floating labels Form</h5>
-
-                        <!-- Floating Labels Form -->
-                        <form class="row g-3" method="POST" enctype="multipart/form-data">
-
-                          <div class="col-md-12">
-                            <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="메뉴명" name="menu_name">
-                              <label>메뉴명</label>
-                            </div>
-                          </div>
-
-                          <div class="col-md-12">
-                            <div class="form-floating">
-                              <textarea class="form-control" placeholder="메뉴설명" name="menu_content"
-                                style="height: 100px;"></textarea>
-                              <label>메뉴설명</label>
-                            </div>
-                          </div>
-
-                          <div class="col-md-12">
-                            <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="가격" name="menu_price">
-                              <label>가격</label>
-                            </div>
-                          </div>
-
-                          <div class="col-md-12">
-                            <div class="form-floating">
-                              <input class="form-control" type="file" name="photo">
-                              <label>사진</label>
-                            </div>
-                          </div>
-
-
-                          <div class="col-md-4">
-                            <div class="form-floating mb-3">
-                              <select class="form-select" id="floatingSelect" aria-label="State" name="menu_category">
-                                <option selected></option>
-                                <option value="1">임시카테고리1</option>
-                                <option value="2">임시카테고리2</option>
-                              </select>
-                              <label for="floatingSelect">카테고리</label>
-                            </div>
-                          </div>
-
-                          <div class="col-12">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" name="menu_popularity"
-                                id="menu_popularity" value="1" onclick="handleCheckboxChange(this)">
-                              <label class="form-check-label" for="menu_popularity">
-                                인기
-                              </label>
-                            </div>
-                          </div>
-
-                          <div class="col-12">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" name="menu_hidden" id="menu_hidden"
-                                value="2" onclick="handleCheckboxChange(this)">
-                              <label class="form-check-label" for="menu_hidden">
-                                숨김
-                              </label>
-                            </div>
-                          </div>
-
-                          <div class="col-12">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" name="menu_soldout" id="menu_soldout"
-                                value="3" onclick="handleCheckboxChange(this)">
-                              <label class="form-check-label" for="menu_soldout">
-                                품절
-                              </label>
-                            </div>
-                          </div>
-
-                          <!-- Hidden inputs to ensure all values are submitted -->
-                          <input type="hidden" name="menu_popularity" value="0">
-                          <input type="hidden" name="menu_hidden" value="0">
-                          <input type="hidden" name="menu_soldout" value="0">
-
-                          <div class="text-center">
-                            <!-- <button type="submit" class="btn btn-primary">Submit</button>
-                          <button type="reset" class="btn btn-secondary">Reset</button> -->
-                            <input class="btn btn-success" type="button" value="메인화면" onclick="location.href='list.do'">
-
+                  <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                      <select
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="State"
+                        name="menu_category"
+                      >
+                        <option selected></option>
+                        <option value="1">임시카테고리1</option>
+                        <option value="2">임시카테고리2</option>
+                      </select>
+                      <label for="floatingSelect">카테고리</label>
+                    </div>
+                  </div>
 
                   <div class="col-12">
                     <div class="form-check">

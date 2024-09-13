@@ -4,8 +4,8 @@ import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
 
-@Alias("member")
 @Data
+@Alias("member")
 public class MemberVo {
 
     int member_id;
@@ -18,6 +18,6 @@ public class MemberVo {
     int member_monthOrder;
     String member_cdate;
     String member_grade;
-    boolean member_active;
+    int grade_id;
 
 }

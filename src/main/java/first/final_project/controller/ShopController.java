@@ -110,7 +110,7 @@ public class ShopController {
 
         try {
             shop_vo = shop_Service.selectOne(shop_id);
-            List<MenuVo> menu_list = menuMapper.selectList();
+            List<MenuVo> menu_list = menuMapper.selectList(shop_id);
             model.addAttribute("shop_vo", shop_vo);
             model.addAttribute("menu_list", menu_list);
         } catch (Exception e) {

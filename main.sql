@@ -177,6 +177,25 @@ CREATE TABLE `reviews_imges` (
 	`reviews_id`	INT	NOT NULL
 );
 
+
+-- 회원테이블에 등급 
+alter table member
+add constraint fk_member_grade_id foreign key (grade_id)
+								references grade (grade_id)
+
+-- 주문테이블에 가게 , 주소, 회원
+alter table orders
+add constraint fk_orders_shop_id foreign key (shop_id)
+								references shop (shop_id) on delete cascade
+                                
+alter table orders
+add constraint fk_orders_addr_id foreign key (addr_id)
+								references addr (addr_id) on delete cascade
+                                
+alter table orders
+add constraint fk_orders_member_id foreign key (member_id)
+								references member (member_id) on delete cascade
+
 -- 리뷰테이블과 리뷰이미지 테이블 외래키 
 alter table reviews_imges
 add constraint fk_reviews_imges_reviews_id foreign key(reviews_id)

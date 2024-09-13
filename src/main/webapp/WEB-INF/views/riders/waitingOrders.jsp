@@ -1,11 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="delivery.jsp" />
 <!DOCTYPE html>
 <html>
   <head>
     <title>배차 대기 중인 주문</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   </head>
   <body>
+    <div class="container">
+    <div class="content-wrapper">
+    <div id="content">
     <h2>배차 대기 중인 주문</h2>
 
     <!-- 메시지를 표시할 영역 -->
@@ -47,59 +53,20 @@ contentType="text/html;charset=UTF-8" language="java" %>
     </c:forEach>
 
     <script>
-      // DOM이 로드된 후 폼에 이벤트 리스너 추가
-      document.addEventListener("DOMContentLoaded", function () {
-        const forms = document.querySelectorAll("form"); // 모든 폼 요소를 선택
-
-        forms.forEach(function (form) {
-          // 각 폼에 submit 이벤트 리스너 추가
-          form.addEventListener("submit", function (event) {
-            event.preventDefault(); // 폼 기본 제출 동작을 막음
-
-            // Fetch form data and submit using fetch
-            const formData = new FormData(form);
-
-            // 서버로 POST 요청 보내기
-            fetch(form.action, {
-              method: "POST",
-              body: formData,
-            })
-              .then((response) => response.json()) // 응답을 JSON으로 변환
-              .then((data) => {
-                alert(data.resultMessage);
-
-                // 배차 성공 시 진행 상황 페이지로 이동 (SPA 방식)
-                if (data.success) {
-                  loadPage("/riders/progress"); // 성공 시 진행 상황 페이지 로드
-                }
-              })
-              .catch((error) => {
-                console.error("에러 발생:", error);
-                alert("배차 요청 중 오류가 발생했습니다. 다시 시도해주세요.");
-              });
+      var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+      var stompClient = Stomp.over(socket);
+  
+      // WebSocket 연결 설정
+      stompClient.connect({}, function (frame) {
+          // 주문 상태 업데이트 메시지 구독
+          stompClient.subscribe('/topic/orders', function (message) {
+              // 서버에서 메시지가 올 때마다 DOM 업데이트
+              location.reload(); // 페이지를 새로고침하여 새로운 데이터를 반영
           });
-        });
       });
-
-      // SPA 방식으로 페이지 로드하는 함수
-      function loadPage(url) {
-        fetch(url)
-          .then((response) => {
-            if (!response.ok) {
-              // 응답 상태가 OK인지 확인
-              throw new Error("네트워크 응답에 문제가 발생했습니다.");
-            }
-            return response.text(); // 텍스트 형식으로 응답 반환
-          })
-          .then((data) => {
-            document.getElementById("content").innerHTML = data; // 컨텐츠 영역에 페이지 로드
-          })
-          .catch((error) => {
-            console.error("페이지 로딩 중 에러:", error);
-            document.getElementById("content").innerHTML =
-              "<p>페이지를 불러오는 중 오류가 발생했습니다.</p>";
-          });
-      }
     </script>
+  </div>
+  </div>
+  </div>
   </body>
 </html>

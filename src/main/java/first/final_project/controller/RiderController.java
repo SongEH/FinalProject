@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import first.final_project.dao.RiderMapper;
+import first.final_project.dao.RidersMapper;
 import first.final_project.service.KakaoMapService;
-import first.final_project.service.RiderService;
+import first.final_project.service.RidersService;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.OrderVo;
 import first.final_project.vo.RiderVo;
@@ -34,13 +35,16 @@ public class RiderController {
     HttpSession session;
 
     @Autowired
-    RiderMapper riderMapper;
+    RidersMapper riderMapper;
 
     @Autowired
-    private RiderService riderService;
+    private RidersService riderService;
 
     @Autowired
     private KakaoMapService kakaoMapService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     // ==========
     @RequestMapping("main.do")
@@ -194,9 +198,7 @@ public class RiderController {
             // String 값을 int로 변환
             int orders_id = Integer.parseInt(orderIdStr);
             int raiders_id = Integer.parseInt(riderIdStr);
-
-            // System.out.println("Parsed orders_id: " + orders_id + ", raiders_id: " +
-            // raiders_id);
+            ;
 
             // 주문 배차 로직 실행
             boolean result = riderService.assignOrderToRider(orders_id, raiders_id, deliveries_method);
@@ -210,7 +212,10 @@ public class RiderController {
             if (result) {
                 riderService.updateOrderStatus(orders_id, "배차 완료");
 
-                return "redirect:/riders/delivery"; // 성공 시 진행 상황 페이지로 리다이렉트
+                // WebSocket을 통해 클라이언트에 실시간 알림 전송
+                messagingTemplate.convertAndSend("/topic/orders", "Order " + orders_id + " has been assigned.");
+
+                return "redirect:/riders/orderProgress"; // 성공 시 진행 상황 페이지로 리다이렉트
                 // System.out.println("Order status updated to '배차 완료'");
             }
 
@@ -222,16 +227,54 @@ public class RiderController {
         return "riders/delivery";
     }
 
+    // 배차 대기 중인 주문 리스트
+    @GetMapping("/waiting-orders")
+    public String getWaitingOrders(Model model) {
+        // 세션에서 라이더 정보를 가져옴
+        HttpSession session = request.getSession();
+        RiderVo user = (RiderVo) session.getAttribute("user");
+
+        // 라이더 정보가 없을 경우
+        if (user == null) {
+            // 로그인 화면으로 리다이렉트
+            return "redirect:login_form.do";
+        }
+
+        int raiders_id = user.getRaiders_id();
+
+        List<OrderVo> orders = riderService.getOrdersByStatus("배차 대기", raiders_id);
+
+        if (orders == null || orders.isEmpty()) {
+            // 오류가 발생한 경우를 처리하거나 빈 목록을 반환
+            model.addAttribute("error", "현재 배차 대기 중인 주문이 없습니다.");
+            return "riders/waitingOrders";
+        }
+
+        model.addAttribute("orders", orders);
+        model.addAttribute("raiders_id", raiders_id);
+        return "riders/waitingOrders";
+    }
+
     // 라이더가 진행 중인 주문 리스트를 표시
     @GetMapping("/progress")
     public String getOrderProgress(Model model) {
-        // int raiders_id = 1; // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID를 가져와야 함)
-        List<OrderVo> orders = riderService.getOrdersByRiderAndStatus(1, "배차 완료");
+        HttpSession session = request.getSession();
+        RiderVo user = (RiderVo) session.getAttribute("user");
+
+        // 라이더 정보가 없을 경우
+        if (user == null) {
+            // 로그인 화면으로 리다이렉트
+            return "redirect:login_form.do";
+        }
+
+        int raiders_id = user.getRaiders_id();
+        List<OrderVo> orders = riderService.getOrdersByRiderAndStatus(raiders_id, "배차 완료");
         if (orders == null || orders.isEmpty()) {
             model.addAttribute("message", "현재 진행 중인 주문이 없습니다.");
         } else {
             model.addAttribute("orders", orders);
         }
+
         return "riders/orderProgress";
     }
 
@@ -256,7 +299,7 @@ public class RiderController {
         // 배달 이력 상태도 '배달 완료'로 업데이트
         riderService.updateDeliveryHistory(orders_id, "배달 완료");
 
-        return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
+        return "redirect:/riders/completed"; // 진행 상황 페이지로 리다이렉트
     }
 
     // 배달 경로를 표시하는 메서드
@@ -275,6 +318,7 @@ public class RiderController {
             // 경로 계산을 위한 주소 정보 가져오기
             String customerAddress = addr.getAddr_line1() + " " + addr.getAddr_line2(); // 주소 1, 2 결합
             String shopAddress = shop.getShop_addr();
+
             double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
             double[] customerCoordinates = kakaoMapService.getCoordinates(customerAddress);
 
@@ -294,8 +338,17 @@ public class RiderController {
     // 라이더가 완료한 배달 내역을 표시
     @GetMapping("/completed")
     public String getCompletedDeliveries(Model model) {
-        // 라이더 ID를 고정값으로 설정 (로그인 시스템이 있다면 해당 라이더의 ID를 사용)
-        int raiders_id = 1; // 예시로 1번 라이더로 설정
+        // 라이더 ID를 고정값으로 설정
+        HttpSession session = request.getSession();
+        RiderVo user = (RiderVo) session.getAttribute("user");
+
+        // 라이더 정보가 없을 경우
+        if (user == null) {
+            // 로그인 화면으로 리다이렉트
+            return "redirect:login_form.do";
+        }
+
+        int raiders_id = user.getRaiders_id();
 
         // 배달 완료된 주문 목록을 가져오기
         List<OrderVo> completedOrders = riderService.getCompletedOrdersByRider(raiders_id);
@@ -312,20 +365,18 @@ public class RiderController {
         return "riders/delivery";
     }
 
-    // 배차 대기 중인 주문 리스트
-    @GetMapping("/waiting-orders")
-    public String getWaitingOrders(Model model) {
-        List<OrderVo> orders = riderService.getOrdersByStatus("배차 대기");
+    // 라이더가 예상 배달 시간 선택
+    @PostMapping("/setDeliveryTime")
+    public String setDeliveryTime(@RequestParam("orders_id") int orders_id,
+            @RequestParam("delivery_time") int delivery_time) {
+        riderService.updateDeliveryTime(orders_id, delivery_time);
+        riderService.updateDeliveryHistory(orders_id, "배차 완료");
+        return "redirect:/riders/progress";
+    }
 
-        if (orders == null || orders.isEmpty()) {
-            // 오류가 발생한 경우를 처리하거나 빈 목록을 반환
-            model.addAttribute("error", "현재 배차 대기 중인 주문이 없습니다.");
-            return "riders/waitingOrders";
-        }
-
-        model.addAttribute("orders", orders);
-        model.addAttribute("raiders_id", 1); // 예시로 라이더 ID를 1로 설정 (실제로는 로그인된 라이더의 ID가 필요)
-        return "riders/waitingOrders";
+    // 라이더가 배차를 받았을 때 클라이언트에게 알림 전송
+    public void notifyOrderUpdate(int ordersId, String status) {
+        messagingTemplate.convertAndSend("/topic/status", status);
     }
 
 }

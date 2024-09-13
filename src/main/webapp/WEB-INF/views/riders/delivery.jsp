@@ -21,7 +21,6 @@
       .container {
         max-width: 900px;
         margin: 0 auto;
-        padding: 20px;
       }
 
       .content-wrapper {
@@ -137,19 +136,30 @@
         padding: 20px;
       }
 
+      .order-progress-box,
+      .completed-order-box,
       .order-box {
         padding: 15px;
         margin: 10px 0;
         background-color: #ffebd4;
         border: 1px solid #ddd;
         border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* 모바일에서의 재배치 */ 
       }
 
+      .order-progress-info div,
+      .completed-order-info div,
       .order-info div {
+        flex: 1;
         margin-bottom: 5px;
       }
 
       .assign-button {
+        width: 200px;
+        height: 100px;
         padding: 10px 15px;
         background-color: #f0a8d0;
         color: white;
@@ -157,9 +167,44 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        font-size: 30px;
       }
 
       .assign-button:hover {
+        background-color: #e090b5;
+      }
+
+      .route-button {
+        width: 80px;
+        height: 40px;
+        padding: 10px 15px;
+        background-color: #f0a8d0;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 11px;
+      }
+
+      .route-button:hover {
+        background-color: #e090b5;
+      }
+
+      .delivery-time-button {
+        width: 200px;
+        height: 100px;
+        padding: 10px 15px;
+        background-color: #f0a8d0;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 25px;
+      }
+
+      .delivery-time-button:hover {
         background-color: #e090b5;
       }
 
@@ -170,19 +215,57 @@
         border-radius: 5px;
       }
 
-      .order-progress-box,
-      .completed-order-box {
-        padding: 20px;
-        background-color: #ffebd4;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 200px;
+      }
+
+      select {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 5px;
+      }
+
+      /* 작은 창 환경에서만 배달 수단이 버튼 위로 */
+      @media (max-width: 600px) {
+
+        form {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .route-button{
+          margin-bottom: 10px;
+        }
+
+        .assign-button {
+          margin-top: 10px;
+          height: 75px;
+          align-items: center;
+          width: 70%;
+        }
+
+        .delivery-time-button {
+          margin-top: 5px;
+          height: 75px;
+          align-items: center;
+          width: 70%;
+        }
+
+        select {
+          width: 80%;
+          margin-bottom: 10px;
+        }
       }
 
       /* Responsive styles */
       @media (max-width: 768px) {
         .container {
-          padding: 15px;
+          padding-left: 15px;
+          padding-right: 15px;
         }
 
         .header {
@@ -271,36 +354,22 @@
 
         <div class="navigation">
           <button
-            onclick="loadPage('${pageContext.request.contextPath}/riders/waiting-orders')"
+            onclick="window.location.href='${pageContext.request.contextPath}/riders/waiting-orders'"
           >
             주문 대기
           </button>
           <button
-            onclick="loadPage('${pageContext.request.contextPath}/riders/progress')"
+            onclick="window.location.href='${pageContext.request.contextPath}/riders/progress'"
           >
             진행 상황
           </button>
           <button
-            onclick="loadPage('${pageContext.request.contextPath}/riders/completed')"
+            onclick="window.location.href='${pageContext.request.contextPath}/riders/completed'"
           >
             배달 완료
           </button>
         </div>
-
-        <div id="content">
-          <!-- Content will be loaded here -->
-        </div>
       </div>
     </div>
-
-    <script>
-      function loadPage(url) {
-        fetch(url)
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("content").innerHTML = data;
-          });
-      }
-    </script>
   </body>
 </html>

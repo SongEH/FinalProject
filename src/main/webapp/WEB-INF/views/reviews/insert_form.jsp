@@ -117,12 +117,14 @@ pageEncoding='UTF-8'%>
 </style>
 <script>
     function reviews_insert(f){
-        let shop_name = document.querySelector("div[name='shop_name']").textContent.trim();
-        let menu_name = document.querySelector("div[name='menu_name']").textContent.trim();
+        // let shop_name = document.querySelector("div[name='shop_name']").textContent.trim();
+        // let menu_name = document.querySelector("div[name='menu_name']").textContent.trim();
         let reviews_rating = f.reviews_rating.value;
         alert(reviews_rating);
         let reviews_content = f.reviews_content.value.trim();
         alert(reviews_content);
+        let orders_id = f.orders_id.value;
+        alert(orders_id)
 
         f.action="insert.do";
         f.submit();
@@ -146,10 +148,11 @@ pageEncoding='UTF-8'%>
 <body>
     <div class="container" style="width: 1000px; margin-top: 30px">
         <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="orders_id" value="${vo.orders_id}"/>
             <div id="reviews_info">
-                <div name="shop_name" class="reviews_feature">피자가게</div>
+                <div name="shop_name" class="reviews_feature">${vo.shop_name}</div>
                 <hr />
-                <div name="menu_name" class="reviews_feature">모짜렐라피자</div>
+                <div name="menu_name" class="reviews_feature">${vo.orders_name}</div>
                 <hr />
                 <div class="reviews_feature" >이 가게를 추천하시겠어요?</div>
                 <fieldset class="reviews_feature"  >

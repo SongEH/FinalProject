@@ -171,8 +171,8 @@ CREATE TABLE `answer` (
 	`board_id`	INT	NOT NULL
 );
 
-CREATE TABLE `reviews_imges` (
-	`reviews_imges_id`	INT	NOT NULL primary key auto_increment,
+CREATE TABLE `reviews_images` (
+	`reviews_images_id`	INT	NOT NULL primary key auto_increment,
 	`reviews_img_name`	VARCHAR(255)	NOT NULL,
 	`reviews_id`	INT	NOT NULL
 );

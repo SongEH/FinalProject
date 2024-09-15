@@ -7,7 +7,24 @@
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<script>
+  function delete_menu(orders_id){
+    // $.ajax({
+    // url     :     "../reviews/insert_form.do",
+    // data    :      {"orders_id": orders_id},
+    // success :   function(res_data){
+    //         alert("리뷰 등록이 완료되었습니다.");
+    //         ("reviews_list_display").html(res_data);
+    // },
+    // error   :   function(err){
+    // alert(error.responseText)
+    // }
+    // });
+    location.href="../reviews/insert_form.do?orders_id=" + orders_id;
+    }
+</script>
 </head>
+
 
 <body>
 

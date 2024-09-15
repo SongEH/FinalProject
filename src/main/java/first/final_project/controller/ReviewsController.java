@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import first.final_project.dao.OrderMapper;
 import first.final_project.dao.ReviewsMapper;
 import first.final_project.vo.MemberVo;
-import first.final_project.vo.ReviewsImgesVo;
+import first.final_project.vo.OrderVo;
+import first.final_project.vo.ReviewsImagesVo;
 import first.final_project.vo.ReviewsVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
@@ -34,28 +36,47 @@ public class ReviewsController {
     @Autowired
     ReviewsMapper reviewsMapper;
     
-    @RequestMapping("/insert_form.do")
-    public String insert_form(){
+    @Autowired
+	OrderMapper order_mapper;
 
+    @RequestMapping("/insert_form.do")
+    public String insert_form(@RequestParam(name="orders_id")int orders_id ,Model model, RedirectAttributes ra){
+        // user 로그인 상태 확인
+        // 유효성 검증: orders_id가 0 이하인 경우
+        if (orders_id <= 0) {
+            System.out.println("유효하지 않은 orders_id: " + orders_id);
+            ra.addAttribute("reason", "invalid_orders_id");
+            return "redirect:error/error_page"; // 유효하지 않은 경우 에러 페이지로 리다이렉트
+        }
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        if(user==null){
+            ra.addAttribute("reason", "session_timeout");
+			return "redirect:../member/login.do";
+        }
+        // member_id 가져오기; 
+        
+        // 주문 정보 얻어오기 
+        OrderVo vo = order_mapper.selectOneByOrdersId(orders_id);
+        model.addAttribute("vo", vo);
         return "reviews/insert_form";
     }
 
     @RequestMapping("list.do")
     public String list(Model model){
-        
-        List<ReviewsVo> vo;
-
-        vo = reviewsMapper.selectList();
-
+        List<ReviewsVo> vo = reviewsMapper.selectList();
         model.addAttribute("vo", vo);
-        
         return "reviews/list";
     }
 
     // reivews insert & reviews_images insert 
     @RequestMapping("insert.do")
-    public String insert(ReviewsVo vo, ReviewsImgesVo imgVo, @RequestParam(name="photo")List<MultipartFile> photo_list, Model model, RedirectAttributes ra) {
+    public String insert(@RequestParam(name="orders_id")int orders_id, ReviewsVo vo, @RequestParam(name="photo")List<MultipartFile> photo_list, Model model, RedirectAttributes ra) {
 
+        if (orders_id <= 0) {
+            System.out.println("유효하지 않은 orders_id: " + orders_id);
+            return "redirect:error/error_page"; // 유효하지 않은 경우 에러 페이지로 리다이렉트
+        }
+        System.out.println(orders_id);
         System.out.println("도착");
 
         MemberVo user = (MemberVo) session.getAttribute("user");
@@ -88,24 +109,28 @@ public class ReviewsController {
         }
 
         // reviews DB 에 인서트
-        
-        vo.setOrders_id(1);
+        vo.setOrders_id(orders_id);
 
         // reviews 등록 
         int res = reviewsMapper.insert(vo);
+        System.out.println("reviews 등록 완료 ");
 
         // reviews 의 id 받아오기 
-        int reviews_id = 1;
-        imgVo.setReviews_id(reviews_id);
+        int reviews_id = reviewsMapper.getReviewIdFromOrderId(orders_id);
+        System.out.println("reviews_id=" +  reviews_id);
+
+        ReviewsImagesVo imageVo = new ReviewsImagesVo();
+        imageVo.setReviews_id(reviews_id);
+        System.out.println(imageVo.getReviews_id());
         // 이미지 insert
         for (String filename : filename_list){
             reviews_img = filename;
-            imgVo.setReviews_img(reviews_img);
+            imageVo.setReviews_img(reviews_img);
 
-            res = reviewsMapper.insert_img(imgVo);
+            res = reviewsMapper.insert_img(imageVo);
         }
 
-        // ra.addAttribute("shop_id", shop_id);
+        // ra.addAllAttributes();
 
         return "redirect:list.do";
     }

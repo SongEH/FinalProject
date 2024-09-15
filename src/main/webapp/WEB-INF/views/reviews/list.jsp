@@ -46,16 +46,16 @@ pageEncoding='UTF-8'%>
 
                         <!-- Floating Labels Form -->
                         <form class="row g-3" method="POST" action="insert.do" enctype="multipart/form-data">
-                        <!-- <input type="hidden" value="" /> -->
+                        <input type="hidden" value="${vo.orders_id}" />
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <div class="reviews_item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center; padding: 10px;">
                                     <div>
-                                        <input type="hidden" value="${vo.reviews_id}"/>
+                                        <!-- <input type="hidden" value="${vo.reviews_id}"/> -->
                                         <div>${vo.shop_name}</div>
                                         <div>
                                             ${vo.reviews_rating}
-                                            <span><input type="button" value="삭제" onclick="reviews_del('${vo.reviews_id}');"/></span> 
+                                            <!-- <span><input type="button" value="삭제" onclick="reviews_del('${vo.reviews_id}');"/></span>  -->
                                         </div>
                                         <div>${vo.reviews_content}</div>
                                             <c:forEach var="img" items="${vo.reviews_img_list}">

@@ -37,7 +37,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-
     <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
     <!-- <insert id="insert" parameterType="order">
     INSERT INTO Orders(
@@ -73,15 +72,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

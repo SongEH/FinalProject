@@ -15,12 +15,11 @@ public class ReviewsVo {
     private int reviews_id;
     private int reviews_rating;
     private String reviews_content;
-    private String reviews_img;
     private String reviews_cdate;
 
     // foreign key 
     private int orders_id;
 
     // 이미지 저장 
-    List<ReviewsImgesVo> reviews_img_list = new ArrayList<>();
+    List<ReviewsImagesVo> reviews_img_list = new ArrayList<>();
 }

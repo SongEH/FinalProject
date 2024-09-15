@@ -4,34 +4,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="first.final_project.dao.ReviewsMapper">
-
-    <resultMap id="reviewsMap" type="reviews">
+    <!-- select reviews + reviews_images -->
+    <!-- <resultMap id="reviewsMap" type="reviews">
         <result property="reviews_id" column="reviews_id"/>
         <collection property="reviews_img_list"
-                    column="reviews_id = reviews_id"
-                    select="selectImgList"/>
+                    ofType="reviewsImages"
+                    column="reviews_id"
+                    select="selectImageList"/>
     </resultMap>
     
-    <select id="selectImgList" resultType="reviewsImges">
-        select * from reviews_imges where reviews_id = #{reviews_id}
-    </select>
-
-    <!-- <select id="selectList" resultType="reviews">
-        select * from reviews
+    <select id="selectImageList" parameterType="int" resultType="reviewsImages">
+        select * from reviews_images where reviews_id = #{reviews_id}
     </select> -->
 
-    <select id="selectList" resultMap="reviewsMap">
+    <select id="selectList" resultType="reviews">
         select 
-            r.* , o.orders_name 
+            r.* , o.orders_name, s.shop_id
         from 
-            reviews as r
-        join
-            orders as o on r.orders_id = o.orders_id
-        join 
-            shop as s on o.shop_id = s.shop_id 
+            reviews r
+        inner join
+            orders o on o.orders_id = r.orders_id
+        inner join 
+            shop s on o.shop_id = s.shop_id 
     </select>
 
-    <!-- reviews table insert -->
+    
+    <select id="getReviewIdFromOrderId" parameterType="int" resultType="Int">
+        select reviews_id from reviews where orders_id = #{orders_id} 
+    </select>
+
+    <select id="selectOneByOrdersId" parameterType="int" resultType="order">
+        select * from order where orders_id = #{orders_id}
+    </select>
+
+    <!-- insert reviews -->
     <insert id="insert" parameterType="reviews">
         insert into reviews (
                             reviews_rating,
@@ -46,9 +52,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                             )
     </insert>
 
-    <!-- reviews_images table insert -->
-    <insert id="insert_img" parameterType="reviewsImage">
-        insert into reviews_imges (reviews_img, reviews_id) values(#{reviews_img}, #{reviews_id})
+    <!-- insert reviews_images   -->
+    <insert id="insert_img" parameterType="reviewsImages">
+        insert into reviews_images(
+                                    reviews_img,
+                                    reviews_id
+                                    )
+                            values(
+                                    #{reviews_img},
+                                    #{reviews_id}
+                                    )
     </insert>
+
 
 </mapper>

@@ -114,6 +114,7 @@
         if(userType == null){
             userType = "UNKNOWN";   //기본갑을 설정
         }
+        session.setAttribute("userType",userType);
     %>
 
     <!-- 관리자 전용 액션 버튼 -->

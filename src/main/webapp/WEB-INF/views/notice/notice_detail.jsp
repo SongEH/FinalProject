@@ -68,6 +68,10 @@
         .back-button:hover {
             background-color: #0056b3;
         }
+        .content {
+            white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
+            word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
+        }
     </style>
     <script type="text/javascript">
         function del(notice_id) {
@@ -81,6 +85,15 @@
 </head>
 <body>
     
+    <% 
+    // 세션에서 user 객체를 가져옴
+    String userType = (String)session.getAttribute("userType");
+    if(userType == null){
+        userType = "UNKNOWN";   //기본갑을 설정
+    }
+    session.setAttribute("userType",userType);
+    %>
+
     <div class="container">
         <h1>공지사항 상세</h1>
 

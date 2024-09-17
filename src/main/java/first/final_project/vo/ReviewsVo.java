@@ -19,6 +19,14 @@ public class ReviewsVo {
 
     // foreign key 
     private int orders_id;
+    private int shop_id;
+    private int member_id;
+
+    // use foreign key access data
+    private String shop_name;
+    private String member_name;
+    private String orders_name;
+    private int orders_price;
 
     // 이미지 저장 
     List<ReviewsImagesVo> reviews_img_list = new ArrayList<>();

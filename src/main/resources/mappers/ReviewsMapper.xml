@@ -5,36 +5,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="first.final_project.dao.ReviewsMapper">
     <!-- select reviews + reviews_images -->
-    <!-- <resultMap id="reviewsMap" type="reviews">
+    <resultMap id="reviewsMap" type="reviews">
         <result property="reviews_id" column="reviews_id"/>
+        <result property="reviews_rating" column="reviews_rating"/>
+        <result property="reviews_content" column="reviews_content"/>
+        <result property="reviews_cdate" column="reviews_cdate"/>
+        <result property="shop_name" column="shop_name"/> 
+        <result property="orders_id" column="orders_id"/><!-- Add this line -->
         <collection property="reviews_img_list"
                     ofType="reviewsImages"
                     column="reviews_id"
                     select="selectImageList"/>
     </resultMap>
     
-    <select id="selectImageList" parameterType="int" resultType="reviewsImages">
+    <select id="selectImageList" resultType="reviewsImages">
         select * from reviews_images where reviews_id = #{reviews_id}
-    </select> -->
+    </select>
 
-    <select id="selectList" resultType="reviews">
+    <select id="selectList" parameterType="int" resultMap="reviewsMap">
         select 
-            r.* , o.orders_name, s.shop_id
+            r.* , o.orders_name as orders_name,
+                    o.orders_price as orders_price, s.shop_id, s.shop_name,
+            m.member_id, m.member_name
         from 
             reviews r
         inner join
             orders o on o.orders_id = r.orders_id
         inner join 
             shop s on o.shop_id = s.shop_id 
+        inner join 
+            member m on o.member_id = m.member_id
+        where m.member_id = #{member_id}
     </select>
-
     
     <select id="getReviewIdFromOrderId" parameterType="int" resultType="Int">
-        select reviews_id from reviews where orders_id = #{orders_id} 
+        select reviews_id from reviews where orders_id = #{orders_id}
     </select>
 
-    <select id="selectOneByOrdersId" parameterType="int" resultType="order">
-        select * from order where orders_id = #{orders_id}
+    <select id="getImageForReviews" parameterType="int" resultType="String">
+        select reviews_img from reviews_images where reviews_id = #{reviews_id}
     </select>
 
     <!-- insert reviews -->
@@ -63,6 +72,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                     #{reviews_id}
                                     )
     </insert>
+
+    <!-- delete reviews -->
+    <delete id="deleteReviews" parameterType="int">
+        delete from reviews where reviews_id = #{reviews_id}
+    </delete>
 
 
 </mapper>

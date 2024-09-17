@@ -18,8 +18,14 @@ public interface ReviewsMapper {
     // insert reviews_img  --> reviews_images table
     int insert_img(ReviewsImagesVo imageVo);
 
+    // reviews delete
+    int deleteReviews(int reviews_id);
+
+    // use Orders_id for get Reviews_id 
     int getReviewIdFromOrderId(int orders_id);
 
-    // select reviews + reviews_images 
-    List<ReviewsVo> selectList();
+    // Calling reviews written by customers 
+    List<ReviewsVo> selectList(int member_id);
+
+    List<String> getImageForReviews(int reviews_id);
 }

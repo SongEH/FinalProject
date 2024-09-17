@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import first.final_project.dao.OrderMapper;
 import first.final_project.dao.ReviewsMapper;
 import first.final_project.vo.MemberVo;
@@ -40,14 +41,14 @@ public class ReviewsController {
 	OrderMapper order_mapper;
 
     @RequestMapping("/insert_form.do")
-    public String insert_form(@RequestParam(name="orders_id")int orders_id ,Model model, RedirectAttributes ra){
+    public String insert_form(int orders_id ,Model model, RedirectAttributes ra){
         // user 로그인 상태 확인
         // 유효성 검증: orders_id가 0 이하인 경우
-        if (orders_id <= 0) {
-            System.out.println("유효하지 않은 orders_id: " + orders_id);
-            ra.addAttribute("reason", "invalid_orders_id");
-            return "redirect:error/error_page"; // 유효하지 않은 경우 에러 페이지로 리다이렉트
-        }
+        // if (orders_id <= 0) {
+        //     System.out.println("유효하지 않은 orders_id: " + orders_id);
+        //     ra.addAttribute("reason", "invalid_orders_id");
+        //     return "redirect:error/error_page"; // 유효하지 않은 경우 에러 페이지로 리다이렉트
+        // }
         MemberVo user = (MemberVo) session.getAttribute("user");
         if(user==null){
             ra.addAttribute("reason", "session_timeout");
@@ -58,14 +59,26 @@ public class ReviewsController {
         // 주문 정보 얻어오기 
         OrderVo vo = order_mapper.selectOneByOrdersId(orders_id);
         model.addAttribute("vo", vo);
-        return "reviews/insert_form";
+        return "reviews/reviews_insert_form";
     }
 
     @RequestMapping("list.do")
-    public String list(Model model){
-        List<ReviewsVo> vo = reviewsMapper.selectList();
-        model.addAttribute("vo", vo);
-        return "reviews/list";
+    public String list(Model model, RedirectAttributes ra){
+        
+        MemberVo user = (MemberVo) session.getAttribute("user");
+
+        if(user==null){
+            ra.addAttribute("reason", "session_timeout");
+			return "redirect:../member/login.do";
+        }
+
+        int member_id = user.getMember_id();
+        System.out.println("도착");
+        List<ReviewsVo> list = reviewsMapper.selectList(member_id);
+        System.out.println("호출완료");
+
+        model.addAttribute("list", list);
+        return "reviews/reviews_list";
     }
 
     // reivews insert & reviews_images insert 
@@ -133,5 +146,22 @@ public class ReviewsController {
         // ra.addAllAttributes();
 
         return "redirect:list.do";
+    }
+
+    @RequestMapping("delete.do")
+    public String delete_reviews(int reviews_id,RedirectAttributes ra){
+
+        List<String> imageFiles = reviewsMapper.getImageForReviews(reviews_id);
+        String absPath = application.getRealPath("/resources/images/");
+        for (String imageFile : imageFiles) {
+            File file = new File(absPath + imageFile);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+
+        reviewsMapper.deleteReviews(reviews_id);
+
+        return "redirect:reviews/list.do";
     }
 }

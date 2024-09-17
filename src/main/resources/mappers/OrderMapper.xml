@@ -36,6 +36,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       GROUP BY o.orders_id, s.shop_name, s.shop_img, a.addr_line1, a.addr_line2, m.member_phone
     </select>
 
+    <select id="selectOneByOrdersId" parameterType="int" resultType="order">
+        select o.*, s.shop_name
+        from orders o
+        inner join shop s on o.shop_id = s.shop_id
+        where o.orders_id = #{orders_id}
+    </select>
 
     <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
     <!-- <insert id="insert" parameterType="order">

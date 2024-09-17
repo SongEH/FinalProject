@@ -39,6 +39,9 @@
             margin: auto;
             margin-left: 5px;
         }
+        .slideshow-container.has-images {
+            display: block; /* Show only if it has images */
+        }
         .prev, .next {
             cursor: pointer;
             position: absolute;
@@ -65,6 +68,8 @@
     </style>
     <script>
         function reviews_del(reviews_id){
+            if (!confirm("해당 리뷰를 정말 삭제하시겠습니까?")) return;
+
             $.ajax({
             url     :     "delete.do",
             data    :      {"reviews_id": reviews_id},
@@ -144,17 +149,17 @@
                                             </div>
                                             <p class="mt-2">${vo.reviews_content}</p>
                                             <div class="slideshow-container" id="slideshow-${vo.reviews_id}">
-                                                <c:forEach var="img" items="${vo.reviews_img_list}">
-                                                    <div class="mySlides">
-                                                        <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" alt="Review Image" />
-                                                    </div>
-                                                </c:forEach>
-                                                <!-- <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                                <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
+                                                    <c:forEach var="img" items="${vo.reviews_img_list}">
+                                                        <c:if test="${not empty img.reviews_img }">
+                                                            <div class="mySlides">
+                                                                <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
+                                                            </div>
+                                                        </c:if>
+                                                    </c:forEach>
                                             </div>
                                             <div class="mt-3">
                                                 <div>${vo.orders_name}</div>
-                                                <fmt:formatNumber value="${vo.orders_price}" type="number" patten="#,###" />
+                                                <div>${vo.orders_price}</div>
                                             </div>
                                         </div>
                                     </div>

@@ -104,7 +104,7 @@ public class ReviewsController {
         // 이미지 저장 List 객체 생성 
         List<String> filename_list = new ArrayList<String>();
         // 초기화
-        String reviews_img = "no_file";
+        String reviews_img = "";
         // 이미지 저장 경로에 저장 
         for(MultipartFile photo : photo_list){
             if(!photo.isEmpty()){
@@ -159,9 +159,7 @@ public class ReviewsController {
                 file.delete();
             }
         }
-
         reviewsMapper.deleteReviews(reviews_id);
-
-        return "redirect:reviews/list.do";
+        return "redirect:list.do";
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8">
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.InquiriesMapper">
+
+    <select id="selectList" resultType="inquiries">
+        select * from inquiries order by inquiries_id desc
+    </select>
+
+    <select id="selectFromIdx" parameterType="int" resultType="inquiries">
+        select * from inquiries where inquiries_id=#{inquiries_id} order by inquiries_id desc
+    </select>
+
+    <insert id="insert" parameterType="inquiries">
+        insert into inquiries(inquiries_title,inquiries_content,inquiries_pwd,member_id,owner_id)
+        values(#{inquiries_title},#{inquiries_content},#{inquiries_pwd},#{member_id},#{owner_id})
+    </insert>
+
+    <update id="update" parameterType="inquiries">
+        update inquiries set inquiries_title=#{inquiries_title},
+                             inquiries_content=#{inquiries_content},
+                             inquiries_pwd =#{inquiries_pwd},
+                             member_id=#{member_id},
+                             owner_id=#{owner_id}
+                             where inquiries_id=#{inquiries_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from inquiries where inquiries_id=#{inquiries_id}
+    </delete>
+</mapper>
+
+

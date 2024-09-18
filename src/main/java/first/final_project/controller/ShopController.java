@@ -2,6 +2,7 @@ package first.final_project.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +46,9 @@ public class ShopController {
 
         List<ShopVo> list;
         System.out.println(food_category);
-        try {
-            list = shop_Service.selectList(food_category);
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "fail_shop_list");
 
-            return "error/error_page";
-        }
+        list = shop_Service.selectList(food_category);
+        
         model.addAttribute("list", list);
 
         return "shop/shop_list";
@@ -96,22 +93,28 @@ public class ShopController {
 
     // 가게 하나 선택
     @RequestMapping("/shop/select_one.do")
-    // @ResponseBody
     public String shop_selectOne(int shop_id, Model model) {
-
         System.out.println("shop_id : " + shop_id);
+        
         ShopVo vo;
+        // Map<String, Integer> counts;  // Changed to CountsVo
+    
         try {
             vo = shop_Service.selectOne(shop_id);
-            List<MenuVo> menu_list = menuMapper.selectMenuList(shop_id);
+            // counts = shop_Service.selectMenuAndReviewsCount(shop_id);
+    
+            // Adding attributes to the model
             model.addAttribute("vo", vo);
-            model.addAttribute("menu_list", menu_list);
+            // if (vo != null) {
+            //     vo.setMenu_count(counts != null ? counts.get("menu_count") : 0);
+            //     vo.setReviews_count(counts != null ? counts.get("reviews_count") : 0);
+            // }
+            System.out.println("정상 실행 ");
+            return "shop/shop_listOne";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "fail_select_one");
             return "error/error_page";
         }
-
-        return "shop/shop_listOne";
     }
 
     // 가게 정보 수정

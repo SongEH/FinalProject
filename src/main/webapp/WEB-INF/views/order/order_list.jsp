@@ -77,8 +77,14 @@
                   <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"  onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
                   <input class="btn btn-info" type="button" id="btn_popup_update" value="배송조회"
                     onclick="modify_menu('${vo.orders_id}');">
-                  <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
-                    onclick="delete_menu('${vo.orders_id}');">
+                    <c:choose>
+                      <c:when test="${vo.hasReview}">
+                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
+                      </c:when>
+                      <c:otherwise>
+                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" onclick="delete_menu('${vo.orders_id}');">
+                      </c:otherwise>
+                  </c:choose>
                 </td>
 
         </div>

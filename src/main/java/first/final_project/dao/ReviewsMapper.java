@@ -26,6 +26,10 @@ public interface ReviewsMapper {
 
     // Calling reviews written by customers 
     List<ReviewsVo> selectList(int member_id);
+    
+    List<ReviewsVo> selectListByShopId(int shop_id);
 
     List<String> getImageForReviews(int reviews_id);
+
+    Boolean checkReviewExists(int orders_id);
 }

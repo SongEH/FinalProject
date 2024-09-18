@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -81,6 +85,21 @@ public class ReviewsController {
         return "reviews/reviews_list";
     }
 
+    @RequestMapping("listByShopId.do")
+    public String listByShopId(@RequestParam(value = "shop_id", required = false) Integer shop_id, Model model) {
+        System.out.println("listByShopId에 도착");
+        
+        if (shop_id == null) {
+            // Handle null shop_id case
+            return "error/errorPage";
+        }
+        
+        List<ReviewsVo> list = reviewsMapper.selectListByShopId(shop_id);
+        model.addAttribute("list", list);
+        System.out.println("List size: " + list.size());
+        return "reviews/reviews_listByShopId";
+    }
+
     // reivews insert & reviews_images insert 
     @RequestMapping("insert.do")
     public String insert(@RequestParam(name="orders_id")int orders_id, ReviewsVo vo, @RequestParam(name="photo")List<MultipartFile> photo_list, Model model, RedirectAttributes ra) {
@@ -91,34 +110,12 @@ public class ReviewsController {
         }
         System.out.println(orders_id);
         System.out.println("도착");
-
+        
         MemberVo user = (MemberVo) session.getAttribute("user");
 
         if(user==null){
             ra.addAttribute("reason", "session_timeout");
 			return "redirect:../member/login.do";
-        }
-
-        // 이미지 저장 경로 
-        String absPath = application.getRealPath("/resources/images/");
-        // 이미지 저장 List 객체 생성 
-        List<String> filename_list = new ArrayList<String>();
-        // 초기화
-        String reviews_img = "";
-        // 이미지 저장 경로에 저장 
-        for(MultipartFile photo : photo_list){
-            if(!photo.isEmpty()){
-                UUID uuid = UUID.randomUUID();
-                reviews_img = uuid + "_" + photo.getOriginalFilename();
-                File f = new File(absPath, reviews_img);
-                
-                try {
-                    photo.transferTo(f);
-                } catch (IOException e) {
-                    return "redirect:error/error_page";
-                }
-            }
-            filename_list.add(reviews_img);
         }
 
         // reviews DB 에 인서트
@@ -128,23 +125,38 @@ public class ReviewsController {
         int res = reviewsMapper.insert(vo);
         System.out.println("reviews 등록 완료 ");
 
-        // reviews 의 id 받아오기 
-        int reviews_id = reviewsMapper.getReviewIdFromOrderId(orders_id);
-        System.out.println("reviews_id=" +  reviews_id);
-
-        ReviewsImagesVo imageVo = new ReviewsImagesVo();
-        imageVo.setReviews_id(reviews_id);
-        System.out.println(imageVo.getReviews_id());
-        // 이미지 insert
-        for (String filename : filename_list){
-            reviews_img = filename;
-            imageVo.setReviews_img(reviews_img);
-
-            res = reviewsMapper.insert_img(imageVo);
+        // 첫 번째 파일을 가져옴
+        if (!photo_list.isEmpty() && !photo_list.get(0).isEmpty()) {
+            String absPath = application.getRealPath("/resources/images/");
+            List<String> filename_list = new ArrayList<>();
+    
+            for (MultipartFile photo : photo_list) {
+                if (!photo.isEmpty()) {
+                    String reviews_img = UUID.randomUUID() + "_" + photo.getOriginalFilename();
+                    filename_list.add(reviews_img);
+                    File f = new File(absPath, reviews_img);
+    
+                    try {
+                        photo.transferTo(f);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return "redirect:error/error_page"; // Redirect on file upload failure
+                    }
+                }
+            }
+    
+            // Insert review images
+            int reviews_id = reviewsMapper.getReviewIdFromOrderId(orders_id);
+            ReviewsImagesVo imageVo = new ReviewsImagesVo();
+            imageVo.setReviews_id(reviews_id);
+    
+            for (String filename : filename_list) {
+                imageVo.setReviews_img(filename);
+                res = reviewsMapper.insert_img(imageVo);
+            }
         }
-
-        // ra.addAllAttributes();
-
+    
+        ra.addFlashAttribute("message", "Review submitted successfully.");
         return "redirect:list.do";
     }
 
@@ -162,4 +174,5 @@ public class ReviewsController {
         reviewsMapper.deleteReviews(reviews_id);
         return "redirect:list.do";
     }
+
 }

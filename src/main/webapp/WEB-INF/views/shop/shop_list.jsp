@@ -195,15 +195,17 @@ header .login {
     
     <script>
       function selectOne(shop_id){
-        
+        alert(shop_id);
         $.ajax({
           url     :     "/shop/select_one.do",
           data    :      {"shop_id": shop_id},
           success :   function(res_data){
+                alert("select_one.do 성공")
                 $("#select_one_display").html(res_data);
                 $("#insert_form_display").hide();
+                // $("#reviews_display").hide();
                 $("#store-list").hide();
-                $('#menu_display').hide();
+                // $('#menu_display').hide();
                 $('#menuButton').click();
                 $('#menuButton').focus();
           },

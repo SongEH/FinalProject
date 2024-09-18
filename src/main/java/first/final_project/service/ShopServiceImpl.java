@@ -1,6 +1,7 @@
 package first.final_project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,11 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public int select_one_shop_id(int owner_id) {
         return shopMapper.select_one_shop_id(owner_id);
+    }
+
+    @Override
+    public Map<String, Integer> selectMenuAndReviewsCount(int shop_id) {
+        return shopMapper.selectMenuAndReviewsCount(shop_id);
     }
 
    

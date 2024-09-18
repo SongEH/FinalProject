@@ -28,6 +28,8 @@ public class ReviewsVo {
     private String orders_name;
     private int orders_price;
 
+
+
     // 이미지 저장 
     List<ReviewsImagesVo> reviews_img_list = new ArrayList<>();
 }

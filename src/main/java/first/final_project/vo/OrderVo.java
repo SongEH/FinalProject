@@ -28,4 +28,6 @@ public class OrderVo {
     private int member_id;
     private String member_phone;
     private int menu_count;
+
+    boolean hasReview;
 }

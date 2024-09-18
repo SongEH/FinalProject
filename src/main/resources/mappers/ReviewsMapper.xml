@@ -5,45 +5,92 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="first.final_project.dao.ReviewsMapper">
     <!-- select reviews + reviews_images -->
-    <resultMap id="reviewsMap" type="reviews">
-        <result property="reviews_id" column="reviews_id"/>
-        <result property="reviews_rating" column="reviews_rating"/>
-        <result property="reviews_content" column="reviews_content"/>
-        <result property="reviews_cdate" column="reviews_cdate"/>
-        <result property="shop_name" column="shop_name"/> 
-        <result property="orders_id" column="orders_id"/><!-- Add this line -->
-        <collection property="reviews_img_list"
-                    ofType="reviewsImages"
-                    column="reviews_id"
-                    select="selectImageList"/>
-    </resultMap>
-    
-    <select id="selectImageList" resultType="reviewsImages">
-        select * from reviews_images where reviews_id = #{reviews_id}
-    </select>
+    <!-- ResultMap for reviews including images -->
+<resultMap id="reviewsMap" type="reviews">
+    <result property="reviews_id" column="reviews_id"/>
+    <result property="reviews_rating" column="reviews_rating"/>
+    <result property="reviews_content" column="reviews_content"/>
+    <result property="reviews_cdate" column="reviews_cdate"/>
+    <result property="shop_name" column="shop_name"/> 
+    <result property="orders_id" column="orders_id"/>
+    <collection property="reviews_img_list"
+                ofType="reviewsImages"
+                column="reviews_id"
+                select="selectImageList"/>
+</resultMap>
 
-    <select id="selectList" parameterType="int" resultMap="reviewsMap">
-        select 
-            r.* , o.orders_name as orders_name,
-                    o.orders_price as orders_price, s.shop_id, s.shop_name,
-            m.member_id, m.member_name
-        from 
-            reviews r
-        inner join
-            orders o on o.orders_id = r.orders_id
-        inner join 
-            shop s on o.shop_id = s.shop_id 
-        inner join 
-            member m on o.member_id = m.member_id
-        where m.member_id = #{member_id}
-    </select>
-    
+<!-- Query to fetch images for a review -->
+<select id="selectImageList" resultType="reviewsImages">
+    SELECT * FROM reviews_images WHERE reviews_id = #{reviews_id}
+</select>
+
+<!-- Query to fetch reviews based on member_id -->
+<select id="selectList" parameterType="int" resultMap="reviewsMap">
+    SELECT 
+        r.*, 
+        o.orders_name AS orders_name,
+        o.orders_price AS orders_price, 
+        s.shop_id, 
+        s.shop_name,
+        m.member_id, 
+        m.member_name
+    FROM 
+        reviews r
+    INNER JOIN
+        orders o ON o.orders_id = r.orders_id
+    INNER JOIN 
+        shop s ON o.shop_id = s.shop_id 
+    INNER JOIN 
+        member m ON o.member_id = m.member_id
+    WHERE 
+        m.member_id = #{member_id}
+</select>
+
+<resultMap id="reviewsShopIdMap" type="reviews">
+    <result property="reviews_id" column="reviews_id"/>
+    <result property="reviews_rating" column="reviews_rating"/>
+    <result property="reviews_content" column="reviews_content"/>
+    <result property="reviews_cdate" column="reviews_cdate"/>
+    <result property="shop_name" column="shop_name"/> 
+    <result property="orders_id" column="orders_id"/>
+    <collection property="reviews_img_list"
+                ofType="reviewsImages"
+                column="reviews_id"
+                select="selectImageList"/>
+</resultMap>
+
+<!-- Query to fetch reviews based on shop_id -->
+<select id="selectListByShopId" parameterType="int" resultMap="reviewsShopIdMap">
+    SELECT 
+        r.*, 
+        o.orders_name AS orders_name,
+        o.orders_price AS orders_price, 
+        s.shop_id, 
+        s.shop_name,
+        m.member_id, 
+        m.member_name
+    FROM 
+        reviews r
+    INNER JOIN
+        orders o ON o.orders_id = r.orders_id
+    INNER JOIN 
+        shop s ON o.shop_id = s.shop_id 
+    INNER JOIN 
+        member m ON o.member_id = m.member_id
+    WHERE 
+        s.shop_id = #{shop_id}
+</select>
+
     <select id="getReviewIdFromOrderId" parameterType="int" resultType="Int">
         select reviews_id from reviews where orders_id = #{orders_id}
     </select>
 
     <select id="getImageForReviews" parameterType="int" resultType="String">
         select reviews_img from reviews_images where reviews_id = #{reviews_id}
+    </select>
+
+    <select id="checkReviewExists" parameterType="int" resultType="Boolean">
+        select reviews_id from reviews where orders_id = #{orders_id}
     </select>
 
     <!-- insert reviews -->
@@ -77,6 +124,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="deleteReviews" parameterType="int">
         delete from reviews where reviews_id = #{reviews_id}
     </delete>
-
 
 </mapper>

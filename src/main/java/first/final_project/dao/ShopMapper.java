@@ -1,6 +1,7 @@
 package first.final_project.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -32,5 +33,8 @@ public interface ShopMapper {
 
     // ownerid로 shopid 검색
     int select_one_shop_id(int owner_id);
+
+    // menu 갯수와 reviews 갯수 구하기 
+    Map<String, Integer> selectMenuAndReviewsCount(int shop_id);
 
 }

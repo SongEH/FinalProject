@@ -26,21 +26,58 @@
         .reviews-item .star-empty {
             color: #ddd;
         }
-        .mySlides {
-            margin-left: 5px;
-        }
-        .mySlides img {
-            width: 500px;
-            height: 300px;
-        }
         .slideshow-container {
             position: relative;
             max-width: 500px;
             margin: auto;
             margin-left: 5px;
         }
-        .slideshow-container.has-images {
-            display: block; /* Show only if it has images */
+        .mySlides {
+            position: absolute;
+        }
+        /* Default size */
+        .image-size-1 img {
+            width: 500px;
+            height: 300px;
+            border: 1px solid black;
+        }
+        .image-size-2 img {
+            width: 250px;
+            height: 300px;
+            border: 1px solid black;
+        }
+        .image-size-3-first img {
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+        }
+        .image-size-3-second img {
+            width: 200px;
+            height: 150px;
+            border: 1px solid black;
+        }
+        .image-size-3-third img {
+            width: 200px;
+            height: 150px;
+            border: 1px solid black;
+        }
+        /* Layout for three images */
+        .image-size-3 {
+            width: 500px;
+            height: 300px;
+            border: 1px solid black;
+        }
+        .image-size-3-first {
+            left: 0;
+            top: 0;
+        }
+        .image-size-3-second {
+            left: 300px;
+            top: 0;
+        }
+        .image-size-3-third {
+            left: 300px;
+            top: 150px;
         }
         .prev, .next {
             cursor: pointer;
@@ -71,42 +108,35 @@
             if (!confirm("해당 리뷰를 정말 삭제하시겠습니까?")) return;
 
             $.ajax({
-            url     :     "delete.do",
-            data    :      {"reviews_id": reviews_id},
-            success :   function(res_data){
-                alert("성공");
-            },
-               
-            error   :   function(err){
-            alert(error.responseText)
-            }
-            });
-            }
-    </script>
-    <script>
-        let slideIndex = 1;
-        showSlides();
-
-        function showSlides() {
-            let i;
-            let slides = document.getElementsByClassName("mySlides");
-            let containers = document.getElementsByClassName("slideshow-container");
-            for (i = 0; i < containers.length; i++) {
-                let containerSlides = containers[i].getElementsByClassName("mySlides");
-                for (let j = 0; j < containerSlides.length; j++) {
-                    containerSlides[j].style.display = "none";  
+                url     :     "delete.do",
+                data    :      {"reviews_id": reviews_id},
+                success :   function(res_data){
+                    alert("성공");
+                    location.href="list.do";
+                },
+                error   :   function(err){
+                    alert(error.responseText);
                 }
-                slideIndex++;
-                if (slideIndex > containerSlides.length) {slideIndex = 1}    
-                containerSlides[slideIndex-1].style.display = "block";  
-            }
-            setTimeout(showSlides, 3000); // Change image every 2 seconds
+            });
         }
 
-        function plusSlides(n) {
-            slideIndex += n;
-            showSlides();
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.slideshow-container').forEach(container => {
+                const slides = container.querySelectorAll('.mySlides');
+                const numSlides = slides.length;
+
+                if (numSlides === 1) {
+                    container.classList.add('image-size-1');
+                } else if (numSlides === 2) {
+                    container.classList.add('image-size-2');
+                } else if (numSlides === 3) {
+                    container.classList.add('image-size-3');
+                    slides[0].classList.add('image-size-3-first');
+                    slides[1].classList.add('image-size-3-second');
+                    slides[2].classList.add('image-size-3-third');
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -149,13 +179,13 @@
                                             </div>
                                             <p class="mt-2">${vo.reviews_content}</p>
                                             <div class="slideshow-container" id="slideshow-${vo.reviews_id}">
+                                                <c:if test="${not empty vo.reviews_img_list }">
                                                     <c:forEach var="img" items="${vo.reviews_img_list}">
-                                                        <c:if test="${not empty img.reviews_img }">
-                                                            <div class="mySlides">
-                                                                <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
-                                                            </div>
-                                                        </c:if>
+                                                        <div class="mySlides slide-${vo.reviews_id}">
+                                                            <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
+                                                        </div>
                                                     </c:forEach>
+                                                </c:if>
                                             </div>
                                             <div class="mt-3">
                                                 <div>${vo.orders_name}</div>
@@ -171,7 +201,5 @@
             </section>
         </div>
     </main>
-
-
 </body>
 </html>

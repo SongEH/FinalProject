@@ -11,6 +11,17 @@ pageEncoding="UTF-8" %>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <script type="text/javascript">
+    // JSP에서 userType 값을 JavaScript로 전달
+    var userType = '<%= session.getAttribute("userType") %>';
+
+    // 회원인 경우 updateCartList() 실행 -> shop_listOne.jsp에서 장바구니 목록 표시
+    if (userType === 'MEMBER') {
+      $(document).ready(function () {
+        updateCartList(); // 페이지 로딩 시 함수 실행
+      });
+    }
+
+
     function show_menu(menu_id) {
 
       location.href = "show.do?menu_id=" + menu_id;
@@ -33,11 +44,11 @@ pageEncoding="UTF-8" %>
 
     function menu_modal(menu_id, menu_soldout) {
 
-      if(menu_soldout == 1) {
+      if (menu_soldout == 1) {
         alert("품절 상품은 담을 수 없습니다.");
         return;
       }
-      
+
       // Show the modal
       var myModal = new bootstrap.Modal(document.getElementById('menuModal'), {
         backdrop: 'static',

@@ -184,7 +184,7 @@ pageEncoding="UTF-8"%>
     }
   </script>
 
-  
+
 
   <script>
     // 특정 가게 삭제 
@@ -208,13 +208,14 @@ pageEncoding="UTF-8"%>
     }
   </script>
 
+
+
   <script>
-    // 선택한 가게 수정 
-    function shop_modi(f) {
-      alert("여기?");
-      alert(f.shop_id.value);
-      f.action = "modify_form.do";
-      f.submit();
+    // 주문 - 한지혜 추가 
+    function orderFromShop(shop_id, shop_name) {
+
+      location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
+
     }
   </script>
 </head>
@@ -285,12 +286,13 @@ pageEncoding="UTF-8"%>
               <h5>장바구니</h5>
             </div>
             <div style="border:1px solid gray; height:auto; min-height: 155px;">
-              장바구니에 담긴 메뉴가 없습니다.
+              <!-- 장바구니에 담긴 메뉴가 없습니다. -->
 
+              <!-- 장바구니 목록 표시  -->
               <div id="cart_list"></div>
             </div>
             <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
-            <button class="btn btn-secondary" disabled>주문하기</button>
+            <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
           </div>
           <!-- </div> -->
         </div>

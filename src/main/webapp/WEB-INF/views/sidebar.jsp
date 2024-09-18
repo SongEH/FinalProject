@@ -51,20 +51,6 @@ pageEncoding="UTF-8" %>
       <!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>?? </span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/carts/list.do">
-              <i class="bi bi-circle"></i><span>(임시!)장바구니목록(회원-마이페이지)</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End Forms Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>??</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>

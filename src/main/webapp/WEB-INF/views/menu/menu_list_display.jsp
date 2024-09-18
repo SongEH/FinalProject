@@ -175,11 +175,10 @@ pageEncoding="UTF-8" %>
 
                           </c:choose>
                         </div>
-                        메뉴명 (${item.menu_id})
                         ${item.menu_name}
                       </h5>
-                      <p class="card-text">설명 ${item.menu_content}</p>
-                      <p class="card-text">가격 ${item.menu_price}</p>
+                      <p class="card-text">${item.menu_content}</p>
+                      <p class="card-text">${item.menu_price}원</p>
 
 
                       <c:if test="${userType == 'MEMBER'}">

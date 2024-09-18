@@ -108,7 +108,7 @@ public class CartsController {
 		carts_mapper.update(carts_id, carts_quantity);
 
 		return "redirect:list.do";
-	}
+	} 
 
 	// 삭제
 	// /carts/delete.do?carts_id=5
@@ -124,4 +124,18 @@ public class CartsController {
 		return "redirect:list.do";
 
 	}
+
+	// carts_display.jsp에서 호출 
+	@PostMapping("delete2.do")
+    public void delete2(@RequestParam("carts_id") int carts_id, RedirectAttributes ra) {
+        // CartsVo 정보 얻어온다
+        CartsVo vo = carts_mapper.selectOne(carts_id);
+        
+        if (vo != null) {
+            carts_mapper.delete(carts_id);
+            ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
+        } else {
+            ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
+        }
+    }
 }

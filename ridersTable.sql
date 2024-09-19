@@ -1,9 +1,5 @@
 
-<<<<<<< HEAD
-CREATE TABLE Riders (
-=======
 CREATE TABLE riders (
->>>>>>> main
     raiders_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     rider_name VARCHAR(50) NOT NULL,
     riders_phone VARCHAR(100) NOT NULL,
@@ -12,11 +8,7 @@ CREATE TABLE riders (
     riders_region VARCHAR(100) NULL
 );
 
-<<<<<<< HEAD
-CREATE TABLE Member (
-=======
 CREATE TABLE member (
->>>>>>> main
     member_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     member_name VARCHAR(50) NOT NULL,
     member_nickname VARCHAR(50) NOT NULL,
@@ -29,11 +21,7 @@ CREATE TABLE member (
     member_grade VARCHAR(50) NOT NULL DEFAULT 'SILVER'
 );
 
-<<<<<<< HEAD
-CREATE TABLE Owner (
-=======
 CREATE TABLE owner (
->>>>>>> main
     owner_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     owner_name VARCHAR(50) NOT NULL,
     owner_accountId VARCHAR(100) NOT NULL,
@@ -46,11 +34,7 @@ CREATE TABLE owner (
     owner_cdate DATE NOT NULL DEFAULT (CURRENT_DATE)
 );
 
-<<<<<<< HEAD
-CREATE TABLE Addr (
-=======
 CREATE TABLE addr (
->>>>>>> main
     addr_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     addr_zipcode CHAR(5) NOT NULL,
     addr_line1 VARCHAR(100) NOT NULL,
@@ -60,11 +44,7 @@ CREATE TABLE addr (
     CONSTRAINT Addr_member_id FOREIGN KEY (member_id) REFERENCES Member(member_id) ON DELETE CASCADE
 );
 
-<<<<<<< HEAD
-CREATE TABLE Shop (
-=======
 CREATE TABLE shop (
->>>>>>> main
     shop_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     shop_name VARCHAR(90) NOT NULL,
     shop_img VARCHAR(255) NULL,
@@ -87,11 +67,7 @@ CREATE TABLE shop (
     CONSTRAINT Shop_owner_id FOREIGN KEY (owner_id) REFERENCES Owner(owner_id) ON DELETE CASCADE
 );
 
-<<<<<<< HEAD
-CREATE TABLE Orders (
-=======
 CREATE TABLE orders (
->>>>>>> main
     orders_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     orders_payment VARCHAR(30) NOT NULL DEFAULT 'Easy Payment' COMMENT '간편결제(카카오페이, 토스페이)',
     orders_price INT NOT NULL,
@@ -104,14 +80,9 @@ CREATE TABLE orders (
     CONSTRAINT Orders_shop_id FOREIGN KEY (shop_id) REFERENCES Shop(shop_id) ON DELETE CASCADE,
     CONSTRAINT Orders_addr_id FOREIGN KEY (addr_id) REFERENCES Addr(addr_id) ON DELETE CASCADE
 );
-<<<<<<< HEAD
-
-CREATE TABLE Deliveries (
-=======
 ALTER TABLE orders ADD delivery_time INT;
 
 CREATE TABLE deliveries (
->>>>>>> main
     deliveries_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     raiders_id INT NOT NULL,
     deliveries_method VARCHAR(50) NOT NULL,
@@ -120,34 +91,13 @@ CREATE TABLE deliveries (
     CONSTRAINT Deliveries_orders_id FOREIGN KEY (orders_id) REFERENCES Orders(orders_id) ON DELETE CASCADE
 );
 
-<<<<<<< HEAD
-CREATE TABLE Delivery_history (
-=======
 CREATE TABLE delivery_history (
->>>>>>> main
     delivery_history_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     delivery_history_status VARCHAR(20) NOT NULL,
     deliveries_id INT NOT NULL,
     CONSTRAINT Delivery_history_deliveries_id FOREIGN KEY (deliveries_id) REFERENCES Deliveries(deliveries_id) ON DELETE CASCADE
 );
 
-<<<<<<< HEAD
-CREATE TABLE Commissions (
-    commissions_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- Primary Key
-    raiders_id INT NOT NULL,  -- Foreign Key to Riders
-    commission DOUBLE NOT NULL,
-    created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_raiders_commissions FOREIGN KEY (raiders_id) REFERENCES Riders(raiders_id) ON DELETE CASCADE
-);
-
-ALTER TABLE Commissions ADD COLUMN deliveries_id INT;
-ALTER TABLE Commissions ADD CONSTRAINT unique_commission UNIQUE (raiders_id, deliveries_id);
-
-
-
--- Riders 테이블 더미 데이터
-INSERT INTO Riders (rider_name, riders_phone, riders_email, riders_pwd, riders_region)
-=======
 CREATE TABLE commissions (
     commissions_id INT AUTO_INCREMENT PRIMARY KEY,
     raiders_id INT NOT NULL,
@@ -227,67 +177,40 @@ CREATE TABLE `admin` (
 
 -- Riders 테이블 더미 데이터
 INSERT INTO riders (rider_name, riders_phone, riders_email, riders_pwd, riders_region)
->>>>>>> main
 VALUES 
 ('사장님나뻐요', '010-1234-5678', 'SJN@naver.com', '1234', '서울'),
 ('외노자', '010-2345-6789', 'WNJ@naver.com', '1324', '서울');
 
 -- Member 테이블 더미 데이터
-<<<<<<< HEAD
-INSERT INTO Member (member_name, member_nickname, member_accountId, member_pwd, member_email, member_phone, member_cdate)
-=======
 INSERT INTO member (member_name, member_nickname, member_accountId, member_pwd, member_email, member_phone, member_cdate)
->>>>>>> main
 VALUES 
 ('천사고객', '악마', 'devil', '1234', 'dev@naver.com', '010-3456-7890', CURRENT_DATE),
 ('일반고객', '일반', 'normal', '1234', 'nomal@naver.com', '010-4567-8901', CURRENT_DATE);
 
 -- Owner 테이블 더미 데이터
-<<<<<<< HEAD
-INSERT INTO Owner (owner_name, owner_accountId, owner_pwd, owner_email, owner_phone, owner_license, owner_registration, owner_bankbook)
-=======
 INSERT INTO owner (owner_name, owner_accountId, owner_pwd, owner_email, owner_phone, owner_license, owner_registration, owner_bankbook)
->>>>>>> main
 VALUES 
 ('가계오우너', 'owner', '1234', 'owner@naver.com', '010-5678-9012', 'LIC123', 'REG123', 'BANK123'),
 ('사좡님', 'sajang', '1234', 'sajang@naver.com', '010-6789-0123', 'LIC456', 'REG456', 'BANK456');
 
 -- Addr 테이블 더미 데이터
-<<<<<<< HEAD
-INSERT INTO Addr (addr_zipcode, addr_line1, addr_line2, addr_name, member_id)
-=======
 INSERT INTO addr (addr_zipcode, addr_line1, addr_line2, addr_name, member_id)
->>>>>>> main
 VALUES 
 ('12345', '서울시 구로구 구일로4길 65', '101동 101호', '마이홈', 1),
 ('54321', '서울특별시 관악구 청룡동 862-1', NULL, '안경점', 2);
 
 -- Shop 테이블 더미 데이터
-<<<<<<< HEAD
-INSERT INTO Shop (shop_name, shop_img, shop_addr, food_category, shop_call, shop_content, shop_min_price, shop_delivery_time, shop_rate, shop_stemp_count, shop_review_count, shop_open_time, shop_close_day, shop_area, owner_id)
-=======
 INSERT INTO shop (shop_name, shop_img, shop_addr, food_category, shop_call, shop_content, shop_min_price, shop_delivery_time, shop_rate, shop_stemp_count, shop_review_count, shop_open_time, shop_close_day, shop_area, owner_id)
->>>>>>> main
 VALUES 
 ('피자천국', NULL, '서울특별시 관악구 남부순환로 1862', '피자', '02-123-4567', '최고의 피자', 15000, '30 mins', 4.5, 10, 100, '10:00 AM', null, '서울', 1),
 ('버거월드', NULL, '서울특별시 관악구 남부순환로 1796', '햄버거', '051-987-6543', '마약넣은 햄버거', 8000, '20 mins', 4.2, 5, 50, '11:00 AM', null, '서울', 2);
 
 -- Orders 테이블 더미 데이터
-<<<<<<< HEAD
-INSERT INTO Orders (orders_payment, orders_price, orders_srequest, orders_drequest, orders_cdate, orders_status, shop_id, addr_id) VALUES
-=======
 INSERT INTO orders (orders_payment, orders_price, orders_srequest, orders_drequest, orders_cdate, orders_status, shop_id, addr_id) VALUES
->>>>>>> main
 ('카카오페이', 20000, '노피클', '집앞에두세요', '2024-08-27', '배차 대기', 1, 1),
 ('토스페이', 12000, '치즈폭탄추가', '링링링링마벨', '2024-08-27', '배차 대기', 2, 2);
 
 -- Delivery_history 테이블 더미 데이터
-<<<<<<< HEAD
-INSERT INTO Delivery_history (delivery_history_status, deliveries_id) VALUES
-('배차 대기', 1),
-('배차 대기', 2);
-
-=======
 INSERT INTO delivery_history (delivery_history_status, deliveries_id) VALUES
 ('배차 대기', 1),
 ('배차 대기', 2);
@@ -295,4 +218,3 @@ INSERT INTO delivery_history (delivery_history_status, deliveries_id) VALUES
 -- 관리자 아이디 생성(로컬)
 INSERT INTO admin (admin_accountId, admin_pwd) VALUES
 ('admin', 'admin');
->>>>>>> main

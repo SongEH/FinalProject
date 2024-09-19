@@ -4,37 +4,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="first.final_project.dao.OrderMapper">
-   <!-- 전체조회  -->
-   <!-- <select id="selectList" resultType="carts">
-     select * from carts order by carts_id desc
-  </select> -->
+  <select id="selectList" parameterType="int" resultType="order">
+        SELECT 
+            o.*,  -- orders 테이블의 모든 컬럼
+            s.shop_name, 
+            s.shop_img,
+            COUNT(c.menu_id) AS menu_count
+        FROM orders o
+        JOIN shop s ON o.shop_id = s.shop_id
+        LEFT JOIN carts c ON o.orders_id = c.orders_id
+        LEFT JOIN addr a ON o.addr_id = a.addr_id 
+        WHERE o.member_id = #{member_id}
+        GROUP BY o.orders_id, s.shop_name, s.shop_img
+  </select>
 
-   <select id="selectList" resultType="order">
-     SELECT 
-         c.*,                         -- Carts 테이블의 모든 컬럼을 선택
-         s.shop_name   AS shop_name,    -- shop 테이블에서 가게명
-         m.menu_name   AS menu_name,    -- Menu 테이블에서 메뉴명
-         m.menu_img    AS menu_img,   -- Menu 테이블에서 메뉴이미지명
-         m.menu_price  AS menu_price  -- Menu 테이블에서 메뉴가격
-      FROM 
-         Orders c
-      JOIN 
-         Menu m ON c.menu_id = m.menu_id
-      JOIN 
-         shop s ON m.shop_id = s.shop_id; 
-   </select>
+  <select id="selectOne" parameterType="int" resultType="order">
+      SELECT
+          o.*,  
+          s.shop_name AS shop_name,
+          s.shop_img AS shop_img,
+          COUNT(c.menu_id) AS menu_count,
+          a.addr_line1,    
+          a.addr_line2,    
+          m.member_phone  
+      FROM orders o
+      JOIN shop s ON o.shop_id = s.shop_id
+      LEFT JOIN carts c ON o.orders_id = c.orders_id
+      LEFT JOIN addr a ON o.addr_id = a.addr_id
+      LEFT JOIN member m ON o.member_id = m.member_id  
+      WHERE o.orders_id = #{orders_id}
+      GROUP BY o.orders_id, s.shop_name, s.shop_img, a.addr_line1, a.addr_line2, m.member_phone
+    </select>
 
+    <select id="selectOneByOrdersId" parameterType="int" resultType="order">
+        select o.*, s.shop_name
+        from orders o
+        inner join shop s on o.shop_id = s.shop_id
+        where o.orders_id = #{orders_id}
+    </select>
 
-
-   <!-- carts_id 에 해당되는 CartsVo 조회  -->
-   <select id="selectOne" parameterType="int" resultType="order">
-     select * from Orders where order_id=#{ order_id }
-   </select>
-
-   
-
-   <!-- 등록 -->
-   <insert id="insert" parameterType="order">
+  <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
+  <!-- <insert id="insert" parameterType="order">
     INSERT INTO Orders(
         orders_payment, 
         orders_price, 
@@ -57,26 +67,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{orders_name},
         #{member_id}
     );
-   </insert>
+   </insert> -->
 
-   <!-- 삭제 -->
-   <delete id="delete" parameterType="int">
+  <!-- 삭제 -->
+  <delete id="delete" parameterType="int">
      delete from Orders
      where order_id=#{order_id}
-   </delete>
+  </delete>
 
+  <select id="getAcceptOrderList" parameterType="map" resultType="order">
+      SELECT o.*, a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, m.member_nickname AS member_nickname, m.member_nickname AS member_nickname, m.member_phone AS member_phone
+      FROM orders o
+      JOIN shop s ON o.shop_id = s.shop_id
+      JOIN owner ow ON s.owner_id = ow.owner_id
+      JOIN addr a ON o.addr_id = a.addr_id
+      JOIN member m ON a.member_id = m.member_id
+      WHERE ow.owner_id = #{owner_id}
+      ORDER BY o.orders_id
+  </select>
 
+  <update id="updateOrderStatus">
+      UPDATE orders SET orders_status = #{status}
+      WHERE orders_id = #{orders_id}
+  </update>
+
+  <delete id="deleteOrder">
+     DELETE from orders
+     WHERE orders_id = #{orders_id}
+  </delete>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

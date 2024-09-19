@@ -17,11 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          m.menu_img    AS menu_img,   -- Menu 테이블에서 메뉴이미지명
          m.menu_price  AS menu_price  -- Menu 테이블에서 메뉴가격
       FROM 
-         Carts c
+         carts c
       JOIN 
-         Menu m ON c.menu_id = m.menu_id
+         menu m ON c.menu_id = m.menu_id
       JOIN 
-         shop s ON m.shop_id = s.shop_id;
+         shop s ON m.shop_id = s.shop_id
+      WHERE
+        c.orders_id IS NULL
    </select>
 
 
@@ -54,16 +56,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
    <!-- 메뉴id로 장바구니 항목 조회 쿼리 -->
    <select id="findByMenuId" resultType="carts">
-        SELECT * FROM Carts
+        SELECT * FROM carts
         WHERE member_id = #{member_id}
         AND shop_id = #{shop_id}
         AND menu_id = #{menu_id}
+        and orders_id IS NULL
         LIMIT 1
    </select>
 
    <!-- 등록 -->
    <insert id="insert" parameterType="carts">
-    INSERT INTO Carts(
+    INSERT INTO carts(
         carts_quantity, 
         member_id, 
         shop_id,
@@ -90,6 +93,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       update carts 
          set carts_quantity=#{ carts_quantity }
        where carts_id=#{ carts_id }
+       and orders_id IS NULL
+   </update>
+
+   <!-- 주문한 메뉴는 장바구니 테이블에서 주문ID 추가  -->
+   <update id="updateOrderId" parameterType="Map">
+      update carts 
+         set orders_id=#{ orders_id }
+      where shop_id=#{ shop_id }
+         and member_id=#{ member_id }
    </update>
 
    <!-- 조건에 맞는 장바구니 항목 조회 쿼리 -->
@@ -101,9 +113,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          m.menu_img    AS menu_img,     -- Menu 테이블에서 메뉴 이미지명
          m.menu_price  AS menu_price    -- Menu 테이블에서 메뉴 가격
       FROM 
-         Carts c
+         carts c
       JOIN 
-         Menu m ON c.menu_id = m.menu_id
+         menu m ON c.menu_id = m.menu_id
       JOIN 
          shop s ON m.shop_id = s.shop_id
       WHERE 
@@ -112,6 +124,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          AND c.orders_id IS NULL;
    </select>
 
+   <!-- 주문 ID가 같은 장바구니 목록 -->
+   <select id="selectOrdersById" parameterType="int" resultType="carts">
+      SELECT 
+         c.*,                         -- Carts 테이블의 모든 컬럼을 선택
+         m.menu_name   AS menu_name,    -- Menu 테이블에서 메뉴명
+         m.menu_img    AS menu_img,     -- Menu 테이블에서 메뉴 이미지명
+         m.menu_price  AS menu_price    -- Menu 테이블에서 메뉴 가격
+      FROM 
+         carts c
+      JOIN 
+         menu m ON c.menu_id = m.menu_id
+      WHERE 
+         c.orders_id = #{orders_id}
+   </select>
 </mapper>
 
 

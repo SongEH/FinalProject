@@ -142,4 +142,5 @@ public class MenuVo {
 		this.menu_status = menu_status;
 	}
 
+	
 }

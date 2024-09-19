@@ -100,6 +100,10 @@ pageEncoding="UTF-8"%>
         f.submit();
       }
     </script>
+    <!-- 태광 아래부분 추가 에러메시지 호출   -->
+    <script> 
+      bod.y
+    </script>
   </head>
   <body>
     <div class="container mt-5">

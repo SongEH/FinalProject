@@ -86,6 +86,9 @@ pageEncoding="UTF-8"%>
           action="${pageContext.request.contextPath}/addr/addr_insert_form.do"
           method="post"
         >
+
+        <input type="hidden" name="nextPath" value="${nextPath}">
+
           <div class="mb-4">
             <label for="zipcode">우편번호</label>
             <input

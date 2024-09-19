@@ -89,72 +89,16 @@
               <!-- 주문 카드 -->
               <div class="card mb-3">
                 <div class="row g-0" onclick="show_menu('${order.orders_id}');">
-                  
                   <div class="col-md-8">
                     <div class="card-body">
                       <h5 class="card-title">
                         주문 번호: ${order.orders_id}
                       </h5>
                       <p class="card-text">결제 금액 : ${order.orders_price} 원</p>
-                      <p class="card-text">결제 수단 : ${order.orders_payment}</p>
                       <p class="card-text">고객 주소 : ${order.addr_line1} ${order.addr_line2}</p>
                       <p class="card-text">고객 네임 : ${order.member_nickname}</p>
                       <p class="card-text">고객 전화 : ${order.member_phone}</p>
-                      <p class="card-text">가계 요청 : ${order.orders_srequest}</p>
-                      <p class="card-text">배달 요청 : ${order.orders_drequest}</p>
-                      <p class="card-text">주문 상태 : ${order.orders_status}</p>
                       <p class="card-text">주문 메뉴 : ${order.orders_name}</p>
-                    </div>
-                    <div class="button-container">
-                    <!-- orders_status가 '주문 대기'일 때만 "주문 대기" 버튼 표시 -->
-                    <c:if test="${order.orders_status == '주문 대기'}">
-                        <form
-                        action="${pageContext.request.contextPath}/order/accept"
-                        >
-                        <input
-                            type="hidden"
-                            name="orders_id"
-                            value="${order.orders_id}"
-                        />
-                        <button type="submit" class="assign-button">주문 받기</button>
-                        </form>
-                        <form
-                        action="${pageContext.request.contextPath}/order/cancel"
-                        >
-                        <input
-                            type="hidden"
-                            name="orders_id"
-                            value="${order.orders_id}"
-                        />
-                        <button type="submit" class="cancel-button">주문 거절</button>
-                        </form>
-                    </c:if>
-                    <!-- orders_status가 '배차 완료'일 때만 "조리 시작" 버튼 표시 -->
-                    <c:if test="${order.orders_status == '배차 완료'}">
-                        <form
-                        action="${pageContext.request.contextPath}/order/startCooking"
-                        >
-                        <input
-                            type="hidden"
-                            name="orders_id"
-                            value="${order.orders_id}"
-                        />
-                        <button type="submit" class="assign-button">조리 시작</button>
-                        </form>
-                    </c:if>
-                    <!-- orders_status가 '조리 중'일 때만 "조리 완료" 버튼 표시 -->
-                    <c:if test="${order.orders_status == '조리 중'}">
-                        <form
-                        action="${pageContext.request.contextPath}/order/endCooking"
-                        >
-                        <input
-                            type="hidden"
-                            name="orders_id"
-                            value="${order.orders_id}"
-                        />
-                        <button type="submit" class="assign-button">조리 완료</button>
-                        </form>
-                    </c:if>
                     </div>
                   </div>
                 </div>

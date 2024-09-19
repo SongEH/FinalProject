@@ -29,4 +29,6 @@ public interface OrderMapper {
 
     void deleteOrder(@Param("orders_id") int orders_id);
 
+    List<OrderVo> getCompleteOrderList(Map<String, Object> params);
+
 }

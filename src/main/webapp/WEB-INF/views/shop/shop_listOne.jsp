@@ -148,12 +148,20 @@ pageEncoding="UTF-8"%>
   </style>
   <script>
     function get_menu(shop_id){
-      alert(shop_id);
-      // $.ajax({
-      //   url     :   
-
-      // })
-    }
+      $.ajax({
+      url     :     "../menu/listByShopId.do",
+      data    :      {"shop_id": shop_id},
+      success :   function(res_data){
+              alert(res_data);
+              $("#menu_display").html(res_data).show();
+              $('#reviews_display').hide();
+              $("shop_info_display").hide();
+      },
+      error   :   function(err){
+      alert(err.responseText)
+      }
+      });
+      }
   </script>
   <script>
     // 특정 가게 삭제 
@@ -183,6 +191,26 @@ pageEncoding="UTF-8"%>
       f.action="modify_form.do";
       f.submit();
     }
+
+    function reviews_list(shop_id){
+      alert("도착");
+      alert(shop_id);
+      $.ajax({
+        url     :   "../reviews/listByShopId.do",
+        method  :   "POST",
+        data    :   {"shop_id": shop_id},
+        success :   function(res_data){
+          alert(res_data);
+          $("#reviews_display").html(res_data).show();
+          $("#menu_display").hide();
+        },
+        error   :   function(err){
+          alert(err.responseText);
+        }
+      });
+    }
+    // location.href="../reviews/listByShopId.do?shop_id=" + shop_id;
+    // }
   </script>
 </head>
 <body>
@@ -219,13 +247,13 @@ pageEncoding="UTF-8"%>
           <div class="row" style="width:100%; margin-top: 30px;">
             <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" id="menuButton" value="메뉴 ${vo.shop_stemp_count}"
+                <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
                 onclick="get_menu('${vo.shop_id}')">
               </div>
             </div>
             <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
-                <input type="button" id="reviewButton" value="클린리뷰"/>
+                <input type="button" id="reviewButton" value="클린리뷰(${vo.reviews_count})" onclick="reviews_list('${vo.shop_id}');"/>
               </div>
             </div>
             <div class="col-sm-4" style="padding:0px">
@@ -235,18 +263,34 @@ pageEncoding="UTF-8"%>
             </div>
           </div>
 
-          <!--menu_list 출력 공간 -->
+          
           <div class="row" style="margin-top:30px;">
-            <c:forEach var="item" items="${menu_list}">
-              <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center;">
-                <div>
-                  <div>${item.menu_name}</div>
-                  <div>${item.menu_content}</div>
-                  <div><strong>${item.menu_price}</strong></div>
+            <!--menu_list 출력 공간 -->
+            <!-- <div id="menu_display" style="padding: 0;">
+              <c:forEach var="item" items="${menu_list}">
+                <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center; padding: 10px;">
+                  <div>
+                    <div>${item.menu_name}</div>
+                    <div>${item.menu_content}</div>
+                    <div><strong>${item.menu_price}</strong></div>
+                  </div>
+                  <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
                 </div>
-                <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
-              </div>
-            </c:forEach>
+              </c:forEach>
+            </div> -->
+
+            <div>
+              <div id="menu_display"></div>
+            </div>
+            <!-- review list 출력 공간 -->
+            <div>
+              <div id="reviews_display"></div>
+            </div>
+            
+            <!-- shop_info_list 출력 공간 -->
+            <div id="shop_info_display">
+
+            </div>
           </div>
         </div>
 
@@ -268,6 +312,8 @@ pageEncoding="UTF-8"%>
         </div>
     </div>
   </div>
+
+
 
   <!-- Sample Menu List -->
   <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">

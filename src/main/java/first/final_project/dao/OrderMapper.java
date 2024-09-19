@@ -13,11 +13,15 @@ public interface OrderMapper {
 
     List<OrderVo> selectList(int i);
 
+    
+
     OrderVo selectOne(int orders_id);
 
     int insert(OrderVo vo);
 
     int delete(int orders_id);
+
+    OrderVo selectOneByOrdersId(int orders_id);
 
     List<OrderVo> getAcceptOrderList(Map<String, Object> params);
 

@@ -67,6 +67,15 @@ public class MenuController {
 		return "menu/menu_list";
 	}
 
+	@RequestMapping("listByShopId.do")
+	public String listByShopId(int shop_id, Model model){
+		System.out.println("listbyShopid 도착");
+		List<MenuVo> list = menu_mapper.selectList(shop_id);
+
+		model.addAttribute("list", list);
+		return "menu/menu_listByShopId";
+	}
+
 	// 메뉴 등록 폼 띄우기
 	@RequestMapping("insert_form.do")
 	public String insert_form() {

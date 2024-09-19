@@ -1,9 +1,9 @@
-<<<<<<< HEAD <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ page
-contentType="text/html;charset=UTF-8" language="java" %> ======= <%@ taglib
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%@ taglib
+uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ page
+contentType="text/html;charset=UTF-8" language="java" %> <%@ taglib
 uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%@ taglib
 uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ page
-contentType="text/html;charset=UTF-8" language="java" %> >>>>>>> main
+contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="delivery.jsp" />
 <!DOCTYPE html>
 <html>

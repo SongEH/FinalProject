@@ -1,10 +1,10 @@
 package first.final_project.vo;
 
-import lombok.Data;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
 
 @Data
 @Alias("order")

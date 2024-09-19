@@ -30,4 +30,8 @@ public interface MemberMapper {
 
     void resetGrades(int grade_id);
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

@@ -18,4 +18,8 @@ public interface NoticeMapper {
     int update(NoticeVo vo);
 
     int delete(int notice_id);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

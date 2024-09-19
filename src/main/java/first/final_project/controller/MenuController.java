@@ -52,12 +52,20 @@ public class MenuController {
 	// /menu/list.do?page=2
 	@RequestMapping("list.do")
 	public String list(Model model) {
+<<<<<<< HEAD
 
 		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
 		OwnerVo user = (OwnerVo) session.getAttribute("user");
 		int owner_id = user.getOwner_id();
 		int shop_id = shop_service.select_one_shop_id(owner_id);
+=======
+>>>>>>> main
 
+		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+		int owner_id = user.getOwner_id();
+		int shop_id = shop_service.select_one_shop_id(owner_id);
+		
 		// 페이징된 리스트를 가져온다
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
@@ -73,6 +81,7 @@ public class MenuController {
 
 		return "menu/menu_insert_form";
 	}
+<<<<<<< HEAD
 	/*
 	 * 지혜님이 작성한 것
 	 * // 메뉴등록
@@ -140,6 +149,11 @@ public class MenuController {
 	 * }
 	 */
 
+=======
+	/* 지혜님이 작성한 것 
+	// 메뉴등록
+	// 요청 Parameter이름과 받는 변수명이 동일하면 @RequestParam(name="")의 name속성은 생략가능
+>>>>>>> main
 	@RequestMapping("insert.do")
 	public String insert(MenuVo vo,
 			@RequestParam(name = "photo") MultipartFile photo,
@@ -185,6 +199,70 @@ public class MenuController {
 		}
 		// 업로드된 화일이름
 		vo.setMenu_img(menu_img);
+
+		String menu_content = vo.getMenu_content().replaceAll("\n", "<br>");
+		vo.setMenu_content(menu_content);
+
+		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+		int owner_id = user.getOwner_id();
+		int shop_id = shop_mapper.selectShopIdByOwnerId(owner_id);
+
+		vo.setShop_id(shop_id);
+
+		// DB insert
+		menu_mapper.insert(vo);
+
+		return "redirect:list.do";
+	}
+	*/
+
+	@RequestMapping("insert.do")
+	public String insert(MenuVo vo,
+			@RequestParam(name = "photo") MultipartFile photo,
+			RedirectAttributes ra) throws Exception, IOException {
+
+		// 세션에서 가져오기....
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+	
+		// session timeout
+		if (user == null) {
+		// response.sendRedirect("../member/login_form.do?reason=session_timeout");
+			ra.addAttribute("reason", "session_timeout");
+			return "redirect:../member/login.do";
+		}
+		// owner_id 가져오기 
+		int owner_id = user.getOwner_id();
+		System.out.println(owner_id);
+		// owner_id로 shop_id 구하기 
+		int shop_id = shop_service.select_one_shop_id(owner_id);
+		// 파일업로드	
+		String absPath = application.getRealPath("/resources/images/");
+
+		String menu_img = "no_file";
+		if (!photo.isEmpty()) {
+
+			// 업로드 화일이름 얻어오기
+			menu_img = photo.getOriginalFilename();
+
+			File f = new File(absPath, menu_img);
+
+			if (f.exists()) {
+				// 저장경로에 동일한 화일이 존재하면=>다른이름을 화일명 변경
+				// 변경화일명 = 시간_원래화일명
+				long tm = System.currentTimeMillis();
+				menu_img = String.format("%d_%s", tm, menu_img);
+
+				f = new File(absPath, menu_img);
+			}
+
+			// 임시화일=>내가 지정한 위치로 복사
+			photo.transferTo(f);
+
+		}
+		// 업로드된 화일이름
+		vo.setMenu_img(menu_img);
+		
 
 		String menu_content = vo.getMenu_content().replaceAll("\n", "<br>");
 		vo.setMenu_content(menu_content);

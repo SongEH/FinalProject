@@ -33,4 +33,8 @@ public interface ShopMapper {
     // ownerid로 shopid 검색
     int select_one_shop_id(int owner_id);
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

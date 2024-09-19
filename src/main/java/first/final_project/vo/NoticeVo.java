@@ -7,7 +7,11 @@ import lombok.Data;
 @Data
 @Alias("notice")
 public class NoticeVo {
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> main
     private int notice_id;
     private String notice_title;
     private String notice_content;
@@ -15,4 +19,8 @@ public class NoticeVo {
     private String notice_type;
     private int admin_id;
     private String adminAccountId;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

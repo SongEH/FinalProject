@@ -14,4 +14,8 @@ public interface PaymentMapper {
 
     // 결제 내역 수정
     int update(PaymentVo vo);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

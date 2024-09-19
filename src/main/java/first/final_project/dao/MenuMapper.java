@@ -22,7 +22,14 @@ public interface MenuMapper {
 
     int update(MenuVo vo);
 
+<<<<<<< HEAD
     // 가게 이름에 따른 메뉴 리스트 출력 -fr 태광
     List<MenuVo> selectMenuList(int shop_id);
 
 }
+=======
+    // 가게 이름에 따른 메뉴 리스트 출력 -fr 태광 
+    List<MenuVo> selectMenuList(int shop_id);
+
+}
+>>>>>>> main

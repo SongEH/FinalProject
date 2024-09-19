@@ -60,4 +60,8 @@ prefix="c" %>
 	        <div id="empty_msg">등록된 회원정보가 없습니다</div>
 	     </c:if>
   </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> main

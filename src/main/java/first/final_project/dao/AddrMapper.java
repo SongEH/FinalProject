@@ -18,4 +18,8 @@ public interface AddrMapper {
     int update(AddrVo vo);
 
     int delete(int addr_id);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

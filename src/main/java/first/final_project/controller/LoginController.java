@@ -200,4 +200,8 @@ public class LoginController {
         return "redirect:/main.do";
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

@@ -11,4 +11,8 @@ public interface GradeMapper {
     List<GradeVo> selectList();
 
     GradeVo selectOne(String grade_name);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

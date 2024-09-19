@@ -91,7 +91,11 @@
             m.member_nickname AS member_nickname, o.orders_drequest AS orders_drequest
         FROM orders o
         JOIN shop s ON o.shop_id = s.shop_id
+<<<<<<< HEAD
         LEFT jOIN Deliveries d ON o.orders_id = d.orders_id
+=======
+        LEFT jOIN deliveries d ON o.orders_id = d.orders_id
+>>>>>>> main
         JOIN addr a ON o.addr_id = a.addr_id
         JOIN member m ON a.member_id = m.member_id
         JOIN riders r ON r.raiders_id = #{raiders_id}
@@ -120,7 +124,11 @@
         JOIN addr a ON o.addr_id = a.addr_id
         JOIN member m ON a.member_id = m.member_id
         WHERE d.raiders_id = #{raiders_id}
+<<<<<<< HEAD
         ORDER BY o.orders_id;
+=======
+        ORDER BY o.orders_id
+>>>>>>> main
     </select>
 
     <select id="getAddrById" parameterType="int" resultType="addr">
@@ -138,7 +146,11 @@
         JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
         JOIN shop s ON o.shop_id = s.shop_id
         WHERE d.raiders_id = #{raiders_id} AND dh.delivery_history_status = '배달 완료'
+<<<<<<< HEAD
         ORDER BY o.orders_id DESC;
+=======
+        ORDER BY o.orders_id DESC
+>>>>>>> main
     </select>
 
     <update id="updateDeliveryHistory">

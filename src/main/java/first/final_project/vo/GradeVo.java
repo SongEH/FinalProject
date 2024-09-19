@@ -32,4 +32,8 @@ public class GradeVo {
     public void setGrade_discount(double grade_discount) {
         this.grade_discount = grade_discount;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

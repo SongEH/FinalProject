@@ -25,6 +25,10 @@ public class MemberController {
 
     @Autowired
     MemberMapper member_mapper;
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 
     // 마이페이지
     @RequestMapping("mypage.do")

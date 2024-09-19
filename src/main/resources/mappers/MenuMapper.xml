@@ -4,6 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="first.final_project.dao.MenuMapper">
+<<<<<<< HEAD
   <!-- 전체조회  -->
   <select id="selectList" parameterType="int" resultType="menu">
      select * from menu where shop_id = #{ shop_id } order by menu_id desc
@@ -12,6 +13,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <!-- 메뉴ID에 해당하는 메뉴 1개 조회  -->
   <select id="selectOne" parameterType="int" resultType="menu">
+=======
+   <!-- 전체조회  -->
+   <select id="selectList" parameterType="int" resultType="menu">
+     select * from menu where shop_id = #{ shop_id } order by menu_id desc
+     
+   </select>
+
+   <!-- 메뉴ID에 해당하는 메뉴 1개 조회  -->
+   <select id="selectOne" parameterType="int" resultType="menu">
+>>>>>>> main
      select * from menu where menu_id=#{ menu_id }
   </select>
 
@@ -22,8 +33,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
+<<<<<<< HEAD
   <!-- 등록 -->
   <insert id="insert" parameterType="menu">
+=======
+   <!-- 등록 -->
+   <insert id="insert" parameterType="menu">
+>>>>>>> main
     INSERT INTO menu(
         menu_category, 
         menu_name, 
@@ -70,9 +86,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          set menu_category=#{ menu_category }, menu_name=#{ menu_name }, menu_content=#{ menu_content }, menu_price=#{ menu_price }, menu_popularity=#{ menu_popularity }, menu_hidden=#{ menu_hidden }, menu_soldout=#{ menu_soldout }
        where menu_id=#{ menu_id }
 
+<<<<<<< HEAD
   </update>
+=======
+   </update>
+>>>>>>> main
 
 
 
 
+<<<<<<< HEAD
 </mapper>
+=======
+</mapper>
+>>>>>>> main

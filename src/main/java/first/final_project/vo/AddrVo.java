@@ -15,4 +15,8 @@ public class AddrVo {
     String addr_line2;
     String addr_name;
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

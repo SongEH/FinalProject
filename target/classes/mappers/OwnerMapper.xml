@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.OwnerMapper">
+
+    <select id="selectPendingRequests" resultType="owner">
+        select * from owner where approval_status='PENDING'
+        order by owner_id
+    </select>
+
+    <select id="selectList" resultType="owner">
+        select * from owner order by owner_id
+    </select>
+
+    <select id="selectOneFromIdx" parameterType="int" resultType="owner">
+        select * from owner where owner_id = #{owner_id}
+    </select>
+
+    <select id="selectOneFromId" parameterType="String" resultType="owner">
+        select * from owner where owner_accountId = #{owner_accountId}
+    </select>
+
+    <insert id="insert" parameterType="owner">
+        INSERT INTO `owner`(
+            `owner_name`,
+            `owner_accountId`,
+            `owner_pwd`,
+            `owner_email`,
+            `owner_phone`,
+            `owner_license`,
+            `owner_bankbook`
+        ) VALUES(
+            #{owner_name},
+            #{owner_accountId},
+            #{owner_pwd},
+            #{owner_email},
+            #{owner_phone},
+            #{owner_license},
+            #{owner_bankbook}
+            )
+    </insert>
+
+    <update id="update_status" parameterType="owner">
+        update owner set approval_status=#{approval_status} where owner_id=#{owner_id}
+    </update>
+
+    <update id="update" parameterType="owner">
+        update owner set owner_name=#{owner_name}, owner_pwd=#{owner_pwd}, owner_email=#{owner_email}, owner_phone=#{owner_phone}, owner_license=#{owner_license}, owner_bankbook=#{owner_bankbook}
+            where owner_id=#{owner_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from owner where owner_id=#{owner_id}
+    </delete>
+
+
+</mapper>
+
+

@@ -40,7 +40,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
     // 가게 1개 정보 가져와서 수정하기
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> main
     @Override
     public ShopVo select_modify_owner_id(int owner_id) {
         return shopMapper.select_modify_owner_id(owner_id);
@@ -58,10 +62,19 @@ public class ShopServiceImpl implements ShopService {
         return shopMapper.delete(shop_id);
     }
 
+<<<<<<< HEAD
     // Owner_id로 shop_id 찾아오기
+=======
+    // Owner_id로 shop_id 찾아오기 
+>>>>>>> main
     @Override
     public int select_one_shop_id(int owner_id) {
         return shopMapper.select_one_shop_id(owner_id);
     }
 
+<<<<<<< HEAD
 }
+=======
+   
+}
+>>>>>>> main

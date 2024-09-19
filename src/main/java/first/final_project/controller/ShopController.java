@@ -100,11 +100,17 @@ public class ShopController {
         // Map<String, Integer> counts;  // Changed to CountsVo
     
         try {
+
             vo = shop_Service.selectOne(shop_id);
             // counts = shop_Service.selectMenuAndReviewsCount(shop_id);
     
             // Adding attributes to the model
+
+            // 한지혜브랜치2에만 있던 코드 
+            List<MenuVo> menu_list = menuMapper.selectMenuList(shop_id);
+          
             model.addAttribute("vo", vo);
+          
             // if (vo != null) {
             //     vo.setMenu_count(counts != null ? counts.get("menu_count") : 0);
             //     vo.setReviews_count(counts != null ? counts.get("reviews_count") : 0);

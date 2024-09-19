@@ -10,7 +10,7 @@ import first.final_project.vo.CartsVo;
 @Mapper
 public interface CartsMapper {
 
-    List<CartsVo> selectList();
+    List<CartsVo> selectList(int member_id);
 
     List<CartsVo> selectPageList(Map<String, Object> map);
 
@@ -31,7 +31,7 @@ public interface CartsMapper {
 
     void updateOrderId(Map<String, Object> map);
 
-    List<CartsVo> selectOrdersById(int orders_id);
+    List<CartsVo> selectCartListByOrdersId(int orders_id);
 
 
 }

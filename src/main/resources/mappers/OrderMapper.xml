@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       GROUP BY o.orders_id, s.shop_name, s.shop_img, a.addr_line1, a.addr_line2, m.member_phone
     </select>
 
+    <!--  main에만 있던 코드   -->
     <select id="selectOneByOrdersId" parameterType="int" resultType="order">
         select o.*, s.shop_name
         from orders o

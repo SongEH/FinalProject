@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="first.final_project.dao.OrderMapper">
-  <select id="selectList" parameterType="int" resultType="order">
+    <select id="selectList" parameterType="int" resultType="order">
         SELECT 
             o.*,  -- orders 테이블의 모든 컬럼
             s.shop_name, 
@@ -16,9 +16,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN addr a ON o.addr_id = a.addr_id 
         WHERE o.member_id = #{member_id}
         GROUP BY o.orders_id, s.shop_name, s.shop_img
-  </select>
+    </select>
 
-  <select id="selectOne" parameterType="int" resultType="order">
+    <select id="selectOne" parameterType="int" resultType="order">
       SELECT
           o.*,  
           s.shop_name AS shop_name,
@@ -36,7 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       GROUP BY o.orders_id, s.shop_name, s.shop_img, a.addr_line1, a.addr_line2, m.member_phone
     </select>
 
-    <!--  main에만 있던 코드   -->
     <select id="selectOneByOrdersId" parameterType="int" resultType="order">
         select o.*, s.shop_name
         from orders o
@@ -44,8 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where o.orders_id = #{orders_id}
     </select>
 
-  <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
-  <!-- <insert id="insert" parameterType="order">
+    <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
+    <!-- <insert id="insert" parameterType="order">
     INSERT INTO Orders(
         orders_payment, 
         orders_price, 
@@ -70,13 +69,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     );
    </insert> -->
 
-  <!-- 삭제 -->
-  <delete id="delete" parameterType="int">
+    <!-- 삭제 -->
+    <delete id="delete" parameterType="int">
      delete from Orders
      where order_id=#{order_id}
-  </delete>
+    </delete>
 
-  <select id="getAcceptOrderList" parameterType="map" resultType="order">
+    <select id="getAcceptOrderList" parameterType="map" resultType="order">
       SELECT o.*, a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, m.member_nickname AS member_nickname, m.member_nickname AS member_nickname, m.member_phone AS member_phone
       FROM orders o
       JOIN shop s ON o.shop_id = s.shop_id
@@ -86,19 +85,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       WHERE ow.owner_id = #{owner_id}
       AND o.orders_status != '배달 완료'
       ORDER BY o.orders_id
-  </select>
+    </select>
 
-  <update id="updateOrderStatus">
+    <update id="updateOrderStatus">
       UPDATE orders SET orders_status = #{status}
       WHERE orders_id = #{orders_id}
-  </update>
+    </update>
 
-  <delete id="deleteOrder">
+    <delete id="deleteOrder">
      DELETE from orders
      WHERE orders_id = #{orders_id}
-  </delete>
+    </delete>
 
-  <select id="getCompleteOrderList" parameterType="map" resultType="order">
+    <select id="getCompleteOrderList" parameterType="map" resultType="order">
       SELECT o.*, a.addr_line1 AS addr_line1, a.addr_line2 AS addr_line2, m.member_nickname AS member_nickname, m.member_nickname AS member_nickname, m.member_phone AS member_phone
       FROM orders o
       JOIN shop s ON o.shop_id = s.shop_id
@@ -108,6 +107,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       WHERE ow.owner_id = #{owner_id}
       AND o.orders_status = '배달 완료'
       ORDER BY o.orders_id
-  </select>
+    </select>
 
+
+    <!-- 총 주문 건수 조회 쿼리 -->
+    <select id="getTotalCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM orders WHERE member_id = #{member_id}
+    </select>
+
+    <!-- 페이징 처리된 완료된 주문 목록을 가져오는 쿼리 -->
+    <select id="selectPageList" parameterType="map" resultType="order">
+        SELECT 
+            o.*,  -- orders 테이블의 모든 컬럼
+            s.shop_name, 
+            s.shop_img,
+            COUNT(c.menu_id) AS menu_count
+        FROM orders o
+        JOIN shop s ON o.shop_id = s.shop_id
+        LEFT JOIN carts c ON o.orders_id = c.orders_id
+        LEFT JOIN addr a ON o.addr_id = a.addr_id 
+        WHERE o.member_id = #{member_id}
+        GROUP BY o.orders_id, s.shop_name, s.shop_img
+        ORDER BY o.orders_cdate DESC
+        LIMIT #{offset}, #{blockList};       
+    </select>
+
+
+    <!-- 날짜 범위로 필터링된 주문 목록을 조회 쿼리 -->
+    <select id="selectPageListByDate" parameterType="map" resultType="order">
+        SELECT 
+            o.orders_id,  -- 필요한 컬럼들만 명시적으로 선택
+            o.member_id,
+            o.orders_cdate,
+            o.addr_id,
+            s.shop_name, 
+            s.shop_img,
+            COUNT(c.menu_id) AS menu_count
+        FROM orders o
+        JOIN shop s ON o.shop_id = s.shop_id
+        LEFT JOIN carts c ON o.orders_id = c.orders_id
+        LEFT JOIN addr a ON o.addr_id = a.addr_id 
+        WHERE o.member_id = #{member_id}
+        <if test="startDate != null and startDate != ''">
+            AND o.orders_cdate &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND o.orders_cdate &lt;= #{endDate}
+        </if>
+        GROUP BY o.orders_id, o.member_id, o.orders_cdate, o.addr_id, s.shop_name, s.shop_img
+        ORDER BY o.orders_cdate DESC
+        LIMIT #{offset}, #{blockList};
+    </select>
+
+    
+
+
+    <!-- 날짜 범위에 따른 주문 건수 조회 쿼리 -->
+    <select id="getTotalCountByDate" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM orders o
+        WHERE o.member_id = #{member_id}
+        <if test="startDate != null and startDate != ''">
+            AND o.orders_cdate &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND o.orders_cdate &lt;= #{endDate}
+        </if>
+    </select>
 </mapper>

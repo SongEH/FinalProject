@@ -1,6 +1,8 @@
 package first.final_project.controller;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -40,17 +42,28 @@ public class ShopController {
     @Autowired
     ServletContext application;
 
+    public BigDecimal formatRating(BigDecimal rating){
+        return rating.setScale(1, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal formatRatingInt(BigDecimal rating){
+        return rating.setScale(0, RoundingMode.CEILING);
+    }
+
     // 메인화면
     @RequestMapping("/shop/list.do")
     public String shop_list(String food_category, Model model) {
 
-        List<ShopVo> list;
+        List<ShopVo> list = shop_Service.selectList(food_category);
         System.out.println(food_category);
 
-        list = shop_Service.selectList(food_category);
-        
+        for(ShopVo vo : list){
+            if(vo.getShop_rating() !=null){
+                BigDecimal shop_rating = vo.getShop_rating().setScale(1, RoundingMode.HALF_UP);
+                vo.setShop_rating(shop_rating);
+            }
+        }
         model.addAttribute("list", list);
-
         return "shop/shop_list";
     }
 
@@ -102,6 +115,12 @@ public class ShopController {
         try {
 
             vo = shop_Service.selectOne(shop_id);
+            BigDecimal shop_rating = formatRating(vo.getShop_rating());
+            BigDecimal shop_rate = formatRatingInt(vo.getShop_rating());
+            System.out.println(shop_rating);
+            vo.setShop_rating(shop_rating);
+            vo.setShop_rate(shop_rate);
+            System.out.println(vo.getShop_rate());
             // counts = shop_Service.selectMenuAndReviewsCount(shop_id);
     
             // Adding attributes to the model

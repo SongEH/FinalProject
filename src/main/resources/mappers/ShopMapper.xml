@@ -28,8 +28,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 전체 리스트 조회  -->
     <select id="selectList" parameterType="String" resultType="shop">
-        SELECT * 
-        FROM shop
+    SELECT 
+        s.*,
+        (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count, 
+        (SELECT COUNT(*) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = s.shop_id) AS reviews_count, 
+        (SELECT AVG(r.reviews_rating) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = s.shop_id) AS shop_rating,
+		(SELECT count(*)
+			from ceoreview c
+            inner join reviews r on c.reviews_id = r.reviews_id
+            inner join orders o on o.orders_id = r.orders_id
+            where o.shop_id = s.shop_id) as ceoreview_count
+    FROM shop s
         <where>
             <if test="foodCategory != null and foodCategory != 'all'">
                 AND food_category = #{foodCategory}
@@ -53,13 +68,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 가게 1개 상세보기  -->
     <select id="selectOne" parameterType="int" resultType="shop">
         SELECT 
-        s.*, 
-        (SELECT COUNT(*) FROM menu WHERE shop_id = 3) AS menu_count, 
-        (SELECT COUNT(*) FROM reviews r 
-         INNER JOIN orders o ON o.orders_id = r.orders_id 
-         WHERE o.shop_id = 3) AS reviews_count
-        FROM shop s
-        WHERE s.shop_id = #{shop_id}
+        s.*,
+        (SELECT COUNT(*) FROM menu WHERE shop_id = #{shop_id}) AS menu_count, 
+        (SELECT COUNT(*) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = #{shop_id}) AS reviews_count, 
+        (SELECT AVG(r.reviews_rating) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = #{shop_id}) AS shop_rating
+    FROM shop s
+    where s.shop_id = #{shop_id}
     </select>
 
     <!-- 가게 데이터 불러오기 -->

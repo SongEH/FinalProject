@@ -207,7 +207,7 @@ header .login {
                 $("#store-list").hide();
                 // $('#menu_display').hide();
                 $('#menuButton').click();
-                $('#menuButton').focus();
+                // $('#menuButton').focus();
           },
           error   :   function(err){
             alert(error.responseText);
@@ -230,40 +230,40 @@ header .login {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">전체보기</a>
+            <a class="nav-link active" aria-current="page" href="list.do?food_category=all">전체보기</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">족발·보쌈</a>
+            <a class="nav-link" href="list.do?food_category=pork_trotters">족발·보쌈</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">피자</a>
+            <a class="nav-link" href="list.do?food_category=pizza">피자</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">치킨</a>
+            <a class="nav-link" href="list.do?food_category=chicken">치킨</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">돈까스·회·일식</a>
+            <a class="nav-link" href="list.do?food_category=japanese_food">돈까스·회·일식</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">한식</a>
+            <a class="nav-link" href="list.do?food_category=korea_food">한식</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">중식</a>
+            <a class="nav-link" href="list.do?food_category=chinese_food">중식</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">아시안</a>
+            <a class="nav-link" href="list.do?food_category=asian_food">아시안</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">백반·죽·국수</a>
+            <a class="nav-link" href="list.do?food_category=porridge_noodle">백반·죽·국수</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">분식</a>
+            <a class="nav-link" href="list.do?food_category=snack_food">분식</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">카페·디저트</a>
+            <a class="nav-link" href="list.do?food_category=desserts">카페·디저트</a> 
           </li>
           <li class="nav-item"></li>
-            <a class="nav-link" href="#">패스트푸드</a>
+            <a class="nav-link" href="list.do?food_category=fast_food">패스트푸드</a>
           </li>
         </ul>
         <form class="d-flex">
@@ -286,8 +286,8 @@ header .login {
                 <div class="store-info">
                     <strong>${vo.shop_name}</strong>
                     <div>
-                        <span class="rating">★ ${vo.shop_rate}</span>
-                        ${vo.shop_review_count}리뷰 4142 · 사장님댓글 1352
+                        <span class="rating">★ ${vo.shop_rating}</span>
+                        | 리뷰${vo.reviews_count} | 사장님댓글 ${vo.ceoreview_count}
                     </div>
                     <div>${vo.shop_min_price} 11,000원 이상 배달</div>
                     <div class="delivery-time">47~62분</div>

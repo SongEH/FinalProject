@@ -1,6 +1,8 @@
 package first.final_project.vo;
 
 import org.apache.ibatis.type.Alias;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.Data;
@@ -17,7 +19,7 @@ public class ShopVo {
     private String shop_call;
     private String shop_content;
     private int shop_min_price;
-    private String shop_rate;
+    private BigDecimal shop_rate;
     private int shop_stemp_count;
     private int shop_review_count;
     private String shop_hours;
@@ -29,6 +31,8 @@ public class ShopVo {
     private int owner_id;
     private int menu_count;
     private int reviews_count;
+    private int ceoreview_count;
+    private BigDecimal shop_rating;
 
     List<MenuVo> menu_list;
 

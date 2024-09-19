@@ -85,6 +85,11 @@ public class ReviewsController {
         int member_id = user.getMember_id();
         System.out.println("도착");
         List<ReviewsVo> list = reviewsMapper.selectList(member_id);
+        for (ReviewsVo vo : list) {
+			Boolean result = reviewsMapper.checkCeoReviewExists(vo.getReviews_id());
+			boolean hasCeoReview = (result != null) ? result : false;
+			vo.setHasCeoReview(hasCeoReview);
+		}
         System.out.println("호출완료");
 
         model.addAttribute("list", list);

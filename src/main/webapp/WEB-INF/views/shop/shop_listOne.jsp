@@ -10,6 +10,7 @@ pageEncoding="UTF-8"%>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     body {
       width: 100%;
@@ -79,6 +80,8 @@ pageEncoding="UTF-8"%>
       }
       .order_info{
         width: 300px;
+        position: sticky;
+        top: 0;
       }
       #shop_name{
         font-size: 16px;
@@ -245,8 +248,17 @@ pageEncoding="UTF-8"%>
 
               <div class="rating" id="shop_info">
                 <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Rating Star"
-                  width="20">
-                <span>${vo.shop_stemp_count}
+                  width="50px">
+                <span>
+                  <div class="stars">
+                    <c:forEach begin="1" end="${vo.shop_rate}">
+                        <i class="fa fa-star"></i>
+                    </c:forEach>
+                    <c:forEach begin="1" end="${5 - vo.shop_rate}">
+                        <i class="fa fa-star star-empty"></i>
+                    </c:forEach>
+                    ${vo.shop_rating}
+                </div>
                   <div class="details">
                     <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
                     <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>
@@ -258,22 +270,18 @@ pageEncoding="UTF-8"%>
               <div id="shop_content">${vo.shop_content}</div>
             </div>
 
-            <!-- menu_list 공간 -->
-
-
             <!-- 메뉴 / 클린리뷰 / 정보  -->
-
-          <div class="row" style="width:100%; margin-top: 30px;">
-            <div class="col-sm-4" style="padding:0px">
-              <div class="menu-tab border">
-                <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
-                onclick="get_menu('${vo.shop_id}')">
+            <div class="row" style="width:100%; margin-top: 30px;">
+              <div class="col-sm-4" style="padding:0px">
+                <div class="menu-tab border">
+                  <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
+                  onclick="get_menu('${vo.shop_id}')">
+                </div>
               </div>
-            </div>
-            <div class="col-sm-4" style="padding:0px">
-              <div class="menu-tab border">
-                <input type="button" id="reviewButton" value="클린리뷰(${vo.reviews_count})" onclick="reviews_list('${vo.shop_id}');"/>
-
+              <div class="col-sm-4" style="padding:0px">
+                <div class="menu-tab border">
+                  <input type="button" id="reviewButton" value="클린리뷰(${vo.reviews_count})" onclick="reviews_list('${vo.shop_id}');"/>
+                </div>
               </div>
               <div class="col-sm-4" style="padding:0px">
                 <div class="menu-tab border">

@@ -3,6 +3,7 @@ package first.final_project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +54,9 @@ public class OrderController {
 
 	@Autowired
 	OrderService orderService;
+
+	@Autowired
+	SimpMessagingTemplate messagingTemplate;
 
 	// /menu/list.do
 	// /menu/list.do?page=2
@@ -115,7 +119,7 @@ public class OrderController {
 		OrderVo vo = order_mapper.selectOne(orders_id);
 
 		// 주문ID를 가진 장바구니 목록 
-		List<CartsVo> list = carts_mapper.selectOrdersById(orders_id);
+		List<CartsVo> list = carts_mapper.selectCartListByOrdersId(orders_id);
 
 		System.out.println(list);
 		model.addAttribute("vo", vo);
@@ -194,6 +198,8 @@ public class OrderController {
 	public String acceptOrderList(@RequestParam("orders_id") int orders_id) {
 		// 주문 상태를 '배차 대기'로 변경
 		orderService.updateOrderStatus(orders_id, "배차 대기");
+		// WebSocket을 통해 라이더에게 메시지 전송
+		messagingTemplate.convertAndSend("/topic/orders", "주문 정보가 업데이트되었습니다.");
 		return "redirect:/order/accept.do";
 	}
 
@@ -201,6 +207,8 @@ public class OrderController {
 	public String startCooking(@RequestParam("orders_id") int orders_id) {
 		// 주문 상태를 '조리 중'로 변경
 		orderService.updateOrderStatus(orders_id, "조리 중");
+		// WebSocket을 통해 라이더에게 메시지 전송
+		messagingTemplate.convertAndSend("/topic/orders", "주문 정보가 업데이트되었습니다.");
 		return "redirect:/order/accept.do";
 	}
 
@@ -208,6 +216,8 @@ public class OrderController {
 	public String endCooking(@RequestParam("orders_id") int orders_id) {
 		// 주문 상태를 '픽업 대기'로 변경
 		orderService.updateOrderStatus(orders_id, "픽업 대기");
+		// WebSocket을 통해 라이더에게 메시지 전송
+		messagingTemplate.convertAndSend("/topic/orders", "주문 정보가 업데이트되었습니다.");
 		return "redirect:/order/accept.do";
 	}
 
@@ -216,6 +226,30 @@ public class OrderController {
 		// 주문 삭제하기
 		orderService.deleteOrder(orders_id);
 		return "redirect:/order/accept.do";
+	}
+
+	@GetMapping("complete.do")
+	public String getCompleteOrderList(Model model) {
+		// 세션에서 가계 정보를 가져옴
+		HttpSession session = request.getSession();
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+		// 가계 정보가 없는 경우
+		if (user == null) {
+			return "redirect:/login_form.do";
+		}
+
+		int owner_id = user.getOwner_id();
+
+		List<OrderVo> orders = orderService.getCompleteOrderList(owner_id, "주문 대기");
+
+		if (orders == null || orders.isEmpty()) {
+			model.addAttribute("message", "완료된 주문이 없습니다.");
+		} else {
+			model.addAttribute("orders", orders);
+		}
+
+		return "order/order_complete_list";
 	}
 
 }

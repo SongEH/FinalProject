@@ -2,6 +2,7 @@ package first.final_project.vo;
 
 import lombok.Data;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -36,4 +37,5 @@ public class OrderVo {
     private int menu_count;
 
     boolean hasReview;
+
 }

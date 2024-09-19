@@ -5,6 +5,30 @@
 <html>
   <head>
     <title>진행 중인 주문</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script>
+      var sessionId = '<%= session.getId() %>'; // 현재 세션 ID
+    
+      var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+      var stompClient = Stomp.over(socket);
+    
+      // WebSocket 연결 설정
+      stompClient.connect({}, function (frame) {
+          // 주문 상태 업데이트 메시지 구독
+          stompClient.subscribe('/topic/orders', function (message) {
+              var receivedMessage = message.body;
+              var senderSessionId = receivedMessage.split(":")[0]; // 메시지에서 세션 ID 추출
+    
+              // 자신이 보낸 메시지는 무시
+              if (sessionId !== senderSessionId) {
+                  location.reload(); // 다른 라이더나 가게에서 보낸 메시지만 처리
+              }
+          });
+      });
+    </script>
+    
   </head>
   <body>
     <div class="container">

@@ -3,21 +3,23 @@ pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Insert title here</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <style>
-      body{
-        width: 100%;
-      }
-      .container-custom{
-        margin:auto;
-        width: 1000px;
-        /* justify-content: space-between; */
-        /* padding: 20px 0;
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Insert title here</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    body {
+      width: 100%;
+    }
+
+    .container-custom {
+      margin: auto;
+      width: 1000px;
+      /* justify-content: space-between; */
+      /* padding: 20px 0;
         width: 1200px; 
         display: flex;
         margin: 0;
@@ -77,8 +79,6 @@ pageEncoding="UTF-8"%>
       }
       .order_info{
         width: 300px;
-        position: sticky;
-        top: 155px;
       }
       #shop_name{
         font-size: 16px;
@@ -122,33 +122,40 @@ pageEncoding="UTF-8"%>
         align-items: center;
       }
 
-      .menu-tab input[type="button"] {
-        flex-shrink: 0;
-        padding:0;
-      }
-      #menuButton:focus {
-        outline: none;
-      }
-      .menu-tab .badge {
-        margin-left: 10px;
-      }
-      .right-panel{
-        position: sticky;
-        top: 30px;
-      }
-      .right-panel h2 {
-          font-size: 20px;
-      }
-      .menu-tab input:hover,
-      .menu-tab input:focus {
-        color : #F0A8D0;
-        font-size: 14px;
-        font-weight: bold;
-        border-bottom: 5px solid #F0A8D0;
-        transform: scale(1.05); /* Make button slightly larger on hover */
-      }
+    .menu-tab input[type="button"] {
+      flex-shrink: 0;
+      padding: 0;
+    }
+
+    #menuButton:focus {
+      outline: none;
+    }
+
+    .menu-tab .badge {
+      margin-left: 10px;
+    }
+
+    .right-panel {
+      position: sticky;
+      top: 30px;
+    }
+
+    .right-panel h2 {
+      font-size: 20px;
+    }
+
+    .menu-tab input:hover,
+    .menu-tab input:focus {
+      color: #F0A8D0;
+      font-size: 14px;
+      font-weight: bold;
+      border-bottom: 5px solid #F0A8D0;
+      transform: scale(1.05);
+      /* Make button slightly larger on hover */
+    }
   </style>
   <script>
+   //  main 브랜치에만 있던 코드
     function get_menu(shop_id){
       $.ajax({
       url     :     "../menu/listByShopId.do",
@@ -164,34 +171,41 @@ pageEncoding="UTF-8"%>
       }
       });
       }
+
   </script>
+
+
+
   <script>
     // 특정 가게 삭제 
-    function shop_del(shop_id){
+    function shop_del(shop_id) {
       alert(shop_id);
-      if(confirm("삭제하면 복구되지 않습니다?\n 정말 삭제하시겠습니까? ")==false) return;
+      if (confirm("삭제하면 복구되지 않습니다?\n 정말 삭제하시겠습니까? ") == false) return;
 
       $.ajax({
-      url     :     "/shop/delete.do",
-      data    :      {"shop_id": shop_id},
-      success :   function(res_data){
-                alert("삭제 성공")
-                location.href="/shop/list.do";
+        url: "/shop/delete.do",
+        data: {
+          "shop_id": shop_id
         },
-      error   :   function(err){
-      alert(error.responseText)
+        success: function (res_data) {
+          alert("삭제 성공")
+          location.href = "/shop/list.do";
+        },
+        error: function (err) {
+          alert(error.responseText)
         }
       });
     }
   </script>
 
+
+
   <script>
-    // 선택한 가게 수정 
-    function shop_modi(f){
-      alert("여기?");
-      alert(f.shop_id.value);
-      f.action="modify_form.do";
-      f.submit();
+    // 주문 - 한지혜 추가 
+    function orderFromShop(shop_id, shop_name) {
+
+      location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
+
     }
 
     function reviews_list(shop_id){
@@ -215,37 +229,40 @@ pageEncoding="UTF-8"%>
     // }
   </script>
 </head>
+
 <body>
   <form method="post">
-  <!-- 표현은 하지않고 활용하기 위한 데이터  -->
-   <input type="hidden" name="shop_id" value="${vo.shop_id}"/>
-   
-<div class="container-custom">
-  <div class="shop">
-    <div class="row">
-        <!-- Left Panel (shop Information) -->
-        <div class="col-md-8 col-sm-12 col-custom">
+    <!-- 표현은 하지않고 활용하기 위한 데이터  -->
+    <input type="hidden" name="shop_id" value="${vo.shop_id}" />
+
+    <div class="container-custom">
+      <div class="shop">
+        <div class="row">
+          <!-- Left Panel (shop Information) -->
+          <div class="col-md-8 col-sm-12 col-custom">
             <div class="shop-info">
-                <div id="shop_name">${vo.shop_name}</div>
-                
-                <div class="rating" id="shop_info">
-                    <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Rating Star" width="20"> 
-                    <span>${vo.shop_stemp_count}
-                      <div class="details">
-                        <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
-                        <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>
-                        <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
-                        <button class="btn btn-danger">4,000원 할인</button>
-                      </div>
-                    </span>
-                </div>
-                <div id="shop_content">${vo.shop_content}</div>
+              <div id="shop_name">${vo.shop_name}</div>
+
+              <div class="rating" id="shop_info">
+                <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Rating Star"
+                  width="20">
+                <span>${vo.shop_stemp_count}
+                  <div class="details">
+                    <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
+                    <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>
+                    <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
+                    <button class="btn btn-danger">4,000원 할인</button>
+                  </div>
+                </span>
+              </div>
+              <div id="shop_content">${vo.shop_content}</div>
             </div>
 
             <!-- menu_list 공간 -->
-            
+
 
             <!-- 메뉴 / 클린리뷰 / 정보  -->
+
           <div class="row" style="width:100%; margin-top: 30px;">
             <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
@@ -256,14 +273,15 @@ pageEncoding="UTF-8"%>
             <div class="col-sm-4" style="padding:0px">
               <div class="menu-tab border">
                 <input type="button" id="reviewButton" value="클린리뷰(${vo.reviews_count})" onclick="reviews_list('${vo.shop_id}');"/>
+
+              </div>
+              <div class="col-sm-4" style="padding:0px">
+                <div class="menu-tab border">
+                  <input type="button" id="infoButton" value="정보" />
+                </div>
               </div>
             </div>
-            <div class="col-sm-4" style="padding:0px">
-              <div class="menu-tab border">
-                <input type="button" id="infoButton" value="정보"/>
-              </div>
-            </div>
-          </div>
+
 
           
           <div class="row" style="margin-top:30px;">
@@ -293,27 +311,33 @@ pageEncoding="UTF-8"%>
             <div id="shop_info_display">
 
             </div>
+
           </div>
+
         </div>
 
         <!-- 주문 영역 출력 공간  -->
         <div class="col-md-4 col-sm-12">
           <div class="order_info">
-          <!-- <div class="right-panel text-center p-3"> -->
+            <!-- <div class="right-panel text-center p-3"> -->
             <div style="background-color:black; color:white; padding: 7px;">
-              <h5>주문표</h5>
+              <h5>장바구니</h5>
             </div>
-              <div style="border:1px solid gray; height:auto; min-height: 155px;">
-                주문표에 담긴 메뉴가 없습니다.
-              </div>
-              <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
-              <button class="btn btn-secondary" disabled>주문하기</button>
+            <div style="border:1px solid gray; height:auto; min-height: 155px;">
+              <!-- 장바구니에 담긴 메뉴가 없습니다. -->
+
+              <!-- 장바구니 목록 표시  -->
+              <div id="cart_list"></div>
             </div>
-          <!-- </div> -->
+            <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
+            <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
           </div>
+          <!-- </div> -->
         </div>
+      </div>
     </div>
   </div>
 </div>
 </body>
+
 </html>

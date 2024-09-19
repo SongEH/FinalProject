@@ -32,4 +32,6 @@ public interface ReviewsMapper {
     List<String> getImageForReviews(int reviews_id);
 
     Boolean checkReviewExists(int orders_id);
+
+    Boolean checkCeoReviewExists(int reviews_id);
 }

@@ -24,123 +24,103 @@ pageEncoding="UTF-8"%>
         display: flex;
         margin: 0;
         position: relative; */
-    }
-
-    .row {
-      margin: 0;
-    }
-
-    panel-left,
-    .panel-right {
-      padding: 10px;
-      /* border: 1px solid gray; */
-      /* background-color: #f9f9f9; */
-    }
-
-    .panel-left {
-      width: 70%;
-    }
-
-    .panel-right {
-      /* width: 330px; */
-      position: sticky;
-      top: 30px;
-    }
-
-    .shop {
-      /* width: 1000px; */
-      margin: auto;
-    }
-
-    /* .shop-info { */
-    /* width: 600px; */
-    /* } */
-    .col-custom {
-      width: 66.66667%;
-    }
-
-    .shop-info h1 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .shop-info img {
-      width: 60px;
-      height: 60px;
-      padding-left: 10px;
-    }
-
-    .shop-info .rating {
-      width: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    .shop-info .rating span {
-      font-size: 16px;
-      margin-left: 5px;
-    }
-
-    .menu-item img {
-      width: 80px;
-      height: 80px;
-      padding-right: 10px;
-      display: flex;
-      align-items: center;
-    }
-
-    .order_info {
-      width: 300px;
-    }
-
-    #shop_name {
-      font-size: 16px;
-      padding: 10px;
-      border: 1px solid gray;
-    }
-
-    #shop_info {
-      padding: 10px;
-      border: 1px solid grey;
-      border-top: none;
-    }
-
-    #shop_content {
-      padding: 10px;
-      border: 1px solid grey;
-      border-top: none;
-      width: 100%;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .shop_info_list {
-      border: 1px solid grey;
-    }
-
-    .menu-tab input[type="button"] {
-      width: 100%;
-      height: 40px;
-      background-color: white;
-      border: 1px solid gray;
-    }
-
-    .menu-section {
-      width: 100%;
-      margin-top: 20px;
-      padding-top: 10px;
-    }
-
-    .menu-section .menu-title {
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
-
-    .menu-tab {
-      display: flex;
-      align-items: center;
-    }
+      }
+      .row{
+        margin: 0;
+      }
+      panel-left, .panel-right {
+        padding: 10px;
+        /* border: 1px solid gray; */
+        /* background-color: #f9f9f9; */
+      }
+      .panel-left {
+        width: 70%;
+      }
+      .panel-right {
+        /* width: 330px; */
+        position: sticky;
+        top: 30px;
+      }
+       .shop{
+        /* width: 1000px; */
+        margin: auto;
+      }
+      
+      /* .shop-info { */
+        /* width: 600px; */
+      /* } */
+      .col-custom{
+        width:66.66667%;
+      }
+      .shop-info h1 {
+          font-size: 20px;
+          margin-bottom: 10px;
+      }
+      .shop-info img{
+        width: 60px;
+        height: 60px;
+        padding-left: 10px;
+      }
+      .shop-info .rating {
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+      .shop-info .rating span {
+        font-size: 16px;
+        margin-left: 5px;
+      }
+      .menu-item img{
+        width: 80px;
+        height: 80px;
+        padding-right: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .order_info{
+        width: 300px;
+      }
+      #shop_name{
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid gray;
+      }
+      #shop_info{
+        padding: 10px;
+        border:1px solid grey;
+        border-top: none;
+      }
+      #shop_content{
+        padding: 10px;
+        border:1px solid grey;
+        border-top: none;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; 
+      }
+      .shop_info_list{
+        border: 1px solid grey;
+      }
+      .menu-tab input[type="button"] {
+        width: 100%;
+        height: 40px;
+        background-color: white;
+        border: 1px solid gray;
+      }
+      .menu-section {
+          width: 100%;
+          margin-top: 20px;
+          padding-top: 10px;
+      }
+      .menu-section .menu-title {
+          font-size: 18px;
+          margin-bottom: 5px;
+      }
+      .menu-tab {
+        display: flex;
+        align-items: center;
+      }
 
     .menu-tab input[type="button"] {
       flex-shrink: 0;
@@ -356,33 +336,8 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </div>
-    </div>
-
-
-
-  <!-- Sample Menu List -->
-  <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">
-
-    <c:forEach var="item" items="${menu_list}">
-      <div class="row col-md-8 col-sm-12 col-custom">
-        <div class="menu-item" style="border: 1px solid gray; width:75%;">
-          <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="float:right">
-          <div>${item.menu_name}</div>
-          <div>${item.menu_content}</div>
-          <div><strong>${item.menu_price}</strong></div>
-        </div>
-      </div>
-    </c:forEach>
-  </div> -->
-    <!-- <div>
-    <div id="menu_list"></div>
-  </div> -->
-    </div>
-    <div class="container" style="margin:auto">
-      <div class="row" style="margin-top:30px;">
-        <%@include file="../menu/menu_list_display.jsp" %>
-      </div>
-    </div>
+  </div>
+</div>
 </body>
 
 </html>

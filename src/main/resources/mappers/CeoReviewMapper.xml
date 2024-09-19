@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.CeoReviewMapper">
+
+    <select id="selectOne" parameterType="int" resultType="ceoreview">
+        select * from ceoreview where reviews_id = #{reviews_id}
+    </select>
+ 
+    <insert id="insert" parameterType="ceoreview">
+        insert into ceoreview (
+                                ceoreviews_content,
+                                ceoreviews_cdate,
+                                owner_id,
+                                reviews_id
+                                )
+                            values(
+                                #{ceoreviews_content},
+                                (current_date),
+                                #{owner_id},
+                                #{reviews_id}
+                                )
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        delete from ceoreview where ceoreviews_id = #{ceoreviews_id}
+    </delete>
+
+
+</mapper>

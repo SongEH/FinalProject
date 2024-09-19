@@ -13,8 +13,6 @@ public interface OrderMapper {
 
     List<OrderVo> selectList(int i);
 
-    
-
     OrderVo selectOne(int orders_id);
 
     int insert(OrderVo vo);
@@ -31,5 +29,7 @@ public interface OrderMapper {
 
     List<OrderVo> getCompleteOrderList(Map<String, Object> params);
 
+
+    int getShopIdByOrderId(int orders_id);
 
 }

@@ -210,6 +210,19 @@ pageEncoding="UTF-8" %>
           </li>
         </ul>
       </li>
+      <!-- 리뷰 관리 메뉴 추가 -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>리뷰관리</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+            <a href="/reviews/listByOwner.do">
+                <i class="bi bi-circle"></i><span>리뷰관리</span>
+            </a>
+        </li>
+        </ul>
+      </li>
     </ul>
     </li>
     <% } %>

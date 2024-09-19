@@ -44,6 +44,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where o.orders_id = #{orders_id}
     </select>
 
+    <select id="getShopIdByOrderId" parameterType="int" resultType="int">
+        select shop_id from shop where owner_id = #{owner_id}
+    </select>
+
   <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
   <!-- <insert id="insert" parameterType="order">
     INSERT INTO Orders(

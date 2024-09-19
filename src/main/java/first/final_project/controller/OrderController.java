@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
@@ -17,7 +16,6 @@ import first.final_project.service.OrderService;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
-import first.final_project.vo.MenuVo;
 import first.final_project.vo.OrderVo;
 import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;

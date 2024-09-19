@@ -138,9 +138,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       WHERE 
          c.orders_id = #{orders_id}
    </select>
-<<<<<<< HEAD
-</mapper>
-=======
 </mapper>
 
 
@@ -154,4 +151,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
->>>>>>> main

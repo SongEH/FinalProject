@@ -134,8 +134,4 @@
         </form>
     </div>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> main

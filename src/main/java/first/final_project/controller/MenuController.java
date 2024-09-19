@@ -18,8 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import first.final_project.dao.MenuMapper;
 import first.final_project.dao.ShopMapper;
 import first.final_project.service.ShopService;
-import first.final_project.util.MyCommon;
-import first.final_project.util.Paging;
 import first.final_project.vo.MenuVo;
 import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;

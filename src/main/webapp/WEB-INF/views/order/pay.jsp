@@ -50,7 +50,6 @@ pageEncoding="UTF-8"%>
                 method: "POST",
                 // contentType: "application/json",
                 data: {
-<<<<<<< HEAD
                   orders_payment: rsp.pg,
                   orders_method: rsp.pay_method,
                   orders_imp_uid: rsp.imp_uid,
@@ -65,22 +64,6 @@ pageEncoding="UTF-8"%>
                   Shop_id: "1",
                   addr_id: "1",
                   member_id: "1",
-=======
-                  "orders_payment": rsp.pg,
-                  "orders_method" :rsp.pay_method,
-                  "orders_imp_uid" :rsp.imp_uid,
-                  "orders_merchant_uid" :rsp.merchant_uid,
-                  "orders_name" :rsp.name,
-                  "orders_price" :rsp.amount,
-                  "member_name" :rsp.buyer_name,
-                  "member_phone" :rsp.buyer_tel,
-                  "addr_line2" :rsp.buyer_addr,
-                  "orders_request" : '맛있게',
-                  "orders_drequest": "배달",
-                  "Shop_id" : "1",
-                  "addr_id" : "1",
-                  "member_id": "1"
->>>>>>> main
                 },
                 success: function (response) {
                   // 서버 결제 API 성공 시 로직

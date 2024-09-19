@@ -13,10 +13,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from grade where grade_name=#{grade_name}
     </select>
 
-<<<<<<< HEAD
-</mapper>
-=======
 </mapper>
 
 
->>>>>>> main

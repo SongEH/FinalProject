@@ -18,8 +18,4 @@ public class MainDisplayController {
         return "shop/shop_list";
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

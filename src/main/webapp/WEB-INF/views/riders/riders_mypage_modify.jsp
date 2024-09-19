@@ -78,7 +78,6 @@ pageEncoding="UTF-8"%>
     </style>
 
     <script type="text/javascript">
-<<<<<<< HEAD
       function formatPhoneNumber(input) {
         let riders_phone = input.value.replace(/\D/g, ""); // 숫자만 남기기
         if (riders_phone.length > 11) {
@@ -96,8 +95,6 @@ pageEncoding="UTF-8"%>
         }
       }
 
-=======
->>>>>>> main
       function updateRidersRegion() {
         let selectedRegions = [];
         $("input[name='riders_region']:checked").each(function () {
@@ -111,7 +108,6 @@ pageEncoding="UTF-8"%>
         updateRidersRegion();
       });
 
-<<<<<<< HEAD
       $(document).ready(function () {
         let regions = "${vo.riders_region}".split(",");
         regions.forEach(function (region) {
@@ -121,14 +117,6 @@ pageEncoding="UTF-8"%>
           );
         });
       });
-=======
-      // $(document).ready(function() {
-      //   let regions = "${vo.riders_region}".split(",");
-      //   regions.forEach(function(region) {
-      //     $("input[name='riders_region'][value='" + region + "']").prop("checked", true);
-      //   });
-      // });
->>>>>>> main
     </script>
   </head>
   <body>
@@ -175,16 +163,9 @@ pageEncoding="UTF-8"%>
 
         <div class="mb-4">
           <label for="phone">전화번호:</label>
-          <input
-            class="form-control"
-            type="text"
-            name="riders_phone"
-            value="${vo.riders_phone}"
-<<<<<<< HEAD
-            oninput="formatPhoneNumber(this);"
-=======
->>>>>>> main
-          />
+          <input class="form-control" type="text" name="riders_phone"
+          value="${vo.riders_phone}" <<<<<<< HEAD
+          oninput="formatPhoneNumber(this);" ======= >>>>>>> main />
         </div>
 
         <div class="mb-4">

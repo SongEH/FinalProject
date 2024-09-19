@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="first.final_project.dao.CommissionMapper">
 
     <!-- 라이더의 완료된 배달 목록을 가져오는 쿼리 -->
-    <select id="selectList" parameterType="int" resultType="completeddeliveryvo">
+    <select id="selectList" parameterType="int" resultType="CommissionVo">
     SELECT
         d.deliveries_id,            -- 배달 ID
         r.rider_name,               -- 라이더 이름
@@ -83,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <!-- 페이징 처리된 완료된 배달 목록을 가져오는 쿼리 -->
-    <select id="selectPageList" parameterType="map" resultType="completeddeliveryvo">
+    <select id="selectPageList" parameterType="map" resultType="CommissionVo">
     SELECT
         d.deliveries_id, r.rider_name, o.orders_id, o.orders_price, dh.delivery_history_status,
         o.orders_cdate, s.shop_name, a.addr_line1, a.addr_line2,
@@ -103,7 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!-- 날짜 범위로 필터링된 배달 목록을 조회하는 쿼리 -->
-    <select id="selectPageListByDate" parameterType="map" resultType="completeddeliveryvo">
+    <select id="selectPageListByDate" parameterType="map" resultType="CommissionVo">
     SELECT
         d.deliveries_id, r.rider_name, o.orders_id, o.orders_price, dh.delivery_history_status,
         o.orders_cdate, s.shop_name, a.addr_line1, a.addr_line2,

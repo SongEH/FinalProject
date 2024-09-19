@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LEFT JOIN
         commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
     WHERE d.raiders_id = #{raiders_id}
-    AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
+    AND EXISTS (SELECT 1 FROM delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
     </select>
 
     <!-- 완료된 배달 건수 조회 쿼리 -->
@@ -156,7 +156,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     JOIN orders o ON d.orders_id = o.orders_id
     LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
     WHERE d.raiders_id = #{raiders_id}
-    AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료')
+    AND EXISTS (SELECT 1 FROM delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료')
         <if test="startDate != null and startDate != ''">
         AND o.orders_cdate &gt;= #{startDate}
         </if>

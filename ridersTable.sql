@@ -98,7 +98,7 @@ CREATE TABLE delivery_history (
     CONSTRAINT Delivery_history_deliveries_id FOREIGN KEY (deliveries_id) REFERENCES Deliveries(deliveries_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Commissions (
+CREATE TABLE commissions (
     commissions_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 기본 키
     raiders_id INT NOT NULL,  -- Riders 테이블의 외래 키
     deliveries_id INT,  -- 배달 ID (추가된 컬럼)

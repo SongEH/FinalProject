@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,12 +14,14 @@ import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
 import first.final_project.dao.OrderMapper;
 import first.final_project.dao.ReviewsMapper;
+import first.final_project.service.OrderService;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
 import first.final_project.vo.MenuVo;
 import first.final_project.vo.OrderVo;
 import first.final_project.vo.ReviewsVo;
+import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -47,6 +50,9 @@ public class OrderController {
 
 	@Autowired
 	ServletContext application;
+
+	@Autowired
+	OrderService orderService;
 
 	// /menu/list.do
 	// /menu/list.do?page=2
@@ -159,5 +165,57 @@ public class OrderController {
 
 	// return "redirect:list.do";
 	// }
+
+	@GetMapping("accept.do")
+	public String getAcceptOrderList(Model model) {
+		// 세션에서 가계 정보를 가져옴
+		HttpSession session = request.getSession();
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+		// 가계 정보가 없는 경우
+		if (user == null) {
+			return "redirect:/login_form.do";
+		}
+
+		int owner_id = user.getOwner_id();
+
+		List<OrderVo> orders = orderService.getAcceptOrderList(owner_id, "주문 대기");
+
+		if (orders == null || orders.isEmpty()) {
+			model.addAttribute("message", "현재 진행 중인 주문이 없습니다.");
+		} else {
+			model.addAttribute("orders", orders);
+		}
+
+		return "order/order_accept_list";
+	}
+
+	@GetMapping("accept")
+	public String acceptOrderList(@RequestParam("orders_id") int orders_id) {
+		// 주문 상태를 '배차 대기'로 변경
+		orderService.updateOrderStatus(orders_id, "배차 대기");
+		return "redirect:/order/accept.do";
+	}
+
+	@GetMapping("startCooking")
+	public String startCooking(@RequestParam("orders_id") int orders_id) {
+		// 주문 상태를 '조리 중'로 변경
+		orderService.updateOrderStatus(orders_id, "조리 중");
+		return "redirect:/order/accept.do";
+	}
+
+	@GetMapping("endCooking")
+	public String endCooking(@RequestParam("orders_id") int orders_id) {
+		// 주문 상태를 '픽업 대기'로 변경
+		orderService.updateOrderStatus(orders_id, "픽업 대기");
+		return "redirect:/order/accept.do";
+	}
+
+	@GetMapping("cancel")
+	public String deleteOrder(@RequestParam("orders_id") int orders_id) {
+		// 주문 삭제하기
+		orderService.deleteOrder(orders_id);
+		return "redirect:/order/accept.do";
+	}
 
 }

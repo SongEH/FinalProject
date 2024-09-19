@@ -207,7 +207,26 @@ session.setAttribute("userType",userType);
           </li>
         </ul>
       </li>
+      <!-- 새로운 주문관리 메뉴 추가 -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#orders-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-box"></i><span>주문 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="orders-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="/order/accept.do">
+              <i class="bi bi-circle"></i><span>주문 내역</span>
+            </a>
+          </li>
+          <li>
+            <a href="/order/complete.do">
+              <i class="bi bi-circle"></i><span>완료 주문 내역</span>
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
+    </li>
     <% } %>
 
     <!--------------------- 사장 로그인 시 END --------------------->

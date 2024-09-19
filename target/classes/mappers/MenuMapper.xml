@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- 전체조회  -->
    <select id="selectList" parameterType="int" resultType="menu">
      select * from menu where shop_id = #{ shop_id } order by menu_id desc
-     
    </select>
 
    <!-- 메뉴ID에 해당하는 메뉴 1개 조회  -->

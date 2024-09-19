@@ -175,13 +175,23 @@ pageEncoding="UTF-8"%>
     }
   </style>
   <script>
-    function get_menu(shop_id) {
-      alert(shop_id);
-      // $.ajax({
-      //   url     :   
+   //  main 브랜치에만 있던 코드
+    function get_menu(shop_id){
+      $.ajax({
+      url     :     "../menu/listByShopId.do",
+      data    :      {"shop_id": shop_id},
+      success :   function(res_data){
+              alert(res_data);
+              $("#menu_display").html(res_data).show();
+              $('#reviews_display').hide();
+              $("shop_info_display").hide();
+      },
+      error   :   function(err){
+      alert(err.responseText)
+      }
+      });
+      }
 
-      // })
-    }
   </script>
 
 
@@ -217,6 +227,26 @@ pageEncoding="UTF-8"%>
       location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
 
     }
+
+    function reviews_list(shop_id){
+      alert("도착");
+      alert(shop_id);
+      $.ajax({
+        url     :   "../reviews/listByShopId.do",
+        method  :   "POST",
+        data    :   {"shop_id": shop_id},
+        success :   function(res_data){
+          alert(res_data);
+          $("#reviews_display").html(res_data).show();
+          $("#menu_display").hide();
+        },
+        error   :   function(err){
+          alert(err.responseText);
+        }
+      });
+    }
+    // location.href="../reviews/listByShopId.do?shop_id=" + shop_id;
+    // }
   </script>
 </head>
 
@@ -252,17 +282,18 @@ pageEncoding="UTF-8"%>
 
 
             <!-- 메뉴 / 클린리뷰 / 정보  -->
-            <div class="row" style="width:100%; margin-top: 30px;">
-              <div class="col-sm-4" style="padding:0px">
-                <div class="menu-tab border">
-                  <input type="button" id="menuButton" value="메뉴 ${vo.shop_stemp_count}"
-                    onclick="get_menu('${vo.shop_id}')">
-                </div>
+
+          <div class="row" style="width:100%; margin-top: 30px;">
+            <div class="col-sm-4" style="padding:0px">
+              <div class="menu-tab border">
+                <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
+                onclick="get_menu('${vo.shop_id}')">
               </div>
-              <div class="col-sm-4" style="padding:0px">
-                <div class="menu-tab border">
-                  <input type="button" id="reviewButton" value="클린리뷰" />
-                </div>
+            </div>
+            <div class="col-sm-4" style="padding:0px">
+              <div class="menu-tab border">
+                <input type="button" id="reviewButton" value="클린리뷰(${vo.reviews_count})" onclick="reviews_list('${vo.shop_id}');"/>
+
               </div>
               <div class="col-sm-4" style="padding:0px">
                 <div class="menu-tab border">
@@ -272,7 +303,34 @@ pageEncoding="UTF-8"%>
             </div>
 
 
+          
+          <div class="row" style="margin-top:30px;">
+            <!--menu_list 출력 공간 -->
+            <!-- <div id="menu_display" style="padding: 0;">
+              <c:forEach var="item" items="${menu_list}">
+                <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center; padding: 10px;">
+                  <div>
+                    <div>${item.menu_name}</div>
+                    <div>${item.menu_content}</div>
+                    <div><strong>${item.menu_price}</strong></div>
+                  </div>
+                  <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="margin-left:auto;">
+                </div>
+              </c:forEach>
+            </div> -->
 
+            <div>
+              <div id="menu_display"></div>
+            </div>
+            <!-- review list 출력 공간 -->
+            <div>
+              <div id="reviews_display"></div>
+            </div>
+            
+            <!-- shop_info_list 출력 공간 -->
+            <div id="shop_info_display">
+
+            </div>
 
           </div>
 
@@ -300,8 +358,11 @@ pageEncoding="UTF-8"%>
     </div>
     </div>
 
-    <!-- Sample Menu List -->
-    <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">
+
+
+  <!-- Sample Menu List -->
+  <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">
+
     <c:forEach var="item" items="${menu_list}">
       <div class="row col-md-8 col-sm-12 col-custom">
         <div class="menu-item" style="border: 1px solid gray; width:75%;">

@@ -9,7 +9,7 @@ import first.final_project.vo.InquiriesVo;
 @Mapper
 public interface InquiriesMapper {
     
-    List<InquiriesVo> selectList();
+    List<InquiriesVo> selectListByType(String inquiries_type);
 
     InquiriesVo selectFromIdx(int inquiries_id);
 
@@ -18,4 +18,5 @@ public interface InquiriesMapper {
     int update(InquiriesVo vo);
 
     int delete(int inquiries_id);
+
 }

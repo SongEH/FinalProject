@@ -12,14 +12,23 @@ pageEncoding="UTF-8" %>
 Object user = session.getAttribute("user"); 
 
 // 사용자 객체 타입에 따라 문자열을설정합니다 
+String userType = "UNKNOWN";
 
-String userType = "UNKNOWN"; 
-if (user instanceof AdminVo) { 
-  userType = "ADMIN"; 
-} else if (user instanceof MemberVo) { userType = "MEMBER"; } 
-else if (user instanceof OwnerVo) { userType = "OWNER"; } 
 
-session.setAttribute("userType",userType);
+if (user instanceof AdminVo) {
+    userType = "ADMIN";
+     
+} else if (user instanceof MemberVo) {
+    userType = "MEMBER";
+   
+} else if (user instanceof OwnerVo) {
+    userType = "OWNER";
+    
+}
+
+// 세션에 userType과 user_id 설정
+session.setAttribute("userType", userType);
+
 %>
 
 <!DOCTYPE html>

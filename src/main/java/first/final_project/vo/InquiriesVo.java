@@ -12,6 +12,9 @@ public class InquiriesVo {
     private String inquiries_content;
     private String inquiries_pwd;
     private String inquiries_cdate;
-    private int member_id;
-    private int owner_id;
+    private String inquiries_type;
+    private Integer member_id;
+    private String memberAccountId;
+    private Integer owner_id;
+    private String ownerAccountId;
 }

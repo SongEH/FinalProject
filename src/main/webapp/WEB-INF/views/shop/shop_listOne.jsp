@@ -175,27 +175,24 @@ pageEncoding="UTF-8"%>
     }
   </style>
   <script>
-   //  main 브랜치에만 있던 코드
-    function get_menu(shop_id){
+    function get_menu(shop_id) {
       $.ajax({
-      url     :     "../menu/listByShopId.do",
-      data    :      {"shop_id": shop_id},
-      success :   function(res_data){
-              alert(res_data);
-              $("#menu_display").html(res_data).show();
-              $('#reviews_display').hide();
-              $("shop_info_display").hide();
-      },
-      error   :   function(err){
-      alert(err.responseText)
-      }
+        url: "../menu/listByShopId.do",
+        data: {
+          "shop_id": shop_id
+        },
+        success: function (res_data) {
+          alert(res_data);
+          $("#menu_display").html(res_data).show();
+          $('#reviews_display').hide();
+          $("shop_info_display").hide();
+        },
+        error: function (err) {
+          alert(err.responseText)
+        }
       });
-      }
-
+    }
   </script>
-
-
-
   <script>
     // 특정 가게 삭제 
     function shop_del(shop_id) {
@@ -218,35 +215,43 @@ pageEncoding="UTF-8"%>
     }
   </script>
 
-
-
   <script>
-    // 주문 - 한지혜 추가 
-    function orderFromShop(shop_id, shop_name) {
-
-      location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
-
+    // 선택한 가게 수정 
+    function shop_modi(f) {
+      alert("여기?");
+      alert(f.shop_id.value);
+      f.action = "modify_form.do";
+      f.submit();
     }
 
-    function reviews_list(shop_id){
+    function reviews_list(shop_id) {
       alert("도착");
       alert(shop_id);
       $.ajax({
-        url     :   "../reviews/listByShopId.do",
-        method  :   "POST",
-        data    :   {"shop_id": shop_id},
-        success :   function(res_data){
+        url: "../reviews/listByShopId.do",
+        method: "POST",
+        data: {
+          "shop_id": shop_id
+        },
+        success: function (res_data) {
           alert(res_data);
           $("#reviews_display").html(res_data).show();
           $("#menu_display").hide();
         },
-        error   :   function(err){
+        error: function (err) {
           alert(err.responseText);
         }
       });
     }
     // location.href="../reviews/listByShopId.do?shop_id=" + shop_id;
     // }
+  </script>
+  <script>
+    // 주문 - 한지혜 추가 
+    function orderFromShop(shop_id, shop_name) {
+      // location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
+      history.pushState(null, '', "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name);
+    }
   </script>
 </head>
 
@@ -278,22 +283,21 @@ pageEncoding="UTF-8"%>
               <div id="shop_content">${vo.shop_content}</div>
             </div>
 
-            <!-- menu_list 공간 -->
 
 
             <!-- 메뉴 / 클린리뷰 / 정보  -->
-
-          <div class="row" style="width:100%; margin-top: 30px;">
-            <div class="col-sm-4" style="padding:0px">
-              <div class="menu-tab border">
-                <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
-                onclick="get_menu('${vo.shop_id}')">
+            <div class="row" style="width:100%; margin-top: 30px;">
+              <div class="col-sm-4" style="padding:0px">
+                <div class="menu-tab border">
+                  <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
+                    onclick="get_menu('${vo.shop_id}')">
+                </div>
               </div>
-            </div>
-            <div class="col-sm-4" style="padding:0px">
-              <div class="menu-tab border">
-                <input type="button" id="reviewButton" value="클린리뷰(${vo.reviews_count})" onclick="reviews_list('${vo.shop_id}');"/>
-
+              <div class="col-sm-4" style="padding:0px">
+                <div class="menu-tab border">
+                  <input type="button" id="reviewButton" value="클린리뷰(${vo.reviews_count})"
+                    onclick="reviews_list('${vo.shop_id}');" />
+                </div>
               </div>
               <div class="col-sm-4" style="padding:0px">
                 <div class="menu-tab border">
@@ -303,10 +307,9 @@ pageEncoding="UTF-8"%>
             </div>
 
 
-          
-          <div class="row" style="margin-top:30px;">
-            <!--menu_list 출력 공간 -->
-            <!-- <div id="menu_display" style="padding: 0;">
+            <div class="row" style="margin-top:30px;">
+              <!--menu_list 출력 공간 -->
+              <!-- <div id="menu_display" style="padding: 0;">
               <c:forEach var="item" items="${menu_list}">
                 <div class="menu-item" style="border: 1px solid gray; height: 120px; display: flex; align-items: center; padding: 10px;">
                   <div>
@@ -319,50 +322,46 @@ pageEncoding="UTF-8"%>
               </c:forEach>
             </div> -->
 
-            <div>
-              <div id="menu_display"></div>
-            </div>
-            <!-- review list 출력 공간 -->
-            <div>
-              <div id="reviews_display"></div>
-            </div>
-            
-            <!-- shop_info_list 출력 공간 -->
-            <div id="shop_info_display">
+              <div>
+                <div id="menu_display"></div>
+              </div>
+              <!-- review list 출력 공간 -->
+              <div>
+                <div id="reviews_display"></div>
+              </div>
 
-            </div>
+              <!-- shop_info_list 출력 공간 -->
+              <div id="shop_info_display">
 
+              </div>
+            </div>
           </div>
 
-        </div>
-
-        <!-- 주문 영역 출력 공간  -->
-        <div class="col-md-4 col-sm-12">
-          <div class="order_info">
-            <!-- <div class="right-panel text-center p-3"> -->
-            <div style="background-color:black; color:white; padding: 7px;">
-              <h5>장바구니</h5>
+          <!-- 주문 영역 출력 공간  -->
+          <div class="col-md-4 col-sm-12">
+            <div class="order_info">
+              <!-- <div class="right-panel text-center p-3"> -->
+              <div style="background-color:black; color:white; padding: 7px;">
+                <h5>장바구니</h5>
+              </div>
+              <div style="border:1px solid gray; height:auto; min-height: 155px;">
+                <!-- 장바구니에 담긴 메뉴가 없습니다. -->
+                <div id="cart_list"></div>
+              </div>
+              <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
+              <!-- <button class="btn btn-secondary" disabled>주문하기</button> -->
+              <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
             </div>
-            <div style="border:1px solid gray; height:auto; min-height: 155px;">
-              <!-- 장바구니에 담긴 메뉴가 없습니다. -->
-
-              <!-- 장바구니 목록 표시  -->
-              <div id="cart_list"></div>
-            </div>
-            <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
-            <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
+            <!-- </div> -->
           </div>
-          <!-- </div> -->
         </div>
       </div>
     </div>
-    </div>
 
 
 
-  <!-- Sample Menu List -->
-  <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">
-
+    <!-- Sample Menu List -->
+    <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">
     <c:forEach var="item" items="${menu_list}">
       <div class="row col-md-8 col-sm-12 col-custom">
         <div class="menu-item" style="border: 1px solid gray; width:75%;">
@@ -377,11 +376,6 @@ pageEncoding="UTF-8"%>
     <!-- <div>
     <div id="menu_list"></div>
   </div> -->
-    </div>
-    <div class="container" style="margin:auto">
-      <div class="row" style="margin-top:30px;">
-        <%@include file="../menu/menu_list_display.jsp" %>
-      </div>
     </div>
 </body>
 

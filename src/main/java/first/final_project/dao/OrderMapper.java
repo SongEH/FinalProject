@@ -19,6 +19,8 @@ public interface OrderMapper {
 
     int delete(int orders_id);
 
+    OrderVo selectOneByOrdersId(int orders_id);
+
     List<OrderVo> getAcceptOrderList(Map<String, Object> params);
 
     void updateOrderStatus(@Param("orders_id") int orders_id, @Param("status") String status);

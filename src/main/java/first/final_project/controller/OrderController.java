@@ -8,15 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
 import first.final_project.dao.OrderMapper;
+import first.final_project.dao.ReviewsMapper;
 import first.final_project.service.OrderService;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
+import first.final_project.vo.MenuVo;
 import first.final_project.vo.OrderVo;
+import first.final_project.vo.ReviewsVo;
 import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +38,9 @@ public class OrderController {
 
 	@Autowired
 	AddrMapper addr_mapper;
+
+	@Autowired
+	ReviewsMapper reviews_mapper;
 
 	@Autowired
 	HttpServletRequest request;
@@ -61,9 +68,13 @@ public class OrderController {
 		// 전체 게시물수
 		// int rowTotal = order_mapper.selectRowTotal();
 
+		for (OrderVo vo : list) {
+			Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
+			boolean hasReview = (result != null) ? result : false;
+			vo.setHasReview(hasReview);
+		}
 		// System.out.println(rowTotal);
 		System.out.println(list);
-
 		// 결과적으로 request binding
 		model.addAttribute("list", list);
 
@@ -97,7 +108,6 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "order_show.do")
-
 	public String order_show(int orders_id, Model model) {
 
 		// 주문 1건 조회

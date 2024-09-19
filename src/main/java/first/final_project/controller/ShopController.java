@@ -105,7 +105,7 @@ public class ShopController {
         System.out.println("shop_id : " + shop_id);
         ShopVo vo;
         try {
-            vo = shop_Service.selectOne(shop_id);
+            vo = shop_Service.selectOne(shop_id); 
             List<MenuVo> menu_list = menuMapper.selectMenuList(shop_id);
             model.addAttribute("vo", vo);
             model.addAttribute("menu_list", menu_list);

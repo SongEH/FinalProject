@@ -31,7 +31,7 @@ public interface CartsMapper {
 
     void updateOrderId(Map<String, Object> map);
 
-    List<CartsVo> selectOrdersById(int orders_id);
+    List<CartsVo> selectCartListByOrdersId(int orders_id);
 
 
 }

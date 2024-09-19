@@ -100,7 +100,7 @@ public class OrderController {
 		OrderVo vo = order_mapper.selectOne(orders_id);
 
 		// 주문ID를 가진 장바구니 목록 
-		List<CartsVo> list = carts_mapper.selectOrdersById(orders_id);
+		List<CartsVo> list = carts_mapper.selectCartListByOrdersId(orders_id);
 
 		System.out.println(list);
 		model.addAttribute("vo", vo);

@@ -36,8 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       GROUP BY o.orders_id, s.shop_name, s.shop_img, a.addr_line1, a.addr_line2, m.member_phone
     </select>
 
-
-
     <!-- 등록 : !!!!!!!!!!!!!!! payment와 중복된다 -->
     <!-- <insert id="insert" parameterType="order">
     INSERT INTO Orders(

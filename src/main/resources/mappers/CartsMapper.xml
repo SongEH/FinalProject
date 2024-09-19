@@ -103,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          set orders_id=#{ orders_id }
       where shop_id=#{ shop_id }
          and member_id=#{ member_id }
+         and orders_id IS NULL;
    </update>
 
    <!-- 조건에 맞는 장바구니 항목 조회 쿼리 -->
@@ -126,7 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
 
    <!-- 주문 ID가 같은 장바구니 목록 -->
-   <select id="selectOrdersById" parameterType="int" resultType="carts">
+   <select id="selectCartListByOrdersId" parameterType="int" resultType="carts">
       SELECT 
          c.*,                         -- Carts 테이블의 모든 컬럼을 선택
          m.menu_name   AS menu_name,    -- Menu 테이블에서 메뉴명

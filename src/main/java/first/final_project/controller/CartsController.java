@@ -39,13 +39,34 @@ public class CartsController {
 	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
 
-		List<CartsVo> list = carts_mapper.selectList();
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		int member_id = user.getMember_id();
+
+		List<CartsVo> list = carts_mapper.selectList(member_id);
 		System.out.println(list);
 
 		// request binding
 		model.addAttribute("list", list);
 
 		return "carts/carts_list";
+	}
+
+	// 회원용 shop_listOne.jsp 에서 보여질 장바구니 목록
+	@RequestMapping("list2.do")
+	public String list2(@RequestParam(name = "page", defaultValue = "1") int nowPage,
+			Model model) {
+
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		int member_id = user.getMember_id();
+
+		List<CartsVo> list = carts_mapper.selectList(member_id);
+		System.out.println(list);
+
+		// request binding
+		model.addAttribute("list", list);
+
+		return "carts/carts_display"; // 반환할 뷰 이름
+
 	}
 
 	// 장바구니에 메뉴 추가
@@ -63,7 +84,7 @@ public class CartsController {
 
 		if (existingItem != null) {
 
-			// 동일 메뉴가 장바구니에 존재하면 수량만 업데이트
+			// 동일 메뉴면 수량만 업데이트
 			existingItem.setCarts_quantity(existingItem.getCarts_quantity() + carts_quantity);
 
 			carts_mapper.update(existingItem.getCarts_id(), existingItem.getCarts_quantity());
@@ -71,11 +92,9 @@ public class CartsController {
 		} else {
 			CartsVo vo = new CartsVo();
 			vo.setCarts_quantity(carts_quantity);
-
 			vo.setMember_id(member_id);
 			vo.setMenu_id(menu_id);
 			vo.setShop_id(shop_id);
-
 			carts_mapper.insert(vo);
 		}
 
@@ -104,5 +123,19 @@ public class CartsController {
 
 		return "redirect:list.do";
 
+	}
+
+	// carts_display.jsp에서 호출
+	@PostMapping("delete2.do")
+	public void delete2(@RequestParam("carts_id") int carts_id, RedirectAttributes ra) {
+		// CartsVo 정보 얻어온다
+		CartsVo vo = carts_mapper.selectOne(carts_id);
+
+		if (vo != null) {
+			carts_mapper.delete(carts_id);
+			ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
+		} else {
+			ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
+		}
 	}
 }

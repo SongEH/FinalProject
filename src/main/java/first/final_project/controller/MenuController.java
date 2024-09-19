@@ -57,12 +57,21 @@ public class MenuController {
 		int shop_id = shop_service.select_one_shop_id(owner_id);
 
 		// 페이징된 리스트를 가져온다
-		List<MenuVo> list = menu_mapper.selectList(shop_id);
+		List<MenuVo> menu_list = menu_mapper.selectList(shop_id);
 
 		// 결과적으로 request binding
-		model.addAttribute("list", list);
+		model.addAttribute("menu_list", menu_list);
 
 		return "menu/menu_list";
+	}
+
+	@RequestMapping("listByShopId.do")
+	public String listByShopId(int shop_id, Model model){
+		System.out.println("listbyShopid 도착");
+		List<MenuVo> list = menu_mapper.selectList(shop_id);
+
+		model.addAttribute("list", list);
+		return "menu/menu_listByShopId";
 	}
 
 	// 메뉴 등록 폼 띄우기

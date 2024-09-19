@@ -42,6 +42,21 @@
         gap: 10px;
     }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script>
+    var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+    var stompClient = Stomp.over(socket);
+
+    // WebSocket 연결 설정
+    stompClient.connect({}, function (frame) {
+        // 주문 상태 업데이트 메시지 구독
+        stompClient.subscribe('/topic/orders', function (message) {
+            location.reload(); // 메시지 수신 시 페이지 새로고침
+        });
+    });
+    </script>
 </head>
 <body>
     <%@include file="../common.jsp" %>

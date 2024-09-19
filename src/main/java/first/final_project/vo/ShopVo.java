@@ -27,6 +27,8 @@ public class ShopVo {
     private String shop_mdate;
     private String shop_status;
     private int owner_id;
+    private int menu_count;
+    private int reviews_count;
 
     List<MenuVo> menu_list;
 

@@ -42,4 +42,12 @@ public class OrderService {
         order_mapper.deleteOrder(orders_id);
     }
 
+    public List<OrderVo> getCompleteOrderList(int owner_id, String status) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("owner_id", owner_id);
+        params.put("status", status);
+
+        return order_mapper.getCompleteOrderList(params);
+    }
+
 }

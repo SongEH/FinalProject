@@ -1,25 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %> 
+pageEncoding="UTF-8" %>
 
-<%@ page import="first.final_project.vo.OwnerVo" %> 
+<%@ page import="first.final_project.vo.OwnerVo" %>
+<%@ page import="first.final_project.vo.MemberVo" %>
+<%@ page import="first.final_project.vo.AdminVo" %>
 
-<%@ page import="first.final_project.vo.MemberVo" %> 
-<%@ page import="first.final_project.vo.AdminVo" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<% 
+  // 세션에서 user 객체를 가져옴
+  Object user = session.getAttribute("user"); 
 
-<% // 세션에서 user 객체를 가져옴
-Object user = session.getAttribute("user"); 
+  // 사용자 객체 타입에 따라 문자열을설정합니다 
 
-// 사용자 객체 타입에 따라 문자열을설정합니다 
+  String userType = "UNKNOWN"; 
+  if (user instanceof AdminVo) { userType = "ADMIN"; } 
+  else if (user instanceof MemberVo) { userType = "MEMBER"; } 
+  else if (user instanceof OwnerVo) { userType = "OWNER"; } 
 
-String userType = "UNKNOWN"; 
-if (user instanceof AdminVo) { 
-  userType = "ADMIN"; 
-} else if (user instanceof MemberVo) { userType = "MEMBER"; } 
-else if (user instanceof OwnerVo) { userType = "OWNER"; } 
-
-session.setAttribute("userType",userType);
+  session.setAttribute("userType",userType);
 %>
 
 <!DOCTYPE html>
@@ -52,22 +51,8 @@ session.setAttribute("userType",userType);
       <!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>?? </span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/carts/list.do">
-              <i class="bi bi-circle"></i><span>(임시!)장바구니목록(회원-마이페이지)</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End Forms Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>??</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>장바구니</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
@@ -88,6 +73,11 @@ session.setAttribute("userType",userType);
           <li>
             <a href="/carts/list.do">
               <i class="bi bi-circle"></i><span>장바구니</span>
+            </a>
+          </li>
+          <li>
+            <a href="/reviews/list.do">
+              <i class="bi bi-circle"></i><span>리뷰내역</span>
             </a>
           </li>
         </ul>

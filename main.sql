@@ -131,7 +131,6 @@ CREATE TABLE `reviews` (
 	`reviews_id`	INT	NOT NULL primary key auto_increment,
 	`reviews_rating`	INT	NOT NULL,
 	`reviews_content`	VARCHAR(255)	NOT NULL,
-	`reviews_img`	VARCHAR(255)	NULL,
 	`reviews_cdate`	DATE	NOT NULL	DEFAULT (CURRENT_DATE),
 	`member_id`	INT	NOT NULL,
 	`menu_id`	INT	NOT NULL,
@@ -172,6 +171,35 @@ CREATE TABLE `answer` (
 	`board_id`	INT	NOT NULL
 );
 
+CREATE TABLE `reviews_images` (
+	`reviews_images_id`	INT	NOT NULL primary key auto_increment,
+	`reviews_img_name`	VARCHAR(255)	NOT NULL,
+	`reviews_id`	INT	NOT NULL
+);
+
+
+-- 회원테이블에 등급 
+alter table member
+add constraint fk_member_grade_id foreign key (grade_id)
+								references grade (grade_id)
+
+-- 주문테이블에 가게 , 주소, 회원
+alter table orders
+add constraint fk_orders_shop_id foreign key (shop_id)
+								references shop (shop_id) on delete cascade
+                                
+alter table orders
+add constraint fk_orders_addr_id foreign key (addr_id)
+								references addr (addr_id) on delete cascade
+                                
+alter table orders
+add constraint fk_orders_member_id foreign key (member_id)
+								references member (member_id) on delete cascade
+
+-- 리뷰테이블과 리뷰이미지 테이블 외래키 
+alter table reviews_imges
+add constraint fk_reviews_imges_reviews_id foreign key(reviews_id)
+											references reviews (reviews_id) on delete cascade
 
 -- 가게에 사장 ID 외래키 설정 
 alter table shop
@@ -182,4 +210,4 @@ add constraint fk_owner_id foreign key (owner_id)
 -- 메뉴에 가게 ID 외래키 설정 
 alter table menu
 add constraint fk_shop_id foreign key (shop_id) 
-                            references shop (shop_id) on delete casacade
+                            references shop (shop_id) on delete cascade

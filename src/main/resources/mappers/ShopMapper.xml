@@ -27,26 +27,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <!-- 전체 리스트 조회  -->
-    <select id="selectList" resultType="shop">
-        select * from shop
+    <select id="selectList" parameterType="String" resultType="shop">
+        SELECT * 
+        FROM shop
+        <where>
+            <if test="foodCategory != null and foodCategory != 'all'">
+                AND food_category = #{foodCategory}
+            </if>
+        </where>
     </select>
 
 
     <!-- 가게 1개 상세보기 + menu 호출  -->
-    <resultMap id="shopMap" type="shop">
-        <result property="shop_id" column="shop_id"/>
-        <collection property="menu_list" column="shop_id=shop_id" select="selectMenuList" />
+    <!-- <resultMap id="shopMap" type="shop">
+      <result property="shop_id" column="shop_id"/>
+      <collection property="menu_list" column="shop_id=shop_id" select="selectMenuList" />
     </resultMap>
 
     <select id="selectMenuList" resultType="menu">
         select * from menu where shop_id=#{ shop_id }
-    </select>
+    </select> -->
 
     <!-- 가게 1개 상세보기  -->
-    <select id="selectOne" parameterType="int" resultMap="shopMap">
-        select * from shop where shop_id = #{shop_id}
+    <select id="selectOne" parameterType="int" resultType="shop">
+        SELECT 
+        s.*, 
+        (SELECT COUNT(*) FROM menu WHERE shop_id = 3) AS menu_count, 
+        (SELECT COUNT(*) FROM reviews r 
+         INNER JOIN orders o ON o.orders_id = r.orders_id 
+         WHERE o.shop_id = 3) AS reviews_count
+        FROM shop s
+        WHERE s.shop_id = 3
     </select>
-
 
     <!-- 가게 데이터 불러오기 -->
     <select id="select_modify_owner_id" parameterType="int" resultType="shop">
@@ -58,6 +70,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select shop_id from shop where owner_id = #{owner_id}
     </select>
 
+    <!-- <select id="selectMenuAndReviewsCount" parameterType="int" resultType="map">
+        SELECT 
+        (SELECT COUNT(*) FROM menu WHERE shop_id = #{shop_id}) AS menu_count, 
+        (SELECT COUNT(*) FROM reviews r 
+        INNER JOIN orders o ON o.orders_id = r.orders_id 
+        WHERE o.shop_id = #{shop_id}) AS reviews_count
+    </select> -->
 
     <!-- 가게 정보 업데이트 -->
     <update id="update" parameterType="shop">

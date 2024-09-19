@@ -287,6 +287,10 @@ public class RiderController {
         // 배달 이력 상태도 '배달 중'으로 업데이트
         riderService.updateDeliveryHistory(orders_id, "배달 중");
 
+        // 현재 세션 ID를 포함하여 WebSocket 메시지 전송
+        String sessionId = session.getId();
+        messagingTemplate.convertAndSend("/topic/orders", sessionId + ": 주문 정보가 업데이트되었습니다.");
+
         return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
     }
 
@@ -298,6 +302,10 @@ public class RiderController {
 
         // 배달 이력 상태도 '배달 완료'로 업데이트
         riderService.updateDeliveryHistory(orders_id, "배달 완료");
+
+        // 현재 세션 ID를 포함하여 WebSocket 메시지 전송
+        String sessionId = session.getId();
+        messagingTemplate.convertAndSend("/topic/orders", sessionId + ": 주문 정보가 업데이트되었습니다.");
 
         return "redirect:/riders/completed"; // 진행 상황 페이지로 리다이렉트
     }

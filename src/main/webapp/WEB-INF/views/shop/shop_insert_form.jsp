@@ -59,8 +59,8 @@
                     <li class="breadcrumb-item active">Layouts</li>
                   </ol>
                 </nav>
-
               </div><!-- End Page Title -->
+              
               <section class="section">
                 <div class="row">
                   <div class="col-lg-10">

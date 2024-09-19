@@ -96,9 +96,9 @@ public class ShopController {
     public String shop_selectOne(int shop_id, Model model) {
         System.out.println("shop_id : " + shop_id);
         
-        ShopVo vo;
+        
         // Map<String, Integer> counts;  // Changed to CountsVo
-    
+        ShopVo vo = new ShopVo();
         try {
             vo = shop_Service.selectOne(shop_id);
             // counts = shop_Service.selectMenuAndReviewsCount(shop_id);

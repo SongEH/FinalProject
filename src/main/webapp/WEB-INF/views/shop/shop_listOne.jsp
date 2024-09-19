@@ -77,6 +77,8 @@ pageEncoding="UTF-8"%>
       }
       .order_info{
         width: 300px;
+        position: sticky;
+        top: 155px;
       }
       #shop_name{
         font-size: 16px;
@@ -312,25 +314,6 @@ pageEncoding="UTF-8"%>
         </div>
     </div>
   </div>
-
-
-
-  <!-- Sample Menu List -->
-  <!-- <div class="container" id="menu_list" style="margin:auto; padding:0;">
-    <c:forEach var="item" items="${menu_list}">
-      <div class="row col-md-8 col-sm-12 col-custom">
-        <div class="menu-item" style="border: 1px solid gray; width:75%;">
-          <img src="${pageContext.request.contextPath }/resources/images/${item.menu_img}" alt="menu_image" style="float:right">
-          <div>${item.menu_name}</div>
-          <div>${item.menu_content}</div>
-          <div><strong>${item.menu_price}</strong></div>
-        </div>
-      </div>
-    </c:forEach>
-  </div> -->
-  <!-- <div>
-    <div id="menu_list"></div>
-  </div> -->
 </div>
 </body>
 </html>

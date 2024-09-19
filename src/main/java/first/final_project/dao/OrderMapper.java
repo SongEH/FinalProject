@@ -13,8 +13,6 @@ public interface OrderMapper {
 
     List<OrderVo> selectList(int i);
 
-    
-
     OrderVo selectOne(int orders_id);
 
     int insert(OrderVo vo);
@@ -28,5 +26,7 @@ public interface OrderMapper {
     void updateOrderStatus(@Param("orders_id") int orders_id, @Param("status") String status);
 
     void deleteOrder(@Param("orders_id") int orders_id);
+
+    int getShopIdByOrderId(int orders_id);
 
 }

@@ -44,7 +44,7 @@ public class PaymentController {
         }
     }
 
-    // order tabel에 insert
+    // order table에 insert
     @RequestMapping(value = "/payment/insert.do")
     @ResponseBody
     public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {

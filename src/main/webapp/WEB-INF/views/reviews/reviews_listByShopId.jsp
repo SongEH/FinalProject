@@ -25,6 +25,14 @@ pageEncoding='UTF-8'%>
     .reviews-item .star-empty {
         color: #ddd;
     }
+    .ceoreview_display{
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        background-color: lightgray;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
     .slideshow-container {
         position: relative;
         max-width: 500px;
@@ -136,9 +144,25 @@ pageEncoding='UTF-8'%>
                         <div>${reviews.orders_name}</div>
                         <div>${reviews.reviews_content}</div>
                     </div>
+                    <c:choose>
+                        <c:when test="${reviews.hasCeoReview}">
+                            <div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ceoreview_display">
+                                            <div>⮑ 사장님 (${reviews.ceoreviews_cdate})</div>
+                                            <div style="margin-top: 3px;">${reviews.ceoreviews_content}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise> 
+                    </c:choose>
                 </div>
             </div>
         </c:forEach>
-</div>
+    </div>
 </body>
 </html>

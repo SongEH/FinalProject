@@ -13,32 +13,18 @@ public class ReviewsController {
 
     @Autowired
     HttpSession session;
-<<<<<<< HEAD
 
     @RequestMapping("insert_form.do")
     public String insert_form() {
-=======
-    
-    @RequestMapping("insert_form.do")
-    public String insert_form(){
->>>>>>> main
 
         return "reviews/insert_form";
     }
 
     @RequestMapping("insert.do")
-<<<<<<< HEAD
     public String insert() {
-=======
-    public String insert(){
->>>>>>> main
 
         MemberVo user = (MemberVo) session.getAttribute("user");
 
         return "reviews";
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

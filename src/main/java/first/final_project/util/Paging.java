@@ -1,6 +1,4 @@
 package first.final_project.util;
-<<<<<<< HEAD
-=======
 /*
         nowPage:현재페이지
         rowTotal:전체데이터갯수
@@ -9,7 +7,6 @@ package first.final_project.util;
 		
 		기존 paging 코드 주석처리 Commission Paging 코드 작성
  */
->>>>>>> main
 
 public class Paging {
 
@@ -70,10 +67,9 @@ public class Paging {
 
 		// 최종 생성된 HTML 문자열 반환
 		return sb.toString();
+
 	}
 }
-<<<<<<< HEAD
-=======
 
 // public class Paging {
 // public static String getPaging(String pageURL,int nowPage, int rowTotal,int
@@ -151,4 +147,3 @@ public class Paging {
 // return sb.toString();
 // }
 // }
->>>>>>> main

@@ -11,8 +11,4 @@ public class DeliveriesVo {
     private int raiders_id;
     private String deliveries_method;
     private int orders_id;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

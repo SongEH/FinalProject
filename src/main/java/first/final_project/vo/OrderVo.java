@@ -18,19 +18,6 @@ public class OrderVo {
     private Date orders_cdate;
     private String orders_status;
     private int shop_id;
-<<<<<<< HEAD
-    private String shop_name;
-    private String shop_status;
-    private String shop_img;
-    private int addr_id;
-    private String addr_line1;
-    private String addr_line2;
-    private String deliveries_method;
-    private int member_id;
-    private String member_phone;
-    private int menu_count;
-}
-=======
     private int addr_id;
     private String addr1;
     private String addr2;
@@ -45,4 +32,3 @@ public class OrderVo {
     private String delivery_history_status; // 추가
     private String member_phone; // 추가
 }
->>>>>>> main

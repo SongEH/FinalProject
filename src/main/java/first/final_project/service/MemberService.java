@@ -10,11 +10,7 @@ import first.final_project.vo.GradeVo;
 import first.final_project.vo.MemberVo;
 
 @Service
-<<<<<<< HEAD
 public class MemberService {
-=======
-public class MemberService{
->>>>>>> main
 
     @Autowired
     MemberMapper member_mapper;
@@ -55,10 +51,6 @@ public class MemberService{
         }
     }
 
-<<<<<<< HEAD
-=======
-    
->>>>>>> main
     @Transactional
     public void resetMonthlyData() {
         // 모든 회원의 주문 건수를 초기화
@@ -69,8 +61,4 @@ public class MemberService{
         member_mapper.resetGrades(silverGrade.getGrade_id());
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

@@ -39,69 +39,8 @@ public class PaymentController {
     public String getAccessToken() {
         try {
             return paymentService.getAccessToken();
-<<<<<<< HEAD
         } catch (Exception e) {
             return "Error fetching access token: " + e.getMessage();
-=======
-        } catch (Exception e) {
-            return "Error fetching access token: " + e.getMessage();
-        }
-    }
-
-    // order tabel에 insert
-    @RequestMapping(value = "/payment/insert.do")
-    @ResponseBody
-    public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {
-
-        System.out.println(vo);
-
-        try {
-            paymentService.insert(vo);
-
-            Integer orders_id = vo.getOrders_id();
-            System.out.println("orders_id : " + orders_id);
-
-            // 주문 후에는 장바구니 테이블에 주문 id 부여 
-            Map<String, Object> map = new HashMap<>();
-            map.put("orders_id", orders_id);
-            map.put("shop_id", shop_id);
-            map.put("member_id", member_id);
-
-            // update 메서드 호출
-            carts_mapper.updateOrderId(map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @GetMapping("/api/payment/data/{impUid}")
-    @ResponseBody
-    public String getPaymentData(@PathVariable String impUid) {
-        System.out.println("도착");
-        System.out.println(impUid);
-
-        try {
-            // accessToken 발급 받기
-            String accessToken = paymentService.getAccessToken();
-            System.out.println("AccessToken: " + accessToken);
-            if (accessToken == null || accessToken.isEmpty()) {
-                System.out.println("AccessToken이 유효하지 않습니다.");
-                return "error/error_page";
-            }
-
-            // 결제 데이터 가져오기
-            JsonNode paymentData = paymentService.getPaymentData(impUid, accessToken);
-            System.out.println("PaymentData: " + paymentData);
-            if (paymentData == null) {
-                System.out.println("결제 데이터가 없습니다.");
-                return "error/error_page";
-            }
-
-            return paymentData.toString();
-        } catch (Exception e) {
-            e.printStackTrace(); // 예외의 스택 트레이스를 콘솔에 출력
-            return "error/error_page";
->>>>>>> main
         }
     }
 

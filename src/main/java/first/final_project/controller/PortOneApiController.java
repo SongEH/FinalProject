@@ -22,8 +22,4 @@
 // public String init() {
 // this.iamportClient = new IamportClient(apiKey, secretKey);
 // }
-<<<<<<< HEAD
 // }
-=======
-// }
->>>>>>> main

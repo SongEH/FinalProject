@@ -20,9 +20,4 @@ public class MemberVo {
     String member_grade;
     int grade_id;
 
-<<<<<<< HEAD
 }
-=======
-    
-}
->>>>>>> main

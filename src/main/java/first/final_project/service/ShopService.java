@@ -26,14 +26,7 @@ public interface ShopService {
     // 가게 삭제하기
     int delete(int shop_id);
 
-<<<<<<< HEAD
     // Owner_id로 shop_id 찾아오기
     int select_one_shop_id(int owner_id);
 
 }
-=======
-    // Owner_id로 shop_id 찾아오기 
-    int select_one_shop_id(int owner_id);
-
-}
->>>>>>> main

@@ -11,9 +11,4 @@ public class AdminVo {
     String admin_accountId;
     String admin_pwd;
 
-<<<<<<< HEAD
 }
-=======
-   
-}
->>>>>>> main

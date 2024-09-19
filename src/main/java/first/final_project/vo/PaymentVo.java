@@ -23,8 +23,4 @@ public class PaymentVo {
     private int addr_id;
     private int member_id;
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

@@ -5,10 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.GetMapping;
->>>>>>> main
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,19 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
 import first.final_project.dao.OrderMapper;
-<<<<<<< HEAD
-=======
 import first.final_project.service.OrderService;
->>>>>>> main
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
 import first.final_project.vo.MenuVo;
 import first.final_project.vo.OrderVo;
-<<<<<<< HEAD
-=======
 import first.final_project.vo.OwnerVo;
->>>>>>> main
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -107,21 +98,14 @@ public class OrderController {
 		return "order/order_pending_list";
 	}
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> main
 	@RequestMapping(value = "order_show.do")
+
 	public String order_show(int orders_id, Model model) {
 
 		// 주문 1건 조회
 		OrderVo vo = order_mapper.selectOne(orders_id);
 
-<<<<<<< HEAD
 		// 주문ID를 가진 장바구니 목록
-=======
-		// 주문ID를 가진 장바구니 목록 
->>>>>>> main
 		List<CartsVo> list = carts_mapper.selectOrdersById(orders_id);
 
 		System.out.println(list);
@@ -173,9 +157,6 @@ public class OrderController {
 	// return "redirect:list.do";
 	// }
 
-<<<<<<< HEAD
-}
-=======
 	@GetMapping("accept.do")
 	public String getAcceptOrderList(Model model) {
 		// 세션에서 가계 정보를 가져옴
@@ -229,4 +210,3 @@ public class OrderController {
 	}
 
 }
->>>>>>> main

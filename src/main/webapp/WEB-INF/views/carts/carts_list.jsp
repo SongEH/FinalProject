@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -112,7 +113,7 @@
                   <td class="cart_total_price">
                     ${vo.menu_price * vo.carts_quantity}
                   </td>
-                  <td class="cart_cdate">${vo.carts_cdate}</td>
+                  <td class="cart_cdate"> <fmt:formatDate value="${vo.carts_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" /></td>
 
                   <td>
                     <input class="btn btn-danger" type="button" value="삭제" onclick="delete_carts('${vo.carts_id}');">

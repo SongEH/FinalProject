@@ -7,6 +7,12 @@ import lombok.Data;
 @Data
 @Alias("coupon")
 public class CouponVo {
+    int coupon_id;
+    int member_id;
+    String coupon_code;
+    int discount_admount;
+    String member_name;
+
     public void setMemberId(int member_id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setMemberId'");

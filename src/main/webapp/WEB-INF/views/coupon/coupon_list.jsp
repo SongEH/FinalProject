@@ -18,7 +18,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <!-- side bar import -->
     <%@include file="../sidebar.jsp" %>
     <main id="main" class="main">
-      <h1>발급된 쿠폰 리스트 (관리자용)</h1>
+      <h1>발급된 쿠폰 리스트</h1>
 
       <c:if test="${not empty coupons}">
         <table border="1">
@@ -40,9 +40,9 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                 <td>${coupon.issued_date}</td>
                 <td>
                   <c:choose>
-                    <c:when test="${coupon.used_date != null}"
-                      >${coupon.used_date}</c:when
-                    >
+                    <c:when test="${coupon.used_date != null}">
+                      ${coupon.used_date}
+                    </c:when>
                     <c:otherwise>미사용</c:otherwise>
                   </c:choose>
                 </td>

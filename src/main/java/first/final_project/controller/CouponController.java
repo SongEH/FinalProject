@@ -14,16 +14,14 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/coupon/")
-public class CounponController {
+public class CouponController {
 
-    @Autowired
-    HttpSession session;
     @Autowired
     private CouponService couponService;
 
+    // 쿠폰 메인 페이지
     @RequestMapping("main.do")
     public String list() {
-
         return "coupon/coupon_main";
     }
 
@@ -34,12 +32,14 @@ public class CounponController {
         return "redirect:/coupon/success"; // 성공 페이지로 리디렉션
     }
 
+    // 발급 성공 페이지
     @RequestMapping("/success")
     public String successPage() {
-        return "coupon/success"; // JSP 또는 HTML 경로
+        return "coupon/success"; // 성공 페이지로 이동
     }
 
-    // @RequestMapping("list.do")
+    // // 특정 회원의 쿠폰 리스트 조회
+    // @RequestMapping("listMember.do")
     // public String listCouponsForMember(Model model, HttpSession session) {
     // MemberVo member = (MemberVo) session.getAttribute("member"); // 세션에서 로그인된 회원
     // 정보 가져오기

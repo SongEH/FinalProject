@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 삭제 -->
     <delete id="delete" parameterType="int">
-     delete from Orders
+     delete from orders
      where order_id=#{order_id}
     </delete>
 
@@ -163,9 +163,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY o.orders_cdate DESC
         LIMIT #{offset}, #{blockList};
     </select>
-
-    
-
 
     <!-- 날짜 범위에 따른 주문 건수 조회 쿼리 -->
     <select id="getTotalCountByDate" parameterType="map" resultType="int">

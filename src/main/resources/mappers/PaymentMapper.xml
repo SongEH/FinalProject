@@ -35,12 +35,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                             )  
     </insert>
 
-
-
-
-
-
-
-
+    <select id="selectPaymentByOrderId" resultType="payment">
+        SELECT * FROM orders WHERE orders_id = #{orders_id}
+    </select>
 
 </mapper>

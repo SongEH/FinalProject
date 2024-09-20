@@ -50,7 +50,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select shop_id from shop where owner_id = #{owner_id}
     </select>
 
-
     <!-- 소프트 삭제 -->
     <update id="softDelete" parameterType="int">
         UPDATE orders

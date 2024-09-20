@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class KakaoMapService {
 
-    private final String apiKey = "468780eb2df5022cd5c83fcacdc8b927"; // 실제 API 키를 넣으세요
+    private final String apiKey = "468780eb2df5022cd5c83fcacdc8b927";
 
     public double[] getCoordinates(String address) throws Exception {
         String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + address;
@@ -41,5 +41,17 @@ public class KakaoMapService {
         }
 
         throw new RuntimeException("입력한 주소를 찾을 수 없습니다. 정확한 주소를 입력해주세요.");
+    }
+
+    // 좌표 간 거리 계산 (Haversine Formula)
+    public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        double earthRadius = 6371e3; // 지구 반지름 (미터)
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return earthRadius * c;  // 거리 (미터 단위)
     }
 }

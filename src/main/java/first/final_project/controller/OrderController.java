@@ -3,6 +3,8 @@ package first.final_project.controller;
 import java.util.List;
 import java.util.Map;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -12,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import first.final_project.dao.AddrMapper;
 import first.final_project.dao.CartsMapper;
 import first.final_project.dao.OrderMapper;
 import first.final_project.dao.ReviewsMapper;
 import first.final_project.service.OrderService;
+import first.final_project.service.PaymentService;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
@@ -24,6 +29,7 @@ import first.final_project.vo.MenuVo;
 import first.final_project.vo.OrderVo;
 import first.final_project.vo.ReviewsVo;
 import first.final_project.vo.OwnerVo;
+import first.final_project.vo.PaymentVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -59,7 +65,11 @@ public class OrderController {
 	@Autowired
 	SimpMessagingTemplate messagingTemplate;
 
-	// 페이징 처리 전
+  @Autowired
+  PaymentService paymentService;
+
+
+  // 페이징 처리 전
 	// /menu/list.do
 	// /menu/list.do?page=2
 	// 주문 내역 확인
@@ -248,7 +258,33 @@ public class OrderController {
 
 	@GetMapping("cancel")
 	public String deleteOrder(@RequestParam("orders_id") int orders_id) {
-		// 주문 삭제하기
+		// // 주문 정보 조회
+		// PaymentVo payment = paymentService.getPaymentByOrderId(orders_id);
+
+		// try {
+		// 	// 결제 취소 처리 (아임포트 결제 취소 API 호출)
+		// 	JsonNode cancelResponse = paymentService.cancelPaymentByOrder(payment.getOrders_imp_uid(), payment.getOrders_price());
+	
+		// 	// API 응답 전체를 출력해서 확인
+		// 	System.out.println("Cancel Response: " + cancelResponse.toString());
+
+		// 	// 응답의 "response" 노드 확인
+		// 	JsonNode responseNode = cancelResponse.get("response");
+			
+		// 	// 결제 취소 결과 확인
+		// 	if (responseNode != null && responseNode.get("status").asText().equals("cancelled")) {
+		// 		// 결제 취소 성공 시 주문 삭제 처리
+		// 		orderService.deleteOrder(orders_id);
+		// 		return "redirect:/order/accept.do?success=OrderAndPaymentCancelled";
+		// 	} else {
+		// 		// 결제 취소 실패 시 처리
+		// 		return "redirect:/order/accept.do?error=PaymentCancelFailed";
+		// 	}
+		// } catch (IOException e) {
+		// 	e.printStackTrace();
+		// 	return "redirect:/order/accept.do?error=PaymentCancelError";
+		// }
+		// 결제 취소 성공 시 주문 삭제 처리
 		orderService.deleteOrder(orders_id);
 		return "redirect:/order/accept.do";
 	}

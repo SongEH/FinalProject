@@ -30,6 +30,6 @@ public interface OrderMapper {
     List<OrderVo> getCompleteOrderList(Map<String, Object> params);
 
 
-    int getShopIdByOrderId(int orders_id);
+    int getShopIdByOrderId(int owner_id);
 
 }

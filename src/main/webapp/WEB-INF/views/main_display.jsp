@@ -96,10 +96,12 @@ pageEncoding="UTF-8"%>
     <div class="header">
       <h1>요기요</h1>
       <h2>"어디로 배달해 드릴까요?"</h2>
+      <input type="button" value="login" 
+      onclick="location.href='../member/login.do'"/>
     </div>
 
     <div class="search-bar">
-      <input type="text" placeholder="서울특별시 관악구 봉천동 1690-41 골든" />
+      <input type="text" placeholder="주소를 입력해주세요" />
       <button>검색</button>
     </div>
 

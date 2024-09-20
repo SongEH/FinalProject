@@ -90,6 +90,12 @@ public class ShopController {
         if (member == null) {
             // 로그인되어 있지 않을 때 기본 가게 리스트를 보여줌
             list = shop_Service.selectList(food_category);
+            for(ShopVo vo : list){
+                if(vo.getShop_rating() !=null){
+                    BigDecimal shop_rating = vo.getShop_rating().setScale(1, RoundingMode.HALF_UP);
+                    vo.setShop_rating(shop_rating);
+                }
+            }
             model.addAttribute("list", list);
         }else{
             // 고객의 주소 정보를 DB에서 조회
@@ -124,6 +130,10 @@ public class ShopController {
                     if (distance <= radius) {
                         list.add(shop);
                         //System.out.println("등록완료");
+                    }
+                    if(shop.getShop_rating() !=null){
+                        BigDecimal shop_rating = shop.getShop_rating().setScale(1, RoundingMode.HALF_UP);
+                        shop.setShop_rating(shop_rating);
                     }
                     //System.out.println("3 : " + shopCoordinates[0] + " " + shopCoordinates[1]);
                     //System.out.println("4 : " + distance);

@@ -108,6 +108,12 @@
                     <div class="button-container">
                     <!-- orders_status가 '주문 대기'일 때만 "주문 대기" 버튼 표시 -->
                     <c:if test="${order.orders_status == '주문 대기'}">
+                        <button
+                        onclick="window.open('${pageContext.request.contextPath}/riders/route?orders_id=${order.orders_id}', '경로보기', 'width=800,height=600');"
+                        class="route-button"
+                        >
+                        위치 확인
+                        </button>
                         <form
                         action="${pageContext.request.contextPath}/order/accept"
                         >

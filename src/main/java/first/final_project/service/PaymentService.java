@@ -85,6 +85,36 @@ public class PaymentService {
         return paymentMapper.insert(vo);
     }
 
+    // //결제 취소 메서드
+    // public JsonNode cancelPaymentByOrder(String impUid, int cancelAmount) throws IOException {
+    //     String accessToken = getAccessToken(); // 결제 취소를 위해 access_token을 가져옴
+    //     System.out.println("aaaaaa : " + accessToken);
+        
+    //     try (CloseableHttpClient client = HttpClients.createDefault()) {
+    //         HttpPost httpPost = new HttpPost("https://api.iamport.kr/payments/cancel");
+    //         httpPost.setHeader("Authorization", accessToken);
+    //         httpPost.setHeader("Content-Type", "application/json");
+    
+    //         // JSON 형식의 요청 바디 구성
+    //         String json = "{\"merchant_uid\":\"" + impUid + "\","
+    //                     + "\"amount\":\"" + cancelAmount + "\","
+    //                     + "\"reason\":\"주문 취소에 따른 결제 취소\"}";
+    //         StringEntity entity = new StringEntity(json);
+    //         httpPost.setEntity(entity);
+    
+    //         try (CloseableHttpResponse response = client.execute(httpPost)) {
+    //             ObjectMapper mapper = new ObjectMapper();
+    //             JsonNode node = mapper.readTree(response.getEntity().getContent());
+    //             return node; // 취소 결과 반환
+    //         }
+    //     }
+    // }
+
+    // public PaymentVo getPaymentByOrderId(int orders_id) {
+    //     return paymentMapper.selectPaymentByOrderId(orders_id);
+    // }
+    
+
 }
 // // 결제 데이터 검증 ( 고민되는 부분 영역)
 // public void verifyPayment(String merchantUid, JsonNode payment) throws

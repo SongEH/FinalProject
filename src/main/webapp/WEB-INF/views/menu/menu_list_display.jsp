@@ -156,7 +156,7 @@ pageEncoding="UTF-8" %>
             <!-- popup:Modal -->
 
             <div class="col-md-4">
-              <img src="../resources/images/${item.menu_img}" class="img-fluid rounded-start" alt="...">
+              <img id="menuImg" src="../resources/images/${item.menu_img}" class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-8">
               <div class="card-body">

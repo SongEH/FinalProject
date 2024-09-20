@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -79,11 +80,13 @@
               <h5 class="card-title">주문 상세보기</h5>
               <p>${ vo.shop_name }</p>
               <p>${ vo.orders_name }</p>
-              <p>주문일시 ${vo.orders_cdate}</p>
+              <p>주문일시
+                <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
+              </p>
               <p>주문번호 ${vo.orders_merchant_uid}</p>
 
               <hr>
-              메뉴 목록 들...
+              메뉴 목록
 
               <table>
                 <c:forEach var="vo" items="${list}">

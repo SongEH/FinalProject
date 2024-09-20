@@ -24,6 +24,7 @@ public class OrderVo {
     private String addr2;
     private int member_id;
     private String shop_img;
+    private int orders_isdelete;
 
     private String shop_name; // 추가
     private String deliveries_method; // 추가

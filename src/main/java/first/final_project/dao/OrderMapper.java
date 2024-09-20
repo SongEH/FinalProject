@@ -17,7 +17,7 @@ public interface OrderMapper {
 
     int insert(OrderVo vo);
 
-    int delete(int orders_id);
+    void softDelete(int orders_id);
 
     OrderVo selectOneByOrdersId(int orders_id);
 

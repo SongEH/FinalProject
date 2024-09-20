@@ -53,6 +53,10 @@ public class OrderService {
         return order_mapper.getCompleteOrderList(params);
     }
 
+    // 주문내역 삭제(소프트 삭제)
+    public void softDelete(int orders_id){
+        order_mapper.softDelete(orders_id);
+    }
 
     // 회원 주문목록 필터링
     // 1. 필터 없이 전체 주문 목록을 페이징 처리해서 가져오는 메서드

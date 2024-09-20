@@ -51,11 +51,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <!-- 삭제 -->
-    <delete id="delete" parameterType="int">
-     delete from Orders
-     where order_id=#{order_id}
-    </delete>
+    <!-- 소프트 삭제 -->
+    <update id="softDelete" parameterType="int">
+        UPDATE orders
+        SET orders_isdelete = 1
+        WHERE orders_id = #{orders_id}
+    </update>
 
 
     <select id="getAcceptOrderList" parameterType="map" resultType="order">
@@ -95,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 총 주문 건수 조회 쿼리 -->
     <select id="getTotalCount" parameterType="int" resultType="int">
-        SELECT COUNT(*) FROM orders WHERE member_id = #{member_id}
+        SELECT COUNT(*) FROM orders WHERE member_id = #{member_id} AND orders_isdelete = 0
     </select>
 
     <!-- 페이징 처리된 완료된 주문 목록을 가져오는 쿼리 -->
@@ -109,7 +110,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN shop s ON o.shop_id = s.shop_id
         LEFT JOIN carts c ON o.orders_id = c.orders_id
         LEFT JOIN addr a ON o.addr_id = a.addr_id 
-        WHERE o.member_id = #{member_id}
+        WHERE o.member_id = #{member_id} 
+        AND o.orders_isdelete = 0
         GROUP BY o.orders_id, s.shop_name, s.shop_img
         ORDER BY o.orders_cdate DESC
         LIMIT #{offset}, #{blockList};       
@@ -119,10 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 날짜 범위로 필터링된 주문 목록을 조회 쿼리 -->
     <select id="selectPageListByDate" parameterType="map" resultType="order">
         SELECT 
-            o.orders_id,  -- 필요한 컬럼들만 명시적으로 선택
-            o.member_id,
-            o.orders_cdate,
-            o.addr_id,
+            o.*,
             s.shop_name, 
             s.shop_img,
             COUNT(c.menu_id) AS menu_count
@@ -131,6 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN carts c ON o.orders_id = c.orders_id
         LEFT JOIN addr a ON o.addr_id = a.addr_id 
         WHERE o.member_id = #{member_id}
+        AND o.orders_isdelete = 0
         <if test="startDate != null and startDate != ''">
             AND o.orders_cdate &gt;= #{startDate}
         </if>
@@ -147,6 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT COUNT(*)
         FROM orders o
         WHERE o.member_id = #{member_id}
+        AND o.orders_isdelete = 0
         <if test="startDate != null and startDate != ''">
             AND o.orders_cdate &gt;= #{startDate}
         </if>

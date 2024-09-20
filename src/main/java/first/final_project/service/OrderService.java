@@ -54,7 +54,7 @@ public class OrderService {
     }
 
 
-    // 필터링
+    // 회원 주문목록 필터링
     // 1. 필터 없이 전체 주문 목록을 페이징 처리해서 가져오는 메서드
     public Map<String, Object> getPagedOrder(int member_id, int page) {
 
@@ -96,7 +96,7 @@ public class OrderService {
         return result; // JSP로 반환할 데이터
     }
 
-    // 진행예정
+    
     // 필터(날짜 범위)가 적용된 데이터를 페이징 처리하여 가져오는 메서드
     public Map<String, Object> getPagedOrder(int member_id, int page, String startDate, String endDate) {
         // 한 페이지에 보여줄 배달 목록의 개수

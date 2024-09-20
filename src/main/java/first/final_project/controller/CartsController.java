@@ -33,8 +33,7 @@ public class CartsController {
 	@Autowired
 	ServletContext application;
 
-	// /menu/list.do
-	// /menu/list.do?page=2
+	// 장바구니 목록
 	@RequestMapping("list.do")
 	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
@@ -102,7 +101,6 @@ public class CartsController {
 	}
 
 	// 수정
-	// /carts/modify.do?carts_id=9&carts_quantity=5
 	@PostMapping("modify.do")
 	public String modify(int carts_id, int carts_quantity, RedirectAttributes ra) {
 		carts_mapper.update(carts_id, carts_quantity);
@@ -111,8 +109,6 @@ public class CartsController {
 	} 
 
 	// 삭제
-	// /carts/delete.do?carts_id=5
-	// /carts/delete.do?carts_id=5&page=2
 	@RequestMapping("delete.do")
 	public String delete(int carts_id, RedirectAttributes ra) {
 

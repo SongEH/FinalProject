@@ -30,7 +30,15 @@
   </style>
 
 
-  <script type="text/javascript"> </script>
+  <script type="text/javascript">
+    
+    function delete_order(orders_id) {
+
+      if (confirm("정말 삭제하시겠습니까?") == false) return;
+
+      location.href = "delete.do?orders_id=" + orders_id;
+    }
+  </script>
 
 
 
@@ -128,7 +136,9 @@
               <p>가게 요청사항 ${ vo.orders_srequest }</p>
               <p>배달 요청사항 ${ vo.orders_drequest }</p>
 
-              <button>주문내역 삭제</button>
+              <input class="btn btn-danger" type="button" value="주문내역삭제"
+                    onclick="delete_order('${vo.orders_id}');">
+            
               <button>같은 메뉴 담기</button>
             </div>
           </div>

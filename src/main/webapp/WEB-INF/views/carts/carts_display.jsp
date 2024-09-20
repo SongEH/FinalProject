@@ -19,7 +19,6 @@ pageEncoding="UTF-8" %>
             success: function (response) {
                 // 성공적으로 삭제되었을 경우 처리
                 alert("삭제되었습니다.");
-                // 페이지를 새로고침하거나 목록을 업데이트하는 코드 추가 가능
                 location.reload(); // 페이지 새로고침
             },
             error: function (xhr, status, error) {

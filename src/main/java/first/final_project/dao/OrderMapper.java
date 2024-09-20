@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import first.final_project.vo.CompletedDeliveryVo;
 import first.final_project.vo.OrderVo;
 
 @Mapper

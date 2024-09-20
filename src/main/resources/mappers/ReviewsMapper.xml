@@ -33,7 +33,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.shop_id, 
         s.shop_name,
         m.member_id, 
-        m.member_name
+        m.member_name,
+        c.ceoreviews_cdate,
+        c.ceoreviews_content,
+        c.ceoreviews_id
     FROM 
         reviews r
     INNER JOIN
@@ -42,6 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         shop s ON o.shop_id = s.shop_id 
     INNER JOIN 
         member m ON o.member_id = m.member_id
+    left join
+        ceoreview c on r.reviews_id = c.reviews_id
     WHERE 
         m.member_id = #{member_id}
 </select>

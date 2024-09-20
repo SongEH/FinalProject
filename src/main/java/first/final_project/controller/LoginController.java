@@ -91,6 +91,9 @@ public class LoginController {
         String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
         return "redirect:" + redirectUrl;
 
+        // 절대 경로 사용 (수정 by 태광)
+        // return "";
+
         // if (url == null || url.isEmpty())
         // return "redirect:/main.do";
         // else

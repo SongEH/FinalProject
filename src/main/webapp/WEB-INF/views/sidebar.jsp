@@ -121,6 +121,16 @@ pageEncoding="UTF-8" %>
               <i class="bi bi-circle"></i><span>Form Validation</span>
             </a>
           </li>
+          <li>
+            <a href="/coupon/main.do">
+              <i class="bi bi-circle"></i><span>쿠폰 발행</span>
+            </a>
+          </li>
+          <li>
+            <a href="/coupon/list.do">
+              <i class="bi bi-circle"></i><span>쿠폰 조회</span>
+            </a>
+          </li>
         </ul>
       </li>
       <!-- End Forms Nav -->

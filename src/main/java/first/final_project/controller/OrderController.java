@@ -1,6 +1,7 @@
 package first.final_project.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -61,26 +62,95 @@ public class OrderController {
 	// /menu/list.do
 	// /menu/list.do?page=2
 	// 주문 내역 확인
+	// @RequestMapping("list.do")
+	// public String list(@RequestParam(name = "page", defaultValue = "1") int
+	// nowPage,
+	// Model model) {
+
+	// MemberVo user = (MemberVo) session.getAttribute("user");
+
+	// List<OrderVo> list = order_mapper.selectList(user.getMember_id());
+
+	// // 전체 게시물수
+	// // int rowTotal = order_mapper.selectRowTotal();
+
+	// for (OrderVo vo : list) {
+	// Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
+	// boolean hasReview = (result != null) ? result : false;
+	// vo.setHasReview(hasReview);
+	// }
+	// // System.out.println(rowTotal);
+	// System.out.println(list);
+	// // 결과적으로 request binding
+	// model.addAttribute("list", list);
+
+	// return "order/order_list";
+	// }
+
 	@RequestMapping("list.do")
-	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
+	public String list(@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "startDate", required = false) String startDate, // 요청 파라미터로 시작 날짜 필터를 받음. 필수 값이 아니기
+																					// 때문에 null일 수 있음
+			@RequestParam(name = "endDate", required = false) String endDate, // 요청 파라미터로 종료 날짜 필터를 받음. 필수 값이 아니기 때문에
+																				// null일 수 있음
 			Model model) {
 
-		MemberVo user = (MemberVo) session.getAttribute("user");
+		// OrderService에서 결과를 담을 Map 객체
+		Map<String, Object> resultMap;
 
-		List<OrderVo> list = order_mapper.selectList(user.getMember_id());
+		// 로그인한 member_id
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		int member_id = user.getMember_id();
+	
+
+		// 필터가 없는 경우(날짜 필터 값이 null이거나 빈 값일 경우) 전체 목록을 가져옴
+        if ((startDate == null || startDate.isEmpty()) && (endDate == null || endDate.isEmpty())) {
+            resultMap = orderService.getPagedOrder(member_id, page); // 전체 배달 목록
+        } else {
+            // 필터가 있는 경우 해당 날짜 범위에 맞는 목록을 가져옴
+            resultMap = orderService.getPagedOrder(member_id, page, startDate, endDate); // 필터 적용된 목록
+        }
+
+		
 
 		// 전체 게시물수
 		// int rowTotal = order_mapper.selectRowTotal();
-		
-		for (OrderVo vo : list) {
+
+		// List<OrderVo> list = order_mapper.selectList(member_id);
+
+		// for (OrderVo vo : list) {
+		// 	Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
+		// 	boolean hasReview = (result != null) ? result : false;
+		// 	vo.setHasReview(hasReview);
+		// }
+
+		// model.addAttribute("list", list);
+
+		List<OrderVo> order_list = (List<OrderVo>) resultMap.get("order_list");
+
+		for (OrderVo vo : order_list) {
 			Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
 			boolean hasReview = (result != null) ? result : false;
 			vo.setHasReview(hasReview);
 		}
-		// System.out.println(rowTotal);
-		System.out.println(list);
+
+
 		// 결과적으로 request binding
-		model.addAttribute("list", list);
+		model.addAttribute("list", order_list);
+		System.out.println("order_list : " + order_list);
+		System.out.println("order_list count : " + order_list.size());
+		
+		// 페이지 메뉴 데이터를 모델에 추가하여 JSP에 전달 (페이징 처리된 페이지 번호)
+        model.addAttribute("pageMenu", resultMap.get("pageMenu"));
+
+        // 현재 페이지 번호를 모델에 추가하여 JSP에 전달
+        model.addAttribute("currentPage", page);
+
+        // 필터 값을 모델에 추가하여 JSP에서 필터를 유지할 수 있게 함
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+		
+		
 
 		return "order/order_list";
 	}
@@ -107,18 +177,18 @@ public class OrderController {
 		model.addAttribute("addr_list", addr_list);
 
 		// 2. 등록된 주소 이외의 추가 주소정보 등록
+		// 추가 고려 .. 
 
 		return "order/order_pending_list";
 	}
 
-	
 	@RequestMapping(value = "order_show.do")
 	public String order_show(int orders_id, Model model) {
 
 		// 주문 1건 조회
 		OrderVo vo = order_mapper.selectOne(orders_id);
 
-		// 주문ID를 가진 장바구니 목록 
+		// 주문ID를 가진 장바구니 목록
 		List<CartsVo> list = carts_mapper.selectCartListByOrdersId(orders_id);
 
 		System.out.println(list);

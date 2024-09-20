@@ -44,4 +44,6 @@ public interface OrderMapper {
     List<OrderVo> selectPageListByDate(Map<String, Object> params);
     ///////////////////// 페이징 END //////////////////////
 
+    int getShopIdByOrderId(int orders_id);
+
 }

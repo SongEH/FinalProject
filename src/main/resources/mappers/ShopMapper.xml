@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          INNER JOIN orders o ON o.orders_id = r.orders_id 
          WHERE o.shop_id = 3) AS reviews_count
         FROM shop s
-        WHERE s.shop_id = 3
+        WHERE s.shop_id = #{shop_id}
     </select>
 
     <!-- 가게 데이터 불러오기 -->

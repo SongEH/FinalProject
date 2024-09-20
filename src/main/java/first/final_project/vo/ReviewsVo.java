@@ -27,8 +27,14 @@ public class ReviewsVo {
     private String member_name;
     private String orders_name;
     private int orders_price;
+    private int owner_id;
+    private String ceoreviews_content;
+    private String ceoreviews_cdate;
+    private int ceoreviews_id;
 
+    private boolean hasCeoReview;
 
+    // CeoReviewVo vo = new CeoReviewVo();
 
     // 이미지 저장 
     List<ReviewsImagesVo> reviews_img_list = new ArrayList<>();

@@ -53,6 +53,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result property="reviews_cdate" column="reviews_cdate"/>
     <result property="shop_name" column="shop_name"/> 
     <result property="orders_id" column="orders_id"/>
+    <!-- <result property="ceoreviews_cdate" column="ceoreviews_cdate"/>
+    <result property="ceoreviews_content" column="ceoreviews_content"/>
+    <result property="ceoreviews_id" column="ceoreviews_id"/> -->
     <collection property="reviews_img_list"
                 ofType="reviewsImages"
                 column="reviews_id"
@@ -68,7 +71,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.shop_id, 
         s.shop_name,
         m.member_id, 
-        m.member_name
+        m.member_name,
+        s.owner_id,
+        c.ceoreviews_cdate,
+        c.ceoreviews_content,
+        c.ceoreviews_id
     FROM 
         reviews r
     INNER JOIN
@@ -77,6 +84,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         shop s ON o.shop_id = s.shop_id 
     INNER JOIN 
         member m ON o.member_id = m.member_id
+    left join
+        ceoreview c on r.reviews_id = c.reviews_id
     WHERE 
         s.shop_id = #{shop_id}
 </select>
@@ -92,6 +101,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="checkReviewExists" parameterType="int" resultType="Boolean">
         select reviews_id from reviews where orders_id = #{orders_id}
     </select>
+
+    <select id="checkCeoReviewExists" parameterType="int" resultType="Boolean">
+        select ceoreviews_id from ceoreview where reviews_id = #{reviews_id}
+    </select>
+
+
+
 
     <!-- insert reviews -->
     <insert id="insert" parameterType="reviews">

@@ -137,8 +137,6 @@ public class OrderService {
 
         // 페이징 처리된 필터된 배달 목록을 가져옴
         List<OrderVo> order_list = order_mapper.selectPageListByDate(params);
-
-        System.out.println("order_list222" + order_list);
         
         // 필터와 함께 페이징 메뉴를 생성 (HTML 형태로 페이지 번호 목록을 생성)
         String pageMenu = Paging.getPaging(

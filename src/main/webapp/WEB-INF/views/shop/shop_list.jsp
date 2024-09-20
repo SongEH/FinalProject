@@ -19,10 +19,16 @@ body {
   padding: 0;
 }
 .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-sizing: border-box;
+}
+/* .container::after{
+  content:"";
+  display:block;
+  clear:both;
+} */
 header {
   background-color: #ff3366;
   color: white;
@@ -82,23 +88,25 @@ header .login {
   cursor: pointer;
   color: #ff3366;
 }
+
 .store-list {
     display: flex;
-    flex-wrap: wrap; /* This allows the stores to wrap to the next line if needed */
-    justify-content: space-between; /* Distribute space evenly between stores */
-    gap: 20px; /* Adds space between items */
+    flex-wrap: wrap;                 /* This allows the stores to wrap to the next line if needed*/
+    justify-content: space-between;  /*Distribute space evenly between stores */
+    gap: 20px;                       /*   Adds space between items */
+  
 }
 
 /* Each store block */
 .store {
-    width: calc(50% - 10px); /* Each store takes 50% of the container's width, minus spacing */
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 15px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: calc(50% - 10px); /* Each store takes 50% of the container's width, minus spacing */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Flex properties for the store info */
@@ -108,8 +116,8 @@ header .login {
 }
 
 .store-logo img {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     margin-right: 15px;
 }
@@ -207,7 +215,7 @@ header .login {
                 $("#store-list").hide();
                 // $('#menu_display').hide();
                 $('#menuButton').click();
-                // $('#menuButton').focus();
+                $('#menuButton').focus();
           },
           error   :   function(err){
             alert(error.responseText);
@@ -215,8 +223,8 @@ header .login {
         });
       }
     </script>
-  </head>
-  <body>
+</head>
+<body>
     <header>
       <div class="logo">오기요</div>
       <a href="#" class="login">로그인</a>
@@ -293,7 +301,7 @@ header .login {
                     <div class="delivery-time">47~62분</div>
                 </div>
             </div>
-            <div class="coupon">2,000원 할인</div>
+            <!-- <div class="coupon">2,000원 할인</div> -->
         </div>
       </c:forEach>
     </div>
@@ -304,9 +312,9 @@ header .login {
   <div>
     <div id="select_one_display"></div>
   </div>
+<div style="margin-top: 50px;">
+  <%@ include file="../footer.jsp" %>
+</div>
 </main>
-</head>
-<body>
-
 </body>
 </html>

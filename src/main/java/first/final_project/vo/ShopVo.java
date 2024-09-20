@@ -33,6 +33,8 @@ public class ShopVo {
     private int reviews_count;
     private int ceoreview_count;
     private BigDecimal shop_rating;
+    private String owner_license;
+
 
     List<MenuVo> menu_list;
 

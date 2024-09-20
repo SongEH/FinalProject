@@ -109,18 +109,17 @@ public class ShopController {
     public String shop_selectOne(int shop_id, Model model) {
         System.out.println("shop_id : " + shop_id);
         
-        
-        // Map<String, Integer> counts;  // Changed to CountsVo
-        ShopVo vo = new ShopVo();
         try {
-
-            vo = shop_Service.selectOne(shop_id);
-            BigDecimal shop_rating = formatRating(vo.getShop_rating());
-            BigDecimal shop_rate = formatRatingInt(vo.getShop_rating());
-            System.out.println(shop_rating);
-            vo.setShop_rating(shop_rating);
-            vo.setShop_rate(shop_rate);
-            System.out.println(vo.getShop_rate());
+            ShopVo vo = shop_Service.selectOne(shop_id);
+            if(vo.getShop_rating()!=null){
+                BigDecimal shop_rating = formatRating(vo.getShop_rating());
+                BigDecimal shop_rate = formatRatingInt(vo.getShop_rating());
+                System.out.println(shop_rating);
+                vo.setShop_rating(shop_rating);
+                vo.setShop_rate(shop_rate);
+                System.out.println(vo.getShop_rate());
+            }
+            
             // counts = shop_Service.selectMenuAndReviewsCount(shop_id);
     
             // Adding attributes to the model
@@ -140,6 +139,13 @@ public class ShopController {
             model.addAttribute("errorMessage", "fail_select_one");
             return "error/error_page";
         }
+    }
+
+    @RequestMapping("/shop/select_info.do")
+    public String shopSelectInfo(int shop_id ,Model model){
+        ShopVo vo = shop_Service.selectOne(shop_id);
+        model.addAttribute("vo", vo);
+        return "shop/shop_info";
     }
 
     // 가게 정보 수정

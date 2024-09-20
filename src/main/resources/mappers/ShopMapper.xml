@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 가게 1개 상세보기  -->
     <select id="selectOne" parameterType="int" resultType="shop">
         SELECT 
-        s.*,
+        s.*,o.owner_license,
         (SELECT COUNT(*) FROM menu WHERE shop_id = #{shop_id}) AS menu_count, 
         (SELECT COUNT(*) 
             FROM reviews r 
@@ -79,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             INNER JOIN orders o ON o.orders_id = r.orders_id 
             WHERE o.shop_id = #{shop_id}) AS shop_rating
     FROM shop s
+    inner join owner o on o.owner_id = s.owner_id
     where s.shop_id = #{shop_id}
     </select>
 

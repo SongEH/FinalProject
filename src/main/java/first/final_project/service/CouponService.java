@@ -41,6 +41,7 @@ public class CouponService {
                 couponMapper.insertCoupon(coupon); // 쿠폰 발행
             }
         }
+
     }
 
     public List<CouponVo> getCouponsForMember(int memberId) {

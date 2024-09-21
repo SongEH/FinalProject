@@ -22,6 +22,7 @@ import first.final_project.dao.OrderMapper;
 import first.final_project.dao.ReviewsMapper;
 import first.final_project.service.OrderService;
 import first.final_project.service.PaymentService;
+import first.final_project.service.ShopService;
 import first.final_project.vo.AddrVo;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
@@ -67,6 +68,9 @@ public class OrderController {
 
 	@Autowired
     PaymentService paymentService;
+
+	@Autowired
+	ShopService shop_Service;
 
 	// /menu/list.do
 	// /menu/list.do?page=2
@@ -270,6 +274,17 @@ public class OrderController {
 			model.addAttribute("orders", orders);
 		}
 
+		// owner와 shop 은 1:1 매칭 확인 및 버튼 비활성화 
+		System.out.println("user.getOwner_id() : " + user.getOwner_id());
+		Boolean result = shop_Service.hasShop(user.getOwner_id());
+        System.out.println(result);
+		Boolean hasShop = (result != null) ? result : false;
+		if(hasShop != null & hasShop){
+			if(hasShop==false){
+				return "redirect:../shop/insert_form.do";
+			}
+		}
+		model.addAttribute("hasShop", hasShop);
 		return "order/order_accept_list";
 	}
 

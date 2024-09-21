@@ -80,6 +80,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select shop_id from shop where owner_id = #{owner_id}
     </select>
 
+    <select id="hasShop" parameterType="int" resultType="Boolean">
+        select shop_id from shop where owner_id = #{owner_id}
+    </select>
+
     <!-- <select id="selectMenuAndReviewsCount" parameterType="int" resultType="map">
         SELECT 
         (SELECT COUNT(*) FROM menu WHERE shop_id = #{shop_id}) AS menu_count, 
@@ -87,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN orders o ON o.orders_id = r.orders_id 
         WHERE o.shop_id = #{shop_id}) AS reviews_count
     </select> -->
+
 
     <!-- 가게 정보 업데이트 -->
     <update id="update" parameterType="shop">

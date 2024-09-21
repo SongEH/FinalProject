@@ -70,5 +70,11 @@ public class ShopServiceImpl implements ShopService {
         return shopMapper.selectMenuAndReviewsCount(shop_id);
     }
 
+    @Override
+    public Boolean hasShop(int owner_id) {
+        return shopMapper.hasShop(owner_id);
+    }
+
+    
    
 }

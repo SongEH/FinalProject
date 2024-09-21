@@ -30,4 +30,6 @@ public interface MemberMapper {
 
     void resetGrades(int grade_id);
 
+    MemberVo getAddr(int member_id);
+
 }

@@ -33,4 +33,7 @@ public interface ShopService {
     // 메뉴 개수와 리뷰 갯수 구하기 
     Map<String, Integer> selectMenuAndReviewsCount(int shop_id);
 
+    // hasShop from owner_id
+    Boolean hasShop(int owner_id);
+
 }

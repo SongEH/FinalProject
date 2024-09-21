@@ -85,7 +85,7 @@
   <%@include file="common.jsp" %>
 
   <!-- header import -->
-  <%@include file="header.jsp" %>
+  <%@include file="header원본.jsp" %>
 
   <!-- side bar import -->
   <%@include file="sidebar.jsp" %>

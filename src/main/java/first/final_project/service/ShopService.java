@@ -15,6 +15,9 @@ public interface ShopService {
     // 가게 카테고리별 출력
     List<ShopVo> selectList(String food_category);
 
+    // 가게 정렬 
+    List<ShopVo> selectListValue(Map selectMap);
+
     // 가게 1개 상세보기
     ShopVo selectOne(int shop_id);
 

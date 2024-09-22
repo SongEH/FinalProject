@@ -75,6 +75,11 @@ public class ShopServiceImpl implements ShopService {
         return shopMapper.hasShop(owner_id);
     }
 
+    @Override
+    public List<ShopVo> selectListValue(Map selectMap) {
+        return shopMapper.selectListValue(selectMap);
+    }
+
     
    
 }

@@ -24,5 +24,7 @@ public class MemberVo {
     String addr_line1;
     String addr_line2;
 
+    String owner_name;
+
     
 }

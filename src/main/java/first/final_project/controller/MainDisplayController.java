@@ -33,9 +33,9 @@ public class MainDisplayController {
                 sb.append(" ");
                 sb.append(vo.getAddr_line2());
             }
-            String orders_addr = sb.toString();
-            System.out.println(orders_addr);
-            model.addAttribute("orders_addr", orders_addr);
+            String order_addr = sb.toString();
+            System.out.println(order_addr);
+            model.addAttribute("order_addr", order_addr);
         }
         return "main_display";
     }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -21,7 +22,7 @@ pageEncoding="UTF-8"%>
         padding: 0;
         background-color: #f7f7f7;
       }
-      .search-bar {
+      /* .search-bar {
         display: flex;
         justify-content: center;
         margin: 20px 0;
@@ -40,7 +41,7 @@ pageEncoding="UTF-8"%>
         margin-left: 10px;
         border-radius: 5px;
         cursor: pointer;
-      }
+      } */
       .container {
         display: flex;
         flex-wrap: wrap;
@@ -80,15 +81,33 @@ pageEncoding="UTF-8"%>
     </style>
     <script>
     function shopListAll(element){
-      let food_category = element.getAttribute('food_category');
+      var food_category = element.getAttribute('food_category');
       alert(food_category);
       let order_addr = $("#order_addr").val().trim();
+      alert(order_addr);
       if(order_addr==null || order_addr==""){
         alert("주소를 입력하시거나 로그인 후 이용할 수 있습니다.")
         return;
       }
-      location.href="../shop/list.do?food_category=" + food_category + "&order_addr=" + order_addr;
-    }
+
+      $.ajax({
+        url  : "../shop/list.do",
+        data : {
+              "food_category": food_category,
+              "order_addr": order_addr
+              },
+      success :   function(res_data){
+              alert("성공");
+              $("#shop_list_display").html(res_data).show();
+              $("#main_display").hide();
+              $(".nav-link").removeClass("active");
+              $("#" + food_category).addClass("active");
+      },
+      error   :   function(err){
+      alert(error.responseText)
+      }
+      });
+      }
     </script>
 
     <script>
@@ -113,23 +132,12 @@ pageEncoding="UTF-8"%>
       }
 
 </script>
-  </head>
-  <body>
-    <%@ include file="header.jsp" %>
-    <!-- <div class="header">
-      <h1>요기요</h1>
-      <h2>"어디로 배달해 드릴까요?"</h2>
-      <input type="button" value="login" 
-      onclick="location.href='../member/login.do'"/>
-    </div> -->
+</head>
+<body>
+  <%@ include file="header.jsp" %>
+  <%@ include file="searchbar.jsp" %>
+  <div id="main_display">
   <form id="myForm" method="POST">
-    <div class="search-bar">
-      <!-- <input type="text" placeholder="건물명, 도로명, 지번으로 검색하세요" name="orders_addr" value="${orders_addr}"/> -->
-        <!-- <label for="order_addr"></label> -->
-        <input type="text" id="order_addr" name="order_addr" placeholder="주소 설정 및 로그인 후 이용할 수 있습니다." value="${orders_addr}" readonly>
-        <button type="button" id="addressSearch" onclick="findAddr()">주소설정</button>
-    </div>
-
     <div class="container">
       <div class="row">
         <div class="col-xxl-3 col-md-4 card" food_category="all" onclick="shopListAll(this)">
@@ -184,8 +192,12 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
   </form>
-    <div class="footer">
-      <p>© 2024 Food Delivery Service</p>
-    </div>
-  </body>
+</div>
+  <div>
+    <div id="shop_list_display"></div>
+  </div>
+  <div style="margin-top: 50px;">
+    <%@ include file="footer.jsp" %>
+  </div>
+</body>
 </html>

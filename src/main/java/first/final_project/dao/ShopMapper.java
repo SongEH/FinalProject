@@ -16,6 +16,9 @@ public interface ShopMapper {
     // 가게 카테고리별 출력
     List<ShopVo> selectList(String food_category);
 
+     // 가게 정렬 
+    List<ShopVo> selectListValue(Map selectMap);
+
     // 가게 추가
     int insert(ShopVo vo);
 

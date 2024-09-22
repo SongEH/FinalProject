@@ -149,7 +149,7 @@
 </head>
 <body>
     <%@ include file="../common.jsp" %>
-    <%@ include file="../header.jsp" %>
+    <%@ include file="../header원본.jsp" %>
     <%@ include file="../sidebar.jsp" %>
 
     <main id="main" class="main">
@@ -174,7 +174,7 @@
                                     <div class="col-md-12">
                                         <div class="reviews-item d-flex flex-column">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <h4>${vo.shop_name}</h4>
+                                                <h5>${vo.shop_name}</h5>
                                                 <button class="btn btn-danger btn-sm btn-delete" onclick="reviews_del('${vo.reviews_id}')">Delete</button>
                                             </div>
                                             <div class="stars">
@@ -204,7 +204,7 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="ceoreview_display">
-                                                                <div>⮑ 사장님 (${vo.ceoreviews_cdate})</div>
+                                                                <div><strong>⮑ 사장님 (${vo.ceoreviews_cdate})</strong></div>
                                                                 <div style="margin-top: 3px;">${vo.ceoreviews_content}</div>
                                                             </div>
                                                         </div>

@@ -1,94 +1,85 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
+<style>
+header {
+    display: flex;
+    justify-content: space-between; /* Align logo to the left and login to the right */
+    align-items: center; /* Vertically center the items */
+    padding: 10px; /* Optional: Add some padding */
+    background-color: #F0A8D0;
+}
+
+header .logo {
+    text-align: left;
+    font-size: 24px; /* Optional: Adjust logo size */
+}
+
+header .login-section {
+    display: flex;
+    align-items: center;
+}
+
+header .login {
+    background-color: orange;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    border: none;
+    margin-left: 10px; /* Space between the welcome text and button */
+}
+
+</style>
 <html lang="ko">
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="/shop/list.do" class="logo d-flex align-items-center">
-        <img src="../resources/assets/img/logo.png" alt="" />
-        <span class="d-none d-lg-block">Logo</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div>
-    <!-- End Logo -->
-
-    <div class="search-bar">
-      <form
-        class="search-form d-flex align-items-center"
-        method="POST"
-        action="#"
-      >
-        <input
-          type="text"
-          name="query"
-          placeholder="Search"
-          title="Enter search keyword"
-        />
-        <button type="submit" title="Search">
-          <i class="bi bi-search"></i>
-        </button>
-      </form>
-    </div>
-    <!-- End Search Bar -->
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle" href="#">
-            <i class="bi bi-search"></i>
+  <body>
+    <header class="header">
+      <c:choose>
+        <c:when test="${not empty sessionScope.user}">
+          <c:choose>
+            <c:when test="${sessionScope.user.member_name !=null}">
+              <a href="/main/display.do" style="text-decoration: none;
+              color: inherit; ">
+              <div class="logo" style="text-align:left;">한입만</div>
+              </a>
+            </c:when>
+            <c:when test="${sessionScope.user.owner_name !=null}">
+              <a href="/order/accept.do" style="text-decoration: none;
+              color: inherit; ">
+              <div class="logo" style="text-align:left;">한입만</div>
+              </a>
+            </c:when>
+          </c:choose>
+        </c:when>
+        <c:otherwise>
+          <a href="/main/display.do" style="text-decoration: none;
+          color: inherit; ">
+          <div class="logo" style="text-align:left;">한입만</div>
           </a>
-        </li>
-        <!-- End Search Icon-->
-        <c:if test="${empty sessionScope.user}">
-          <li class="nav-item dropdown">
-            <a href="/login_form.do"><button>Login</button></a>
-            <a href="/insert_form.do"><button>Insert</button></a>
-          </li>
-        </c:if>
+        </c:otherwise>
 
-        <c:if test="${not empty sessionScope.user}">
-          <li class="nav-item dropdown pe-3">
-            <a
-              class="nav-link nav-profile d-flex align-items-center pe-0"
-              href="#"
-              data-bs-toggle="dropdown"
-            >
-              <img
-                src="../resources/assets/img/profile-img.jpg"
-                alt="Profile"
-                class="rounded-circle"
-              />
-              <span class="d-none d-md-block dropdown-toggle ps-2"
-                >K. Anderson</span
-              > </a
-            ><!-- End Profile Iamge Icon -->
+      </c:choose>
 
-            <ul
-              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
-            >
-              <li class="dropdown-header">
-                <h6>Kevin Anderson</h6>
-                <span>Web Designer</span>
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a
-                  class="dropdown-item d-flex align-items-center"
-                  href="/logout.do"
-                >
-                  <i class="bi bi-box-arrow-right"></i>
-                  <span> Logout</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </c:if>
-      </ul>
-    </nav>
-    <!-- End Icons Navigation -->
-  </header>
-  <!-- End Header -->
+      <c:choose>
+        <c:when test="${not empty sessionScope.user}">
+          <c:choose>
+              <c:when test="${sessionScope.user.member_name !=null}">
+                  <span>Welcome ${sessionScope.user.member_name}님</span>
+                  <input class="login" type="button" value="My Page" onclick="location.href='../member/mypage.do'">
+              </c:when>
+              <c:when test="${sessionScope.user.owner_name !=null}">
+                  <span>Welcome ${sessionScope.user.owner_name}님</span>
+                  <input class="login" type="button" value="Owner Dashboard" onclick="location.href='../owner/dashboard.do'">
+              </c:when>
+          </c:choose>
+        </c:when>
+        <c:otherwise>
+          <div class="login-section">
+            <input class="login" type="button" value="login" 
+            onclick="location.href='../member/login.do'"/>
+          </div>
+        </c:otherwise>
+      </c:choose>
+    </header>
+</body>
 </html>

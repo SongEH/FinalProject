@@ -71,15 +71,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         carts_quantity, 
         member_id, 
         shop_id,
-        menu_id, 
-        carts_cdate
+        menu_id
     )
     VALUES (
         #{carts_quantity}, 
         #{member_id}, 
         #{shop_id}, 
-        #{menu_id}, 
-        CURRENT_DATE
+        #{menu_id}
     );
    </insert>
 

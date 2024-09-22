@@ -1,13 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+   -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+    integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous">
+  </script>
 
   <script>
     function delete_menu(orders_id) {
@@ -67,58 +75,100 @@
       </button>
     </form>
 
+
     <section class="section">
       <table>
         <div class="row align-items-top">
           <div class="col-lg-6">
 
             <c:forEach var="vo" items="${list}">
-              <!-- Card with an image on left -->
-              <tr>
-                <td>
-                  <div class="card mb-3">
-                    <div class="row g-0" lass="photo">
-                      <!-- popup:Modal -->
+              <c:if test="${vo.orders_isdelete == 0}">
+                <tr id="order-${vo.orders_id}">
+                  <!-- 각 주문에 고유 ID를 부여 -->
+                  <td>
+                    <div class="card mb-3">
+                      <div class="row g-0" lass="photo">
+                        <!-- popup:Modal -->
 
-                      <div class="col-md-4">
-                        <img src="../resources/images/${vo.shop_img}" class="img-fluid rounded-start" alt="...">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h5 class="card-title">
-                            ${vo.shop_name}
-                          </h5>
-                          <p class="card-text">${vo.orders_name}, ${vo.menu_count}개</p>
-                          <p class="card-text">가격 ${vo.orders_price}원</p>
-                </td>
-                <td>
-                  <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
-                    onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
-                  <input class="btn btn-info" type="button" id="btn_popup_update" value="배송조회"
-                    onclick="modify_menu('${vo.orders_id}');">
-                  <c:choose>
-                    <c:when test="${vo.hasReview}">
-                      <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
-                    </c:when>
-                    <c:otherwise>
-                      <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
-                        onclick="delete_menu('${vo.orders_id}');">
-                    </c:otherwise>
-                  </c:choose>
-                </td>
-
+                        <div class="col-md-4">
+                          <img src="../resources/images/${vo.shop_img}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title">
+                              <p class="orders-status" style="color:red;">${vo.orders_status}</p>${vo.shop_name}
+                            </h5>
+                            <p class="card-text">주문일시
+                              <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
+                            </p>
+                            <p class="card-text">${vo.orders_name}, ${vo.menu_count}개</p>
+                            <p class="card-text">가격 ${vo.orders_price}원</p>
+                  </td>
+                  <td>
+                    <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
+                      onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
+                    <input class="btn btn-info" type="button" id="btn_popup_update" value="배송조회"
+                      onclick="modify_menu('${vo.orders_id}');">
+                    <c:choose>
+                      <c:when test="${vo.hasReview}">
+                        <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
+                      </c:when>
+                      <c:otherwise>
+                        <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
+                          onclick="delete_menu('${vo.orders_id}');">
+                      </c:otherwise>
+                    </c:choose>
+                  </td>
+                </tr>
+              </c:if>
+            </c:forEach>
           </div>
-        </div>
-
-        </div><!-- End Card with an image on left -->
-        </div>
-        </tr>
-        </c:forEach>
-
-        </div>
         </div>
       </table>
     </section>
+
+    <!-- polling 방식으로 주문상태 업데이트 -->
+    <script>
+      function fetchOrders() {
+        let member_id = 1;
+        $.ajax({
+          url: `/order/list_test`, // 주문 내역을 가져오는 API 경로
+          method: 'GET',
+          success: function (orders) {
+            console.log(orders);
+            console.log("성공!!!");
+            // orders.forEach(order => {
+            //   const orderRow = $(`#order-${order.id}`);
+            //   const orderStatusElement = orderRow.find('.orders-status');
+
+            //   // 주문 상태 업데이트
+            //   if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
+            //     orderStatusElement.text(order.orders_status);
+            //   }
+            // });
+
+            orders.forEach(order => {
+              console.log(`Updating order ${order.orders_id} with status ${order.orders_status}`);
+              const orderRow = $(`#order-${order.orders_id}`);
+              const orderStatusElement = orderRow.find('.orders-status');
+
+              if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
+                orderStatusElement.text(order.orders_status);
+                console.log(`Status updated for order ${order.orders_id}`);
+              }
+            });
+          },
+          error: function (err) {
+            console.error('주문을 가져오는 중 오류 발생:', err);
+          }
+        });
+      }
+
+      // 5초마다 주문 내역을 가져옵니다.
+      setInterval(fetchOrders, 5000); // 5000ms = 5초
+    </script>
+
+
 
     <!-- 페이징 처리 -->
     <div style="text-align: center; margin-top: 20px; font-size: 15px">

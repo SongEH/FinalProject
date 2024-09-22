@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -29,7 +30,15 @@
   </style>
 
 
-  <script type="text/javascript"> </script>
+  <script type="text/javascript">
+    
+    function delete_order(orders_id) {
+
+      if (confirm("정말 삭제하시겠습니까?") == false) return;
+
+      location.href = "delete.do?orders_id=" + orders_id;
+    }
+  </script>
 
 
 
@@ -79,11 +88,13 @@
               <h5 class="card-title">주문 상세보기</h5>
               <p>${ vo.shop_name }</p>
               <p>${ vo.orders_name }</p>
-              <p>주문일시 ${vo.orders_cdate}</p>
+              <p>주문일시
+                <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
+              </p>
               <p>주문번호 ${vo.orders_merchant_uid}</p>
 
               <hr>
-              메뉴 목록 들...
+              메뉴 목록
 
               <table>
                 <c:forEach var="vo" items="${list}">
@@ -106,7 +117,6 @@
                     <td class="cart_total_price">
                       ${vo.menu_price * vo.carts_quantity}
                     </td>
-                    <td class="cart_cdate">${vo.carts_cdate}</td>
 
 
                   </tr>
@@ -125,7 +135,9 @@
               <p>가게 요청사항 ${ vo.orders_srequest }</p>
               <p>배달 요청사항 ${ vo.orders_drequest }</p>
 
-              <button>주문내역 삭제</button>
+              <input class="btn btn-danger" type="button" value="주문내역삭제"
+                    onclick="delete_order('${vo.orders_id}');">
+            
               <button>같은 메뉴 담기</button>
             </div>
           </div>

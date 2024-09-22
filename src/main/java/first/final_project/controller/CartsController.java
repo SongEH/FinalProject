@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import first.final_project.dao.CartsMapper;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
+import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -33,8 +34,7 @@ public class CartsController {
 	@Autowired
 	ServletContext application;
 
-	// /menu/list.do
-	// /menu/list.do?page=2
+	// 장바구니 목록
 	@RequestMapping("list.do")
 	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
@@ -51,12 +51,13 @@ public class CartsController {
 		return "carts/carts_list";
 	}
 
-	// 회원용 shop_listOne.jsp 에서 보여질 장바구니 목록 
+	// 회원용 shop_listOne.jsp 에서 보여질 장바구니 목록
 	@RequestMapping("list2.do")
 	public String list2(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
 
 		MemberVo user = (MemberVo) session.getAttribute("user");
+
 		int member_id = user.getMember_id();
 
 		List<CartsVo> list = carts_mapper.selectList(member_id);
@@ -102,17 +103,14 @@ public class CartsController {
 	}
 
 	// 수정
-	// /carts/modify.do?carts_id=9&carts_quantity=5
 	@PostMapping("modify.do")
 	public String modify(int carts_id, int carts_quantity, RedirectAttributes ra) {
 		carts_mapper.update(carts_id, carts_quantity);
 
 		return "redirect:list.do";
-	} 
+	}
 
 	// 삭제
-	// /carts/delete.do?carts_id=5
-	// /carts/delete.do?carts_id=5&page=2
 	@RequestMapping("delete.do")
 	public String delete(int carts_id, RedirectAttributes ra) {
 
@@ -125,17 +123,17 @@ public class CartsController {
 
 	}
 
-	// carts_display.jsp에서 호출 
+	// carts_display.jsp에서 호출
 	@PostMapping("delete2.do")
-    public void delete2(@RequestParam("carts_id") int carts_id, RedirectAttributes ra) {
-        // CartsVo 정보 얻어온다
-        CartsVo vo = carts_mapper.selectOne(carts_id);
-        
-        if (vo != null) {
-            carts_mapper.delete(carts_id);
-            ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
-        } else {
-            ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
-        }
-    }
+	public void delete2(@RequestParam("carts_id") int carts_id, RedirectAttributes ra) {
+		// CartsVo 정보 얻어온다
+		CartsVo vo = carts_mapper.selectOne(carts_id);
+
+		if (vo != null) {
+			carts_mapper.delete(carts_id);
+			ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
+		} else {
+			ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
+		}
+	}
 }

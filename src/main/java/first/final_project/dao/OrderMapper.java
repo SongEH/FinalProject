@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import first.final_project.vo.CompletedDeliveryVo;
 import first.final_project.vo.OrderVo;
 
 @Mapper
@@ -18,7 +17,7 @@ public interface OrderMapper {
 
     int insert(OrderVo vo);
 
-    int delete(int orders_id);
+    void softDelete(int orders_id);
 
     OrderVo selectOneByOrdersId(int orders_id);
 

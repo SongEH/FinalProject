@@ -83,51 +83,54 @@
 </head>
 <body>
 
-<%
-    String userType = (String) session.getAttribute("userType");
-    if (userType == null) {
-        userType = "UNKNOWN";
-    }
-    session.setAttribute("userType", userType);
-%>
+    <input type="hidden" id="inquiries_pwd" value="${vo.inquiries_pwd}">
+    <input type="hidden" id="inquiries_id" value="${vo.inquiries_id}">
+    
+    <%
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            userType = "UNKNOWN";
+        }
+        session.setAttribute("userType", userType);
+    %>
 
-<div class="container">
-    <h1>문의사항 상세</h1>
+    <div class="container">
+        <h1>문의사항 상세</h1>
 
-    <!-- 상세 정보 표시 영역 -->
-    <div class="inquiries_detail">
-        <div class="inquiries_title">
-            ${vo.inquiries_title}
+        <!-- 상세 정보 표시 영역 -->
+        <div class="inquiries_detail">
+            <div class="inquiries_title">
+                ${vo.inquiries_title}
+            </div>
+            <div class="inquiries_cdate">
+                ${vo.inquiries_cdate}
+            </div>
+            <div class="inquiries_content">
+                ${vo.inquiries_content}
+            </div>
+            <div class="inquiries_author">
+                <c:choose>
+                    <c:when test="${vo.memberAccountId != null}">
+                        작성자: ${vo.memberAccountId}
+                    </c:when>
+                    <c:when test="${vo.ownerAccountId != null}">
+                        작성자: ${vo.ownerAccountId}
+                    </c:when>
+                    
+                </c:choose>
+            </div>
+            <c:if test="${userType == 'MEMBER'}">
+                <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
+                <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
+            </c:if>
+            <c:if test="${userType == 'OWNER'}">
+                <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
+                <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
+            </c:if>
         </div>
-        <div class="inquiries_cdate">
-            ${vo.inquiries_cdate}
-        </div>
-        <div class="inquiries_content">
-            ${vo.inquiries_content}
-        </div>
-        <div class="inquiries_author">
-            <c:choose>
-                <c:when test="${vo.memberAccountId != null}">
-                    작성자: ${vo.memberAccountId}
-                </c:when>
-                <c:when test="${vo.ownerAccountId != null}">
-                    작성자: ${vo.ownerAccountId}
-                </c:when>
-                
-            </c:choose>
-        </div>
-        <c:if test="${userType == 'MEMBER'}">
-            <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
-            <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
-        </c:if>
-        <c:if test="${userType == 'OWNER'}">
-            <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
-            <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
-        </c:if>
+
+        <a href="${pageContext.request.contextPath}/inquiries/list.do" class="back-button">목록으로</a>
     </div>
-
-    <a href="${pageContext.request.contextPath}/inquiries/list.do" class="back-button">목록으로</a>
-</div>
 
 </body>
 </html>

@@ -88,7 +88,7 @@ public class InquiriesController {
     }
 
     @RequestMapping("/detail.do")
-    public String detail(@RequestParam(value = "inquiries_id", required = false) Integer inquiries_id, Model model) {
+    public String detail(@RequestParam(value = "inquiries_id", required = false) Integer inquiries_id,@RequestParam String inquiries_pwd, Model model) {
         if (inquiries_id == null) {
             return "redirect:/inquiries/list.do";
         }
@@ -114,6 +114,12 @@ public class InquiriesController {
             }
         }
 
+        // 비밀번호 확인
+        if (inquiries_pwd == null || !inquiries_pwd.equals(vo.getInquiries_pwd())) {
+            model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+            return "redirect:/inquiries/check_password.do"; // 비밀번호 입력 페이지로 리디렉션
+        }
+
         // 만약 회원과 사장 정보가 모두 없다면 로그인 페이지로 리디렉션
         if (vo.getMemberAccountId() == null && vo.getOwnerAccountId() == null) {
             return "redirect:/login_form.do";
@@ -131,6 +137,13 @@ public class InquiriesController {
 
         return "inquiries/inquiries_insert_form";
     }
+
+    @RequestMapping("insert.do")
+    public String insert(){
+
+        return "redirect:/inquiries/list.do";
+    }
+
 
     @RequestMapping("delete.do")
     public String delete(@RequestParam int inquiries_id){

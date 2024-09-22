@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>문의사항 등록</title>
+    <title>문의사항 수정</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -97,43 +97,53 @@
                 return;
             }
 
-            f.action = "/inquiries/insert.do";
+            f.action = "/inquiries/modify.do";
             f.submit();
         }
     </script>
 </head>
 <body>
-
+    <% 
+        // 세션에서 user 객체를 가져옴
+        String userType = (String)session.getAttribute("userType");
+        if(userType == null){
+            userType = "UNKNOWN";   //기본갑을 설정
+        }
+        session.setAttribute("userType",userType);
+    %>
     
     <div class="container">
-        <h1>문의사항 등록</h1>
-        <form action="${pageContext.request.contextPath}/inquiries/insert_form.do" method="post">
+        <h1>문의사항 수정</h1>
+        <form action="${pageContext.request.contextPath}/inquiries/modify_form.do" method="post">
             <input type="hidden" name="inquiries_id" value="${vo.inquiries_id}">
             <div class="form-group">
                 <label for="inquiries_title">제목</label>
-                <input type="text" id="inquiries_title" name="inquiries_title" required>
+                <input type="text" id="inquiries_title" name="inquiries_title" value="${vo.inquiries_title}" required>
             </div>
             <div class="form-group">
                 <label for="inquiries_type">유형</label>
                 <select class="select, form-control" id="inquiries_type" name="inquiries_type" required>
-                    <option value="전체">전체</option>
-                    <option value="결제문의">결제 문의</option>
-                    <option value="주문문의">주문 문의</option>
-                    <option value="서비스이용">서비스 이용</option>
-                    <option value="배송문의">배송 문의</option>
+                    <option value="전체" ${vo.inquiries_type == '전체' ? 'selected' : ''}>전체</option>
+                    <option value="결제문의" ${vo.inquiries_type == '결제문의' ? 'selected' : ''}>결제 문의</option>
+                    <option value="주문문의" ${vo.inquiries_type == '주문문의' ? 'selected' : ''}>주문 문의</option>
+                    <option value="서비스이용" ${vo.inquiries_type == '서비스이용' ? 'selected' : ''}>서비스 이용</option>
+                    <option value="배송문의" ${vo.inquiries_type == '배송문의' ? 'selected' : ''}>배송 문의</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="inquiries_content">내용</label>
-                <textarea id="inquiries_content" name="inquiries_content" rows="5" required></textarea>
+                <textarea id="inquiries_content" name="inquiries_content" rows="5" required>${vo.inquiries_content}</textarea>
             </div>
             <div class="form-group">
                 <label for="inquiries_pwd">비밀번호</label>
-                <input type="password" id="inquiries_pwd" name="inquiries_pwd" required>
+                <input type="password" id="inquiries_pwd" name="inquiries_pwd" value="${vo.inquiries_pwd}" required>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" onclick="send(this.form);">
                     등록
+                </button>
+                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/inquiries/detail.do?inquries_id=${vo.inquiries_id}';"></button>
+                    취소
                 </button>
             </div>
         </form>

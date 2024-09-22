@@ -220,50 +220,49 @@
     }
 
     function checkPassword() {
-        let inquiries_pwd = document.getElementById("inquiries_pwd").value;
-        let hidden_inquiries_pwd = document.getElementById("hidden_inquiries_pwd").value;
-        let inquiries_id = document.getElementById("inquiries_id").value;
+    let inquiries_pwd = document.getElementById("inquiries_pwd").value;
+    let hidden_inquiries_pwd = document.getElementById("hidden_inquiries_pwd").value;
+    let inquiries_id = document.getElementById("inquiries_id").value;
 
-        alert("inquiries_id : " + inquiries_id);
-        if (inquiries_id.trim() === "") {
-            alert("inquiries_id : " + inquiries_id);
-            document.getElementById("modal_password_message").innerText = "유효하지 않은 ID입니다.";
-            return;
-        }
-
-        if (inquiries_pwd.length === 0) {
-            document.getElementById("modal_password_message").innerText = "비밀번호를 입력하세요.";
-            return;
-        }
-
-         // 비밀번호 비교
-        if (inquiries_pwd !== hidden_inquiries_pwd) {
-            document.getElementById("modal_password_message").innerText = "비밀번호가 일치하지 않습니다.";
-            return;
-        }
-
-        // AJAX 요청
-       $.ajax({
-            url: "/inquiries/check_password.do",
-            type: "POST",
-            data: {
-                inquiries_id: inquiries_id,
-                inquiries_pwd: inquiries_pwd
-            },
-            dataType: "json",
-            success: function (res_data) {
-                if (res_data.result) {
-                    // 비밀번호 확인 성공 시 detail.do로 이동
-                    window.location.href = `${pageContext.request.contextPath}/inquiries/detail.do?inquiries_id=${inquiries_id}`;
-                } else {
-                    document.getElementById("modal_password_message").innerText = "비밀번호가 일치하지 않습니다.";
-                }
-            },
-            error: function () {
-                alert("서버 오류가 발생했습니다.");
-            }
-        });
+    if (inquiries_id.trim() === "") {
+        document.getElementById("modal_password_message").innerText = "유효하지 않은 ID입니다.";
+        return;
     }
+
+    if (inquiries_pwd.length === 0) {
+        document.getElementById("modal_password_message").innerText = "비밀번호를 입력하세요.";
+        return;
+    }
+
+    // 비밀번호 비교
+    if (inquiries_pwd !== hidden_inquiries_pwd) {
+        document.getElementById("modal_password_message").innerText = "비밀번호가 일치하지 않습니다.";
+        return;
+    }
+
+    // AJAX 요청
+    $.ajax({
+        url: "/inquiries/check_password.do",
+        type: "POST",
+        data: {
+            inquiries_id: inquiries_id,
+            inquiries_pwd: inquiries_pwd
+        },
+        dataType: "json",
+        success: function (res_data) {
+            if (res_data.result) {
+                // 비밀번호 확인 성공 시 detail.do로 이동
+                window.location.href = `/inquiries/detail.do?inquiries_id=${inquiries_id}&password=${inquiries_pwd}`;
+            } else {
+                document.getElementById("modal_password_message").innerText = "비밀번호가 일치하지 않습니다.";
+            }
+        },
+        error: function () {
+            alert("서버 오류가 발생했습니다.");
+        }
+    });
+}
+
 </script>
 
 </body>

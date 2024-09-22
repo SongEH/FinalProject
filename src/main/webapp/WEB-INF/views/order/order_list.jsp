@@ -63,19 +63,19 @@
     <form action="list.do" method="get" class="form-inline">
       <input type="hidden" name="member_id" value="${param.member_id}" />
       <div class="form-group">
-          <label for="startDate">시작 날짜:</label>
-          <input type="date" id="startDate" name="startDate" value="${param.startDate}" class="form-control" />
+        <label for="startDate">시작 날짜:</label>
+        <input type="date" id="startDate" name="startDate" value="${param.startDate}" class="form-control" />
       </div>
       <div class="form-group" style="margin-left: 10px">
-          <label for="endDate">종료 날짜:</label>
-          <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
+        <label for="endDate">종료 날짜:</label>
+        <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
       </div>
       <button type="submit" class="btn btn-primary" style="margin-left: 10px">
-          필터 적용
+        필터 적용
       </button>
-  </form>
-  
-  
+    </form>
+
+
     <section class="section">
       <table>
         <div class="row align-items-top">
@@ -83,7 +83,8 @@
 
             <c:forEach var="vo" items="${list}">
               <c:if test="${vo.orders_isdelete == 0}">
-                <tr>
+                <tr id="order-${vo.orders_id}">
+                  <!-- 각 주문에 고유 ID를 부여 -->
                   <td>
                     <div class="card mb-3">
                       <div class="row g-0" lass="photo">
@@ -95,7 +96,7 @@
                         <div class="col-md-8">
                           <div class="card-body">
                             <h5 class="card-title">
-                              ${vo.shop_name}
+                              <p class="orders-status" style="color:red;">${vo.orders_status}</p>${vo.shop_name}
                             </h5>
                             <p class="card-text">주문일시
                               <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
@@ -125,7 +126,47 @@
         </div>
       </table>
     </section>
-    
+
+    <!-- polling 방식으로 주문상태 업데이트 -->
+    <script>
+      function fetchOrders() {
+        let member_id = 1;
+        $.ajax({
+          url: `/order/list_test`, // 주문 내역을 가져오는 API 경로
+          method: 'GET',
+          success: function (orders) {
+            console.log(orders);
+            console.log("성공!!!");
+            // orders.forEach(order => {
+            //   const orderRow = $(`#order-${order.id}`);
+            //   const orderStatusElement = orderRow.find('.orders-status');
+
+            //   // 주문 상태 업데이트
+            //   if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
+            //     orderStatusElement.text(order.orders_status);
+            //   }
+            // });
+
+            orders.forEach(order => {
+              console.log(`Updating order ${order.orders_id} with status ${order.orders_status}`);
+              const orderRow = $(`#order-${order.orders_id}`);
+              const orderStatusElement = orderRow.find('.orders-status');
+
+              if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
+                orderStatusElement.text(order.orders_status);
+                console.log(`Status updated for order ${order.orders_id}`);
+              }
+            });
+          },
+          error: function (err) {
+            console.error('주문을 가져오는 중 오류 발생:', err);
+          }
+        });
+      }
+
+      // 5초마다 주문 내역을 가져옵니다.
+      setInterval(fetchOrders, 5000); // 5000ms = 5초
+    </script>
 
 
 

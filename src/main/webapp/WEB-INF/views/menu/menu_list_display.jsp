@@ -15,11 +15,15 @@ pageEncoding="UTF-8" %>
     var userType = '<%= session.getAttribute("userType") %>';
 
     // 회원은 shop_listOne.jsp에서 장바구니 목록 표시
-    if (userType === 'MEMBER') {
-      $(document).ready(function () {
+
+    $(document).ready(function () {
+      if (userType === 'MEMBER') {
         updateCartList(); // 페이지 로딩 시 함수 실행
-      });
-    }
+      } else if (userType === "UNKNOWN") {
+        $('#cart_list').html('<p>로그인해주세요.</p>');
+      }
+    });
+
 
 
     // 사장용 메뉴상세 보기

@@ -117,7 +117,6 @@
                     <td class="cart_total_price">
                       ${vo.menu_price * vo.carts_quantity}
                     </td>
-                    <td class="cart_cdate">${vo.carts_cdate}</td>
 
 
                   </tr>

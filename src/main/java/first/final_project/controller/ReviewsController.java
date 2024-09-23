@@ -19,10 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
+import first.final_project.dao.CeoReviewMapper;
 import first.final_project.dao.OrderMapper;
 import first.final_project.dao.ReviewsMapper;
+import first.final_project.vo.CeoReviewVo;
 import first.final_project.vo.MemberVo;
 import first.final_project.vo.OrderVo;
+import first.final_project.vo.OwnerVo;
 import first.final_project.vo.ReviewsImagesVo;
 import first.final_project.vo.ReviewsVo;
 import jakarta.servlet.ServletContext;
@@ -43,6 +46,9 @@ public class ReviewsController {
 
     @Autowired
     OrderMapper order_mapper;
+
+    @Autowired
+    CeoReviewMapper ceoreviewMapper;
 
     @RequestMapping("/insert_form.do")
     public String insert_form(int orders_id, Model model, RedirectAttributes ra) {
@@ -79,6 +85,11 @@ public class ReviewsController {
         int member_id = user.getMember_id();
         System.out.println("도착");
         List<ReviewsVo> list = reviewsMapper.selectList(member_id);
+        for (ReviewsVo vo : list) {
+            Boolean result = reviewsMapper.checkCeoReviewExists(vo.getReviews_id());
+            boolean hasCeoReview = (result != null) ? result : false;
+            vo.setHasCeoReview(hasCeoReview);
+        }
         System.out.println("호출완료");
 
         model.addAttribute("list", list);
@@ -86,18 +97,44 @@ public class ReviewsController {
     }
 
     @RequestMapping("listByShopId.do")
-    public String listByShopId(@RequestParam(value = "shop_id", required = false) Integer shop_id, Model model) {
+    public String listByShopId(int shop_id, Model model) {
         System.out.println("listByShopId에 도착");
-
-        if (shop_id == null) {
-            // Handle null shop_id case
-            return "error/errorPage";
-        }
-
+        System.out.println("shop_id = " + shop_id);
+        // if (shop_id == null) {
+        // // Handle null shop_id case
+        // return "error/errorPage";
+        // }
         List<ReviewsVo> list = reviewsMapper.selectListByShopId(shop_id);
+        for (ReviewsVo vo : list) {
+            Boolean result = reviewsMapper.checkCeoReviewExists(vo.getReviews_id());
+            boolean hasCeoReview = (result != null) ? result : false;
+            vo.setHasCeoReview(hasCeoReview);
+        }
         model.addAttribute("list", list);
         System.out.println("List size: " + list.size());
         return "reviews/reviews_listByShopId";
+    }
+
+    @RequestMapping("listByOwner.do")
+    public String listByOwner(Model model, RedirectAttributes ra) {
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        if (user == null) {
+            ra.addAttribute("reason", "session_timeout");
+            return "redirect:../member/login.do";
+        }
+        int shop_id = order_mapper.getShopIdByOrderId(user.getOwner_id());
+        System.out.println("shop_id : " + shop_id);
+        List<ReviewsVo> list = reviewsMapper.selectListByShopId(shop_id);
+
+        for (ReviewsVo vo : list) {
+            Boolean result = reviewsMapper.checkCeoReviewExists(vo.getReviews_id());
+            boolean hasCeoReview = (result != null) ? result : false;
+            vo.setHasCeoReview(hasCeoReview);
+        }
+
+        model.addAttribute("list", list);
+
+        return "reviews/reviews_listByOwner";
     }
 
     // reivews insert & reviews_images insert

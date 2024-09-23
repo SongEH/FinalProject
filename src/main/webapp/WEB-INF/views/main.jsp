@@ -70,13 +70,14 @@ prefix="c" %>
         }
       }
 
-      @media (min-width: 1200px) {
-        body {
-          background-color: rgb(195, 228, 163);
-        }
-      }
-
-      .menu-item:hover {
+      <!--
+        header
+        import
+        --
+        > <%@include
+        file="header원본.jsp"
+        %
+        > .menu-item:hover {
         cursor: pointer;
       }
     </style>

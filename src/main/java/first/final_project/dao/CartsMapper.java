@@ -12,6 +12,7 @@ public interface CartsMapper {
 
     List<CartsVo> selectList(int member_id);
 
+    // 페이징된 목록
     List<CartsVo> selectPageList(Map<String, Object> map);
 
     int selectRowTotal();
@@ -22,7 +23,8 @@ public interface CartsMapper {
 
     int delete(int carts_id);
 
-    int update(int carts_id, int carts_quantity); // 수량만 수정
+    // 수정 (수량만 가능)
+    int update(int carts_id, int carts_quantity);
 
     // 메뉴id로 장바구니 검색 검색
     CartsVo findByMenuId(int member_id, int shop_id, int menu_id);

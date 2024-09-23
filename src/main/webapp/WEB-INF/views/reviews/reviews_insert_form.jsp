@@ -116,6 +116,23 @@ pageEncoding='UTF-8'%>
 }
 </style>
 <script>
+    function fileCount(){
+        let fileInput = document.getElementById('file-input');
+        let fileCountDisplay = document.getElementById('file-count');
+        let fileCount = fileInput.files.length;
+
+        if (fileCount > 3) {
+            alert("최대 3개의 파일만 선택할 수 있습니다.");
+            fileInput.value = ""; // 파일 입력을 초기화
+            fileCountDisplay.textContent = '';
+        } else if (fileCount > 0) {
+            fileCountDisplay.textContent = `선택된 파일: ${fileCount}개`;
+        } else {
+            fileCountDisplay.textContent = '';
+        }
+    }
+</script>
+<script>
     function reviews_insert(f){
         // let shop_name = document.querySelector("div[name='shop_name']").textContent.trim();
         // let menu_name = document.querySelector("div[name='menu_name']").textContent.trim();

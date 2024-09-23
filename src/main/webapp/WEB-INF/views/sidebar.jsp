@@ -33,6 +33,17 @@ pageEncoding="UTF-8" %>
 
     // 다른 JavaScript 코드
   </script>
+  <style>
+  .disabled-link {
+  color: gray; /* Set your desired color */
+  pointer-events: none; /* Disable clicking */
+  text-decoration: none; /* Remove underline */
+}
+.disabled-link:hover {
+    color: gray; /* Prevent color change */
+    cursor: default; /* Show a default cursor instead of a pointer */
+}
+  </style>
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
@@ -191,9 +202,18 @@ pageEncoding="UTF-8" %>
         </a>
         <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="/shop/insert_form.do">
-              <i class="bi bi-circle"></i><span>가맹점 등록</span>
-            </a>
+            <c:choose>
+              <c:when test="${hasShop}">
+                <a href="#" class="disabled-link">
+                  <i class="bi bi-circle"></i><span>가맹점 등록</span>
+                </a>
+              </c:when>
+              <c:otherwise>
+                 <a href="/shop/insert_form.do">
+                  <i class="bi bi-circle"></i><span>가맹점 등록</span>
+                </a>
+              </c:otherwise>
+            </c:choose>
           </li>
           <li>
             <a href="/shop/modify_form.do">
@@ -218,6 +238,19 @@ pageEncoding="UTF-8" %>
               <i class="bi bi-circle"></i><span>완료 주문 내역</span>
             </a>
           </li>
+        </ul>
+      </li>
+      <!-- 리뷰 관리 메뉴 추가 -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>리뷰관리</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+            <a href="/reviews/listByOwner.do">
+                <i class="bi bi-circle"></i><span>리뷰관리</span>
+            </a>
+        </li>
         </ul>
       </li>
     </ul>

@@ -19,4 +19,6 @@ public class OwnerVo {
     String owner_rdate;
     String approval_status;
 
+    String member_name;
+
 }

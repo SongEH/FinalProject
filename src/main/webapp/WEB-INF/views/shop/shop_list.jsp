@@ -19,28 +19,15 @@ body {
   padding: 0;
 }
 .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-header {
-  background-color: #ff3366;
-  color: white;
-  padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  box-sizing: border-box;
 }
-header .logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-header .login {
-  background-color: orange;
-  padding: 8px 15px;
-  border-radius: 5px;
-  color: white;
-  text-decoration: none;
+.menu_sort{
+  align-items: end;
+  display: block;
 }
 .search-bar {
   display: flex;
@@ -82,23 +69,25 @@ header .login {
   cursor: pointer;
   color: #ff3366;
 }
+
 .store-list {
     display: flex;
-    flex-wrap: wrap; /* This allows the stores to wrap to the next line if needed */
-    justify-content: space-between; /* Distribute space evenly between stores */
-    gap: 20px; /* Adds space between items */
+    flex-wrap: wrap;                 /* This allows the stores to wrap to the next line if needed*/
+    justify-content: space-between;  /*Distribute space evenly between stores */
+    gap: 20px;                       /*   Adds space between items */
+  
 }
 
 /* Each store block */
 .store {
-    width: calc(50% - 10px); /* Each store takes 50% of the container's width, minus spacing */
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 15px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: calc(50% - 10px); /* Each store takes 50% of the container's width, minus spacing */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Flex properties for the store info */
@@ -108,8 +97,8 @@ header .login {
 }
 
 .store-logo img {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     margin-right: 15px;
 }
@@ -125,6 +114,14 @@ header .login {
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
+}
+#menu_sort {
+  float: right;
+  margin-left: auto;
+}
+
+.form-control {
+  width: 200px;
 }
 
 /* .store-list {
@@ -215,98 +212,90 @@ header .login {
         });
       }
     </script>
-  </head>
-  <body>
-    <header>
-      <div class="logo">오기요</div>
-      <a href="#" class="login">로그인</a>
-    </header>
-  
-  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-10" id="nav">
-    <div class="container">
-     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon">?</span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">전체보기</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">족발·보쌈</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">피자</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">치킨</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">돈까스·회·일식</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">한식</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">중식</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">아시안</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">백반·죽·국수</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">분식</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">카페·디저트</a>
-          </li>
-          <li class="nav-item"></li>
-            <a class="nav-link" href="#">패스트푸드</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+    <script>
+      function optionChange(){
+        let selectValue = document.getElementById("sortOption").value;
+        let food_category = document.getElementById("food_category").value;
+        let order_addr = document.getElementById("order_addr").value;
+        alert(food_category);
+        alert(order_addr);
+        alert(selectValue);
+        $.ajax({
+        url     :     "../shop/food_list.do",
+        data    :      {"selectValue": selectValue,
+                        "food_category": food_category,
+                        "order_addr": order_addr},
+        success :   function(res_data){
+                    $("#store_list").hide();          
+                    $("#store_list_display").html(res_data);
+        },
+        error   :   function(err){
+        alert(error.responseText)
+        }
+        });
+        }
+    </script>
+</head>
+<body>
+  <div id="shop_list_display">
+  <!-- <%@ include file="../header.jsp" %>
+  <%@ include file="../searchbar.jsp"%> -->
+  <%@ include file="../navbar.jsp" %>
+<main style="margin-top: 30px;">
+
+  <div class="container">
+
+    <div id="menu_sort" style="margin-bottom: 20px;">
+      <select id="sortOption" class="form-control" onchange="optionChange()">
+        <option value="rank" >기본 정렬순</option>
+        <option value="shop_rating">별점순</option>
+        <option value="reviews_count">리뷰 많은순</option>
+        <option value="shop_min_price">최소 주문 금액순</option>
+      </select>
+    </div>
+
+    <hr>
+
+    <div id="store_list">
+
+      <div class="store-list mt-10" id="store-list" >
+        <c:forEach var="vo" items="${list}">
+          <div class="store" onclick="selectOne('${vo.shop_id}');">
+              <div class="store-left">
+                  <div class="store-logo">
+                    <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Store 1 Logo">
+                  </div>
+                  <div class="store-info">
+                      <strong>${vo.shop_name}</strong>
+                      <div>
+                          <span class="rating">★ ${vo.shop_rating}</span>
+                          | 리뷰${vo.reviews_count} | 사장님댓글 ${vo.ceoreview_count}
+                      </div>
+                      <div>${vo.shop_min_price} 11,000원 이상 배달</div>
+                      <div class="delivery-time">47~62분</div>
+                  </div>
+              </div>
+          </div>
+        </c:forEach>
       </div>
     </div>
-  </nav>
-
-<main style="margin-top: 30px;">
-  <div class="container">
-    <div class="store-list mt-10" id="store-list" >
-      <c:forEach var="vo" items="${list}">
-        <div class="store" onclick="selectOne('${vo.shop_id}');">
-            <div class="store-left">
-                <div class="store-logo">
-                  <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Store 1 Logo">
-                </div>
-                <div class="store-info">
-                    <strong>${vo.shop_name}</strong>
-                    <div>
-                        <span class="rating">★ ${vo.shop_rate}</span>
-                        ${vo.shop_review_count}리뷰 4142 · 사장님댓글 1352
-                    </div>
-                    <div>${vo.shop_min_price} 11,000원 이상 배달</div>
-                    <div class="delivery-time">47~62분</div>
-                </div>
-            </div>
-            <div class="coupon">2,000원 할인</div>
-        </div>
-      </c:forEach>
+  </div>
+  <div>
+    <div id="store_list_display">
+      <input type="hidden" id="order_addr" value="${order_addr}"/> ${order_addr}
+      <input type="hidden" id="food_category" value="${food_category}"/>${food_category}
     </div>
   </div>
       <!-- Add more stores similarly -->
     <div id="insert_form_display"></div>
+</div>
+  <div>
+    <div id="select_list_category_display"></div>
   </div>
   <div>
     <div id="select_one_display"></div>
   </div>
+</div>
 </main>
-</head>
-<body>
-
 </body>
 </html>

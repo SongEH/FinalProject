@@ -26,6 +26,14 @@
         .reviews-item .star-empty {
             color: #ddd;
         }
+        .ceoreview_display{
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        background-color: lightgray;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
         .slideshow-container {
             position: relative;
             max-width: 500px;
@@ -141,7 +149,7 @@
 </head>
 <body>
     <%@ include file="../common.jsp" %>
-    <%@ include file="../header.jsp" %>
+    <%@ include file="../header원본.jsp" %>
     <%@ include file="../sidebar.jsp" %>
 
     <main id="main" class="main">
@@ -166,7 +174,7 @@
                                     <div class="col-md-12">
                                         <div class="reviews-item d-flex flex-column">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <h4>${vo.shop_name}</h4>
+                                                <h5>${vo.shop_name}</h5>
                                                 <button class="btn btn-danger btn-sm btn-delete" onclick="reviews_del('${vo.reviews_id}')">Delete</button>
                                             </div>
                                             <div class="stars">
@@ -191,6 +199,20 @@
                                                 <div>${vo.orders_name}</div>
                                                 <div>${vo.orders_price}</div>
                                             </div>
+                                            <c:choose>
+                                                <c:when test="${vo.hasCeoReview}">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="ceoreview_display">
+                                                                <div><strong>⮑ 사장님 (${vo.ceoreviews_cdate})</strong></div>
+                                                                <div style="margin-top: 3px;">${vo.ceoreviews_content}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                </c:otherwise>    
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </c:forEach>

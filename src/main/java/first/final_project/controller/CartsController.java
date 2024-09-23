@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import first.final_project.dao.CartsMapper;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
+import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -33,8 +34,7 @@ public class CartsController {
 	@Autowired
 	ServletContext application;
 
-	// /menu/list.do
-	// /menu/list.do?page=2
+	// 장바구니 목록
 	@RequestMapping("list.do")
 	public String list(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			Model model) {
@@ -57,6 +57,7 @@ public class CartsController {
 			Model model) {
 
 		MemberVo user = (MemberVo) session.getAttribute("user");
+
 		int member_id = user.getMember_id();
 
 		List<CartsVo> list = carts_mapper.selectList(member_id);
@@ -102,7 +103,6 @@ public class CartsController {
 	}
 
 	// 수정
-	// /carts/modify.do?carts_id=9&carts_quantity=5
 	@PostMapping("modify.do")
 	public String modify(int carts_id, int carts_quantity, RedirectAttributes ra) {
 		carts_mapper.update(carts_id, carts_quantity);
@@ -111,8 +111,6 @@ public class CartsController {
 	}
 
 	// 삭제
-	// /carts/delete.do?carts_id=5
-	// /carts/delete.do?carts_id=5&page=2
 	@RequestMapping("delete.do")
 	public String delete(int carts_id, RedirectAttributes ra) {
 

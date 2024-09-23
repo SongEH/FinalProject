@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      select * from carts order by carts_id desc
   </select> -->
 
-   <select id="selectList" resultType="carts">
+   <select id="selectList" parameterType="int" resultType="carts">
      SELECT 
          c.*,                         -- Carts 테이블의 모든 컬럼을 선택
          s.shop_name   AS shop_name,    -- shop 테이블에서 가게명
@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          shop s ON m.shop_id = s.shop_id
       WHERE
         c.orders_id IS NULL
+        AND c.member_id = #{ member_id }
    </select>
 
 
@@ -70,15 +71,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         carts_quantity, 
         member_id, 
         shop_id,
-        menu_id, 
-        carts_cdate
+        menu_id
     )
     VALUES (
         #{carts_quantity}, 
         #{member_id}, 
         #{shop_id}, 
-        #{menu_id}, 
-        CURRENT_DATE
+        #{menu_id}
     );
    </insert>
 
@@ -102,6 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          set orders_id=#{ orders_id }
       where shop_id=#{ shop_id }
          and member_id=#{ member_id }
+         and orders_id IS NULL;
    </update>
 
    <!-- 조건에 맞는 장바구니 항목 조회 쿼리 -->
@@ -125,7 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
 
    <!-- 주문 ID가 같은 장바구니 목록 -->
-   <select id="selectOrdersById" parameterType="int" resultType="carts">
+   <select id="selectCartListByOrdersId" parameterType="int" resultType="carts">
       SELECT 
          c.*,                         -- Carts 테이블의 모든 컬럼을 선택
          m.menu_name   AS menu_name,    -- Menu 테이블에서 메뉴명

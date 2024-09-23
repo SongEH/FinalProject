@@ -27,28 +27,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <!-- 전체 리스트 조회  -->
-    <select id="selectList" resultType="shop">
-        select * from shop
+    <select id="selectList" parameterType="String" resultType="shop">
+    SELECT 
+        s.*,
+        (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count, 
+        (SELECT COUNT(*) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = s.shop_id) AS reviews_count, 
+        (SELECT AVG(r.reviews_rating) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = s.shop_id) AS shop_rating,
+		(SELECT count(*)
+			from ceoreview c
+            inner join reviews r on c.reviews_id = r.reviews_id
+            inner join orders o on o.orders_id = r.orders_id
+            where o.shop_id = s.shop_id) as ceoreview_count
+    FROM shop s
+        <where>
+            <if test="foodCategory != null and foodCategory != 'all'">
+                AND food_category = #{foodCategory}
+            </if>
+        </where>
     </select>
 
-
-    <!-- 가게 1개 상세보기 + menu 호출  -->
-    <resultMap id="shopMap" type="shop">
-      <result property="shop_id"  column="shop_id"/>
-      <collection property="menu_list"
-                  column="shop_id=shop_id" 
-                  select="selectMenuList" />
-    </resultMap>
-
-    <select id="selectMenuList" resultType="menu">
-        select * from menu where shop_id=#{ shop_id }
+    <!-- 가게 정렬 -->
+    <select id="selectListValue" parameterType="map" resultType="shop">    
+        SELECT         
+            s.*,        
+            (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,         
+            (SELECT COUNT(*)             
+             FROM reviews r             
+             INNER JOIN orders o ON o.orders_id = r.orders_id             
+             WHERE o.shop_id = s.shop_id) AS reviews_count,         
+            (SELECT AVG(r.reviews_rating)             
+             FROM reviews r             
+             INNER JOIN orders o ON o.orders_id = r.orders_id             
+             WHERE o.shop_id = s.shop_id) AS shop_rating,		
+            (SELECT COUNT(*)             
+             FROM ceoreview c            
+             INNER JOIN reviews r ON c.reviews_id = r.reviews_id            
+             INNER JOIN orders o ON o.orders_id = r.orders_id            
+             WHERE o.shop_id = s.shop_id) AS ceoreview_count    
+        FROM shop s        
+        <where>            
+            <if test="food_category != null and food_category != 'all'">                
+                AND food_category = #{food_category}            
+            </if>        
+        </where>
+        <if test="selectValue != null"> 
+            ORDER BY 
+            <choose>
+                <when test="selectValue == 'rank'">
+                    shop_id ASC 
+                </when>
+                <when test="selectValue == 'shop_rating'">
+                    shop_rating DESC
+                </when>
+                <when test="selectValue == 'reviews_count'">
+                    reviews_count DESC
+                </when>
+                <when test="selectValue == 'shop_min_price'">
+                    shop_min_price ASC
+                </when>
+            </choose>
+        </if>
     </select>
 
     <!-- 가게 1개 상세보기  -->
-    <select id="selectOne" parameterType="int" resultMap="shopMap">
-        select * from shop where shop_id = #{shop_id}
+    <select id="selectOne" parameterType="int" resultType="shop">
+        SELECT 
+        s.*,o.owner_license,
+        (SELECT COUNT(*) FROM menu WHERE shop_id = #{shop_id}) AS menu_count, 
+        (SELECT COUNT(*) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = #{shop_id}) AS reviews_count, 
+        (SELECT AVG(r.reviews_rating) 
+            FROM reviews r 
+            INNER JOIN orders o ON o.orders_id = r.orders_id 
+            WHERE o.shop_id = #{shop_id}) AS shop_rating
+    FROM shop s
+    inner join owner o on o.owner_id = s.owner_id
+    where s.shop_id = #{shop_id}
     </select>
-
 
     <!-- 가게 데이터 불러오기 -->
     <select id="select_modify_owner_id" parameterType="int" resultType="shop">
@@ -59,6 +122,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="select_one_shop_id" parameterType="int">
         select shop_id from shop where owner_id = #{owner_id}
     </select>
+
+    <select id="hasShop" parameterType="int" resultType="Boolean">
+        select shop_id from shop where owner_id = #{owner_id}
+    </select>
+
+    <!-- <select id="selectMenuAndReviewsCount" parameterType="int" resultType="map">
+        SELECT 
+        (SELECT COUNT(*) FROM menu WHERE shop_id = #{shop_id}) AS menu_count, 
+        (SELECT COUNT(*) FROM reviews r 
+        INNER JOIN orders o ON o.orders_id = r.orders_id 
+        WHERE o.shop_id = #{shop_id}) AS reviews_count
+    </select> -->
 
 
     <!-- 가게 정보 업데이트 -->

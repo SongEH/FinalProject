@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- 전체조회  -->
    <select id="selectList" parameterType="int" resultType="menu">
      select * from menu where shop_id = #{ shop_id } order by menu_id desc
-     
    </select>
 
    <!-- 메뉴ID에 해당하는 메뉴 1개 조회  -->
@@ -33,7 +32,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         menu_popularity, 
         menu_hidden,
         menu_soldout,
-        menu_cdate, 
         menu_status, 
         shop_id
     )
@@ -45,8 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{menu_img}, 
         #{menu_popularity}, 
         #{menu_hidden}, 
-        #{menu_soldout}, 
-        CURRENT_DATE,
+        #{menu_soldout},
         1, 
         #{shop_id}
     );
@@ -66,11 +63,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
    <!-- 내용수정 -->
    <update id="update" parameterType="menu">
-      update menu 
-         set menu_category=#{ menu_category }, menu_name=#{ menu_name }, menu_content=#{ menu_content }, menu_price=#{ menu_price }, menu_popularity=#{ menu_popularity }, menu_hidden=#{ menu_hidden }, menu_soldout=#{ menu_soldout }
-       where menu_id=#{ menu_id }
-
-   </update>
+    UPDATE menu 
+    SET menu_category = #{menu_category}, 
+        menu_name = #{menu_name}, 
+        menu_content = #{menu_content}, 
+        menu_price = #{menu_price}, 
+        menu_popularity = #{menu_popularity}, 
+        menu_hidden = #{menu_hidden}, 
+        menu_soldout = #{menu_soldout}, 
+        menu_mdate = NOW() 
+    WHERE menu_id = #{menu_id}
+</update>
 
 
 

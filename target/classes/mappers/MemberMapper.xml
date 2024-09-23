@@ -25,6 +25,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select * from member where member_nickname=#{member_nickname}
     </select>
 
+    <select id="getAddr" parameterType="int" resultType="member">
+        SELECT m.*, a.addr_line1, a.addr_line2
+        FROM member m
+        INNER JOIN (
+            SELECT *
+            FROM addr 
+            WHERE member_id = #{member_id}
+            ORDER BY addr_id DESC
+            LIMIT 1
+        ) a ON a.member_id = m.member_id
+        WHERE m.member_id = #{member_id}
+    </select>
+
     <!--추가 등록 -->
     <insert id="insert" parameterType="member">
         insert into member(`member_name`, 

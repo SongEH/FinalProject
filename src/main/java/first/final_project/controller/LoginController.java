@@ -88,8 +88,11 @@ public class LoginController {
         session.setAttribute("isLoggedIn", true);
 
         // 절대 경로 사용
-        String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
-        return "redirect:" + redirectUrl;
+        // String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
+        // return "redirect:" + redirectUrl;
+
+        // 절대 경로 사용 (수정 by 태광)
+        return "redirect:../main/display.do";
 
         // if (url == null || url.isEmpty())
         // return "redirect:/main.do";
@@ -153,7 +156,9 @@ public class LoginController {
 
         session.setAttribute("user", user);
         System.out.println(user);
-        return "redirect:../main.do";
+        // return "redirect:../main.do";
+        // 태광 수정 
+        return "redirect:../order/accept.do";
     }
 
     // 아이디 중복 체크

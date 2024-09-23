@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.ReviewsMapper">
+    <!-- select reviews + reviews_images -->
+    <!-- ResultMap for reviews including images -->
+<resultMap id="reviewsMap" type="reviews">
+    <result property="reviews_id" column="reviews_id"/>
+    <result property="reviews_rating" column="reviews_rating"/>
+    <result property="reviews_content" column="reviews_content"/>
+    <result property="reviews_cdate" column="reviews_cdate"/>
+    <result property="shop_name" column="shop_name"/> 
+    <result property="orders_id" column="orders_id"/>
+    <collection property="reviews_img_list"
+                ofType="reviewsImages"
+                column="reviews_id"
+                select="selectImageList"/>
+</resultMap>
+
+<!-- Query to fetch images for a review -->
+<select id="selectImageList" resultType="reviewsImages">
+    SELECT * FROM reviews_images WHERE reviews_id = #{reviews_id}
+</select>
+
+<!-- Query to fetch reviews based on member_id -->
+<select id="selectList" parameterType="int" resultMap="reviewsMap">
+    SELECT 
+        r.*, 
+        o.orders_name AS orders_name,
+        o.orders_price AS orders_price, 
+        s.shop_id, 
+        s.shop_name,
+        m.member_id, 
+        m.member_name,
+        c.ceoreviews_cdate,
+        c.ceoreviews_content,
+        c.ceoreviews_id
+    FROM 
+        reviews r
+    INNER JOIN
+        orders o ON o.orders_id = r.orders_id
+    INNER JOIN 
+        shop s ON o.shop_id = s.shop_id 
+    INNER JOIN 
+        member m ON o.member_id = m.member_id
+    left join
+        ceoreview c on r.reviews_id = c.reviews_id
+    WHERE 
+        m.member_id = #{member_id}
+</select>
+
+<resultMap id="reviewsShopIdMap" type="reviews">
+    <result property="reviews_id" column="reviews_id"/>
+    <result property="reviews_rating" column="reviews_rating"/>
+    <result property="reviews_content" column="reviews_content"/>
+    <result property="reviews_cdate" column="reviews_cdate"/>
+    <result property="shop_name" column="shop_name"/> 
+    <result property="orders_id" column="orders_id"/>
+    <!-- <result property="ceoreviews_cdate" column="ceoreviews_cdate"/>
+    <result property="ceoreviews_content" column="ceoreviews_content"/>
+    <result property="ceoreviews_id" column="ceoreviews_id"/> -->
+    <collection property="reviews_img_list"
+                ofType="reviewsImages"
+                column="reviews_id"
+                select="selectImageList"/>
+</resultMap>
+
+<!-- Query to fetch reviews based on shop_id -->
+<select id="selectListByShopId" parameterType="int" resultMap="reviewsShopIdMap">
+    SELECT 
+        r.*, 
+        o.orders_name AS orders_name,
+        o.orders_price AS orders_price, 
+        s.shop_id, 
+        s.shop_name,
+        m.member_id, 
+        m.member_name,
+        s.owner_id,
+        c.ceoreviews_cdate,
+        c.ceoreviews_content,
+        c.ceoreviews_id
+    FROM 
+        reviews r
+    INNER JOIN
+        orders o ON o.orders_id = r.orders_id
+    INNER JOIN 
+        shop s ON o.shop_id = s.shop_id 
+    INNER JOIN 
+        member m ON o.member_id = m.member_id
+    left join
+        ceoreview c on r.reviews_id = c.reviews_id
+    WHERE 
+        s.shop_id = #{shop_id}
+</select>
+
+    <select id="getReviewIdFromOrderId" parameterType="int" resultType="Int">
+        select reviews_id from reviews where orders_id = #{orders_id}
+    </select>
+
+    <select id="getImageForReviews" parameterType="int" resultType="String">
+        select reviews_img from reviews_images where reviews_id = #{reviews_id}
+    </select>
+
+    <select id="checkReviewExists" parameterType="int" resultType="Boolean">
+        select reviews_id from reviews where orders_id = #{orders_id}
+    </select>
+
+    <select id="checkCeoReviewExists" parameterType="int" resultType="Boolean">
+        select ceoreviews_id from ceoreview where reviews_id = #{reviews_id}
+    </select>
+
+
+
+
+    <!-- insert reviews -->
+    <insert id="insert" parameterType="reviews">
+        insert into reviews (
+                            reviews_rating,
+                            reviews_content,
+                            reviews_cdate,
+                            orders_id
+                    )values (
+                            #{reviews_rating},
+                            #{reviews_content},
+                            sysdate(),
+                            #{orders_id}
+                            )
+    </insert>
+
+    <!-- insert reviews_images   -->
+    <insert id="insert_img" parameterType="reviewsImages">
+        insert into reviews_images(
+                                    reviews_img,
+                                    reviews_id
+                                    )
+                            values(
+                                    #{reviews_img},
+                                    #{reviews_id}
+                                    )
+    </insert>
+
+    <!-- delete reviews -->
+    <delete id="deleteReviews" parameterType="int">
+        delete from reviews where reviews_id = #{reviews_id}
+    </delete>
+
+</mapper>

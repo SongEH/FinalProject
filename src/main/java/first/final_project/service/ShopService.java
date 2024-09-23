@@ -2,6 +2,7 @@ package first.final_project.service;
 
 import first.final_project.vo.ShopVo;
 import java.util.List;
+import java.util.Map;
 
 public interface ShopService {
 
@@ -13,6 +14,9 @@ public interface ShopService {
 
     // 가게 카테고리별 출력
     List<ShopVo> selectList(String food_category);
+
+    // 가게 정렬 
+    List<ShopVo> selectListValue(Map selectMap);
 
     // 가게 1개 상세보기
     ShopVo selectOne(int shop_id);
@@ -28,5 +32,11 @@ public interface ShopService {
 
     // Owner_id로 shop_id 찾아오기 
     int select_one_shop_id(int owner_id);
+
+    // 메뉴 개수와 리뷰 갯수 구하기 
+    Map<String, Integer> selectMenuAndReviewsCount(int shop_id);
+
+    // hasShop from owner_id
+    Boolean hasShop(int owner_id);
 
 }

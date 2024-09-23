@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,9 @@ public class PaymentController {
     @Autowired
     CartsMapper carts_mapper;
 
+    @Autowired
+    SimpMessagingTemplate messagingTemplate;
+
     // public PaymentController(PaymentService paymentService) {
     // this.paymentService = paymentService;
     // }
@@ -44,7 +48,7 @@ public class PaymentController {
         }
     }
 
-    // order tabel에 insert
+    // order table에 insert
     @RequestMapping(value = "/payment/insert.do")
     @ResponseBody
     public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {
@@ -65,6 +69,9 @@ public class PaymentController {
 
             // update 메서드 호출
             carts_mapper.updateOrderId(map);
+
+            // WebSocket을 통해 가계에 메시지 전송
+		    messagingTemplate.convertAndSend("/topic/orders", "주문이 들어왔습니다.");
         } catch (Exception e) {
             e.printStackTrace();
         }

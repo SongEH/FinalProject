@@ -1,3 +1,4 @@
+/*
 --회원의 등급과 해당 등급의 할인 금액을 저장합니다.
 CREATE TABLE grade (
     grade_id INT AUTO_INCREMENT PRIMARY KEY,  -- 등급 ID
@@ -30,3 +31,4 @@ CREATE TABLE coupon (
     used_date TIMESTAMP,                         -- 사용 일자 (NULL이면 미사용 상태)
     FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
+*/

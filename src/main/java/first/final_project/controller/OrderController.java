@@ -1,5 +1,6 @@
 package first.final_project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,108 +76,119 @@ public class OrderController {
 	ShopService shop_Service;
 
 	// 페이징 처리 전
-	// /menu/list.do
-	// /menu/list.do?page=2
 	// 주문 내역 확인
-	@RequestMapping("list.do")
-	public String list(@RequestParam(name = "page", defaultValue = "1") int
-	nowPage,
-	Model model) {
-
-	MemberVo user = (MemberVo) session.getAttribute("user");
-
-	List<OrderVo> list = order_mapper.selectList(user.getMember_id());
-
-	// 전체 게시물수
-	// int rowTotal = order_mapper.selectRowTotal();
-
-	for (OrderVo vo : list) {
-	Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
-	boolean hasReview = (result != null) ? result : false;
-	vo.setHasReview(hasReview);
-	}
-	// System.out.println(rowTotal);
-	System.out.println(list);
-	// 결과적으로 request binding
-	model.addAttribute("list", list);
-
-	return "order/order_list";
-	}
-
 	// @RequestMapping("list.do")
-	// public String list(@RequestParam(name = "page", defaultValue = "1") int page,
-	// 		@RequestParam(name = "startDate", required = false) String startDate, // 요청 파라미터로 시작 날짜 필터를 받음. 필수 값이 아니기
-	// 																				// 때문에 null일 수 있음
-	// 		@RequestParam(name = "endDate", required = false) String endDate, // 요청 파라미터로 종료 날짜 필터를 받음. 필수 값이 아니기 때문에
-	// 																			// null일 수 있음
-	// 		Model model) {
+	// public String list(@RequestParam(name = "page", defaultValue = "1") int
+	// nowPage,
+	// Model model) {
 
-	// 	// DATETIME 형식으로 비교하기 위해서 시:분:초 추가
-	// 	if (startDate != null && !startDate.isEmpty()) {
-	// 		startDate += " 00:00:00"; // 시작 날짜에 시간 추가
-	// 	}
-	// 	if (endDate != null && !endDate.isEmpty()) {
-	// 		endDate += " 23:59:59"; // 종료 날짜에 시간 추가
-	// 	}
+	// MemberVo user = (MemberVo) session.getAttribute("user");
 
-	// 	// OrderService에서 결과를 담을 Map 객체
-	// 	Map<String, Object> resultMap;
+	// List<OrderVo> list = order_mapper.selectList(user.getMember_id());
 
-	// 	// 로그인한 member_id
-	// 	MemberVo user = (MemberVo) session.getAttribute("user");
-	// 	int member_id = user.getMember_id();
+	// // 전체 게시물수
+	// // int rowTotal = order_mapper.selectRowTotal();
 
-	// 	// 필터가 없는 경우(날짜 필터 값이 null이거나 빈 값일 경우) 전체 목록을 가져옴
-	// 	if ((startDate == null || startDate.isEmpty()) && (endDate == null || endDate.isEmpty())) {
-	// 		resultMap = orderService.getPagedOrder(member_id, page); // 전체 배달 목록
-	// 	} else {
-	// 		// 필터가 있는 경우 해당 날짜 범위에 맞는 목록을 가져옴
-	// 		resultMap = orderService.getPagedOrder(member_id, page, startDate, endDate); // 필터 적용된 목록
-	// 	}
+	// for (OrderVo vo : list) {
+	// Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
+	// boolean hasReview = (result != null) ? result : false;
+	// vo.setHasReview(hasReview);
+	// }
+	// // System.out.println(rowTotal);
+	// System.out.println(list);
+	// // 결과적으로 request binding
+	// model.addAttribute("list", list);
 
-	// 	List<OrderVo> order_list = (List<OrderVo>) resultMap.get("order_list");
-
-	// 	for (OrderVo vo : order_list) {
-	// 		Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
-	// 		boolean hasReview = (result != null) ? result : false;
-	// 		vo.setHasReview(hasReview);
-	// 	}
-
-	// 	// 결과적으로 request binding
-	// 	model.addAttribute("list", order_list);
-	// 	System.out.println("order_list : " + order_list);
-	// 	System.out.println("order_list count : " + order_list.size());
-
-	// 	// 페이지 메뉴 데이터를 모델에 추가하여 JSP에 전달 (페이징 처리된 페이지 번호)
-	// 	model.addAttribute("pageMenu", resultMap.get("pageMenu"));
-
-	// 	// 현재 페이지 번호를 모델에 추가하여 JSP에 전달
-	// 	model.addAttribute("currentPage", page);
-
-	// 	// 필터 값을 모델에 추가하여 JSP에서 필터를 유지할 수 있게 함
-	// 	model.addAttribute("startDate", startDate);
-	// 	model.addAttribute("endDate", endDate);
-
-	// 	return "order/order_list";
+	// return "order/order_list";
 	// }
 
-	// 회원 주문목록 화면에서 Ajax polling 방식으로 주기적으로 서버에 요청해 주문상태 업데이트
-	@RequestMapping("/order_list")
-	@ResponseBody
-	public List<OrderVo> getOrders() {
+	@RequestMapping("list.do")
+	public String list(@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "startDate", required = false) String startDate, // 요청 파라미터로 시작 날짜 필터를 받음. 필수 값이 아니기
+																					// 때문에 null일 수 있음
+			@RequestParam(name = "endDate", required = false) String endDate, // 요청 파라미터로 종료 날짜 필터를 받음. 필수 값이 아니기 때문에
+																				// null일 수 있음
+			Model model) {
 
-		// 현재 로그인한 사용자
+		// DATETIME 형식으로 비교하기 위해서 시:분:초 추가
+		if (startDate != null && !startDate.isEmpty()) {
+			startDate += " 00:00:00"; // 시작 날짜에 시간 추가
+		}
+		if (endDate != null && !endDate.isEmpty()) {
+			endDate += " 23:59:59"; // 종료 날짜에 시간 추가
+		}
+
+		// OrderService에서 결과를 담을 Map 객체
+		Map<String, Object> resultMap;
+
+		// 로그인한 member_id
 		MemberVo user = (MemberVo) session.getAttribute("user");
-
 		int member_id = user.getMember_id();
-		List<OrderVo> order_list = order_mapper.selectList(member_id);
+
+		// 필터가 없는 경우(날짜 필터 값이 null이거나 빈 값일 경우) 전체 목록을 가져옴
+		if ((startDate == null || startDate.isEmpty()) && (endDate == null || endDate.isEmpty())) {
+			resultMap = orderService.getPagedOrder(member_id, page); // 전체 배달 목록
+		} else {
+			// 필터가 있는 경우 해당 날짜 범위에 맞는 목록을 가져옴
+			resultMap = orderService.getPagedOrder(member_id, page, startDate, endDate); // 필터 적용된 목록
+		}
+
+		List<OrderVo> order_list = (List<OrderVo>) resultMap.get("order_list");
+
+		for (OrderVo vo : order_list) {
+			Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
+			boolean hasReview = (result != null) ? result : false;
+			vo.setHasReview(hasReview);
+		}
+
+		// 결과적으로 request binding
+		model.addAttribute("list", order_list);
+		System.out.println("order_list : " + order_list);
+		System.out.println("order_list count : " + order_list.size());
+
+		// 페이지 메뉴 데이터를 모델에 추가하여 JSP에 전달 (페이징 처리된 페이지 번호)
+		model.addAttribute("pageMenu", resultMap.get("pageMenu"));
+
+		// 현재 페이지 번호를 모델에 추가하여 JSP에 전달
+		model.addAttribute("currentPage", page);
+
+		// 필터 값을 모델에 추가하여 JSP에서 필터를 유지할 수 있게 함
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+
+		return "order/order_list";
+	}
+
+	@RequestMapping("order_list.do")
+	@ResponseBody
+	public List<OrderVo> getOrders(@RequestParam String type, HttpSession session) {
+		List<OrderVo> order_list = new ArrayList<>();
+		int id;
+
+		// 세션에서 사용자 정보 가져오기
+		Object userObject = session.getAttribute("user");
+
+		if (userObject == null) {
+			throw new RuntimeException("사용자가 로그인하지 않았습니다."); // 또는 적절한 예외 처리
+		}
+
+		if ("owner".equals(type)) {
+			OwnerVo user = (OwnerVo) userObject;
+			id = user.getOwner_id();
+			order_list = orderService.getAcceptOrderList(id, "주문 대기");
+
+		} else if ("member".equals(type)) {
+			MemberVo user = (MemberVo) userObject;
+			id = user.getMember_id();
+			order_list = order_mapper.selectList(id);
+		}
+
 		System.out.println("주문리스트\n" + order_list);
 
-		// 매퍼를 통해 주문 리스트를 반환
 		return order_list;
 	}
 
-	// 주문대기 (주문 전)
+	// 회원 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
 	public String insert(int shop_id, String shop_name, Model model) {
 
@@ -199,7 +211,7 @@ public class OrderController {
 		return "order/order_pending_list";
 	}
 
-	// 주문 상세보기
+	// 회원 주문 상세보기
 	@RequestMapping(value = "order_show.do")
 	public String order_show(int orders_id, Model model) {
 
@@ -216,7 +228,7 @@ public class OrderController {
 		return "order/order_show";
 	}
 
-	// 주문 삭제 (소프트삭제)
+	// 회원 주문 삭제 (소프트삭제)
 	@RequestMapping(value = "delete.do")
 	public String delete(int orders_id) {
 
@@ -225,7 +237,8 @@ public class OrderController {
 		return "redirect:list.do";
 	}
 
-	// 은호님 추가
+	// ------------------------------ 가맹점 측 -----------------------------
+	// 가맹점 주문 내역
 	@GetMapping("accept.do")
 	public String getAcceptOrderList(Model model) {
 		// 세션에서 가계 정보를 가져옴
@@ -247,13 +260,13 @@ public class OrderController {
 			model.addAttribute("orders", orders);
 		}
 
-		// owner와 shop 은 1:1 매칭 확인 및 버튼 비활성화 
+		// owner와 shop 은 1:1 매칭 확인 및 버튼 비활성화
 		System.out.println("user.getOwner_id() : " + user.getOwner_id());
 		Boolean result = shop_Service.hasShop(user.getOwner_id());
-        System.out.println(result);
+		System.out.println(result);
 		Boolean hasShop = (result != null) ? result : false;
-		if(hasShop != null & hasShop){
-			if(hasShop==false){
+		if (hasShop != null & hasShop) {
+			if (hasShop == false) {
 				return "redirect:../shop/insert_form.do";
 			}
 		}
@@ -261,6 +274,7 @@ public class OrderController {
 		return "order/order_accept_list";
 	}
 
+	// 주문 접수
 	@GetMapping("accept")
 	public String acceptOrderList(@RequestParam("orders_id") int orders_id) {
 		// 주문 상태를 '배차 대기'로 변경
@@ -270,6 +284,7 @@ public class OrderController {
 		return "redirect:/order/accept.do";
 	}
 
+	// 조리시작
 	@GetMapping("startCooking")
 	public String startCooking(@RequestParam("orders_id") int orders_id) {
 		// 주문 상태를 '조리 중'로 변경
@@ -279,6 +294,7 @@ public class OrderController {
 		return "redirect:/order/accept.do";
 	}
 
+	// 픽업대기 (조리완료시)
 	@GetMapping("endCooking")
 	public String endCooking(@RequestParam("orders_id") int orders_id) {
 		// 주문 상태를 '픽업 대기'로 변경
@@ -288,6 +304,7 @@ public class OrderController {
 		return "redirect:/order/accept.do";
 	}
 
+	// 주문 거절
 	@GetMapping("cancel")
 	public String deleteOrder(@RequestParam("orders_id") int orders_id) {
 		// // 주문 정보 조회
@@ -324,6 +341,7 @@ public class OrderController {
 		return "redirect:/order/accept.do";
 	}
 
+	// 완료한 주문 내역
 	@GetMapping("complete.do")
 	public String getCompleteOrderList(Model model) {
 		// 세션에서 가게 정보를 가져옴

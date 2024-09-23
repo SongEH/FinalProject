@@ -55,7 +55,6 @@ public class MenuController {
 		int owner_id = user.getOwner_id();
 		int shop_id = shop_service.select_one_shop_id(owner_id);
 
-		// 페이징된 리스트를 가져온다
 		List<MenuVo> menu_list = menu_mapper.selectList(shop_id);
 
 		// 결과적으로 request binding

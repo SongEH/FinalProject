@@ -27,8 +27,8 @@
   border-radius: 5px;
 }
 .search-bar button {
-  background-color: #ff3366;
-  color: white;
+  background-color: #F7B5CA;
+  color: black;
   border: none;
   padding: 10px 20px;
   margin-left: 10px;

@@ -102,19 +102,19 @@
     
                           <div class="col-md-12">
                             <div class="form-floating">
-                              <select class="form-control" placeholder="음식카테고리" name="food_category" value="${vo.food_category}">
-                                <option class="form-control" value="pork_trotters">족발 보쌈</option>
-                                <option class="form-control" value="korea_food">한식</option>
-                                <option class="form-control" value="japanese_food">돈까스 회 일식</option>
-                                <option class="form-control" value="west_food">피자/양식</option>
-                                <option class="form-control" value="chicken">치킨</option>
-                                <option value="chinese_food">중식</option>
-                                <option value="asian_food">아시안</option>
-                                <option value="porridge_noodle">백반 죽 국수</option>
-                                <option value="snack_food">분식</option>
-                                <option value="desserts">디저트</option>
-                                <option value="fast_food">패스트푸드</option>
-                              </select>
+                              <select class="form-control" placeholder="음식카테고리" name="food_category">
+                                <option class="form-control" value="pork_trotters" <c:if test="${vo.food_category == 'pork_trotters'}">selected</c:if>>족발·보쌈</option>
+                                <option class="form-control" value="pizza" <c:if test="${vo.food_category == 'pizza'}">selected</c:if>>피자</option>
+                                <option class="form-control" value="chicken" <c:if test="${vo.food_category == 'chicken'}">selected</c:if>>치킨</option>
+                                <option class="form-control" value="japanese_food" <c:if test="${vo.food_category == 'japanese_food'}">selected</c:if>>돈까스·회·일식</option>
+                                <option class="form-control" value="korea_food" <c:if test="${vo.food_category == 'korea_food'}">selected</c:if>>한식</option>
+                                <option class="form-control" value="chinese_food" <c:if test="${vo.food_category == 'chinese_food'}">selected</c:if>>중식</option>
+                                <option class="form-control" value="asian_food" <c:if test="${vo.food_category == 'asian_food'}">selected</c:if>>아시안</option>
+                                <option class="form-control" value="porridge_noodle" <c:if test="${vo.food_category == 'porridge_noodle'}">selected</c:if>>백반·죽·국수</option>
+                                <option class="form-control" value="snack_food" <c:if test="${vo.food_category == 'snack_food'}">selected</c:if>>분식</option>
+                                <option class="form-control" value="desserts" <c:if test="${vo.food_category == 'desserts'}">selected</c:if>>카페·디저트</option>
+                                <option class="form-control" value="fast_food" <c:if test="${vo.food_category == 'fast_food'}">selected</c:if>>패스트푸드</option>
+                            </select>
                             </div>
                           </div>
     
@@ -128,7 +128,7 @@
     
                           <div class="col-md-12">
                             <div class="form-floating">
-                              <input class="form-control" type="file" name="photo">
+                              <input class="form-control" type="file" name="photo" value="${vo.shop_img}">
                               <label>사진</label>
                             </div>
                           </div>

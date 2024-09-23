@@ -29,6 +29,10 @@ body {
   align-items: end;
   display: block;
 }
+#sort_display{
+  float: right;
+  margin-left: auto;
+}
 .search-bar {
   display: flex;
   justify-content: center;
@@ -198,11 +202,13 @@ body {
           data    :      {"shop_id": shop_id},
           success :   function(res_data){
                 alert("select_one.do 성공")
-                $("#select_one_display").html(res_data);
+                $("#select_one_display").html(res_data).show();
                 $("#insert_form_display").hide();
-                // $("#reviews_display").hide();
+                $("#reviews_display").hide();
                 $("#store-list").hide();
-                // $('#menu_display').hide();
+                $("#store_list_display").hide();
+                $("#sort_display").hide();
+                $('#select_list_category_display').hide();
                 $('#menuButton').click();
                 $('#menuButton').focus();
           },
@@ -237,7 +243,7 @@ body {
     </script>
 </head>
 <body>
-  <div id="shop_list_display">
+
   <!-- <%@ include file="../header.jsp" %>
   <%@ include file="../searchbar.jsp"%> -->
   <%@ include file="../navbar.jsp" %>
@@ -245,19 +251,18 @@ body {
 
   <div class="container">
 
-    <div id="menu_sort" style="margin-bottom: 20px;">
-      <select id="sortOption" class="form-control" onchange="optionChange()">
-        <option value="rank" >기본 정렬순</option>
-        <option value="shop_rating">별점순</option>
-        <option value="reviews_count">리뷰 많은순</option>
-        <option value="shop_min_price">최소 주문 금액순</option>
-      </select>
+    <div id="sort_display" style="align-items: end !important;">
+      <div id="menu_sort" style="margin-bottom: 20px;">
+        <select id="sortOption" class="form-control" onchange="optionChange()">
+          <option value="rank" >기본 정렬순</option>
+          <option value="shop_rating">별점순</option>
+          <option value="reviews_count">리뷰 많은순</option>
+          <option value="shop_min_price">최소 주문 금액순</option>
+        </select>
+      </div>
     </div>
 
-    <hr>
-
     <div id="store_list">
-
       <div class="store-list mt-10" id="store-list" >
         <c:forEach var="vo" items="${list}">
           <div class="store" onclick="selectOne('${vo.shop_id}');">
@@ -280,22 +285,23 @@ body {
       </div>
     </div>
   </div>
-  <div>
-    <div id="store_list_display">
-      <input type="hidden" id="order_addr" value="${order_addr}"/> ${order_addr}
-      <input type="hidden" id="food_category" value="${food_category}"/>${food_category}
-    </div>
+ 
+  <div id="store_list_display">
+    <input type="hidden" id="order_addr" value="${order_addr}"/> ${order_addr}
+    <input type="hidden" id="food_category" value="${food_category}"/>${food_category}
   </div>
+
+  <div>
       <!-- Add more stores similarly -->
     <div id="insert_form_display"></div>
-</div>
+  </div>
   <div>
     <div id="select_list_category_display"></div>
   </div>
   <div>
     <div id="select_one_display"></div>
   </div>
-</div>
+
 </main>
 </body>
 </html>

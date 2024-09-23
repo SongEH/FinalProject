@@ -34,6 +34,7 @@
         alert("주소를 입력하시거나 로그인 후 이용할 수 있습니다.")
         return;
       }
+      alert(order_addr);
       // var activeCategory = food_category;
       // alert(activeCategory);
 
@@ -44,11 +45,10 @@
                       },
       success :   function(res_data){
               $("#store_list").hide();
-              $("#store_list_display").html(res_data);
-              
-              // $("#store_list_display").html(res_data).show();
-              // $("#select_list_category_display").html(res_data).show();
-              // $("#shop_list_display").hide();
+              $("#select_one_display").hide();
+              $("#store_list_display").hide();
+              $("#select_list_category_display").html(res_data).show();
+              // $("#sort_display").html(res_data);
               $(".nav-link").removeClass("active");
               $("#" + food_category).addClass("active");
       },
@@ -109,7 +109,7 @@
           </ul>
           <form class="d-flex">
             <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-success" type="button" value="Search"></button>
           </form>
         </div>
       </div>

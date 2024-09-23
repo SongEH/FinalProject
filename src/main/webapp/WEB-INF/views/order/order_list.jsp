@@ -15,7 +15,8 @@
   </script>
 
   <script>
-    function review(orders_id) {
+
+    function insert_review(orders_id) {
       // $.ajax({
       // url     :     "../reviews/insert_form.do",
       // data    :      {"orders_id": orders_id},
@@ -30,6 +31,7 @@
       location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
     }
   </script>
+
 
   <!-- polling 방식으로 주문상태 업데이트 -->
   <script>
@@ -67,6 +69,17 @@
     // 특정 주기 마다 주문 내역을 가져옵니다.
     setInterval(fetchOrders, 30000); // 10000ms = 10초
   </script>
+
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between; /* Align logo to the left and login to the right */
+    align-items: center; /* Vertically center the items */
+    padding: 10px; /* Optional: Add some padding */
+    background-color: #F0A8D0;
+}
+</style>
 
 </head>
 
@@ -153,7 +166,7 @@
                       </c:when>
                       <c:otherwise>
                         <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
-                          onclick="review('${vo.orders_id}');">
+                          onclick="insert_review('${vo.orders_id}');">
                       </c:otherwise>
                     </c:choose>
                   </td>

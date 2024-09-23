@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import first.final_project.service.CouponService;
 import first.final_project.vo.CouponVo;
+import first.final_project.vo.MemberVo;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/coupon/")
@@ -16,6 +18,9 @@ public class CouponController {
 
     @Autowired
     private CouponService couponService;
+
+    @Autowired
+    HttpSession httpSession;
 
     // 쿠폰 메인 페이지
     @RequestMapping("main.do")
@@ -36,18 +41,17 @@ public class CouponController {
         return "coupon/success"; // 성공 페이지로 이동
     }
 
-    // // 특정 회원의 쿠폰 리스트 조회
-    // @RequestMapping("listMember.do")
-    // public String listCouponsForMember(Model model, HttpSession session) {
-    // MemberVo member = (MemberVo) session.getAttribute("member"); // 세션에서 로그인된 회원
-    // 정보 가져오기
-    // if (member != null) {
-    // List<CouponVo> coupons =
-    // couponService.getCouponsForMember(member.getMember_id());
-    // model.addAttribute("coupons", coupons); // 쿠폰 리스트를 모델에 추가
-    // }
-    // return "coupon/coupon_list"; // 쿠폰 리스트를 보여주는 페이지로 이동
-    // }
+    // 특정 회원의 쿠폰 리스트 조회
+    @RequestMapping("listMember.do")
+    public String listCouponsForMember(Model model, HttpSession session) {
+        MemberVo member = (MemberVo) session.getAttribute("member"); // 세션에서 로그인된 회원
+        // 정보 가져오기
+        if (member != null) {
+            List<CouponVo> coupons = couponService.getCouponsForMember(member.getMember_id());
+            model.addAttribute("coupons", coupons); // 쿠폰 리스트를 모델에 추가
+        }
+        return "coupon/coupon_list"; // 쿠폰 리스트를 보여주는 페이지로 이동
+    }
 
     // 관리자가 모든 발급된 쿠폰을 조회하는 메서드
     @RequestMapping("list.do")

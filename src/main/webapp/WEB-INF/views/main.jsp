@@ -69,17 +69,6 @@ prefix="c" %>
           background-color: rgb(221, 162, 162);
         }
       }
-
-      <!--
-        header
-        import
-        --
-        > <%@include
-        file="header원본.jsp"
-        %
-        > .menu-item:hover {
-        cursor: pointer;
-      }
     </style>
   </head>
 

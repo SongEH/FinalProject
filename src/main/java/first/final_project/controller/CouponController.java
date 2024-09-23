@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import first.final_project.service.CouponService;
 import first.final_project.vo.CouponVo;
-import first.final_project.vo.MemberVo;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/coupon/")

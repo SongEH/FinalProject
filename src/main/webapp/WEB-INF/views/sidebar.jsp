@@ -19,6 +19,7 @@ pageEncoding="UTF-8" %>
   else if (user instanceof OwnerVo) { userType = "OWNER"; } 
 
   session.setAttribute("userType",userType);
+
 %>
 
 <!DOCTYPE html>

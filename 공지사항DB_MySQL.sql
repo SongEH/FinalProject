@@ -14,7 +14,7 @@ create table notice(
 );
 
 alter table notice add constraint 
-fk_notice_to_answer foreign key(admin_id) references admin(admin_id);
+fk_admin_to_notice foreign key(admin_id) references admin(admin_id);
 
 alter table notice add constraint ck_notice_type 
 check(notice_type in('전체','서비스안내','점검안내','약관안내'));

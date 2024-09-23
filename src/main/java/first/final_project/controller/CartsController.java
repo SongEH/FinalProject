@@ -61,7 +61,7 @@ public class CartsController {
 		int member_id = user.getMember_id();
 
 		List<CartsVo> list = carts_mapper.selectList(member_id);
-		System.out.println(list);
+		System.out.println("장바구니목록\n" + list);
 
 		// request binding
 		model.addAttribute("list", list);

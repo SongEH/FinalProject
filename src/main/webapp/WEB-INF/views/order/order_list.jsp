@@ -8,9 +8,6 @@
 <head>
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-   -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
@@ -18,6 +15,7 @@
   </script>
 
   <script>
+
     function insert_review(orders_id) {
       // $.ajax({
       // url     :     "../reviews/insert_form.do",
@@ -33,6 +31,46 @@
       location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
     }
   </script>
+
+
+  <!-- polling 방식으로 주문상태 업데이트 -->
+  <script>
+    function fetchOrders() {
+      $.ajax({
+        url: `/order/order_list.do`, // 주문 내역을 가져오는 API 경로
+        data: {
+          type: 'member'
+        }, // type 데이터를 전달
+        method: 'GET',
+        success: function (orders) {
+
+          orders.forEach(order => {
+            console.log(order.orders_id, order.orders_status);
+
+            let orders_id = '#order-' + order.orders_id;
+            let orderRow = $(orders_id);
+            let orderStatusElement = orderRow.find('.orders-status')[0]; // jQuery로 선택한 후, 첫 번째 요소 가져오기
+
+            console.log("orderRow" + orderRow);
+            if (orderStatusElement) {
+              orderStatusElement.textContent = order.orders_status; // 상태 업데이트
+              console.log("Status updated for order " + order.orders_id);
+            } else {
+              console.log("요소를 찾을 수 없습니다: " + orders_id); // 요소를 찾지 못했을 경우 로그 출력
+            }
+          });
+        },
+        error: function (err) {
+          console.error('주문을 가져오는 중 오류 발생:', err);
+        }
+      });
+    }
+
+    // 특정 주기 마다 주문 내역을 가져옵니다.
+    setInterval(fetchOrders, 30000); // 10000ms = 10초
+  </script>
+
+
 <style>
   header {
     display: flex;
@@ -42,6 +80,7 @@
     background-color: #F0A8D0;
 }
 </style>
+
 </head>
 
 
@@ -80,7 +119,7 @@
         <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
       </div>
       <button type="submit" class="btn btn-primary" style="margin-left: 10px">
-        필터 적용
+        검색
       </button>
     </form>
 
@@ -107,6 +146,9 @@
                             <h5 class="card-title">
                               <p class="orders-status" style="color:red;">${vo.orders_status}</p>${vo.shop_name}
                             </h5>
+                            <c:if test="${vo.orders_status != '배달 완료' && vo.delivery_time != 0}">
+                              <p class="delivery-time">배달 예정 시간: ${vo.delivery_time}</p>
+                            </c:if>
                             <p class="card-text">주문일시
                               <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
                             </p>
@@ -135,48 +177,6 @@
         </div>
       </table>
     </section>
-
-    <!-- polling 방식으로 주문상태 업데이트 -->
-    <script>
-      function fetchOrders() {
-        let member_id = 1;
-        $.ajax({
-          url: `/order/list_test`, // 주문 내역을 가져오는 API 경로
-          method: 'GET',
-          success: function (orders) {
-            console.log(orders);
-            console.log("성공!!!");
-            // orders.forEach(order => {
-            //   const orderRow = $(`#order-${order.id}`);
-            //   const orderStatusElement = orderRow.find('.orders-status');
-
-            //   // 주문 상태 업데이트
-            //   if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
-            //     orderStatusElement.text(order.orders_status);
-            //   }
-            // });
-
-            orders.forEach(order => {
-              console.log(`Updating order ${order.orders_id} with status ${order.orders_status}`);
-              const orderRow = $(`#order-${order.orders_id}`);
-              const orderStatusElement = orderRow.find('.orders-status');
-
-              if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
-                orderStatusElement.text(order.orders_status);
-                console.log(`Status updated for order ${order.orders_id}`);
-              }
-            });
-          },
-          error: function (err) {
-            console.error('주문을 가져오는 중 오류 발생:', err);
-          }
-        });
-      }
-
-      // 5초마다 주문 내역을 가져옵니다.
-      setInterval(fetchOrders, 5000); // 5000ms = 5초
-    </script>
-
 
 
     <!-- 페이징 처리 -->

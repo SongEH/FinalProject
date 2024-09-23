@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import first.final_project.dao.MenuMapper;
 import first.final_project.service.AddrService;
 import first.final_project.service.KakaoMapService;
@@ -390,16 +391,15 @@ public class ShopController {
     public String shop_modify(ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
             Model model) {
         // 기존 이미지 불러오기
-        System.out.println();
         String filename = shop_Service.selectOne(vo.getShop_id()).getShop_img();
         System.out.println("vo.getShop_img filename = " + filename);
 
-        String shop_img = "no_file";
         // 이미지 저장할 경로
         String absPath = application.getRealPath("/resources/images/");
         System.out.println(absPath);
         // 새로운 이미지 UUID 부여
         if (!photo.isEmpty()) {
+            String shop_img = "no_file";
             UUID uuid = UUID.randomUUID();
             shop_img = uuid + "_" + photo.getOriginalFilename();
 
@@ -434,10 +434,12 @@ public class ShopController {
             }
 
         }
-
+        System.out.println("변경할 이미지가 없습니다. ");
         try {
+            System.out.println("업데이트전");
             int res = shop_Service.update(vo);
-            return "redirect:shoplist.do";
+            System.out.println("가게수정 완료");
+            return "redirect:modify_form.do";
             // shop_id = vo.getShop_id();
         } catch (Exception e) {
             return "error/error_page";

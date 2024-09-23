@@ -202,7 +202,8 @@ public class LoginController {
 
         session.invalidate();
 
-        return "redirect:/main.do";
+        // return "redirect:/main.do";
+        return "redirect:/main/display.do";
     }
 
 }

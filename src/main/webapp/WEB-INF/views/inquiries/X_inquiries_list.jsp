@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>공지사항 목록</title>
+    <title>문의사항 목록</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,11 +41,11 @@
             font-weight: bold;
             color: #ff5733;
         }
-        .admin-actions {
+        .actions {
             text-align: center;
             margin-bottom: 20px;
         }
-        .admin-actions a {
+        .actions a {
             text-decoration: none;
             padding: 10px 20px;
             color: #fff;
@@ -53,15 +53,15 @@
             border-radius: 5px;
             font-size: 16px;
         }
-        .admin-actions a:hover {
+        .actions a:hover {
             background-color: #0056b3;
         }
-        .notice-list {
+        .inquiries-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-        .notice-card {
+        .inquiries-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -71,26 +71,26 @@
             background-color: #ffffff;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
-        .notice-title {
+        .inquiries-title {
             font-size: 18px;
             font-weight: bold;
             flex: 2;
         }
-        .notice-date {
+        .inquiries-date {
             flex: 1;
             text-align: center;
             color: #888;
         }
-        .notice-author {
+        .inquiries-author {
             flex: 1;
             text-align: right;
             color: #555;
         }
-        .notice-title a {
+        .inquiries-title a {
             text-decoration: none;
             color: #007bff;
         }
-        .notice-title a:hover {
+        .inquiries-title a:hover {
             text-decoration: underline;
         }
 
@@ -98,15 +98,8 @@
 </head>
 <body>
 <div class="container">
-    <input type="hidden" id="notice_type" value="${vo.notice_type}">
-    <h1>공지사항</h1>
-
-    <div class="filter">
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=전체" class="${notice_type == '전체' ? 'active' : ''}">전체</a>
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=서비스안내" class="${notice_type == '서비스안내' ? 'active' : ''}">서비스 안내</a>
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=점검안내" class="${notice_type == '점검안내' ? 'active' : ''}">점검 안내</a>
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=약관안내" class="${notice_type == '약관안내' ? 'active' : ''}">약관 안내</a>
-    </div>
+    <input type="hidden" id="inquiries_type" value="${vo.inquiries_type}">
+    <h1>문의사항</h1>
 
     <% 
         // 세션에서 user 객체를 가져옴
@@ -114,29 +107,49 @@
         if(userType == null){
             userType = "UNKNOWN";   //기본갑을 설정
         }
-        session.setAttribute("userType",userType);
+        
     %>
-
-    <!-- 관리자 전용 액션 버튼 -->
-    <c:if test="${userType == 'ADMIN'}">
-        <div class="admin-actions">
-            <a href="${pageContext.request.contextPath}/notice/insert_form.do">공지사항 등록</a>
-        </div>
-    </c:if>
-
     
 
-    <div class="notice-list">
-        <c:forEach var="notice" items="${list}">
-            <div class="notice-card">
-                <div class="notice-title">
-                    <a href="${pageContext.request.contextPath}/notice/detail.do?notice_id=${notice.notice_id}">${notice.notice_title}</a>
+    <div class="filter">
+        <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=전체" class="${inquiries_type == '전체' ? 'active' : ''}">전체</a>
+        <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=결제문의" class="${inquiries_type == '결제문의' ? 'active' : ''}">결제문의</a>
+        <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=주문문의" class="${inquiries_type == '주문문의' ? 'active' : ''}">주문문의</a>
+        <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=서비스이용" class="${inquiries_type == '서비스이용' ? 'active' : ''}">서비스이용</a>
+        <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=배송문의" class="${inquiries_type == '배송문의' ? 'active' : ''}">배송문의</a>
+    </div>
+    
+
+    <c:if test="${userType == 'MEMBER'}">
+        <div class="actions">
+            <a href="${pageContext.request.contextPath}/inquiries/insert_form.do">문의사항 등록</a>
+        </div>
+    </c:if>
+    <c:if test="${userType == 'OWNER'}">
+        <div class="actions">
+            <a href="${pageContext.request.contextPath}/inquiries/insert_form.do">문의사항 등록</a>
+        </div>
+    </c:if>
+    
+
+    <div class="inquiries-list">
+        <c:forEach var="inquiries" items="${list}">
+            <div class="inquiries-card">
+                <div class="inquiries-title">
+                    <a href="${pageContext.request.contextPath}/inquiries/detail.do?inquiries_id=${inquiries.inquiries_id}">${inquiries.inquiries_title}</a>
                 </div>
-                <div class="notice-date">
-                    작성일자: ${notice.notice_cdate}
+                <div class="inquiries-date">
+                    작성일자: ${inquiries.inquiries_cdate}
                 </div>
-                <div class="notice-author">
-                    작성자: ${notice.adminAccountId}
+                <div class="inquiries-author">
+                     <c:choose>
+                        <c:when test="${inquiries.memberAccountId != null}">
+                            작성자: ${inquiries.memberAccountId}
+                        </c:when>
+                        <c:when test="${inquiries.ownerAccountId != null}">
+                            작성자: ${inquiries.ownerAccountId}
+                        </c:when>
+                    </c:choose>
                 </div>
             </div>
         </c:forEach>

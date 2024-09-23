@@ -196,7 +196,7 @@ pageEncoding="UTF-8" %>
             <c:choose>
               <c:when test="${hasShop}">
                 <a href="#" class="disabled-link">
-                  <i class="bi bi-circle"></i><span>가맹점 등록</span>
+                  <i class="bi bi-circle"></i><span>가맹점 등록 완료</span>
                 </a>
               </c:when>
               <c:otherwise>

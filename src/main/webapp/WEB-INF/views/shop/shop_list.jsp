@@ -211,6 +211,7 @@ body {
                 $('#select_list_category_display').hide();
                 $('#menuButton').click();
                 $('#menuButton').focus();
+
           },
           error   :   function(err){
             alert(error.responseText);
@@ -223,23 +224,28 @@ body {
         let selectValue = document.getElementById("sortOption").value;
         let food_category = document.getElementById("food_category").value;
         let order_addr = document.getElementById("order_addr").value;
+        let searchValue = document.getElementById("searchInput").value;
         alert(food_category);
         alert(order_addr);
         alert(selectValue);
         $.ajax({
         url     :     "../shop/food_list.do",
-        data    :      {"selectValue": selectValue,
-                        "food_category": food_category,
-                        "order_addr": order_addr},
+        data  : {"selectValue": selectValue,
+              "food_category": food_category,
+              "order_addr": order_addr,
+              "searchValue": searchValue},
         success :   function(res_data){
-                    $("#store_list").hide();          
+                    alert("성공");
+                    $("#store_list").hide();
+                    $("#store_list_display").html("");        
                     $("#store_list_display").html(res_data);
+
         },
-        error   :   function(err){
-        alert(error.responseText)
+          error   :   function(err){
+          alert(error.responseText)
         }
-        });
-        }
+      });
+    }
     </script>
 </head>
 <body>
@@ -287,8 +293,8 @@ body {
   </div>
  
   <div id="store_list_display">
-    <input type="hidden" id="order_addr" value="${order_addr}"/> ${order_addr}
-    <input type="hidden" id="food_category" value="${food_category}"/>${food_category}
+    <input type="hidden" id="order_addr" value="${order_addr}"/>
+    <input type="hidden" id="food_category" value="${food_category}"/>
   </div>
 
   <div>

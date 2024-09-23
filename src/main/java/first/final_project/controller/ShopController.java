@@ -1,10 +1,12 @@
 package first.final_project.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -115,7 +117,6 @@ public class ShopController {
             model.addAttribute("list", list);
             model.addAttribute("order_addr", order_addr);
             model.addAttribute("food_category", food_category);
-            System.out.println(activeCategory);
         } catch (Exception e) {
             e.printStackTrace();  // 예외 발생 시 전체 스택 트레이스를 출력
             System.out.println("예외 발생: " + e.getMessage());  // 구체적인 예외 메시지 출력
@@ -126,7 +127,10 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/food_list.do")
-    public String shop_food_list(String food_category,String order_addr, String selectValue, Model model, RedirectAttributes ra) {
+    public String shop_food_list(String food_category,String order_addr, 
+    @RequestParam(name="selectValue", required = false) String selectValue,
+    @RequestParam(name="searchValue", required = false)String searchValue,
+     Model model, RedirectAttributes ra) throws UnsupportedEncodingException {
 
  
         // System.out.println(selectValue);
@@ -140,10 +144,12 @@ public class ShopController {
 
         Map<String, Object> selectMap = new HashMap<String, Object>();
         selectMap.put("food_category", food_category);
-        if(selectMap!=null){
+        if(selectValue!=null){
             selectMap.put("selectValue", selectValue); 
         }
-        
+        if(searchValue!=null){
+            selectMap.put("searchValue", searchValue);
+        }
 
         List<ShopVo> list;
         double radius = 10000;  // 10km 반경
@@ -288,6 +294,10 @@ public class ShopController {
         int owner_id = user.getOwner_id();
         System.out.println(owner_id);
 
+        String shop_addr = vo.getShop_addr1() + " " + vo.getShop_addr2();
+        vo.setShop_addr(shop_addr);
+        System.err.println("vo.getShop_addr() : "  +  vo.getShop_addr());
+
         System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
 
@@ -306,7 +316,7 @@ public class ShopController {
         vo.setOwner_id(owner_id);
         int res = shop_Service.insert(vo);
 
-        return "redirect:shoplist.do";
+        return "redirect:modify_form.do";
     }
 
     // 가게 하나 선택

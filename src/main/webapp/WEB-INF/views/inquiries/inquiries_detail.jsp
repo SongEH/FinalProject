@@ -83,16 +83,8 @@
 </head>
 <body>
 
-    <input type="hidden" id="inquiries_pwd" value="${vo.inquiries_pwd}">
     <input type="hidden" id="inquiries_id" value="${vo.inquiries_id}">
-    
-    <%
-        String userType = (String) session.getAttribute("userType");
-        if (userType == null) {
-            userType = "UNKNOWN";
-        }
-        session.setAttribute("userType", userType);
-    %>
+
 
     <div class="container">
         <h1>문의사항 상세</h1>

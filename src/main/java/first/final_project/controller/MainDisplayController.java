@@ -16,7 +16,7 @@ public class MainDisplayController {
     HttpSession session;
 
     @Autowired
-    MemberMapper memberMapper;
+    MemberMapper member_mapper;
 
 
     @RequestMapping("/main/display.do")
@@ -25,7 +25,7 @@ public class MainDisplayController {
         StringBuilder sb = new StringBuilder();
         
         if(user!=null){
-            MemberVo vo = memberMapper.getAddr(user.getMember_id());
+            MemberVo vo = member_mapper.getAddr(user.getMember_id());
             if(vo.getAddr_line1() != null && !vo.getAddr_line1().isEmpty()){
                 sb.append(vo.getAddr_line1());
             }

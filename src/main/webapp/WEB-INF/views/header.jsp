@@ -20,7 +20,7 @@ header .login-section {
     align-items: center;
 }
 
-header .login {
+header .login ,.insert {
     background-color: orange;
     padding: 8px 15px;
     border-radius: 5px;
@@ -65,18 +65,21 @@ header .login {
           <c:choose>
               <c:when test="${sessionScope.user.member_name !=null}">
                   <span>Welcome ${sessionScope.user.member_name}님</span>
-                  <input class="login" type="button" value="My Page" onclick="location.href='../member/mypage.do'">
+                  <input class="login" type="button" value="My Page" onclick="location.href='/member/mypage.do'">
               </c:when>
               <c:when test="${sessionScope.user.owner_name !=null}">
                   <span>Welcome ${sessionScope.user.owner_name}님</span>
                   <input class="login" type="button" value="Owner Dashboard" onclick="location.href='../owner/dashboard.do'">
               </c:when>
+              
           </c:choose>
         </c:when>
         <c:otherwise>
           <div class="login-section">
             <input class="login" type="button" value="login" 
-            onclick="location.href='../member/login.do'"/>
+            onclick="location.href='/login_form.do'"/>
+            <input class="insert" type="button" value="insert" 
+            onclick="location.href='/insert_form.do'"/>
           </div>
         </c:otherwise>
       </c:choose>

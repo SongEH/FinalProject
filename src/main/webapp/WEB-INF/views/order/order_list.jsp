@@ -8,9 +8,6 @@
 <head>
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-   -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
@@ -18,7 +15,7 @@
   </script>
 
   <script>
-    function delete_menu(orders_id) {
+    function review(orders_id) {
       // $.ajax({
       // url     :     "../reviews/insert_form.do",
       // data    :      {"orders_id": orders_id},
@@ -71,7 +68,7 @@
         <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
       </div>
       <button type="submit" class="btn btn-primary" style="margin-left: 10px">
-        필터 적용
+        검색
       </button>
     </form>
 
@@ -115,7 +112,7 @@
                       </c:when>
                       <c:otherwise>
                         <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
-                          onclick="delete_menu('${vo.orders_id}');">
+                          onclick="review('${vo.orders_id}');">
                       </c:otherwise>
                     </c:choose>
                   </td>
@@ -132,30 +129,24 @@
       function fetchOrders() {
         let member_id = 1;
         $.ajax({
-          url: `/order/list_test`, // 주문 내역을 가져오는 API 경로
+          url: `/order/order_list`, // 주문 내역을 가져오는 API 경로
           method: 'GET',
           success: function (orders) {
-            console.log(orders);
-            console.log("성공!!!");
-            // orders.forEach(order => {
-            //   const orderRow = $(`#order-${order.id}`);
-            //   const orderStatusElement = orderRow.find('.orders-status');
-
-            //   // 주문 상태 업데이트
-            //   if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
-            //     orderStatusElement.text(order.orders_status);
-            //   }
-            // });
-
+            
             orders.forEach(order => {
-              console.log(`Updating order ${order.orders_id} with status ${order.orders_status}`);
-              const orderRow = $(`#order-${order.orders_id}`);
-              const orderStatusElement = orderRow.find('.orders-status');
+              console.log(order.orders_id, order.orders_status);
 
-              if (orderRow.length && orderStatusElement.text() !== order.orders_status) {
-                orderStatusElement.text(order.orders_status);
-                console.log(`Status updated for order ${order.orders_id}`);
-              }
+              let orders_id = '#order-'+ order.orders_id;
+              let orderRow = $(orders_id);
+              let orderStatusElement =  orderRow.find('.orders-status')[0]; // jQuery로 선택한 후, 첫 번째 요소 가져오기
+
+              // console.log("orderRow" + orderRow);
+              // console.log("textContent" + orderStatusElement.textContent);
+
+              // orderStatusElement.textContent = "테스트";
+              orderStatusElement.textContent = order.orders_status
+              // console.log("Status updated for order"  + order.orders_status);
+              
             });
           },
           error: function (err) {
@@ -164,8 +155,8 @@
         });
       }
 
-      // 5초마다 주문 내역을 가져옵니다.
-      setInterval(fetchOrders, 5000); // 5000ms = 5초
+      // 특정 주기 마다 주문 내역을 가져옵니다.
+      setInterval(fetchOrders, 30000); // 10000ms = 10초
     </script>
 
 

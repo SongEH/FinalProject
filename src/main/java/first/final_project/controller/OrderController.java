@@ -160,19 +160,20 @@ public class OrderController {
 	// 	return "order/order_list";
 	// }
 
-	// polling 방식 적용중.... - 한지혜
-	// public List<OrderVo> getOrders(@PathVariable int member_id) {
-	@RequestMapping("/list_test")
+	// 회원 주문목록 화면에서 Ajax polling 방식으로 주기적으로 서버에 요청해 주문상태 업데이트
+	@RequestMapping("/order_list")
 	@ResponseBody
 	public List<OrderVo> getOrders() {
-		System.out.println("여기도 안오나?");
 
-		int member_id = 1;
-		List<OrderVo> test = order_mapper.selectList(member_id);
-		System.out.println("testtestetest" + test);
+		// 현재 로그인한 사용자
+		MemberVo user = (MemberVo) session.getAttribute("user");
+
+		int member_id = user.getMember_id();
+		List<OrderVo> order_list = order_mapper.selectList(member_id);
+		System.out.println("주문리스트\n" + order_list);
 
 		// 매퍼를 통해 주문 리스트를 반환
-		return order_mapper.selectList(member_id);
+		return order_list;
 	}
 
 	// 주문대기 (주문 전)

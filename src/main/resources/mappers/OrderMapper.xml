@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select shop_id from shop where owner_id = #{owner_id}
     </select>
 
-    <!-- 소프트 삭제 -->
+    <!-- 회원의 주문목록 삭제 (소프트 삭제) -->
     <update id="softDelete" parameterType="int">
         UPDATE orders
         SET orders_isdelete = 1
@@ -76,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       WHERE orders_id = #{orders_id}
     </update>
 
+    <!-- 가맹점 사장 주문 거절시  -->
     <delete id="deleteOrder">
      DELETE from orders
      WHERE orders_id = #{orders_id}

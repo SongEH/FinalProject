@@ -1,5 +1,9 @@
 package first.final_project.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,12 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import first.final_project.dao.OrderMapper;
 import first.final_project.util.MyCommon;
 import first.final_project.util.Paging;
-import first.final_project.vo.CompletedDeliveryVo;
 import first.final_project.vo.OrderVo;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class OrderService {
@@ -54,7 +53,7 @@ public class OrderService {
     }
 
     // 주문내역 삭제(소프트 삭제)
-    public void softDelete(int orders_id){
+    public void softDelete(int orders_id) {
         order_mapper.softDelete(orders_id);
     }
 
@@ -100,7 +99,6 @@ public class OrderService {
         return result; // JSP로 반환할 데이터
     }
 
-    
     // 필터(날짜 범위)가 적용된 데이터를 페이징 처리하여 가져오는 메서드
     public Map<String, Object> getPagedOrder(int member_id, int page, String startDate, String endDate) {
         // 한 페이지에 보여줄 배달 목록의 개수
@@ -137,13 +135,12 @@ public class OrderService {
 
         // 페이징 처리된 필터된 배달 목록을 가져옴
         List<OrderVo> order_list = order_mapper.selectPageListByDate(params);
-        
+
         // 필터와 함께 페이징 메뉴를 생성 (HTML 형태로 페이지 번호 목록을 생성)
         String pageMenu = Paging.getPaging(
                 "list.do?member_id=" + member_id + "&startDate=" + startDate + "&endDate=" + endDate,
                 page, rowTotal, blockList, blockPage);
 
-       
         // 결과를 Map에 담아 반환 (배달 목록, 페이지 메뉴)
         Map<String, Object> result = new HashMap<>();
         result.put("order_list", order_list); // 필터된 배달 목록

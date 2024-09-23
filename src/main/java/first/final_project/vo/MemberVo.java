@@ -19,6 +19,12 @@ public class MemberVo {
     String member_cdate;
     String member_grade;
     int grade_id;
+    
+    // inner join from addr 
+    String addr_line1;
+    String addr_line2;
+
+    String owner_name;
 
     
 }

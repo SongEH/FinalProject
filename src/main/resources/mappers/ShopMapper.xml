@@ -52,6 +52,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <!-- 가게 정렬 -->
+    <select id="selectListValue" parameterType="map" resultType="shop">    
+        SELECT         
+            s.*,        
+            (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,         
+            (SELECT COUNT(*)             
+             FROM reviews r             
+             INNER JOIN orders o ON o.orders_id = r.orders_id             
+             WHERE o.shop_id = s.shop_id) AS reviews_count,         
+            (SELECT AVG(r.reviews_rating)             
+             FROM reviews r             
+             INNER JOIN orders o ON o.orders_id = r.orders_id             
+             WHERE o.shop_id = s.shop_id) AS shop_rating,		
+            (SELECT COUNT(*)             
+             FROM ceoreview c            
+             INNER JOIN reviews r ON c.reviews_id = r.reviews_id            
+             INNER JOIN orders o ON o.orders_id = r.orders_id            
+             WHERE o.shop_id = s.shop_id) AS ceoreview_count    
+        FROM shop s        
+        <where>            
+            <if test="food_category != null and food_category != 'all'">                
+                AND food_category = #{food_category}            
+            </if>        
+        </where>
+        <if test="selectValue != null"> 
+            ORDER BY 
+            <choose>
+                <when test="selectValue == 'rank'">
+                    shop_id ASC 
+                </when>
+                <when test="selectValue == 'shop_rating'">
+                    shop_rating DESC
+                </when>
+                <when test="selectValue == 'reviews_count'">
+                    reviews_count DESC
+                </when>
+                <when test="selectValue == 'shop_min_price'">
+                    shop_min_price ASC
+                </when>
+            </choose>
+        </if>
+    </select>
+
     <!-- 가게 1개 상세보기  -->
     <select id="selectOne" parameterType="int" resultType="shop">
         SELECT 
@@ -80,6 +123,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select shop_id from shop where owner_id = #{owner_id}
     </select>
 
+    <select id="hasShop" parameterType="int" resultType="Boolean">
+        select shop_id from shop where owner_id = #{owner_id}
+    </select>
+
     <!-- <select id="selectMenuAndReviewsCount" parameterType="int" resultType="map">
         SELECT 
         (SELECT COUNT(*) FROM menu WHERE shop_id = #{shop_id}) AS menu_count, 
@@ -87,6 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN orders o ON o.orders_id = r.orders_id 
         WHERE o.shop_id = #{shop_id}) AS reviews_count
     </select> -->
+
 
     <!-- 가게 정보 업데이트 -->
     <update id="update" parameterType="shop">

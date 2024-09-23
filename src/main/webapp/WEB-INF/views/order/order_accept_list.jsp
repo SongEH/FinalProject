@@ -59,6 +59,7 @@
     </script>
 </head>
 <body>
+    
     <%@include file="../common.jsp" %>
   
     <%@include file="../header.jsp" %>

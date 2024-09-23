@@ -15,8 +15,8 @@
 </head>
 <body>
   <div class="container">
-    <input type="hidden" id="order_addr" value="${order_addr}"/> ${order_addr}
-    <input type="hidden" id="food_category" value="${food_category}"/>${food_category}
+    <input type="hidden" id="order_addr" value="${order_addr}"/>
+    <input type="hidden" id="food_category" value="${food_category}"/>
     <div class="store-list mt-10" id="store-list" >
       <c:forEach var="vo" items="${list}">
         <div class="store" onclick="selectOne('${vo.shop_id}');">

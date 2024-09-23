@@ -27,7 +27,8 @@
 </style>
 <script>
     function shopLis(element){
-      var food_category = element.getAttribute('food_category');
+
+      var food_category = element.getAttribute('food_category').trim();
       alert(food_category);
       let order_addr = $("#order_addr").val().trim();
       if(order_addr==null || order_addr==""){
@@ -35,22 +36,27 @@
         return;
       }
       alert(order_addr);
+      let selectValue = document.getElementById("sortOption").value;
+      let searchValue = document.getElementById("searchInput").value;
       // var activeCategory = food_category;
       // alert(activeCategory);
 
       $.ajax({
       url     :     "../shop/food_list.do",
-      data    :      {"food_category": food_category,
-                      "order_addr": order_addr,
-                      },
+      data  : {"selectValue": selectValue,
+              "food_category": food_category,
+              "order_addr": order_addr,
+              "searchValue": searchValue},
       success :   function(res_data){
               $("#store_list").hide();
               $("#select_one_display").hide();
-              $("#store_list_display").hide();
-              $("#select_list_category_display").html(res_data).show();
-              // $("#sort_display").html(res_data);
+              // $("#select_list_category_display").html(res_data).show();
+              $("#store_list_display").html(res_data).show();
+              $("#sort_display").show();
               $(".nav-link").removeClass("active");
               $("#" + food_category).addClass("active");
+              $("#sortOption").val("rank");
+              $("#searchInput").val("");
       },
       error   :   function(err){
       alert(error.responseText)
@@ -58,6 +64,35 @@
       });
       }
       // location.href="../shop/list.do?food_category=" + food_category + "&order_addr=" + order_addr;
+</script>
+<script>
+  function searchWord(){
+    let selectValue = document.getElementById("sortOption").value;
+    let food_category = document.getElementById("food_category").value;
+    let order_addr = document.getElementById("order_addr").value;
+    let searchValue = document.getElementById("searchInput").value;
+    alert(selectValue);
+    alert(food_category);
+    alert(order_addr);
+    alert(searchValue);
+    $.ajax({
+      url   : "../shop/food_list.do",
+      data  : {"selectValue": selectValue,
+              "food_category": food_category,
+              "order_addr": order_addr,
+              "searchValue": searchValue},
+      success :   function(res_data){
+                  alert("성공");
+                  $("#store_list").hide();   
+                  $("#store_list_display").html("");       
+                  $("#store_list_display").html(res_data);
+
+      },
+        error   :   function(err){
+        alert(error.responseText)
+      }
+    });
+  }
 </script>
 <html lang="ko">
   <body>
@@ -70,10 +105,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item" >
-              <a class="nav-link" id="all" aria-current="page" food_category="all" onclick="shopLis(this)">전체보기</a>
+              <a class="nav-link" id="all" food_category="all" onclick="shopLis(this)">전체보기</a>
             </li>
             <li class="nav-item">
-              <!-- <a class="nav-link" href="list.do?food_category=pork_trotters">족발·보쌈</a> -->
               <a class="nav-link" id="pork_trotters" food_category="pork_trotters" onclick="shopLis(this)">족발·보쌈</a>
             </li>
             <li class="nav-item" >
@@ -108,8 +142,8 @@
             </li>
           </ul>
           <form class="d-flex">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="button" value="Search"></button>
+            <input class="form-control" id="searchInput" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="button" value="Search" onclick="searchWord();">검색</button>
           </form>
         </div>
       </div>

@@ -166,13 +166,14 @@ pageEncoding="UTF-8"%>
   <script>
     function get_info(shop_id){
       $.ajax({
-      url     :     "select_info.do",
+      url     :     "../shop/select_info.do",
       data    :      {"shop_id": shop_id},
       success :   function(res_data){
               alert("menu호출");
               $("#shop_info_display").html(res_data).show();
               $("#menu_display").hide();
               $('#reviews_display').hide();
+
       },
       error   :   function(err){
       alert(err.responseText)
@@ -325,7 +326,7 @@ pageEncoding="UTF-8"%>
 
             <div class="row" style="margin-top:30px;">
               <!--menu_list 출력 공간 -->
-              <div>
+              <div style="padding: 0;">
                 <div id="menu_display"></div>
               </div>
 

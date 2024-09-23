@@ -138,7 +138,16 @@ pageEncoding="UTF-8" %>
       });
     }
   </script>
-
+<style>
+  .card{
+    width: 100%;
+    margin: 0;
+  }
+  .card-text{
+    margin-bottom: 8px;
+    /* padding: 0; */
+  }
+</style>
 </head>
 
 <body>
@@ -202,7 +211,6 @@ pageEncoding="UTF-8" %>
                 </c:if>
               </div>
             </div>
-
           </div><!-- End Card with an image on left -->
         </div>
       </c:if>

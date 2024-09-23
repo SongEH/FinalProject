@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM
         deliveries d
     JOIN
+
         riders r ON d.raiders_id = r.raiders_id
     JOIN
         orders o ON d.orders_id = o.orders_id

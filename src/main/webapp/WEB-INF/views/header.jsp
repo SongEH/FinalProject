@@ -31,6 +31,15 @@ header .login, .insert {
     border: none;
     margin-left: 10px; /* Space between the welcome text and button */
 }
+header .insert {
+    background-color: #F0A8D0;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: black;
+    text-decoration: none;
+    border: none;
+    margin-left: 10px; /* Space between the welcome text and button */
+}
 header .logout{
   background-color: #F0A8D0;
   padding: 8px 15px;
@@ -40,8 +49,21 @@ header .logout{
   border: none;
   margin-left:10px;
 }
-
 </style>
+<script>
+  window.onload = function() {
+            // Check if this script has been executed before in the current session
+            if (!sessionStorage.getItem('logoutChecked')) {
+                var user = '${sessionScope.user}';
+                if (!user || user === 'null') {
+                  sessionStorage.setItm('logoutChecked', 'false');
+                    window.location.href = '/logout.do';  // Redirect to logout or login page
+                }
+                // Set the flag so this check won't run again in this session
+                sessionStorage.setItem('logoutChecked', 'true');
+            }
+        };
+</script>
 <html lang="ko">
   <body>
     <header class="header">
@@ -104,9 +126,9 @@ header .logout{
         </c:when>
         <c:otherwise>
           <div class="login-section">
-            <input class="login" type="button" value="login" 
+            <input class="login" type="button" value="로그인" 
             onclick="location.href='/login_form.do'"/>
-            <input class="insert" type="button" value="insert" 
+            <input class="insert" type="button" value="회원가입" 
             onclick="location.href='/insert_form.do'"/>
           </div>
         </c:otherwise>

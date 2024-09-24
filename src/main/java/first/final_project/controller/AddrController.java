@@ -86,7 +86,7 @@ public class AddrController {
     if (nextPath.equals("addr_list")) {
       return "redirect:/addr/addr_list.do";
     } else {
-      return "redirect:/order/order_pending_list.do";
+      return "redirect:/order/pending_list.do";
     }
 
   }

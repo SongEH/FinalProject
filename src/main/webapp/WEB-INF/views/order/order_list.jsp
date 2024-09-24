@@ -15,7 +15,6 @@
   </script>
 
   <script>
-
     function insert_review(orders_id) {
       // $.ajax({
       // url     :     "../reviews/insert_form.do",
@@ -71,15 +70,18 @@
   </script>
 
 
-<style>
-  header {
-    display: flex;
-    justify-content: space-between; /* Align logo to the left and login to the right */
-    align-items: center; /* Vertically center the items */
-    padding: 10px; /* Optional: Add some padding */
-    background-color: #F0A8D0;
-}
-</style>
+  <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      /* Align logo to the left and login to the right */
+      align-items: center;
+      /* Vertically center the items */
+      padding: 10px;
+      /* Optional: Add some padding */
+      background-color: #F0A8D0;
+    }
+  </style>
 
 </head>
 
@@ -107,86 +109,97 @@
 
     </div><!-- End Page Title -->
 
-    <!-- 날짜 필터링 폼 -->
-    <form action="list.do" method="get" class="form-inline">
-      <input type="hidden" name="member_id" value="${param.member_id}" />
-      <div class="form-group">
-        <label for="startDate">시작 날짜:</label>
-        <input type="date" id="startDate" name="startDate" value="${param.startDate}" class="form-control" />
-      </div>
-      <div class="form-group" style="margin-left: 10px">
-        <label for="endDate">종료 날짜:</label>
-        <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
-      </div>
-      <button type="submit" class="btn btn-primary" style="margin-left: 10px">
-        검색
-      </button>
-    </form>
+    <c:if test="${empty list}">
+      <p>주문 내역이 없습니다.</p>
+    </c:if>
+
+    <c:if test="${not empty list}">
+      <!-- 날짜 필터링 폼 -->
+      <form action="list.do" method="get" class="form-inline">
+        <input type="hidden" name="member_id" value="${param.member_id}" />
+        <div class="form-group">
+          <label for="startDate">시작 날짜:</label>
+          <input type="date" id="startDate" name="startDate" value="${param.startDate}" class="form-control" />
+        </div>
+        <div class="form-group" style="margin-left: 10px">
+          <label for="endDate">종료 날짜:</label>
+          <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-left: 10px">
+          검색
+        </button>
+      </form>
 
 
-    <section class="section">
-      <table>
+
+      <section class="section">
+
         <div class="row align-items-top">
           <div class="col-lg-6">
 
-            <c:forEach var="vo" items="${list}">
-              <c:if test="${vo.orders_isdelete == 0}">
-                <tr id="order-${vo.orders_id}">
-                  <!-- 각 주문에 고유 ID를 부여 -->
-                  <td>
-                    <div class="card mb-3">
-                      <div class="row g-0" lass="photo">
-                        <!-- popup:Modal -->
 
-                        <div class="col-md-4">
-                          <img src="../resources/images/${vo.shop_img}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                            <h5 class="card-title">
-                              <p class="orders-status" style="color:red;">${vo.orders_status}</p>${vo.shop_name}
-                            </h5>
-                            <c:if test="${vo.orders_status != '배달 완료' && vo.delivery_time != 0}">
-                              <p class="delivery-time">배달 예정 시간: ${vo.delivery_time}</p>
-                            </c:if>
-                            <p class="card-text">주문일시
-                              <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
-                            </p>
-                            <p class="card-text">${vo.orders_name}, ${vo.menu_count}개</p>
-                            <p class="card-text">가격 ${vo.orders_price}원</p>
-                  </td>
-                  <td>
-                    <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
-                      onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
-                    <input class="btn btn-info" type="button" id="btn_popup_update" value="배송조회"
-                      onclick="modify_menu('${vo.orders_id}');">
-                    <c:choose>
-                      <c:when test="${vo.hasReview}">
-                        <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
-                      </c:when>
-                      <c:otherwise>
-                        <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
-                          onclick="insert_review('${vo.orders_id}');">
-                      </c:otherwise>
-                    </c:choose>
-                  </td>
-                </tr>
-              </c:if>
-            </c:forEach>
-          </div>
-        </div>
-      </table>
+            <table>
+              <c:forEach var="vo" items="${list}">
+                <c:if test="${vo.orders_isdelete == 0}">
+                  <tr id="order-${vo.orders_id}">
+                    <!-- 각 주문에 고유 ID를 부여 -->
+                    <td>
+                      <div class="card mb-3">
+                        <div class="row g-0" lass="photo">
+                          <!-- popup:Modal -->
+
+                          <div class="col-md-4">
+                            <img src="../resources/images/${vo.shop_img}" class="img-fluid rounded-start" alt="...">
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 class="card-title">
+                                <p class="orders-status" style="color:red;">${vo.orders_status}</p>${vo.shop_name}
+                              </h5>
+                              <c:if test="${vo.orders_status != '배달 완료' && vo.delivery_time != 0}">
+                                <p class="delivery-time">배달 예정 시간: ${vo.delivery_time}</p>
+                              </c:if>
+                              <p class="card-text">주문일시
+                                <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
+                              </p>
+                              <p class="card-text">${vo.orders_name}, ${vo.menu_count}개</p>
+                              <p class="card-text">가격 ${vo.orders_price}원</p>
+                    </td>
+                    <td>
+                      <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
+                        onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
+                      <input class="btn btn-info" type="button" id="btn_popup_update" value="배송조회"
+                        onclick="modify_menu('${vo.orders_id}');">
+                      <c:choose>
+                        <c:when test="${vo.hasReview}">
+                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
+                        </c:when>
+                        <c:otherwise>
+                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
+                            onclick="insert_review('${vo.orders_id}');">
+                        </c:otherwise>
+                      </c:choose>
+                    </td>
+                  </tr>
+                </c:if>
+              </c:forEach>
+            </table>
+            <!-- 페이징 처리 -->
+            <div style="text-align: center; margin-top: 20px; font-size: 15px">
+              ${pageMenu}
+            </div>
+
+            <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
+            <input type="hidden" name="startDate" value="${param.startDate}" />
+            <input type="hidden" name="endDate" value="${param.endDate}" />
+    </c:if>
+    </div>
+    </div>
+
     </section>
 
 
-    <!-- 페이징 처리 -->
-    <div style="text-align: center; margin-top: 20px; font-size: 15px">
-      ${pageMenu}
-    </div>
 
-    <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
-    <input type="hidden" name="startDate" value="${param.startDate}" />
-    <input type="hidden" name="endDate" value="${param.endDate}" />
 
   </main><!-- End #main -->
 </body>

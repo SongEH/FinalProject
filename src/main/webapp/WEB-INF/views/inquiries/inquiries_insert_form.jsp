@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>문의사항 등록</title>
     <style>
         body {
@@ -67,8 +71,7 @@
             let inquiries_title = f.inquiries_title.value.trim();
             let inquiries_type = f.inquiries_type.value.trim();
             let inquiries_content = f.inquiries_content.value.trim();
-            let inquiries_pwd = f.inquiries_pwd.value.trim();
-
+            
             if(inquiries_title ==""){
                 alert("제목을 입력하시오");
                 f.inquiries_title.value="";
@@ -90,13 +93,6 @@
                 return;
             }
 
-            if(inquiries_pwd ==""){
-                alert("비밀번호을 입력하시오");
-                f.inquiries_pwd.value="";
-                f.inquiries_pwd.focus();
-                return;
-            }
-
             f.action = "/inquiries/insert.do";
             f.submit();
         }
@@ -105,8 +101,29 @@
 <body>
 
     
-    <div class="container">
+    <%@include file="../common.jsp" %>
+
+    <%@include file="../header.jsp" %>
+
+    <%@include file="../sidebar.jsp" %>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+
         <h1>문의사항 등록</h1>
+
+        <nav>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Forms</li>
+            <li class="breadcrumb-item active">Layouts</li>
+            </ol>
+        </nav>
+
+        </div><!-- End Page Title -->
+
+        <div class="container">
+        
         <form action="${pageContext.request.contextPath}/inquiries/insert_form.do" method="post">
             <input type="hidden" name="inquiries_id" value="${vo.inquiries_id}">
             <div class="form-group">
@@ -128,15 +145,16 @@
                 <textarea id="inquiries_content" name="inquiries_content" rows="5" required></textarea>
             </div>
             <div class="form-group">
-                <label for="inquiries_pwd">비밀번호</label>
-                <input type="password" id="inquiries_pwd" name="inquiries_pwd" required>
-            </div>
-            <div class="form-group">
                 <button type="button" class="btn btn-primary" onclick="send(this.form);">
                     등록
                 </button>
             </div>
         </form>
     </div>
+
+    </main><!-- End #main -->
+
+
+    
 </body>
 </html>

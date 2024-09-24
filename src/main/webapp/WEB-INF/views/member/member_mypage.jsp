@@ -5,7 +5,8 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -25,7 +26,7 @@ pageEncoding="UTF-8"%>
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
-            padding: 20px;
+            padding: 0px;
         }
 
         .container {
@@ -112,7 +113,7 @@ pageEncoding="UTF-8"%>
   <main id="main" class="main">
     <div class="pagetitle">
 
-      <h1>Form Layouts</h1>
+     <h1>회&nbsp;원&nbsp;정&nbsp;보</h1>
 
       <nav>
         <ol class="breadcrumb">
@@ -125,7 +126,7 @@ pageEncoding="UTF-8"%>
     </div><!-- End Page Title -->
 
     <input type="hidden" name="member_id" value="${member.member_id}" />
-    <h1>회&nbsp;원&nbsp;정&nbsp;보</h1>
+    
     <div class="container mx-auto p-6">
       <div class="mb-4">
         <lable for="name">이름:</lable>

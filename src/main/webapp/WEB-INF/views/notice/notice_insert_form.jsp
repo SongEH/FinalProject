@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>공지사항 등록</title>
     <style>
         body {
@@ -99,16 +100,29 @@
 </head>
 <body>
 
-    <!-- 메시지 표시 -->
-    <c:if test="${not empty message}">
-        <div class="alert alert-info">
-            ${message}
-        </div>
-    </c:if>
+   <%@include file="../common.jsp" %>
 
-    
-    <div class="container">
-        <h1>공지사항 등록</h1>
+  <%@include file="../header.jsp" %>
+
+  <%@include file="../sidebar.jsp" %>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+
+      <h1>공지사항 등록</h1>
+
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item active">Layouts</li>
+        </ol>
+      </nav>
+
+    </div><!-- End Page Title -->
+
+   <div class="container">
+        
         <form action="${pageContext.request.contextPath}/notice/insert_form.do" method="post">
             <input type="hidden" name="notice_id" value="${vo.notice_id}">
             <div class="form-group">
@@ -135,5 +149,9 @@
             </div>
         </form>
     </div>
+
+  </main><!-- End #main -->
+    
+    
 </body>
 </html>

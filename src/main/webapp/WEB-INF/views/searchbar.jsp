@@ -12,13 +12,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin:0;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 1); /* 50% dark overlay */
   background-image: url('../resources/images/배경이미지.jpeg'); /* Replace with the actual image path */
   background-size: cover; /* Ensures the image covers the entire background */
   background-position: center; /* Centers the image */
   padding: 10px; /* Adds padding around the search input and button */
   height: 100px;
 }
+
+
 .search-bar input {
   width: 300px;
   height: 50px;

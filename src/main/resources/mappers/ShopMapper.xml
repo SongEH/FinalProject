@@ -72,9 +72,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              WHERE o.shop_id = s.shop_id) AS ceoreview_count    
         FROM shop s        
         <where>            
-            <if test="food_category != null and food_category != 'all'">                
+            <if test="food_category !=null and food_category != 'all'">                
                 AND food_category = #{food_category}            
-            </if>        
+            </if>
+            <if test="searchValue != null and searchValue !=''">
+                AND shop_name LIKE CONCAT('%', '${searchValue}', '%')
+            </if>
         </where>
         <if test="selectValue != null"> 
             ORDER BY 

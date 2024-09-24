@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>공지사항 상세</title>
     <style>
         body {
@@ -68,6 +72,10 @@
         .back-button:hover {
             background-color: #0056b3;
         }
+        .content {
+            white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
+            word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
+        }
     </style>
     <script type="text/javascript">
         function del(notice_id) {
@@ -81,29 +89,54 @@
 </head>
 <body>
     
-    <div class="container">
+    <%@include file="../common.jsp" %>
+
+    <%@include file="../header.jsp" %>
+
+    <%@include file="../sidebar.jsp" %>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+
         <h1>공지사항 상세</h1>
 
-        <div class="notice-detail">
-            <div class="notice-title">
-                ${vo.notice_title}
-            </div>
-            <div class="notice-date">
-                ${vo.notice_cdate}
-            </div>
-            <div class="notice-content">
-                ${vo.notice_content}
-            </div>
-            <div class="notice-author">
-                작성자: ${vo.adminAccountId}
-            </div>
-        </div>
+        <nav>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Forms</li>
+            <li class="breadcrumb-item active">Layouts</li>
+            </ol>
+        </nav>
 
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=전체" class="back-button">목록으로</a>
-        <c:if test="${userType == 'ADMIN'}">
-            <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/notice/modify_form.do?notice_id=${vo.notice_id}&notice_type=${vo.notice_type}'">수정</button>
-            <button type="button" class="btn btn-primary" onclick="del('${vo.notice_id}');">삭제</button>
-        </c:if>
-    </div>
+        </div><!-- End Page Title -->
+
+        <div class="container">
+        
+            <div class="notice-detail">
+                <div class="notice-title">
+                    ${vo.notice_title}
+                </div>
+                <div class="notice-date">
+                    ${vo.notice_cdate}
+                </div>
+                <div class="notice-content">
+                    ${vo.notice_content}
+                </div>
+                <div class="notice-author">
+                    작성자: ${vo.adminAccountId}
+                </div>
+            </div>
+
+            <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=전체" class="back-button">목록으로</a>
+            <c:if test="${userType == 'ADMIN'}">
+                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/notice/modify_form.do?notice_id=${vo.notice_id}&notice_type=${vo.notice_type}'">수정</button>
+                <button type="button" class="btn btn-primary" onclick="del('${vo.notice_id}');">삭제</button>
+            </c:if>
+        </div>
+        
+
+    </main><!-- End #main -->
+
+    <%@include file="../footer.jsp" %>
 </body>
 </html>

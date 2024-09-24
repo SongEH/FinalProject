@@ -5,10 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>공지사항 등록</title>
+    <title>문의사항 등록</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,66 +64,72 @@
 
     <script type="text/javascript">
         function send(f){
-            let notice_title = f.notice_title.value.trim();
-            let notice_type = f.notice_title.value.trim();
-            let notice_content = f.notice_title.value.trim();
+            let inquiries_title = f.inquiries_title.value.trim();
+            let inquiries_type = f.inquiries_type.value.trim();
+            let inquiries_content = f.inquiries_content.value.trim();
+            let inquiries_pwd = f.inquiries_pwd.value.trim();
 
-            if(notice_title ==""){
+            if(inquiries_title ==""){
                 alert("제목을 입력하시오");
-                f.notice_title.value="";
-                f.notice_title.focus();
+                f.inquiries_title.value="";
+                f.inquiries_title.focus();
                 return;
             }
 
-            if(notice_type ==""){
+            if(inquiries_type ==""){
                 alert("유형을 선택하시오");
-                f.notice_type.value="";
-                f.notice_type.focus();
+                f.inquiries_type.value="";
+                f.inquiries_type.focus();
                 return;
             }
 
-            if(notice_content ==""){
+            if(inquiries_content ==""){
                 alert("내용을 입력하시오");
-                f.notice_content.value="";
-                f.notice_content.focus();
+                f.inquiries_content.value="";
+                f.inquiries_content.focus();
                 return;
             }
 
-            f.action = "/notice/insert.do";
+            if(inquiries_pwd ==""){
+                alert("비밀번호을 입력하시오");
+                f.inquiries_pwd.value="";
+                f.inquiries_pwd.focus();
+                return;
+            }
+
+            f.action = "/inquiries/insert.do";
             f.submit();
         }
     </script>
 </head>
 <body>
 
-    <!-- 메시지 표시 -->
-    <c:if test="${not empty message}">
-        <div class="alert alert-info">
-            ${message}
-        </div>
-    </c:if>
-
     
     <div class="container">
-        <h1>공지사항 등록</h1>
-        <form action="${pageContext.request.contextPath}/notice/insert_form.do" method="post">
-            <input type="hidden" name="notice_id" value="${vo.notice_id}">
+        <h1>문의사항 등록</h1>
+        <form action="${pageContext.request.contextPath}/inquiries/insert_form.do" method="post">
+            <input type="hidden" name="inquiries_id" value="${vo.inquiries_id}">
             <div class="form-group">
-                <label for="notice_title">제목</label>
-                <input type="text" id="notice_title" name="notice_title" required>
+                <label for="inquiries_title">제목</label>
+                <input type="text" id="inquiries_title" name="inquiries_title" required>
             </div>
             <div class="form-group">
-                <label for="notice_type">유형</label>
-                <select class="select, form-control" id="notice_type" name="notice_type" required>
+                <label for="inquiries_type">유형</label>
+                <select class="select, form-control" id="inquiries_type" name="inquiries_type" required>
                     <option value="전체">전체</option>
-                    <option value="서비스안내">서비스 안내</option>
-                    <option value="점검안내">점검 안내</option>
-                    <option value="약관안내">약관 안내</option>
+                    <option value="결제문의">결제 문의</option>
+                    <option value="주문문의">주문 문의</option>
+                    <option value="서비스이용">서비스 이용</option>
+                    <option value="배송문의">배송 문의</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="notice_content">내용</label>
-                <textarea id="notice_content" name="notice_content" rows="5" required></textarea>
+                <label for="inquiries_content">내용</label>
+                <textarea id="inquiries_content" name="inquiries_content" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="inquiries_pwd">비밀번호</label>
+                <input type="password" id="inquiries_pwd" name="inquiries_pwd" required>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" onclick="send(this.form);">

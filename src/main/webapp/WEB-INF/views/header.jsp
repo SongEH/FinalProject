@@ -20,6 +20,7 @@ header .login-section {
     align-items: center;
 }
 
+
 header .login {
     background-color: #F0A8D0;
     padding: 8px 15px;
@@ -84,12 +85,15 @@ header .logout{
                   <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
                 </span>
               </c:when>
+              
           </c:choose>
         </c:when>
         <c:otherwise>
           <div class="login-section">
             <input class="login" type="button" value="login" 
-            onclick="location.href='../member/login.do'"/>
+            onclick="location.href='/login_form.do'"/>
+            <input class="insert" type="button" value="insert" 
+            onclick="location.href='/insert_form.do'"/>
           </div>
         </c:otherwise>
       </c:choose>

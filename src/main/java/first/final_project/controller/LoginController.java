@@ -86,6 +86,7 @@ public class LoginController {
 
         session.setAttribute("user", user);
         session.setAttribute("isLoggedIn", true);
+        session.setAttribute("userType", user);
 
         // 절대 경로 사용
         // String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
@@ -155,6 +156,7 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
+        session.setAttribute("userType", user);
         System.out.println(user);
         // return "redirect:../main.do";
         // 태광 수정 
@@ -192,6 +194,7 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
+        session.setAttribute("userType", user);
 
         return "redirect:../main.do";
     }

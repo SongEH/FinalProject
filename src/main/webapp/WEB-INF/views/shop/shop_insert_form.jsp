@@ -3,40 +3,66 @@
     <!DOCTYPE html>
     <html lang="ko">
 
-    <head>
-      <meta charset="utf-8">
-    </head>
-     <script>
-      function send(f) {
-        let shop_name = f.shop_name.value.trim();
-        // alert(f.shop_name.value);
-        let shop_content = f.shop_content.value.trim();
-        // alert(f.shop_content.value);
-        let shop_addr = f.shop_addr.value.trim();
-        // alert(f.shop_addr.value);
-        let shop_call= f.shop_call.value.trim();
-        // alert(f.shop_call.value);
-        let shop_min_price = f.shop_min_price.value.trim();
-        // alert(f.shop_min_price.value);
-        let shop_hours = f.shop_hours.value.trim();
-        // alert(f.shop_hours.value);
-        let shop_close_day = f.shop_close_day.value.trim();
-        // alert(f.shop_close_day.value);
-        let shop_area = f.shop_area.value.trim();
-        // alert(f.shop_area.value);
-        let food_category = f.food_category.value;
-        // alert(f.food_category.value);
-        let shop_status = f.shop_status.value;
-        // alert(f.shop_status.value);
+<head>
+<meta charset="utf-8">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script>
+  function send(f) {
+    let shop_name = f.shop_name.value.trim();
+    // alert(f.shop_name.value);
+    let shop_content = f.shop_content.value.trim();
+    // alert(f.shop_content.value);
+    let shop_addr1 = f.shop_addr1.value.trim();
+    let shop_addr2 = f.shop_addr2.value.trim();
+    let shop_addr = shop_addr1 + " " + shop_addr2;
+    alert(shop_addr);
+    // alert(f.shop_addr.value);
+    let shop_call= f.shop_call.value.trim();
+    // alert(f.shop_call.value);
+    let shop_min_price = f.shop_min_price.value.trim();
+    // alert(f.shop_min_price.value);
+    let shop_hours = f.shop_hours.value.trim();
+    // alert(f.shop_hours.value);
+    let shop_close_day = f.shop_close_day.value.trim();
+    // alert(f.shop_close_day.value);
+    let shop_area = f.shop_area.value.trim();
+    // alert(f.shop_area.value);
+    let food_category = f.food_category.value;
+    // alert(f.food_category.value);
+    let shop_status = f.shop_status.value;
+    // alert(f.shop_status.value);
 
-        if(f.shop_name==""){
-          alert("가게 이름을 작성해주세요")
+    if(f.shop_name==""){
+      alert("가게 이름을 작성해주세요")
+    }
+
+    f.action = "insert.do";
+    f.submit();
+  }
+</script>
+  <script>
+  // findAddr() function definition
+  function findAddr() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        // Define a variable to receive the user address.
+        let addr = '';
+
+        // The address value according to the address type selected by the user
+        if (data.userSelectedType === 'R') { // If the user selects the road name address (R)
+            addr = data.roadAddress;
+        } else { // If the user selects the Jibun address (J)
+            addr = data.jibunAddress;
         }
 
-        f.action = "insert.do";
-        f.submit();
+        // Enter the received address in the address box
+        $("#shop_addr1").val(addr);
       }
-    </script>
+    }).open();
+  }
+</script>
+</head>
     <body>
       <%@include file="../common.jsp" %>
 
@@ -87,9 +113,24 @@
                           </div>
     
                           <div class="col-md-12">
-                            <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="가게주소" name="shop_addr">
-                              <label>가게주소</label>
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="shop_addr1" placeholder="주소찾기 버튼을 눌러주세요." name="shop_addr1" readonly>
+                                    <label>가게주소</label>
+                                </div>
+                              </div>
+                              <div class="col-md-5">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="shop_addr2" placeholder="상세주소를 입력해주세요" name="shop_addr2">
+                                    <label>상세주소</label>
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-floating">
+                                    <button type="button" class="form-control" style="background-color: #F7B5CA;"  id="addressSearch" onclick="findAddr()">주소 찾기</button>
+                                </div>
+                              </div>
                             </div>
                           </div>
     

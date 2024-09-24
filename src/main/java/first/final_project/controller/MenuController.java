@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import first.final_project.dao.MenuMapper;
 import first.final_project.dao.ShopMapper;
 import first.final_project.service.ShopService;
+import first.final_project.vo.MemberVo;
 import first.final_project.vo.MenuVo;
 import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;
@@ -59,20 +60,47 @@ public class MenuController {
 
 		// 결과적으로 request binding
 		model.addAttribute("menu_list", menu_list);
+		model.addAttribute("shop_id", shop_id);
 
 		return "menu/menu_list";
 	}
 
 
+	// shop_id로 메뉴 목록 조회 
 	@RequestMapping("listByShopId.do")
 	public String listByShopId(int shop_id, Model model) {
 		System.out.println("listbyShopid 도착");
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		if(user!=null){
+			session.setAttribute("userType", "MEMBER");
+		}
 		// model.addAttribute("list", list);
 		// return "menu/menu_listByShopId";
 
 		model.addAttribute("menu_list", list);
+		return "menu/menu_list_display";
+
+	}
+
+	// 가게 메뉴목록 필터링(숨김, 품절, 인기) 
+	@RequestMapping("menu_rank.do")
+	public String menu_rank(int shop_id, Model model, String selectValue) {
+		
+		System.out.println("menu_rank 도착");
+
+		// List<MenuVo> list = menu_mapper.selectList(shop_id);
+
+		Map<String, Object> selectMap = new HashMap<String, Object>();
+        selectMap.put("shop_id", shop_id);      
+        selectMap.put("selectValue", selectValue); 
+
+		List<MenuVo> menu_list = menu_mapper.selectListValue(selectMap);
+
+		model.addAttribute("menu_list", menu_list);
+		System.out.println("menu_list : \n" + menu_list);
+
 		return "menu/menu_list_display";
 
 	}

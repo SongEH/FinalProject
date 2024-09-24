@@ -127,7 +127,8 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/food_list.do")
-    public String shop_food_list(String food_category,String order_addr, 
+    public String shop_food_list(
+    @RequestParam(name="food_category", defaultValue = "all") String food_category,String order_addr, 
     @RequestParam(name="selectValue", required = false) String selectValue,
     @RequestParam(name="searchValue", required = false)String searchValue,
      Model model, RedirectAttributes ra) throws UnsupportedEncodingException {

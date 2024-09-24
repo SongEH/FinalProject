@@ -14,22 +14,24 @@
   <script>
     function optionChange() {
       let selectValue = document.getElementById("sortOption").value;
-      
-      alert(selectValue);
+      let shopId = document.getElementById("shop_id").value;
 
-      // $.ajax({
-      //   url: "/menu/menu_rank.do",
-      //   data: {
-      //     "selectValue": selectValue
-      //   },
-      //   success: function (res_data) {
-      //     $("#store_list").hide();
-      //     $("#store_list_display").html(res_data);
-      //   },
-      //   error: function (err) {
-      //     alert(error.responseText)
-      //   }
-      // });
+      alert(shopId);
+
+      $.ajax({
+        url: "/menu/menu_rank.do",
+        data: {
+          "selectValue": selectValue,
+          "shop_id": shopId
+        },
+        success: function (res_data) {
+          $("#menu_default_list").hide();
+          $("#menu_rank_list").html(res_data);
+        },
+        error: function (err) {
+          alert(error.responseText)
+        }
+      });
     }
   </script>
 
@@ -67,8 +69,16 @@
         <option value="rank_hidden">숨김메뉴</option>
       </select>
     </div>
+
+    <input type="hidden" id="shop_id" value="${shop_id}">
+
     <!-- 메뉴목록리스트 -->
-    <%@include file="menu_list_display.jsp" %>
+    <div id="menu_default_list">
+      <%@include file="menu_list_display.jsp" %>
+    </div>
+
+    <div id="menu_rank_list">
+    </div>
 
   </main><!-- End #main -->
 

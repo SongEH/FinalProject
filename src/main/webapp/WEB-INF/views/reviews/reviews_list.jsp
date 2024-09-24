@@ -3,6 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -147,22 +148,23 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 </head>
-<body>
-    <%@ include file="../common.jsp" %>
-    <%@ include file="../header원본.jsp" %>
-    <%@ include file="../sidebar.jsp" %>
 
-    <main id="main" class="main">
-        <div class="container">
-            <div class="pagetitle">
-                <h1>Reviews</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item">Reviews</li>
-                    </ol>
-                </nav>
-            </div>
+<body>
+  <%@ include file="../common.jsp" %>
+  <%@ include file="../header원본.jsp" %>
+  <%@ include file="../sidebar.jsp" %>
+
+  <main id="main" class="main">
+    <div class="container">
+      <div class="pagetitle">
+        <h1>Reviews</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Reviews</li>
+          </ol>
+        </nav>
+      </div>
 
             <section class="section">
                 <div class="row">
@@ -225,4 +227,5 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </main>
 </body>
+
 </html>

@@ -71,6 +71,12 @@ public class OrderService {
 
         // 전체 페이지 수 계산
         int totalPage = (rowTotal + blockList - 1) / blockList;
+
+        // totalPage가 0일 때, offset을 0으로 설정
+        if (totalPage == 0) {
+            totalPage = 1; // 최소 페이지 수를 1로 설정
+        }
+
         // 페이지 경계 처리 (1보다 작을 경우 1로, 전체 페이지 수보다 클 경우 마지막 페이지로 설정)
         if (page < 1)
             page = 1;

@@ -75,6 +75,7 @@ body {
 }
 
 .store-list {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;                 /* This allows the stores to wrap to the next line if needed*/
     justify-content: space-between;  /*Distribute space evenly between stores */
@@ -84,7 +85,7 @@ body {
 
 /* Each store block */
 .store {
-  width: calc(50% - 10px); /* Each store takes 50% of the container's width, minus spacing */
+  width: 48%;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   padding: 15px;
@@ -93,13 +94,19 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+.store-list:only-child{
+  width:100%;
+  justify-content: center;
+}
 
 /* Flex properties for the store info */
 .store-left {
     display: flex;
     flex-direction: row;
 }
-
+#store_list{
+  width:100%;
+}
 .store-logo img {
     width: 90px;
     height: 90px;

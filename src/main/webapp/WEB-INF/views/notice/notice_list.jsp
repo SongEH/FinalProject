@@ -2,10 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>공지사항 목록</title>
     <style>
         body {
@@ -97,51 +101,70 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <input type="hidden" id="notice_type" value="${vo.notice_type}">
-    <h1>공지사항</h1>
+        <%@include file="../common.jsp" %>
 
-    <div class="filter">
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=전체" class="${notice_type == '전체' ? 'active' : ''}">전체</a>
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=서비스안내" class="${notice_type == '서비스안내' ? 'active' : ''}">서비스 안내</a>
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=점검안내" class="${notice_type == '점검안내' ? 'active' : ''}">점검 안내</a>
-        <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=약관안내" class="${notice_type == '약관안내' ? 'active' : ''}">약관 안내</a>
-    </div>
+        <%@include file="../header.jsp" %>
 
-    <% 
-        // 세션에서 user 객체를 가져옴
-        String userType = (String)session.getAttribute("userType");
-        if(userType == null){
-            userType = "UNKNOWN";   //기본갑을 설정
-        }
-        session.setAttribute("userType",userType);
-    %>
+        <%@include file="../sidebar.jsp" %>
 
-    <!-- 관리자 전용 액션 버튼 -->
-    <c:if test="${userType == 'ADMIN'}">
-        <div class="admin-actions">
-            <a href="${pageContext.request.contextPath}/notice/insert_form.do">공지사항 등록</a>
-        </div>
-    </c:if>
+        <main id="main" class="main">
+            <div class="pagetitle">
 
-    
+            <h1>공지사항</h1>
 
-    <div class="notice-list">
-        <c:forEach var="notice" items="${list}">
-            <div class="notice-card">
-                <div class="notice-title">
-                    <a href="${pageContext.request.contextPath}/notice/detail.do?notice_id=${notice.notice_id}">${notice.notice_title}</a>
-                </div>
-                <div class="notice-date">
-                    작성일자: ${notice.notice_cdate}
-                </div>
-                <div class="notice-author">
-                    작성자: ${notice.adminAccountId}
-                </div>
+            <nav>
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Forms</li>
+                <li class="breadcrumb-item active">Layouts</li>
+                </ol>
+            </nav>
+
+            </div><!-- End Page Title -->
+
+            <div class="container">
+            <input type="hidden" id="notice_type" value="${vo.notice_type}">
+            
+
+            <div class="filter">
+                <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=전체" class="${notice_type == '전체' ? 'active' : ''}">전체</a>
+                <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=서비스안내" class="${notice_type == '서비스안내' ? 'active' : ''}">서비스 안내</a>
+                <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=점검안내" class="${notice_type == '점검안내' ? 'active' : ''}">점검 안내</a>
+                <a href="${pageContext.request.contextPath}/notice/list.do?notice_type=약관안내" class="${notice_type == '약관안내' ? 'active' : ''}">약관 안내</a>
             </div>
-        </c:forEach>
-    </div>
-    
-</div>
+
+            
+
+            <!-- 관리자 전용 액션 버튼 -->
+            <c:if test="${userType == 'ADMIN'}">
+                <div class="admin-actions">
+                    <a href="${pageContext.request.contextPath}/notice/insert_form.do">공지사항 등록</a>
+                </div>
+            </c:if>
+
+            
+
+            <div class="notice-list">
+                <c:forEach var="notice" items="${list}">
+                    <div class="notice-card">
+                        <div class="notice-title">
+                            <a href="${pageContext.request.contextPath}/notice/detail.do?notice_id=${notice.notice_id}">${notice.notice_title}</a>
+                        </div>
+                        <div class="notice-date">
+                            작성일자: ${notice.notice_cdate}
+                        </div>
+                        <div class="notice-author">
+                            작성자: ${notice.adminAccountId}
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+            
+        </div>
+
+    </main><!-- End #main -->
+
+    <%@include file="../footer.jsp" %>
+
 </body>
 </html>

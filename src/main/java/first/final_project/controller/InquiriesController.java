@@ -1,6 +1,5 @@
 package first.final_project.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +42,7 @@ public class InquiriesController {
         
         List<InquiriesVo> list = inquiries_mapper.selectListByType(inquiries_type);
         String userType = (String) session.getAttribute("userType");
+        
         if (userType == null) {
             return "redirect:/login_form.do";
         }
@@ -75,29 +75,9 @@ public class InquiriesController {
     }
 
 
-    // @RequestMapping("check_password.do")
-    // @ResponseBody
-    // public Map<String, Object> check_pwd(@RequestParam("inquiries_id") Integer inquiries_id,
-    //                                     @RequestParam("inquiries_pwd") String inquiries_pwd){
-    //     Map<String, Object> map = new HashMap<>();
-        
-    //     InquiriesVo vo = inquiries_mapper.selectFromIdx(inquiries_id);
-    //     if(vo == null){
-    //         response.put("result",false);
-    //         return response;
-    //     }
-       
-    //     if(inquiries_pwd.equals(vo.getInquiries_pwd())){
-    //         response.put("result",true);
-    //     }else{
-    //         response.put("result",false);
-    //     }
-
-    //     return response;
-    // }
 
     @RequestMapping("/detail.do")
-    public String detail(@RequestParam(value = "inquiries_id", required = false) Integer inquiries_id, @RequestParam(value="inquiries_pwd",required=false) String inquiries_pwd, Model model) {
+    public String detail(@RequestParam(value = "inquiries_id", required = false) Integer inquiries_id, Model model) {
         if (inquiries_id == null) {
             return "redirect:/inquiries/list.do";
         }
@@ -120,12 +100,7 @@ public class InquiriesController {
         // vo.setMemberAccountId(member.getMember_accountId());
         // vo.setOwnerAccountId(owner.getOwner_accountId());
 
-        // 비밀번호 확인
-        if (inquiries_pwd == null || !inquiries_pwd.equals(vo.getInquiries_pwd())) {
-            model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
-            model.addAttribute("inquiries_id", inquiries_id);
-            return "redirect:/inquiries/check_password.do"; // 비밀번호 입력 페이지로 리디렉션
-        }
+
 
         String content = vo.getInquiries_content().replace("\n", "<br/>");
         vo.setInquiries_content(content);
@@ -146,8 +121,7 @@ public class InquiriesController {
     }
 
     @RequestMapping("insert.do")
-    public String insert(String inquiries_title, String inquiries_type,String inquiries_content,
-                        String inquiries_pwd){
+    public String insert(String inquiries_title, String inquiries_type,String inquiries_content){
 
         MemberVo member = (MemberVo)session.getAttribute("user");
         OwnerVo owner = (OwnerVo)session.getAttribute("user");
@@ -161,7 +135,6 @@ public class InquiriesController {
             inquiries.setInquiries_title(inquiries_title);
             inquiries.setInquiries_type(inquiries_type);
             inquiries.setInquiries_content(inquiries_content);
-            inquiries.setInquiries_pwd(inquiries_pwd);
             inquiries.setMember_id(member.getMember_id());
             inquiries.setOwner_id(owner.getOwner_id());
 
@@ -190,7 +163,7 @@ public class InquiriesController {
     }
 
     @RequestMapping("modify.do")
-    public String modify(int inquiries_id,String inquiries_title,String inquiries_type,String inquiries_content,String inquiries_pwd){
+    public String modify(int inquiries_id,String inquiries_title,String inquiries_type,String inquiries_content){
         String userType = (String)session.getAttribute("userType");
         if(userType == null || !"MEMBER".equals(userType) || !"OWNER".equals(userType)){
             return "redirect:/login_form.do";
@@ -206,7 +179,6 @@ public class InquiriesController {
         inquiries.setInquiries_title(inquiries_title);
         inquiries.setInquiries_type(inquiries_type);
         inquiries.setInquiries_content(inquiries_content);
-        inquiries.setInquiries_pwd(inquiries_pwd);
         inquiries.setMember_id(member.getMember_id());
         inquiries.setOwner_id(owner.getOwner_id());
 

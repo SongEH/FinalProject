@@ -130,19 +130,9 @@
 <body>
 <div class="container">
     <input type="hidden" id="inquiries_type" value="${vo.inquiries_type}">
-    <input type="hidden" id="inquiries_pwd" value="${vo.inquiries_pwd}">
     <input type="hidden" id="inquiries_id" value="${vo.inquiries_id}">
     <h1>문의사항</h1>
 
-    <% 
-        // 세션에서 user 객체를 가져옴
-        String userType = (String)session.getAttribute("userType");
-        if(userType == null){
-            userType = "UNKNOWN";   //기본갑을 설정
-        }
-        session.setAttribute("userType",userType);
-    %>
-    
 
     <div class="filter">
         <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=전체" class="${inquiries_type == '전체' ? 'active' : ''}">전체</a>
@@ -186,94 +176,9 @@
         </c:forEach>
     </div>
 
-                <!-- 비밀번호 입력 모달 -->
-    <input type="hidden" id="hidden_inquiries_pwd" value="${vo.inquiries_pwd}">             
-    <div id="passwordModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>비밀번호 입력</h2>
-            <input type="password" id="inquiries_pwd" placeholder="비밀번호를 입력하세요" />
-            <button type="button" onclick="checkPassword()">확인</button>
-            <div id="modal_password_message" style="color: red;"></div>
-        </div>
-    </div>
-    
-
     
 
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    // 페이지 로드 시 비밀번호 오류가 있는지 확인
-    $(document).ready(function() {
-        const errorMessage = "${error}"; // 서버에서 보낸 오류 메시지
-        if (errorMessage) {
-            alert(errorMessage); // 오류 메시지 표시
-            showPasswordModal("${inquiries_id}", null, null); // 비밀번호 모달 표시
-        }
-    });
-
-
-    function showPasswordModal(inquiries_id,memberAccountId,ownerAccountId) {
-        inquiries.inquiries_id = inquiries_id;
-        memberAccountId = memberAccountId;
-        ownerAccountId = ownerAccountId;
-
-        alert("memberAccountId : " + memberAccountId);
-        alert("ownerAccoountId : " + ownerAccountId);
-        document.getElementById("passwordModal").style.display = "block";
-        document.getElementById("modal_password_message").innerText = ""; // 초기화
-    }
-
-    function closeModal() {
-        document.getElementById("passwordModal").style.display = "none";
-    }
-
-    function checkPassword() {
-    let inquiries_pwd = document.getElementById("inquiries_pwd").value;
-    let hidden_inquiries_pwd = document.getElementById("hidden_inquiries_pwd").value;
-
-    if (!inquiries.inquiries_id || inquiries.inquiries_id.trim() === "") {
-        document.getElementById("modal_password_message").innerText = "유효하지 않은 ID입니다.";
-        return;
-    }
-
-    if (inquiries_pwd.length === 0) {
-        document.getElementById("modal_password_message").innerText = "비밀번호를 입력하세요.";
-        return;
-    }
-
-    // 비밀번호 비교
-    if (inquiries_pwd !== hidden_inquiries_pwd) {
-        document.getElementById("modal_password_message").innerText = "비밀번호가 일치하지 않습니다.";
-        return;
-    }
-
-    // AJAX 요청
-    $.ajax({
-        url: "/inquiries/check_password.do",
-        type: "POST",
-        data: {
-            inquiries_id: inquiries.inquiries_id,
-            inquiries_pwd: inquiries_pwd
-        },
-        dataType: "json",
-        success: function (res_data) {
-            if (res_data.result) {
-                // 비밀번호 확인 성공 시 detail.do로 이동
-                window.location.href = `/inquiries/detail.do?inquiries_id=${inquiries.inquiries_id}&password=${inquiries_pwd}`;
-            } else {
-                document.getElementById("modal_password_message").innerText = "비밀번호가 일치하지 않습니다.";
-            }
-        },
-        error: function () {
-            alert("서버 오류가 발생했습니다.");
-        }
-    });
-}
-
-</script>
 
 </body>
 </html>

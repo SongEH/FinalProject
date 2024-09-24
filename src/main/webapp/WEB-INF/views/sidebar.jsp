@@ -54,17 +54,10 @@ pageEncoding="UTF-8" %>
     switch (userType) {
       case "MEMBER": %>
     <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/main.do">
-          <i class="bi bi-grid"></i>
-          <span>??(사용자)</span>
-        </a>
-      </li>
-      <!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>장바구니</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>회원페이지</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
@@ -77,6 +70,15 @@ pageEncoding="UTF-8" %>
               <i class="bi bi-circle"></i><span>주소정보</span>
             </a>
           </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>장바구니</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          
           <li>
             <a href="/order/list.do">
               <i class="bi bi-circle"></i><span>주문내역</span>
@@ -94,62 +96,70 @@ pageEncoding="UTF-8" %>
           </li>
         </ul>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          
+          <li>
+            <a href="/notice/list.do">
+              <i class="bi bi-circle"></i><span>공지사항</span>
+            </a>
+          </li>
+          <li>
+            <a href="/inquiries/list.do">
+              <i class="bi bi-circle"></i><span>문의사항</span>
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
+
     <!--------------------- 사용자 로그인 시 END--------------------->
 
     <!--------------------- 관리자 로그인 시 --------------------->
     <% break; case "ADMIN": %>
     <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/main.do">
-          <i class="bi bi-grid"></i>
-          <span>메인페이지(관리자)</span>
-        </a>
-      </li>
-      <!-- End Dashboard Nav -->
+      
 
       <li class="nav-item">
         <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>메뉴관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-journal-text"></i><span>관리자페이지</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="/menu/list.do">
-              <i class="bi bi-circle"></i><span>메뉴목록</span>
+            <a href="/admin/member_list.do">
+              <i class="bi bi-circle"></i><span>회원리스트</span>
             </a>
           </li>
           <li>
-            <a href="/menu/insert_form.do">
-              <i class="bi bi-circle"></i><span>메뉴등록</span>
+            <a href="/admin/owner_list.do">
+              <i class="bi bi-circle"></i><span>사장리스트</span>
             </a>
           </li>
           <li>
-            <a href="/carts/list.do">
-              <i class="bi bi-circle"></i><span>(한지혜작업중)장바구니목록</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
+            <a href="/admin/pending_requests.do">
+              <i class="bi bi-circle"></i><span>승인요청</span>
             </a>
           </li>
         </ul>
       </li>
-      <!-- End Forms Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>가맹점관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="/shop/insert_form.do">
-              <i class="bi bi-circle"></i><span>가맹점 등록</span>
+            <a href="/notice/list.do">
+              <i class="bi bi-circle"></i><span>공지사항</span>
             </a>
           </li>
           <li>
-            <a href="/shop/modify_form.do">
-              <i class="bi bi-circle"></i><span>가맹점 수정</span>
+            <a href="/inquiries/list.do">
+              <i class="bi bi-circle"></i><span>문의사항</span>
             </a>
           </li>
         </ul>
@@ -160,13 +170,6 @@ pageEncoding="UTF-8" %>
     <!--------------------- 사장 로그인 시 --------------------->
     <% break; case "OWNER": %>
     <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/shop/list.do">
-          <i class="bi bi-grid"></i>
-          <span>전체</span>
-        </a>
-      </li>
-      <!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -196,7 +199,9 @@ pageEncoding="UTF-8" %>
             <c:choose>
               <c:when test="${hasShop}">
                 <a href="#" class="disabled-link">
+
                   <i class="bi bi-circle"></i><span>가맹점 등록 완료</span>
+
                 </a>
               </c:when>
               <c:otherwise>

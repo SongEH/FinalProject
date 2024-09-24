@@ -20,14 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insert" parameterType="inquiries">
-        insert into inquiries(inquiries_title,inquiries_content,inquiries_pwd,inquiries_type,member_id,owner_id)
-        values(#{inquiries_title},#{inquiries_content},#{inquiries_pwd},#{inquiries_type},#{member_id},#{owner_id})
+        insert into inquiries(inquiries_title,inquiries_content,inquiries_type,member_id,owner_id)
+        values(#{inquiries_title},#{inquiries_content},#{inquiries_type},#{member_id},#{owner_id})
     </insert>
 
     <update id="update" parameterType="inquiries">
         update inquiries set inquiries_title=#{inquiries_title},
                              inquiries_content=#{inquiries_content},
-                             inquiries_pwd =#{inquiries_pwd},
                              inquiries_type=#{inquiries_type},
                              member_id=#{member_id},
                              owner_id=#{owner_id}

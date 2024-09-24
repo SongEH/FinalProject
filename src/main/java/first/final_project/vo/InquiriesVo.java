@@ -10,7 +10,6 @@ public class InquiriesVo {
     private int inquiries_id;
     private String inquiries_title;
     private String inquiries_content;
-    private String inquiries_pwd;
     private String inquiries_cdate;
     private String inquiries_type;
     private int member_id;

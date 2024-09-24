@@ -71,7 +71,6 @@
         success: function (response) {
           // 성공적으로 삭제되었을 경우 처리
           alert("삭제되었습니다.");
-          location.reload(); // 페이지 새로고침
         },
         error: function (xhr, status, error) {
           alert("삭제에 실패했습니다: " + xhr.responseText);

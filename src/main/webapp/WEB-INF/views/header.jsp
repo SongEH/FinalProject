@@ -48,8 +48,21 @@ header .logout{
   border: none;
   margin-left:10px;
 }
-
 </style>
+<script>
+  window.onload = function() {
+            // Check if this script has been executed before in the current session
+            if (!sessionStorage.getItem('logoutChecked')) {
+                var user = '${sessionScope.user}';
+                if (!user || user === 'null') {
+                  sessionStorage.setItm('logoutChecked', 'false');
+                    window.location.href = '/logout.do';  // Redirect to logout or login page
+                }
+                // Set the flag so this check won't run again in this session
+                sessionStorage.setItem('logoutChecked', 'true');
+            }
+        };
+</script>
 <html lang="ko">
   <body>
     <header class="header">

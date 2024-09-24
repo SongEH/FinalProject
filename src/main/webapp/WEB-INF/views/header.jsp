@@ -30,6 +30,15 @@ header .login {
     border: none;
     margin-left: 10px; /* Space between the welcome text and button */
 }
+header .insert {
+    background-color: #F0A8D0;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: black;
+    text-decoration: none;
+    border: none;
+    margin-left: 10px; /* Space between the welcome text and button */
+}
 header .logout{
   background-color: #F0A8D0;
   padding: 8px 15px;
@@ -76,13 +85,13 @@ header .logout{
               <c:when test="${sessionScope.user.member_name !=null}">
                 <span>Welcome ${sessionScope.user.member_name}님 안녕하세요.
                   <input class="login" type="button" value="My Page" onclick="location.href='../order/list.do'"/>
-                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+                  <input class="logout" type="button" value="로그아웃" onclick="location.href='../logout.do'"/>
                 </span>
               </c:when>
               <c:when test="${sessionScope.user.owner_name !=null}">
                 <span>Welcome ${sessionScope.user.owner_name}님
                   <input class="login" type="button" value="Owner Dashboard" onclick="location.href='../owner/dashboard.do'">
-                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+                  <input class="logout" type="button" value="로그아웃" onclick="location.href='../logout.do'"/>
                 </span>
               </c:when>
               
@@ -90,9 +99,9 @@ header .logout{
         </c:when>
         <c:otherwise>
           <div class="login-section">
-            <input class="login" type="button" value="login" 
+            <input class="login" type="button" value="로그인" 
             onclick="location.href='/login_form.do'"/>
-            <input class="insert" type="button" value="insert" 
+            <input class="insert" type="button" value="회원가입" 
             onclick="location.href='/insert_form.do'"/>
           </div>
         </c:otherwise>

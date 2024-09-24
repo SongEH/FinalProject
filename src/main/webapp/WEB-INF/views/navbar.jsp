@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   margin: 0;
-  background-image: url('../resources/images/배경이미지.jpeg'); /* Replace with the actual image path */
+  background-image: url('../resources/images/배경이미지.png'); /* Replace with the actual image path */
   background-size: cover; /* Ensures the image covers the entire background */
   background-position: center; /* Centers the image */
   padding: 10px; /* Adds padding around the search input and button */

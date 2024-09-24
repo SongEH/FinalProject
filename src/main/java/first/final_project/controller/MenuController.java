@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import first.final_project.dao.MenuMapper;
 import first.final_project.dao.ShopMapper;
 import first.final_project.service.ShopService;
+import first.final_project.vo.MemberVo;
 import first.final_project.vo.MenuVo;
 import first.final_project.vo.OwnerVo;
 import jakarta.servlet.ServletContext;
@@ -69,6 +70,10 @@ public class MenuController {
 		System.out.println("listbyShopid 도착");
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
+		MemberVo user = (MemberVo) session.getAttribute("user");
+		if(user!=null){
+			session.setAttribute("userType", "MEMBER");
+		}
 		// model.addAttribute("list", list);
 		// return "menu/menu_listByShopId";
 

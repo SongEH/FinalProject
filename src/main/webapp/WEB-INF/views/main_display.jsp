@@ -98,7 +98,7 @@ pageEncoding="UTF-8"%>
               },
       success :   function(res_data){
               alert("성공");
-              $("#shop_list_display").html(res_data).show();
+              $("#shop_list_main_display").html(res_data).show();
               $("#main_display").hide();
               $(".nav-link").removeClass("active");
               $("#" + food_category).addClass("active");
@@ -194,7 +194,7 @@ pageEncoding="UTF-8"%>
   </form>
 </div>
   <div>
-    <div id="shop_list_display"></div>
+    <div id="shop_list_main_display"></div>
   </div>
   <div style="margin-top: 50px;">
     <%@ include file="footer.jsp" %>

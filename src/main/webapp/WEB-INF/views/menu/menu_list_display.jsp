@@ -62,7 +62,7 @@ pageEncoding="UTF-8" %>
       });
       myModal.show();
 
-      // p_idx에 대한 사진정보 가져오기(Ajax이용 JSON형식)
+      // menu_id에 대한 메뉴정보 가져오기(Ajax이용 JSON형식)
       $.ajax({
         url: "/menu/menu_one.do", //PhotoOneAction
         data: {
@@ -138,7 +138,16 @@ pageEncoding="UTF-8" %>
       });
     }
   </script>
-
+<style>
+  .card{
+    width: 100%;
+    margin: 0;
+  }
+  .card-text{
+    margin-bottom: 8px;
+    /* padding: 0; */
+  }
+</style>
 </head>
 
 <body>
@@ -202,7 +211,6 @@ pageEncoding="UTF-8" %>
                 </c:if>
               </div>
             </div>
-
           </div><!-- End Card with an image on left -->
         </div>
       </c:if>

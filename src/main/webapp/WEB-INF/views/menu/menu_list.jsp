@@ -8,15 +8,35 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <style>
     #menuImg {
-      width:200px !important;
+      width: 200px !important;
     }
-
   </style>
+  <script>
+    function optionChange() {
+      let selectValue = document.getElementById("sortOption").value;
+      
+      alert(selectValue);
+
+      // $.ajax({
+      //   url: "/menu/menu_rank.do",
+      //   data: {
+      //     "selectValue": selectValue
+      //   },
+      //   success: function (res_data) {
+      //     $("#store_list").hide();
+      //     $("#store_list_display").html(res_data);
+      //   },
+      //   error: function (err) {
+      //     alert(error.responseText)
+      //   }
+      // });
+    }
+  </script>
 
 </head>
 
 <body>
-  
+
 
   <%@include file="../common.jsp" %>
 
@@ -39,6 +59,14 @@
 
     </div><!-- End Page Title -->
 
+    <div id="menu_sort" style="margin-bottom: 20px;">
+      <select id="sortOption" class="form-control" onchange="optionChange()">
+        <option value="rank">기본 정렬순</option>
+        <option value="rank_popularity">인기메뉴</option>
+        <option value="rank_soldout">품절메뉴</option>
+        <option value="rank_hidden">숨김메뉴</option>
+      </select>
+    </div>
     <!-- 메뉴목록리스트 -->
     <%@include file="menu_list_display.jsp" %>
 

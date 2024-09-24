@@ -7,7 +7,7 @@ header {
     justify-content: space-between; /* Align logo to the left and login to the right */
     align-items: center; /* Vertically center the items */
     padding: 10px; /* Optional: Add some padding */
-    background-color: #F0A8D0;
+    background-color: #FFC6C6;
 }
 
 header .logo {
@@ -20,14 +20,24 @@ header .login-section {
     align-items: center;
 }
 
-header .login ,.insert {
-    background-color: orange;
+
+header .login {
+    background-color: #F0A8D0;
     padding: 8px 15px;
     border-radius: 5px;
-    color: white;
+    color: black;
     text-decoration: none;
     border: none;
     margin-left: 10px; /* Space between the welcome text and button */
+}
+header .logout{
+  background-color: #F0A8D0;
+  padding: 8px 15px;
+  border-radius: 5px;
+  color: black;
+  text-decoration: none;
+  border: none;
+  margin-left:10px;
 }
 
 </style>
@@ -64,12 +74,16 @@ header .login ,.insert {
         <c:when test="${not empty sessionScope.user}">
           <c:choose>
               <c:when test="${sessionScope.user.member_name !=null}">
-                  <span>Welcome ${sessionScope.user.member_name}님</span>
-                  <input class="login" type="button" value="My Page" onclick="location.href='/member/mypage.do'">
+                <span>Welcome ${sessionScope.user.member_name}님 안녕하세요.
+                  <input class="login" type="button" value="My Page" onclick="location.href='../order/list.do'"/>
+                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+                </span>
               </c:when>
               <c:when test="${sessionScope.user.owner_name !=null}">
-                  <span>Welcome ${sessionScope.user.owner_name}님</span>
+                <span>Welcome ${sessionScope.user.owner_name}님
                   <input class="login" type="button" value="Owner Dashboard" onclick="location.href='../owner/dashboard.do'">
+                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+                </span>
               </c:when>
               
           </c:choose>

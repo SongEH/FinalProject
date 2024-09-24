@@ -115,23 +115,7 @@ pageEncoding='UTF-8'%>
     margin-top: 30px;
 }
 </style>
-<script>
-    function fileCount(){
-        let fileInput = document.getElementById('file-input');
-        let fileCountDisplay = document.getElementById('file-count');
-        let fileCount = fileInput.files.length;
 
-        if (fileCount > 3) {
-            alert("최대 3개의 파일만 선택할 수 있습니다.");
-            fileInput.value = ""; // 파일 입력을 초기화
-            fileCountDisplay.textContent = '';
-        } else if (fileCount > 0) {
-            fileCountDisplay.textContent = `선택된 파일: ${fileCount}개`;
-        } else {
-            fileCountDisplay.textContent = '';
-        }
-    }
-</script>
 <script>
     function reviews_insert(f){
         // let shop_name = document.querySelector("div[name='shop_name']").textContent.trim();
@@ -148,22 +132,48 @@ pageEncoding='UTF-8'%>
     }
 </script>
 <script>
-    function fileCount(){
-        let fileInput = document.getElementById('file-input');
-        let fileCountDisplay = document.getElementById('file-count');
-        let fileCount = fileInput.files.length;
+  function fileCount() {
+    let fileInput = document.getElementById('file-input');
+    let fileCountDisplay = document.getElementById('file-count');
+    let imgsWrap = document.querySelector('.imgs_wrap'); // Define imgsWrap
 
-        if (fileCount > 0) {
-            fileCountDisplay.textContent = `선택된 파일:` + fileCount + `개`;
-            
-        } else {
-            fileCountDisplay.textContent = '';
+    let fileCount = fileInput.files.length;
+
+    // Clear previous images
+    imgsWrap.innerHTML = "";
+
+    if (fileCount > 3) {
+        alert("최대 3개의 파일만 선택할 수 있습니다.");
+        fileInput.value = ""; // Reset the file input
+        fileCountDisplay.textContent = ''; // Reset the file count display
+    } else if (fileCount > 0) {
+        fileCountDisplay.textContent = "선택된 파일:" + fileCount + "개";
+        
+        // Loop through each file
+        for (let i = 0; i < fileCount; i++) {
+            let file = fileInput.files[i];
+            let reader = new FileReader();
+
+            // When the file is read, create the image element
+            reader.onload = function (e) {
+                let img = document.createElement("img");
+                img.src = e.target.result;
+                img.style.width = "100px";  // Set width for preview
+                img.style.height = "100px"; // Set height for preview
+                img.style.margin = "10px";  // Add some spacing between images
+                imgsWrap.appendChild(img);  // Append the image to the container
+            };
+
+            reader.readAsDataURL(file); // Read the file as a data URL
         }
+    } else {
+        fileCountDisplay.textContent = ''; // No files selected
     }
+}
 </script>
 </head>
 <body>
-    <div class="container" style="width: 1000px; margin-top: 30px">
+    <div class="container" style="width: 1000px; margin-top: 100px">
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" name="orders_id" value="${vo.orders_id}"/>
             <div id="reviews_info">
@@ -199,8 +209,12 @@ pageEncoding='UTF-8'%>
             <!-- File Input -->
             <input class="reviews_feature" name="photo" type="file" id="file-input"  multiple onchange="fileCount()"/>
             <div id="file-list" class="file_list"></div>
+
             <div class="reviews_feature" style="text-align: center;">
                 <span id="file-count"></span>
+                <div class="imgs_wrap" style="align-items: center;">
+                    <img id="img"/>
+                </div>
                 <!-- <input type="submit" value="등록완료"/> -->
                 <input type="button" value="등록완료" onclick="reviews_insert(this.form);" />
             </div>

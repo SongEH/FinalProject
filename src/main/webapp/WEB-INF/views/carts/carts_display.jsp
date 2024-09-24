@@ -97,33 +97,6 @@
 </script>
 
 <body>
-
-  <script>
-    // 장바구니 아이템 삭제
-    function deleteItem(cartsId) {
-      // AJAX 요청으로 carts_id를 컨트롤러로 전송
-      $.ajax({
-        url: '/carts/delete2.do', // URL을 적절히 설정
-        type: 'POST',
-        data: {
-          carts_id: cartsId
-        },
-        success: function (response) {
-          // 성공적으로 삭제되었을 경우 처리
-          alert("삭제되었습니다.");
-        },
-        error: function (xhr, status, error) {
-          alert("삭제에 실패했습니다: " + xhr.responseText);
-        }
-      });
-    }
-
-    // 주문 
-    function orderFromShop(shop_id, shop_name) {
-      location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
-    }
-  </script>
-
   <c:set var="currentShopId" value="" />
   <c:set var="currentShopTotal" value="0" />
   <c:set var="totalPrice" value="0" />

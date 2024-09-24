@@ -1,5 +1,6 @@
 <%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,78 +37,35 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .slideshow-container {
-    position: relative;
+    display: flex;
     max-width: 500px;
     margin: auto;
     margin-left: 5px;
 }
-.mySlides {
-    position: absolute;
+.mySlides { 
+  width: 100%;
+  /* flex: 0 0 auto; */
+    /* position: relative; */
 }
 /* Default size */
-.image-size-1 img {
-    width: 500px;
-    height: 300px;
-    border: 1px solid black;
-}
-.image-size-2 img {
-    width: 250px;
-    height: 300px;
-    border: 1px solid black;
-}
-.image-size-3-first img {
+.first-slide-1 img {
     width: 300px;
-    height: 300px;
+    height: 200px;
     border: 1px solid black;
 }
-.image-size-3-second img {
-    width: 200px;
-    height: 150px;
+.second-slide-1 img {
+    width: 300px;
+    height: 200px;
     border: 1px solid black;
 }
-.image-size-3-third img {
-    width: 200px;
-    height: 150px;
+.second-slide-2 img {
+    width: 300px;
+    height: 200px;
     border: 1px solid black;
+    margin-left: 10px;
 }
 /* Layout for three images */
-.image-size-3 {
-    width: 500px;
-    height: 300px;
-    border: 1px solid black;
-}
-.image-size-3-first {
-    left: 0;
-    top: 0;
-}
-.image-size-3-second {
-    left: 300px;
-    top: 0;
-}
-.image-size-3-third {
-    left: 300px;
-    top: 150px;
-}
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-.next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-.prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-}
+
 .btn-delete {
     margin-left: auto;
 }
@@ -120,7 +78,7 @@ function reviews_del(reviews_id){
         url     :     "delete.do",
         data    :      {"reviews_id": reviews_id},
         success :   function(res_data){
-            alert("성공");
+            // alert("성공");
             location.href="list.do";
         },
         error   :   function(err){
@@ -129,8 +87,8 @@ function reviews_del(reviews_id){
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('.slideshow-container').forEach(container => {
+(function(slideshowId) {
+        const container = document.getElementById(slideshowId);
         const slides = container.querySelectorAll('.mySlides');
         const numSlides = slides.length;
 
@@ -138,14 +96,16 @@ document.addEventListener("DOMContentLoaded", function() {
             container.classList.add('image-size-1');
         } else if (numSlides === 2) {
             container.classList.add('image-size-2');
+            slides[0].classList.add('image-size-2-first');
+            slides[1].classList.add('image-size-2-seconde');
         } else if (numSlides === 3) {
             container.classList.add('image-size-3');
             slides[0].classList.add('image-size-3-first');
             slides[1].classList.add('image-size-3-second');
             slides[2].classList.add('image-size-3-third');
         }
-    });
-});
+    })
+    ('slideshow-${vo.reviews_id}');
 </script>
 </head>
 
@@ -190,14 +150,25 @@ document.addEventListener("DOMContentLoaded", function() {
                                             </div>
                                             <p class="mt-2">${vo.reviews_content}</p>
                                             <div class="slideshow-container" id="slideshow-${vo.reviews_id}">
-                                                <c:if test="${not empty vo.reviews_img_list }">
-                                                    <c:forEach var="img" items="${vo.reviews_img_list}" varStatus="status" >
-                                                        <div class="mySlides slide-${status.index + 1}">
-                                                            <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
-                                                        </div>
-                                                    </c:forEach>
+                                              <c:if test="${not empty vo.reviews_img_list }">
+                                                <c:set var="imageCount" value="${fn:length(vo.reviews_img_list)}" />
+                                                <c:if test="${imageCount == 2}">
+                                                  <c:forEach var="img" items="${vo.reviews_img_list}" varStatus="status">
+                                                      <div class="mySlides second-slide-${status.index + 1}">
+                                                          <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
+                                                      </div>
+                                                  </c:forEach>
                                                 </c:if>
+                                                <c:if test="${imageCount ==1}">
+                                                  <c:forEach var="img" items="${vo.reviews_img_list}" varStatus="status">
+                                                      <div class="mySlides first-slide-${status.index + 1}">
+                                                          <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
+                                                      </div>
+                                                  </c:forEach>
+                                                </c:if>
+                                              </c:if>
                                             </div>
+                                            
                                             <div class="mt-3">
                                                 <div>주문한 메뉴 : ${vo.orders_name}</div>
                                                 <div>주문한 가격 : ${vo.orders_price}</div>

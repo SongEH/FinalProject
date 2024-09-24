@@ -203,12 +203,12 @@ body {
     
     <script>
       function selectOne(shop_id){
-        alert(shop_id);
+        // alert(shop_id);
         $.ajax({
           url     :     "/shop/select_one.do",
           data    :      {"shop_id": shop_id},
           success :   function(res_data){
-                alert("select_one.do 성공")
+                // alert("select_one.do 성공");
                 $("#select_one_display").html(res_data).show();
                 $("#insert_form_display").hide();
                 $("#reviews_display").hide();
@@ -232,9 +232,9 @@ body {
         let food_category = document.getElementById("food_category").value;
         let order_addr = document.getElementById("order_addr").value;
         let searchValue = document.getElementById("searchInput").value;
-        alert(food_category);
-        alert(order_addr);
-        alert(selectValue);
+        // alert(food_category);
+        // alert(order_addr);
+        // alert(selectValue);
         $.ajax({
         url     :     "../shop/food_list.do",
         data  : {"selectValue": selectValue,
@@ -242,7 +242,7 @@ body {
               "order_addr": order_addr,
               "searchValue": searchValue},
         success :   function(res_data){
-                    alert("성공");
+                    // alert("성공");
                     $("#store_list").hide();
                     $("#store_list_display").html("");        
                     $("#store_list_display").html(res_data);

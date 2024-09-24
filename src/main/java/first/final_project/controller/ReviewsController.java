@@ -89,6 +89,8 @@ public class ReviewsController {
 			Boolean result = reviewsMapper.checkCeoReviewExists(vo.getReviews_id());
 			boolean hasCeoReview = (result != null) ? result : false;
 			vo.setHasCeoReview(hasCeoReview);
+            String reviews_content = vo.getReviews_content().replaceAll("\n", "<br>");
+            vo.setReviews_content(reviews_content);
 		}
         System.out.println("호출완료");
 
@@ -157,9 +159,9 @@ public class ReviewsController {
 
         // reviews DB 에 인서트
         vo.setOrders_id(orders_id);
-
         // reviews 등록 
         int res = reviewsMapper.insert(vo);
+        
         System.out.println("reviews 등록 완료 ");
 
         // 첫 번째 파일을 가져옴
@@ -208,6 +210,7 @@ public class ReviewsController {
                 file.delete();
             }
         }
+        int res = order_mapper.setHasReview(reviews_id);
         reviewsMapper.deleteReviews(reviews_id);
         return "redirect:list.do";
     }

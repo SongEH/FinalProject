@@ -162,6 +162,10 @@ pageEncoding="UTF-8"%>
       transform: scale(1.05);
       /* Make button slightly larger on hover */
     }
+    .star-empty{
+      color: white;
+      text-shadow: 0px 0px 0.5px black;
+    }
   </style>
   <script>
     function get_info(shop_id){
@@ -169,7 +173,7 @@ pageEncoding="UTF-8"%>
       url     :     "../shop/select_info.do",
       data    :      {"shop_id": shop_id},
       success :   function(res_data){
-              alert("menu호출");
+              // alert("menu호출");
               $("#shop_info_display").html(res_data).show();
               $("#menu_display").hide();
               $('#reviews_display').hide();
@@ -190,7 +194,7 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert(res_data);
+          // alert(res_data);
           $("#menu_display").html(res_data).show();
           $('#reviews_display').hide();
           $("#shop_info_display").hide();
@@ -213,7 +217,7 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert("삭제 성공")
+          alert("삭제 성공");
           location.href = "/shop/list.do";
         },
         error: function (err) {
@@ -233,8 +237,8 @@ pageEncoding="UTF-8"%>
     }
 
     function get_review(shop_id) {
-      alert("도착");
-      alert(shop_id);
+      // alert("도착");
+      // alert(shop_id);
       $.ajax({
         url: "../reviews/listByShopId.do",
         method: "POST",
@@ -242,7 +246,7 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert(res_data);
+          // alert(res_data);
           $("#reviews_display").html(res_data).show();
           $("#menu_display").hide();
           $("#shop_info_display").hide();
@@ -282,15 +286,17 @@ pageEncoding="UTF-8"%>
                 <span>
                   <div class="stars">
                     <c:if test="${vo.shop_rating != null && vo.shop_rating > 0}">
-                    <c:forEach begin="1" end="${vo.shop_rate}">
+                    <c:set var="shopRateInt" value="${vo.shop_rate.intValue()}"/>
+                    <c:set var="empShopRate" value="${5 - shopRateInt}"/>
+                    <c:forEach begin="1" end="${shopRateInt}">
                         <i class="fa fa-star"></i>
                     </c:forEach>
-                    <c:forEach begin="1" end="${5 - vo.shop_rate}">
+                    <c:forEach begin="1" end="${empShopRate}">
                         <i class="fa fa-star star-empty"></i>
                     </c:forEach>
                     ${vo.shop_rating}
                     </c:if>
-                </div>
+                  </div>
                   <div class="details">
                     <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
                     <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>

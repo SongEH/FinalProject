@@ -159,11 +159,11 @@ pageEncoding='UTF-8'%>
 <script>
 function ceoWriteReview(f){
     let ceoreviews_content = f.ceoreviews_content.value.trim();
-    alert(f.ceoreviews_content.value);
+    // alert(f.ceoreviews_content.value);
     let owner_id = f.owner_id.value;
-    alert(f.owner_id.value);
+    // alert(f.owner_id.value);
     let reviews_id = f.reviews_id.value;
-    alert(f.reviews_id.value);
+    // alert(f.reviews_id.value);
 
     $.ajax({
     url     :     "../ceoReview/insert.do",

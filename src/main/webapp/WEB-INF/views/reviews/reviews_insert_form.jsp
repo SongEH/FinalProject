@@ -129,11 +129,11 @@ input[type="radio"]:checked ~ label {
     // let shop_name = document.querySelector("div[name='shop_name']").textContent.trim();
     // let menu_name = document.querySelector("div[name='menu_name']").textContent.trim();
     let reviews_rating = f.reviews_rating.value;
-    alert(reviews_rating);
+    // alert(reviews_rating);
     let reviews_content = f.reviews_content.value.trim();
-    alert(reviews_content);
+    // alert(reviews_content);
     let orders_id = f.orders_id.value;
-    alert(orders_id)
+    // alert(orders_id)
 
     if(reviews_rating==""){
       alert("별점은 선택은 필수입니다.");
@@ -163,8 +163,8 @@ input[type="radio"]:checked ~ label {
     // Clear previous images
     imgsWrap.innerHTML = "";
 
-    if (fileCount > 3) {
-        alert("최대 3개의 파일만 선택할 수 있습니다.");
+    if (fileCount > 2) {
+        alert("최대 2개의 파일만 선택할 수 있습니다.");
         fileInput.value = ""; // Reset the file input
         fileCountDisplay.textContent = ''; // Reset the file count display
     } else if (fileCount > 0) {
@@ -229,6 +229,7 @@ input[type="radio"]:checked ~ label {
             
             <!-- File Input -->
             <input class="reviews_feature" name="photo" type="file" id="file-input"  multiple onchange="fileCount()"/>
+            <div style="text-align: center; margin-top: 10px;">이미지는 최대 2대까지만 등록 가능합니다.</div>
             <div id="file-list" class="file_list"></div>
 
             <div class="reviews_feature" style="text-align: center;">
@@ -236,7 +237,6 @@ input[type="radio"]:checked ~ label {
                 <div class="imgs_wrap" style="align-items: center;">
                     <img id="img"/>
                 </div>
-                <!-- <input type="submit" value="등록완료"/> -->
                 <input type="button" value="등록완료" onclick="reviews_insert(this.form);" />
             </div>
         </form>

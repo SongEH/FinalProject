@@ -29,13 +29,13 @@
     function shopLis(element){
 
       var food_category = element.getAttribute('food_category').trim();
-      alert(food_category);
+      // alert(food_category);
       let order_addr = $("#order_addr").val().trim();
       if(order_addr==null || order_addr==""){
         alert("주소를 입력하시거나 로그인 후 이용할 수 있습니다.")
         return;
       }
-      alert(order_addr);
+      // alert(order_addr);
       let selectValue = document.getElementById("sortOption").value;
       let searchValue = document.getElementById("searchInput").value;
       // var activeCategory = food_category;
@@ -71,10 +71,10 @@
     let food_category = document.getElementById("food_category").value;
     let order_addr = document.getElementById("order_addr").value;
     let searchValue = document.getElementById("searchInput").value;
-    alert(selectValue);
-    alert(food_category);
-    alert(order_addr);
-    alert(searchValue);
+    // alert(selectValue);
+    // alert(food_category);
+    // alert(order_addr);
+    // alert(searchValue);
     $.ajax({
       url   : "../shop/food_list.do",
       data  : {"selectValue": selectValue,
@@ -82,7 +82,7 @@
               "order_addr": order_addr,
               "searchValue": searchValue},
       success :   function(res_data){
-                  alert("성공");
+                  // alert("성공");
                   $("#store_list").hide();   
                   $("#store_list_display").html("");       
                   $("#store_list_display").html(res_data);

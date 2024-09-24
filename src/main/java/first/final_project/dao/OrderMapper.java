@@ -45,4 +45,6 @@ public interface OrderMapper {
 
     int getShopIdByOrderId(int owner_id);
 
+    int setHasReview(int reviews_id);
+
 }

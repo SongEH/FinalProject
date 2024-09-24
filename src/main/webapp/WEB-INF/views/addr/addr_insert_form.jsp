@@ -3,12 +3,14 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Insert title here</title>
+    
     <script type="text/javascript">
       function execDaumPostcode() {
         new daum.Postcode({
@@ -78,7 +80,7 @@
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
-        padding: 20px;
+        padding: 0px;
       }
 
       .container {
@@ -155,7 +157,7 @@
       <main id="main" class="main">
         <div class="pagetitle">
 
-          <h1>Form Layouts</h1>
+          <h1>주소등록</h1>
 
           <nav>
             <ol class="breadcrumb">
@@ -168,10 +170,7 @@
         </div><!-- End Page Title -->
 
         <div class="container mx-auto p-6">
-          <h1 class="text-3xl font-bold mb-6" style="margin-top: 150px">
-            주&nbsp;소&nbsp;등&nbsp;록
-          </h1>
-
+          
           <div class="bg-white shadow-md rounded-lg p-6">
             <form
               action="${pageContext.request.contextPath}/addr/addr_insert_form.do"

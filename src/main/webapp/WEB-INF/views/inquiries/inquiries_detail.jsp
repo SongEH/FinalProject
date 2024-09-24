@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>문의사항 상세</title>
     <style>
        body {
@@ -83,46 +84,64 @@
 </head>
 <body>
 
-    <input type="hidden" id="inquiries_id" value="${vo.inquiries_id}">
 
+    <%@include file="../common.jsp" %>
 
-    <div class="container">
+    <%@include file="../header.jsp" %>
+
+    <%@include file="../sidebar.jsp" %>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+
         <h1>문의사항 상세</h1>
 
-        <!-- 상세 정보 표시 영역 -->
-        <div class="inquiries_detail">
-            <div class="inquiries_title">
-                ${vo.inquiries_title}
+        <nav>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Forms</li>
+            <li class="breadcrumb-item active">Layouts</li>
+            </ol>
+        </nav>
+
+        </div><!-- End Page Title -->
+
+        <input type="hidden" id="inquiries_id" value="${vo.inquiries_id}">
+        <div class="container">
+
+            <!-- 상세 정보 표시 영역 -->
+            <div class="inquiries_detail">
+                <div class="inquiries_title">
+                    ${vo.inquiries_title}
+                </div>
+                <div class="inquiries_cdate">
+                    ${vo.inquiries_cdate}
+                </div>
+                <div class="inquiries_content">
+                    ${vo.inquiries_content}
+                </div>
+                <div class="inquiries-author">
+                        작성자: 
+                        <c:choose>
+                            <c:when test="${not empty inquiries.memberAccountId}">
+                                ${vo.memberAccountId}
+                            </c:when>
+                            <c:when test="${not empty inquiries.ownerAccountId}">
+                                ${vo.ownerAccountId}
+                            </c:when>
+                        </c:choose>
+                </div>
+                <c:if test="${isAuthor}">
+                    <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
+                    <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
+                </c:if>
+                
             </div>
-            <div class="inquiries_cdate">
-                ${vo.inquiries_cdate}
-            </div>
-            <div class="inquiries_content">
-                ${vo.inquiries_content}
-            </div>
-            <div class="inquiries_author">
-                <c:choose>
-                    <c:when test="${vo.memberAccountId != null}">
-                        작성자: ${vo.memberAccountId}
-                    </c:when>
-                    <c:when test="${vo.ownerAccountId != null}">
-                        작성자: ${vo.ownerAccountId}
-                    </c:when>
-                    
-                </c:choose>
-            </div>
-            <c:if test="${userType == 'MEMBER'}">
-                <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
-                <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
-            </c:if>
-            <c:if test="${userType == 'OWNER'}">
-                <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
-                <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
-            </c:if>
+
+            <a href="${pageContext.request.contextPath}/inquiries/list.do" class="back-button">목록으로</a>
         </div>
 
-        <a href="${pageContext.request.contextPath}/inquiries/list.do" class="back-button">목록으로</a>
-    </div>
+    </main><!-- End #main -->
 
 </body>
 </html>

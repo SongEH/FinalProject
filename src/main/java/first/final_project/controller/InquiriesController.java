@@ -41,31 +41,21 @@ public class InquiriesController {
     public String list(@RequestParam(value="inquiries_type",defaultValue = "전체")String inquiries_type,Model model){
         
         List<InquiriesVo> list = inquiries_mapper.selectListByType(inquiries_type);
-        String userType = (String) session.getAttribute("userType");
         
-        if (userType == null) {
-            return "redirect:/login_form.do";
-        }
-
         for (InquiriesVo vo : list) {
-            if ("MEMBER".equals(userType)) {
+            if (vo.getMember_id() != 0) {
                 // 회원이 작성한 문의만 회원 ID를 설정
                 MemberVo member = member_mapper.selectOneFromIdx(vo.getMember_id());
                 if (member != null) {
                     vo.setMemberAccountId(member.getMember_accountId());
                 }
-            } else if ("OWNER".equals(userType)) {
+            }  
+            if (vo.getOwner_id() != 0) {
                 // 사장이 작성한 문의만 사장 ID를 설정
                 OwnerVo owner = owner_mapper.selectOneFromIdx(vo.getOwner_id());
                 if (owner != null) {
                     vo.setOwnerAccountId(owner.getOwner_accountId());
                 }
-            }
-
-            // 작성자가 없으면 로그인 폼으로 리디렉션
-            if ((userType.equals("MEMBER") && vo.getMemberAccountId() == null) ||
-                    (userType.equals("OWNER") && vo.getOwnerAccountId() == null)) {
-                return "redirect:/login_form.do";
             }
         }
 
@@ -78,6 +68,7 @@ public class InquiriesController {
 
     @RequestMapping("/detail.do")
     public String detail(@RequestParam(value = "inquiries_id", required = false) Integer inquiries_id, Model model) {
+
         if (inquiries_id == null) {
             return "redirect:/inquiries/list.do";
         }
@@ -91,23 +82,20 @@ public class InquiriesController {
         if(userType == null){
             return "redirect:/login_form.do";
         }
-
-        // MemberVo member = member_mapper.selectOneFromIdx(vo.getMember_id());
-        // OwnerVo owner = owner_mapper.selectOneFromIdx(vo.getOwner_id());
-        // if (member == null || owner == null) {
-        //     return "redirect:/login_form.do";
-        // }
-        // vo.setMemberAccountId(member.getMember_accountId());
-        // vo.setOwnerAccountId(owner.getOwner_accountId());
-
-
-
-        String content = vo.getInquiries_content().replace("\n", "<br/>");
-        vo.setInquiries_content(content);
-
         model.addAttribute("vo", vo);
 
-        return "inquiries/inquiries_detail";
+        Object user = session.getAttribute("user");
+        boolean isAuthor = false;
+
+        if (user instanceof MemberVo) {
+            isAuthor = vo.getMember_id() == ((MemberVo) user).getMember_id();
+        } else if (user instanceof OwnerVo) {
+            isAuthor = vo.getOwner_id() == ((OwnerVo) user).getOwner_id();
+        }
+
+        model.addAttribute("isAuthor", isAuthor); // 작성자 여부 추가
+
+        return "inquiries/inquiries_detail"; // 상세 페이지 반환
     }
     
     @RequestMapping("insert_form.do")
@@ -123,26 +111,44 @@ public class InquiriesController {
     @RequestMapping("insert.do")
     public String insert(String inquiries_title, String inquiries_type,String inquiries_content){
 
-        MemberVo member = (MemberVo)session.getAttribute("user");
-        OwnerVo owner = (OwnerVo)session.getAttribute("user");
-        if(member == null || owner == null){
-            return "redirect:/login_form.do";
-        }
-        String userType = (String)session.getAttribute("userType");
-        if("MEMBER".equals(userType) || "OWNER".equals(userType)){
-            InquiriesVo inquiries = new InquiriesVo();
+        Object user = session.getAttribute("user");
+        String userType = (String) session.getAttribute("userType");
 
-            inquiries.setInquiries_title(inquiries_title);
-            inquiries.setInquiries_type(inquiries_type);
-            inquiries.setInquiries_content(inquiries_content);
+        InquiriesVo inquiries = new InquiriesVo();
+        inquiries.setInquiries_title(inquiries_title);
+        inquiries.setInquiries_type(inquiries_type);
+        inquiries.setInquiries_content(inquiries_content);
+
+        if("MEMBER".equals(userType) && user instanceof MemberVo){
+            MemberVo member = (MemberVo)user;
             inquiries.setMember_id(member.getMember_id());
+            inquiries.setOwner_id(0);
+        }else if ("OWNER".equals(userType) && user instanceof OwnerVo) {
+            OwnerVo owner = (OwnerVo) user;
             inquiries.setOwner_id(owner.getOwner_id());
-
-            inquiries_mapper.insert(inquiries);
-            return "redirect:/inquiries/list.do";
-        }else{
-            return "redirect:/login_form.do";
+            inquiries.setMember_id(0);
         }
+
+        inquiries_mapper.insert(inquiries);
+        return "redirect:/inquiries/list.do";
+        // MemberVo member = (MemberVo)session.getAttribute("user");
+        // OwnerVo owner = (OwnerVo)session.getAttribute("user");
+        // // if(member == null || owner == null){
+        // //     return "redirect:/login_form.do";
+        // // }
+        // String userType = (String)session.getAttribute("userType");
+        // if("MEMBER".equals(userType) || "OWNER".equals(userType)){
+        //     InquiriesVo inquiries = new InquiriesVo();
+
+        //     inquiries.setInquiries_title(inquiries_title);
+        //     inquiries.setInquiries_type(inquiries_type);
+        //     inquiries.setInquiries_content(inquiries_content);
+        //     inquiries.setMember_id(member.getMember_id());
+        //     inquiries.setOwner_id(owner.getOwner_id());
+
+        //     inquiries_mapper.insert(inquiries);
+        // }
+        // return "redirect:/inquiries/list.do";
 
     }
 
@@ -154,7 +160,7 @@ public class InquiriesController {
             return "redirect:/inquiries/list.do";
         }
         String userType = (String) session.getAttribute("userType");
-        if(userType == null || !"MEMBER".equals(userType) || !"OWNER".equals(userType)){
+        if(userType == null){
             return "redirect:/login_form.do";
         }
 
@@ -190,6 +196,6 @@ public class InquiriesController {
     @RequestMapping("delete.do")
     public String delete(@RequestParam int inquiries_id){
         inquiries_mapper.delete(inquiries_id);
-        return "redirect:/list.do";
+        return "redirect:/inquiries/list.do";
     }
 }

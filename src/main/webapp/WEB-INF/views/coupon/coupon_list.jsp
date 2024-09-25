@@ -23,11 +23,11 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         <table border="1">
           <thead>
             <tr>
-              <th>Member Name</th>
-              <th>Coupon Code</th>
-              <th>Discount Amount</th>
-              <th>Issued Date</th>
-              <th>Used Date</th>
+              <th>회원명</th>
+              <th>쿠폰 번호</th>
+              <th>할인 금액</th>
+              <th>발행날짜</th>
+              <th>사용 날짜</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +36,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                 <td>${coupon.member_name}</td>
                 <td>${coupon.coupon_code}</td>
                 <td>${coupon.discount_amount}</td>
-                <td>${coupon.issued_date}</td>
+                <td>${coupon.start_date}</td>
                 <td>
                   <c:choose>
                     <c:when test="${coupon.used_date != null}">
@@ -51,7 +51,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         </table>
       </c:if>
       <c:if test="${empty coupons}">
-        <p>No coupons issued yet.</p>
+        <p>발행된 쿠폰이 없습니다.</p>
       </c:if>
     </main>
   </body>

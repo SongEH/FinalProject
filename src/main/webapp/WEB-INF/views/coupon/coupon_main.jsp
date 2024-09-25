@@ -14,8 +14,8 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <%@include file="../sidebar.jsp" %>
 
     <main id="main" class="main">
-      <h1>Coupon Issuance</h1>
-      <button onclick="location.href ='issue.do'">Issue Coupons</button>
+      <h1>쿠폰 발행하기</h1>
+      <button onclick="location.href ='issue.do'">쿠폰 발행하기</button>
     </main>
   </body>
 </html>

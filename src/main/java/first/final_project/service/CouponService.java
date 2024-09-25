@@ -39,6 +39,7 @@ public class CouponService {
                 coupon.setMember_id(member.getMember_id());
                 coupon.setDiscount_amount(grade.getGrade_discount()); // 등급에 맞는 할인 금액 설정
                 coupon.setCoupon_code(generateCouponCode()); // 쿠폰 코드 생성
+                coupon.setGrade_id(grade.getGrade_id());
 
                 couponMapper.insertCoupon(coupon); // 쿠폰 발행
             }
@@ -59,12 +60,4 @@ public class CouponService {
         return couponMapper.getAllIssuedCoupons();
     }
 
-    public void testInsertCoupon() {
-        CouponVo coupon = new CouponVo();
-        coupon.setMember_id(1); // Use an existing member_id
-        coupon.setDiscount_amount(5000);
-        coupon.setCoupon_code(generateCouponCode());
-
-        couponMapper.insertCoupon(coupon);
-    }
 }

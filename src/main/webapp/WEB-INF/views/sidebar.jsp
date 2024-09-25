@@ -150,6 +150,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         <i class="bi bi-circle"></i><span>승인요청</span>
                       </a>
                     </li>
+                    <li>
+                      <a href="/coupon/main.do">
+                        <i class="bi bi-circle"></i><span>쿠폰발행</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/coupon/list.do">
+                        <i class="bi bi-circle"></i><span>쿠폰조회</span>
+                      </a>
+                    </li>
                   </ul>
                 </li>
                 <li class="nav-item">

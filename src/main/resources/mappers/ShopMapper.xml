@@ -71,10 +71,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              INNER JOIN orders o ON o.orders_id = r.orders_id            
              WHERE o.shop_id = s.shop_id) AS ceoreview_count    
         FROM shop s        
+        <<<<<<< HEAD
         <where>
-            <if test="food_category != null and food_category != 'all'">                
+<if test="food_category != null and food_category != 'all'">                
+                AND food_category = #{food_category}            
+        </if>
+
+        <where>
+            <if test="food_category !=null and food_category != 'all'">                
                 AND food_category = #{food_category}            
             </if>
+            <if test="searchValue != null and searchValue !=''">
+                AND shop_name LIKE CONCAT('%', '${searchValue}', '%')
+            </if>
+
         </where>
         <if test="selectValue != null"> 
             ORDER BY 
@@ -138,7 +148,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 가게 정보 업데이트 -->
     <update id="update" parameterType="shop">
-        update shop set shop_name=#{shop_name}, shop_content=#{shop_content}, shop_addr=#{shop_addr}, shop_call=#{shop_call}, shop_min_price=#{shop_min_price}, shop_hours=#{shop_hours}, shop_close_day=#{shop_close_day}, shop_area=#{shop_area}, food_category=#{food_category}, shop_status=#{shop_status}, shop_img=#{shop_img}
+        update shop set shop_name = #{shop_name},
+                        shop_content = #{shop_content},
+                        shop_addr = #{shop_addr},
+                        shop_call = #{shop_call},
+                        shop_min_price = #{shop_min_price},
+                        shop_hours = #{shop_hours},
+                        shop_close_day = #{shop_close_day},
+                        shop_area = #{shop_area},
+                        food_category = #{food_category},
+                        shop_status = #{shop_status}
+        <if test="shop_img != null">
+                            , shop_img = #{shop_img}
+        </if>
                     where shop_id = #{shop_id}
     </update>
 

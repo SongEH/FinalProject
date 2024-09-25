@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.InquiriesMapper">
+
+    <select id="selectListByType" parameterType="int" resultType="inquiries">
+        select * from inquiries
+            <trim prefix="where">
+                <if test="inquiries_type !='전체'">
+                    inquiries_type=#{inquiries_type}
+                </if>
+            </trim>
+        order by inquiries_id desc
+    </select>
+
+    <select id="selectFromIdx" parameterType="int" resultType="inquiries">
+        select * from inquiries where inquiries_id=#{inquiries_id} order by inquiries_id desc
+    </select>
+
+    <insert id="insert" parameterType="inquiries">
+        insert into inquiries(inquiries_title,inquiries_content,inquiries_type)
+        values(#{inquiries_title},#{inquiries_content},#{inquiries_type})
+    </insert>
+
+    <update id="update" parameterType="inquiries">
+        update inquiries set inquiries_title=#{inquiries_title},
+                             inquiries_content=#{inquiries_content},
+                             inquiries_type=#{inquiries_type},
+                             member_id=#{member_id},
+                             owner_id=#{owner_id}
+                             where inquiries_id=#{inquiries_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from inquiries where inquiries_id=#{inquiries_id}
+    </delete>
+</mapper>
+
+

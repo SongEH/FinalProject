@@ -1,9 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>사장 정보 수정</title>
     <script type="text/javascript">
       /* 자바 스크립트 함수 선언(비밀번호 확인) */
@@ -100,89 +105,115 @@ pageEncoding="UTF-8"%>
     </script>
   </head>
   <body>
-    <h1>사장 정보 수정</h1>
-    <form
-      action="${pageContext.request.contextPath}/owner/ownerpage/modify.do"
-      method="post"
-    >
-      <input type="hidden" name="owner_id" value="${owner.owner_id}" />
-      <div class="container mx-auto p-6">
-        <div class="mb-4">
-          <label for="name">이름:</label>
-          <input
-            class="form-control"
-            type="text"
-            name="owner_name"
-            value="${owner.owner_name}"
-          />
+
+    <%@include file="../common.jsp" %>
+
+    <%@include file="../header.jsp" %>
+
+    <%@include file="../sidebar.jsp" %>
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+
+        <h1>회원정보 수정</h1>
+
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Forms</li>
+            <li class="breadcrumb-item active">Layouts</li>
+          </ol>
+        </nav>
+
+      </div><!-- End Page Title -->
+
+        <form
+        action="${pageContext.request.contextPath}/owner/ownerpage/modify.do"
+        method="post">
+        <input type="hidden" name="owner_id" value="${owner.owner_id}" />
+        <div class="container mx-auto p-6">
+          <div class="mb-4">
+            <label for="name">이름:</label>
+            <input
+              class="form-control"
+              type="text"
+              name="owner_name"
+              value="${owner.owner_name}"
+            />
+          </div>
+          <div class="mb-4">
+            <lable for="accountId">아이디:</lable>
+            <input
+              class="form-control"
+              type="text"
+              value="${owner.owner_accountId}"
+              readonly
+            />
+          </div>
+          <div class="mb-4">
+            <label for="password">비밀번호:</label>
+            <input
+              class="form-control"
+              type="password"
+              name="owner_pwd"
+              value="${owner.owner_pwd}"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="email"
+              >이메일:
+              <span class="em_red">*</span>
+            </label>
+            <input
+              class="form-control"
+              type="text"
+              name="owner_email"
+              value="${owner.owner_email}"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="phone">전화번호:</label>
+            <input
+              class="form-control"
+              type="text"
+              name="owner_phone"
+              oninput="formatPhoneNumber(this);"
+              value="${owner.owner_phone}"
+            />
+          </div>
+          <div class="mb-4">
+            <lable for="license">사업자등록번호:</lable>
+            <input
+              class="form-control"
+              type="text"
+              name="owner_license"
+              value="${owner.owner_license}"
+            />
+          </div>
+          <div class="mb-4">
+            <lable for="bankbook">법인통장번호:</lable>
+            <input
+              class="form-control"
+              type="text"
+              name="owner_bankbook"
+              value="${owner.owner_bankbook}"
+            />
+          </div>
+          <div class="flex justify-end">
+            <input type="button" value="수정하기" onclick="send(this.form);" />
+            <input
+              type="button"
+              value="돌아가기"
+              onclick="location.href='/owner/ownerpage.do'"
+            />
+          </div>
         </div>
-        <div class="mb-4">
-          <lable for="accountId">아이디:</lable>
-          <input
-            class="form-control"
-            type="text"
-            value="${owner.owner_accountId}"
-            readonly
-          />
-        </div>
-        <div class="mb-4">
-          <label for="password">비밀번호:</label>
-          <input
-            class="form-control"
-            type="password"
-            name="owner_pwd"
-            value="${owner.owner_pwd}"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="email"
-            >이메일:
-            <span class="em_red">*</span>
-          </label>
-          <input
-            class="form-control"
-            type="text"
-            name="owner_email"
-            value="${owner.owner_email}"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="phone">전화번호:</label>
-          <input
-            class="form-control"
-            type="text"
-            name="owner_phone"
-            oninput="formatPhoneNumber(this);"
-            value="${owner.owner_phone}"
-          />
-        </div>
-        <div class="mb-4">
-          <lable for="license">사업자등록번호:</lable>
-          <input
-            class="form-control"
-            type="text"
-            name="owner_license"
-            value="${owner.owner_license}"
-          />
-        </div>
-        <div class="mb-4">
-          <lable for="bankbook">법인통장번호:</lable>
-          <input
-            class="form-control"
-            type="text"
-            name="owner_bankbook"
-            value="${owner.owner_bankbook}"
-          />
-        </div>
-        <div class="flex justify-end">
-          <input type="button" value="수정하기" onclick="send(this.form);" />
-          <input
-            type="button"
-            value="돌아가기"
-            onclick="location.href='/owner/ownerpage.do'"
-          />
-        </div>
-      </div>
-    </form>
+      </form>
+
+    </main><!-- End #main -->
+
+
+    
+    
   </body>
 </html>

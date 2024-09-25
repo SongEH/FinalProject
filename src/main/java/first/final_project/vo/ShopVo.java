@@ -14,12 +14,16 @@ public class ShopVo {
     private int shop_id;
     private String shop_name;
     private String shop_img;
+
+    private String shop_addr1;
+    private String shop_addr2;
     private String shop_addr;
+
     private String food_category;
     private String shop_call;
     private String shop_content;
     private int shop_min_price;
-    private BigDecimal shop_rate;
+    private int shop_rate;
     private int shop_stemp_count;
     private int shop_review_count;
     private String shop_hours;

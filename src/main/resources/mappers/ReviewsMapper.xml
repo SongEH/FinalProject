@@ -111,9 +111,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select ceoreviews_id from ceoreview where reviews_id = #{reviews_id}
     </select>
 
-
-
-
     <!-- insert reviews -->
     <insert id="insert" parameterType="reviews">
         insert into reviews (

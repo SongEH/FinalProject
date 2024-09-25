@@ -85,6 +85,7 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
+        session.setAttribute("userType", "MEMBER");
         session.setAttribute("isLoggedIn", true);
 
         // 절대 경로 사용
@@ -155,6 +156,7 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
+        session.setAttribute("userType", "OWNER");
         System.out.println(user);
         // return "redirect:../main.do";
         // 태광 수정 
@@ -192,7 +194,8 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
-
+        session.setAttribute("userType", "ADMIN");
+        
         return "redirect:../main.do";
     }
 
@@ -202,7 +205,8 @@ public class LoginController {
 
         session.invalidate();
 
-        return "redirect:/main.do";
+        // return "redirect:/main.do";
+        return "redirect:/main/display.do";
     }
 
 }

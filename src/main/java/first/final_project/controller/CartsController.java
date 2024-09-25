@@ -61,7 +61,7 @@ public class CartsController {
 		int member_id = user.getMember_id();
 
 		List<CartsVo> list = carts_mapper.selectList(member_id);
-		System.out.println(list);
+		System.out.println("장바구니목록\n" + list);
 
 		// request binding
 		model.addAttribute("list", list);
@@ -124,16 +124,21 @@ public class CartsController {
 	}
 
 	// carts_display.jsp에서 호출
-	@PostMapping("delete2.do")
-	public void delete2(@RequestParam("carts_id") int carts_id, RedirectAttributes ra) {
+	@RequestMapping("delete2.do")
+	public String delete2(@RequestParam("carts_id") int carts_id, RedirectAttributes ra) {
 		// CartsVo 정보 얻어온다
 		CartsVo vo = carts_mapper.selectOne(carts_id);
-
+		
 		if (vo != null) {
 			carts_mapper.delete(carts_id);
+			System.out.println("삭제 성공");
 			ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
+			return "redirect:../carts/list";
 		} else {
 			ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
+			return "redirect:../error/error";
 		}
+		
 	}
+	
 }

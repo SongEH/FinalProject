@@ -1,10 +1,12 @@
 package first.final_project.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import first.final_project.dao.MenuMapper;
 import first.final_project.service.AddrService;
 import first.final_project.service.KakaoMapService;
@@ -53,7 +56,7 @@ public class ShopController {
     }
 
     public BigDecimal formatRatingInt(BigDecimal rating){
-        return rating.setScale(0, RoundingMode.CEILING);
+        return rating.setScale(0, RoundingMode.FLOOR);
     }
 
     @Autowired
@@ -114,7 +117,6 @@ public class ShopController {
             model.addAttribute("list", list);
             model.addAttribute("order_addr", order_addr);
             model.addAttribute("food_category", food_category);
-            System.out.println(activeCategory);
         } catch (Exception e) {
             e.printStackTrace();  // 예외 발생 시 전체 스택 트레이스를 출력
             System.out.println("예외 발생: " + e.getMessage());  // 구체적인 예외 메시지 출력
@@ -125,7 +127,11 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/food_list.do")
-    public String shop_food_list(String food_category,String order_addr, String selectValue, Model model, RedirectAttributes ra) {
+    public String shop_food_list(
+    @RequestParam(name="food_category", defaultValue = "all") String food_category,String order_addr, 
+    @RequestParam(name="selectValue", required = false) String selectValue,
+    @RequestParam(name="searchValue", required = false)String searchValue,
+     Model model, RedirectAttributes ra) throws UnsupportedEncodingException {
 
  
         // System.out.println(selectValue);
@@ -139,10 +145,12 @@ public class ShopController {
 
         Map<String, Object> selectMap = new HashMap<String, Object>();
         selectMap.put("food_category", food_category);
-        if(selectMap!=null){
+        if(selectValue!=null){
             selectMap.put("selectValue", selectValue); 
         }
-        
+        if(searchValue!=null){
+            selectMap.put("searchValue", searchValue);
+        }
 
         List<ShopVo> list;
         double radius = 10000;  // 10km 반경
@@ -287,6 +295,10 @@ public class ShopController {
         int owner_id = user.getOwner_id();
         System.out.println(owner_id);
 
+        String shop_addr = vo.getShop_addr1() + " " + vo.getShop_addr2();
+        vo.setShop_addr(shop_addr);
+        System.err.println("vo.getShop_addr() : "  +  vo.getShop_addr());
+
         System.out.println("---shop_insert.do----");
         String shop_img = "no_file";
 
@@ -305,7 +317,7 @@ public class ShopController {
         vo.setOwner_id(owner_id);
         int res = shop_Service.insert(vo);
 
-        return "redirect:shoplist.do";
+        return "redirect:modify_form.do";
     }
 
     // 가게 하나 선택
@@ -317,7 +329,8 @@ public class ShopController {
             ShopVo vo = shop_Service.selectOne(shop_id);
             if(vo.getShop_rating()!=null){
                 BigDecimal shop_rating = formatRating(vo.getShop_rating());
-                BigDecimal shop_rate = formatRatingInt(vo.getShop_rating());
+                BigDecimal shop_rate_decimal = formatRatingInt(vo.getShop_rating());
+                int shop_rate = shop_rate_decimal.intValue();
                 System.out.println(shop_rating);
                 vo.setShop_rating(shop_rating);
                 vo.setShop_rate(shop_rate);
@@ -390,16 +403,15 @@ public class ShopController {
     public String shop_modify(ShopVo vo, @RequestParam MultipartFile photo, RedirectAttributes ra,
             Model model) {
         // 기존 이미지 불러오기
-        System.out.println();
         String filename = shop_Service.selectOne(vo.getShop_id()).getShop_img();
         System.out.println("vo.getShop_img filename = " + filename);
 
-        String shop_img = "no_file";
         // 이미지 저장할 경로
         String absPath = application.getRealPath("/resources/images/");
         System.out.println(absPath);
         // 새로운 이미지 UUID 부여
         if (!photo.isEmpty()) {
+            String shop_img = "no_file";
             UUID uuid = UUID.randomUUID();
             shop_img = uuid + "_" + photo.getOriginalFilename();
 
@@ -434,10 +446,12 @@ public class ShopController {
             }
 
         }
-
+        System.out.println("변경할 이미지가 없습니다. ");
         try {
+            System.out.println("업데이트전");
             int res = shop_Service.update(vo);
-            return "redirect:shoplist.do";
+            System.out.println("가게수정 완료");
+            return "redirect:modify_form.do";
             // shop_id = vo.getShop_id();
         } catch (Exception e) {
             return "error/error_page";

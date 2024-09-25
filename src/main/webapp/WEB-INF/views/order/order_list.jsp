@@ -33,7 +33,7 @@
 
 
   <!-- polling 방식으로 주문상태 업데이트 -->
-  <script>
+  <!-- <script>
     function fetchOrders() {
       $.ajax({
         url: `/order/order_list.do`, // 주문 내역을 가져오는 API 경로
@@ -67,6 +67,21 @@
 
     // 특정 주기 마다 주문 내역을 가져옵니다.
     setInterval(fetchOrders, 30000); // 10000ms = 10초
+  </script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+  <script>
+    var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+    var stompClient = Stomp.over(socket);
+
+    // WebSocket 연결 설정
+    stompClient.connect({}, function (frame) {
+      // 주문 상태 업데이트 메시지 구독
+      stompClient.subscribe('/topic/orders', function (message) {
+        location.reload(); // 메시지 수신 시 페이지 새로고침
+      });
+    });
   </script>
 
 

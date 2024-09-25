@@ -22,7 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 등록 -->
   <insert id="insert" parameterType="menu">
     INSERT INTO menu(
-        menu_category, 
         menu_name, 
         menu_content,
         menu_price, 
@@ -34,7 +33,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         shop_id
     )
     VALUES (
-        #{menu_category}, 
         #{menu_name}, 
         #{menu_content}, 
         #{menu_price}, 

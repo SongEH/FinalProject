@@ -4,7 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="first.final_project.dao.ShopMapper">
 
-
     <!-- 가게추가 -->
     <!-- <insert id="insert" parameterType="first.final_project.vo.ShopVo"> -->
     <insert id="insert" parameterType="shop">
@@ -71,12 +70,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              INNER JOIN orders o ON o.orders_id = r.orders_id            
              WHERE o.shop_id = s.shop_id) AS ceoreview_count    
         FROM shop s        
-        <<<<<<< HEAD
-        <where>
-<if test="food_category != null and food_category != 'all'">                
-                AND food_category = #{food_category}            
-        </if>
-
         <where>
             <if test="food_category !=null and food_category != 'all'">                
                 AND food_category = #{food_category}            
@@ -84,7 +77,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="searchValue != null and searchValue !=''">
                 AND shop_name LIKE CONCAT('%', '${searchValue}', '%')
             </if>
-
         </where>
         <if test="selectValue != null"> 
             ORDER BY 
@@ -169,6 +161,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="delete" parameterType="int">
         delete from shop where shop_id = #{shop_id}
     </delete>
+
 
 
 

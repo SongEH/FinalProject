@@ -7,19 +7,15 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
+    <title>Coupon Main</title>
   </head>
   <body>
-    <%@include file="../common.jsp" %>
-
-    <!-- header import -->
-    <%@include file="../header.jsp" %>
-
-    <!-- side bar import -->
+    <%@include file="../common.jsp" %> <%@include file="../header.jsp" %>
     <%@include file="../sidebar.jsp" %>
+
     <main id="main" class="main">
-      여긴 쿠폰
-      <button onclick="location.href ='issue.do'">쿠폰발행</button>
+      <h1>Coupon Issuance</h1>
+      <button onclick="location.href ='issue.do'">Issue Coupons</button>
     </main>
   </body>
 </html>

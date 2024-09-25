@@ -35,17 +35,16 @@ public class CouponController {
         return "redirect:/coupon/success"; // 성공 페이지로 리디렉션
     }
 
-    // 발급 성공 페이지
-    @RequestMapping("/success")
+    // Success page after issuing coupons
+    @RequestMapping("success")
     public String successPage() {
-        return "coupon/success"; // 성공 페이지로 이동
+        return "coupon/success"; // Show success message
     }
 
     // 특정 회원의 쿠폰 리스트 조회
     @RequestMapping("listMember.do")
     public String listCouponsForMember(Model model, HttpSession session) {
-        MemberVo member = (MemberVo) session.getAttribute("member"); // 세션에서 로그인된 회원
-        // 정보 가져오기
+        MemberVo member = (MemberVo) session.getAttribute("member"); // 세션에서 로그인된 회원 정보 가져오기
         if (member != null) {
             List<CouponVo> coupons = couponService.getCouponsForMember(member.getMember_id());
             model.addAttribute("coupons", coupons); // 쿠폰 리스트를 모델에 추가
@@ -54,10 +53,12 @@ public class CouponController {
     }
 
     // 관리자가 모든 발급된 쿠폰을 조회하는 메서드
+    // View issued coupons
     @RequestMapping("list.do")
-    public String listAllCoupons(Model model) {
+    public String listCoupons(Model model) {
         List<CouponVo> coupons = couponService.getAllIssuedCoupons();
-        model.addAttribute("coupons", coupons); // 조회된 쿠폰 리스트를 모델에 추가
-        return "coupon/coupon_list"; // 관리자가 볼 수 있는 쿠폰 리스트 페이지로 이동
+        model.addAttribute("coupons", coupons); // Add coupon data to the model
+        return "coupon/coupon_list"; // Render coupon list JSP page
     }
+
 }

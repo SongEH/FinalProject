@@ -10,5 +10,6 @@ public class AdminVo {
     int admin_id;
     String admin_accountId;
     String admin_pwd;
-
+    String member_name;
+    String owner_name;
 }

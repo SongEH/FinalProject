@@ -19,25 +19,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES (#{member_id}, LEFT(UUID(), 8), #{discount_amount}, NOW());
     </insert>
 
-    <!-- 등급 ID로 등급을 조회하는 SQL -->
-    <select id="getGradeById" parameterType="int" resultType="first.final_project.vo.GradeVo">
-        SELECT * FROM grade WHERE grade_id = #{grade_id}
-    </select>
+
 
     <insert id="insertCoupon">
         INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
         VALUES (#{member_id}, #{coupon_code}, #{discount_amount}, NOW());
     </insert>
 
-    <!-- Retrieve all coupons issued to a member -->
-    <select id="getCouponsByMemberId" resultType="first.final_project.vo.CouponVo">
+
+    <select id="getCouponsByMemberId" resultType="coupon">
         SELECT coupon_code, discount_amount, start_date, used_date
         FROM coupon
         WHERE member_id = #{member_id};
     </select>
 
-    <!-- Retrieve all issued coupons -->
-    <select id="getAllIssuedCoupons" resultType="first.final_project.vo.CouponVo">
+
+    <select id="getAllIssuedCoupons" resultType="coupon">
         SELECT c.coupon_code, c.discount_amount, c.start_date, c.used_date, m.member_name
         FROM coupon c
         JOIN member m ON c.member_id = m.member_id;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import first.final_project.dao.CouponMapper;
-import first.final_project.dao.GradeMapper;
+
 import first.final_project.dao.MemberMapper;
 import first.final_project.vo.CouponVo;
 import first.final_project.vo.MemberVo;
@@ -21,9 +21,6 @@ public class CouponService {
 
     @Autowired
     private CouponMapper couponMapper;
-
-    @Autowired
-    private GradeMapper gradeMapper;
 
     // 모든 회원에게 쿠폰 발행
     @Transactional

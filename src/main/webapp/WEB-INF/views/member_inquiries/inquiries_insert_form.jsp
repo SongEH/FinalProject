@@ -9,8 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <title>문의사항 수정</title>
+    <title>문의사항 등록</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,39 +68,39 @@
 
     <script type="text/javascript">
         function send(f){
-            let inquiries_title = f.inquiries_title.value.trim();
-            let inquiries_type = f.inquiries_type.value.trim();
-            let inquiries_content = f.inquiries_content.value.trim();
+            let m_inquiries_title = f.m_inquiries_title.value.trim();
+            let m_inquiries_type = f.m_inquiries_type.value.trim();
+            let m_inquiries_content = f.m_inquiries_content.value.trim();
             
-
-            if(inquiries_title ==""){
+            if(m_inquiries_title ==""){
                 alert("제목을 입력하시오");
-                f.inquiries_title.value="";
-                f.inquiries_title.focus();
+                f.m_inquiries_title.value="";
+                f.m_inquiries_title.focus();
                 return;
             }
 
-            if(inquiries_type ==""){
+            if(m_inquiries_type ==""){
                 alert("유형을 선택하시오");
-                f.inquiries_type.value="";
-                f.inquiries_type.focus();
+                f.m_inquiries_type.value="";
+                f.m_inquiries_type.focus();
                 return;
             }
 
-            if(inquiries_content ==""){
+            if(m_inquiries_content ==""){
                 alert("내용을 입력하시오");
-                f.inquiries_content.value="";
-                f.inquiries_content.focus();
+                f.m_inquiries_content.value="";
+                f.m_inquiries_content.focus();
                 return;
             }
 
-            f.action = "/inquiries/modify.do";
+            f.action = "/member_inquiries/insert.do";
             f.submit();
         }
     </script>
 </head>
 <body>
 
+    
     <%@include file="../common.jsp" %>
 
     <%@include file="../header.jsp" %>
@@ -111,7 +110,7 @@
     <main id="main" class="main">
         <div class="pagetitle">
 
-        <h1>문의사항 수정</h1>
+        <h1>문의사항 등록</h1>
 
         <nav>
             <ol class="breadcrumb">
@@ -124,39 +123,38 @@
         </div><!-- End Page Title -->
 
         <div class="container">
-            
-            <form action="${pageContext.request.contextPath}/inquiries/modify_form.do" method="post">
-                <input type="hidden" name="inquiries_id" value="${vo.inquiries_id}">
-                <div class="form-group">
-                    <label for="inquiries_title">제목</label>
-                    <input type="text" id="inquiries_title" name="inquiries_title" value="${vo.inquiries_title}" required>
-                </div>
-                <div class="form-group">
-                    <label for="inquiries_type">유형</label>
-                    <select class="select, form-control" id="inquiries_type" name="inquiries_type" required>
-                        <option value="전체" ${vo.inquiries_type == '전체' ? 'selected' : ''}>전체</option>
-                        <option value="결제문의" ${vo.inquiries_type == '결제문의' ? 'selected' : ''}>결제 문의</option>
-                        <option value="주문문의" ${vo.inquiries_type == '주문문의' ? 'selected' : ''}>주문 문의</option>
-                        <option value="서비스이용" ${vo.inquiries_type == '서비스이용' ? 'selected' : ''}>서비스 이용</option>
-                        <option value="배송문의" ${vo.inquiries_type == '배송문의' ? 'selected' : ''}>배송 문의</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inquiries_content">내용</label>
-                    <textarea id="inquiries_content" name="inquiries_content" rows="5" required>${vo.inquiries_content}</textarea>
-                </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary" onclick="send(this.form);">
-                        등록
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/inquiries/detail.do?inquries_id=${vo.inquiries_id}';">
-                        취소
-                    </button>
-                </div>
-            </form>
-        </div>
+        
+        <form action="${pageContext.request.contextPath}/member_inquiries/insert_form.do" method="post">
+            <input type="hidden" name="m_inquiries_id" value="${vo.m_inquiries_id}">
+            <div class="form-group">
+                <label for="m_inquiries_title">제목</label>
+                <input type="text" id="m_inquiries_title" name="m_inquiries_title" required>
+            </div>
+            <div class="form-group">
+                <label for="m_inquiries_type">유형</label>
+                <select class="select, form-control" id="m_inquiries_type" name="m_inquiries_type" required>
+                    <option value="전체">전체</option>
+                    <option value="결제문의">결제 문의</option>
+                    <option value="주문문의">주문 문의</option>
+                    <option value="서비스이용">서비스 이용</option>
+                    <option value="배송문의">배송 문의</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="m_inquiries_content">내용</label>
+                <textarea id="m_inquiries_content" name="m_inquiries_content" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                    등록
+                </button>
+            </div>
+        </form>
+    </div>
 
     </main><!-- End #main -->
+
+
     
 </body>
 </html>

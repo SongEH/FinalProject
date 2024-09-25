@@ -83,7 +83,7 @@ pageEncoding="UTF-8" %>
                   </a>
                 </li>
                 <li>
-                  <a href="/inquiries/list.do">
+                  <a href="/member_inquiries/list.do">
                     <i class="bi bi-circle"></i><span>문의사항</span>
                   </a>
                 </li>
@@ -126,8 +126,13 @@ pageEncoding="UTF-8" %>
                   </a>
                 </li>
                 <li>
-                  <a href="/inquiries/list.do">
-                    <i class="bi bi-circle"></i><span>문의사항</span>
+                  <a href="/member_inquiries/list.do">
+                    <i class="bi bi-circle"></i><span>회원 문의사항</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/owner_inquiries/list.do">
+                    <i class="bi bi-circle"></i><span>사장 문의사항</span>
                   </a>
                 </li>
               </ul>
@@ -231,7 +236,7 @@ pageEncoding="UTF-8" %>
                   </a>
                 </li>
                 <li>
-                  <a href="/inquiries/list.do">
+                  <a href="/owner_inquiries/list.do">
                     <i class="bi bi-circle"></i><span>문의사항</span>
                   </a>
                 </li>

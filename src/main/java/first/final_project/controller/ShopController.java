@@ -339,8 +339,6 @@ public class ShopController {
     
             // Adding attributes to the model
 
-            // 한지혜브랜치2에만 있던 코드 
-            List<MenuVo> menu_list = menuMapper.selectMenuList(shop_id);
           
             model.addAttribute("vo", vo);
           

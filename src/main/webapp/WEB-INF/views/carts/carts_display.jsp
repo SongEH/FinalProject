@@ -86,9 +86,15 @@
     });
   }
 
+  
+
   function orderFromShop(shop_id, shop_name) {
-    location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
-  }
+    // 기본 클릭 이벤트를 차단합니다.
+    event.preventDefault(); 
+
+    // 직접 페이지 이동
+    window.location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
+}
 
   function updateQuantity(cartsId, operation) {
     // 수량 업데이트 로직 추가 필요
@@ -110,7 +116,7 @@
         <p>총 가격: ${currentShopTotal}원</p>
         <button class="order-button" onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
       </c:if>
-      
+
       <!-- 가게명 및 가게별 총 가격 초기화 -->
       <p class="shop-info">가게명: ${item.shop_name}</p>
       <c:set var="currentShopId" value="${item.shop_id}" />
@@ -140,13 +146,16 @@
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
   <c:if test="${currentShopId != ''}">
     <p>총 가격: ${currentShopTotal}원</p>
-    <button class="order-button" onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
+    <button id="orderButton" class="order-button"
+      onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
   </c:if>
 
   <!-- 전체 가격 출력 -->
   <div class="total-price">
     장바구니 총 가격: ${totalPrice}원
   </div>
+
+  <button onclick='"/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;"'>되냐고</button>
 </body>
 
 

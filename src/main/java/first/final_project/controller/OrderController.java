@@ -194,7 +194,7 @@ public class OrderController {
 
 	// 회원 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
-	public String insert(int shop_id, String shop_name, Model model) {
+	public String insert(int shop_id, String shop_name, Model model) { 
 
 		// 현재 로그인한 사용자
 		MemberVo user = (MemberVo) session.getAttribute("user");

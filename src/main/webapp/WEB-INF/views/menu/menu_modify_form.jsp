@@ -35,7 +35,6 @@
       //입력값 검증
       let menu_name = f.menu_name.value.trim();
       let menu_content = f.menu_content.value.trim();
-      let menu_category = f.menu_category.value.trim();
       let menu_price = f.menu_price.value.trim();
 
       if (menu_name == '') {
@@ -52,12 +51,6 @@
         return;
       }
 
-      if (menu_category == '') {
-        alert("카테고리를 입력하세요!");
-        f.menu_category.value = ""; //지우기
-        f.menu_category.focus();
-        return;
-      }
       if (menu_price == '') {
         alert("가격을 입력하세요!");
         f.menu_price.value = ""; //지우기

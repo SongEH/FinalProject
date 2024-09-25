@@ -60,8 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 메뉴 수정 -->
   <update id="update" parameterType="menu">
     UPDATE menu 
-    SET menu_category = #{menu_category}, 
-        menu_name = #{menu_name}, 
+    SET menu_name = #{menu_name}, 
         menu_content = #{menu_content}, 
         menu_price = #{menu_price}, 
         menu_popularity = #{menu_popularity}, 

@@ -61,7 +61,7 @@ public class PaymentController {
             Integer orders_id = vo.getOrders_id();
             System.out.println("orders_id : " + orders_id);
 
-            // 주문 후에는 장바구니 테이블에 주문 id 부여 
+            // 주문 후에는 장바구니 테이블에 주문 id 부여
             Map<String, Object> map = new HashMap<>();
             map.put("orders_id", orders_id);
             map.put("shop_id", shop_id);

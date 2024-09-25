@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import first.final_project.dao.CommissionMapper;
 import first.final_project.util.MyCommon;
 import first.final_project.util.Paging;
-import first.final_project.vo.CompletedDeliveryVo;
+import first.final_project.vo.CommissionVo;
 
 @Service
 public class CommissionService {
@@ -49,7 +49,7 @@ public class CommissionService {
         params.put("blockList", blockList); // 한 페이지당 가져올 목록 개수
 
         // 페이징 처리된 배달 목록을 가져옴
-        List<CompletedDeliveryVo> deliveries = commissionMapper.selectPageList(params);
+        List<CommissionVo> deliveries = commissionMapper.selectPageList(params);
 
         // 페이징 메뉴를 생성 (HTML 형태로 페이지 번호 목록을 생성)
         String pageMenu = Paging.getPaging("list.do?raiders_id=" + raiders_id, page, rowTotal, blockList, blockPage);
@@ -101,7 +101,7 @@ public class CommissionService {
         params.put("endDate", endDate); // 필터: 종료 날짜
 
         // 페이징 처리된 필터된 배달 목록을 가져옴
-        List<CompletedDeliveryVo> deliveries = commissionMapper.selectPageListByDate(params);
+        List<CommissionVo> deliveries = commissionMapper.selectPageListByDate(params);
 
         // 필터와 함께 페이징 메뉴를 생성 (HTML 형태로 페이지 번호 목록을 생성)
         String pageMenu = Paging.getPaging(

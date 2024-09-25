@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="first.final_project.dao.CommissionMapper">
 
     <!-- 라이더의 완료된 배달 목록을 가져오는 쿼리 -->
-    <select id="selectList" parameterType="int" resultType="first.final_project.vo.CompletedDeliveryVo">
+    <select id="selectList" parameterType="int" resultType="CommissionVo">
     SELECT
         d.deliveries_id,            -- 배달 ID
         r.rider_name,               -- 라이더 이름
@@ -21,19 +21,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ELSE o.orders_price * 0.03  -- 주문 금액의 3%를 수수료로 계산
         END AS commission
     FROM
-        Deliveries d
+        deliveries d
     JOIN
-        Riders r ON d.raiders_id = r.raiders_id
+
+        riders r ON d.raiders_id = r.raiders_id
     JOIN
-        Orders o ON d.orders_id = o.orders_id
+        orders o ON d.orders_id = o.orders_id
     JOIN
-        Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+        delivery_history dh ON d.deliveries_id = dh.deliveries_id
     JOIN
-        Shop s ON o.shop_id = s.shop_id
+        shop s ON o.shop_id = s.shop_id
     JOIN
-        Addr a ON o.addr_id = a.addr_id
+        addr a ON o.addr_id = a.addr_id
     LEFT JOIN
-        Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+        commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
     WHERE
         d.raiders_id = #{raiders_id}
         AND dh.delivery_history_status = '배달 완료'
@@ -50,20 +51,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         END
     ), 0)
     FROM
-        Deliveries d
+        deliveries d
     JOIN
-        Orders o ON d.orders_id = o.orders_id
+        orders o ON d.orders_id = o.orders_id
     LEFT JOIN
-        Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+        commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
     WHERE d.raiders_id = #{raiders_id}
-    AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
+    AND EXISTS (SELECT 1 FROM delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
     </select>
 
     <!-- 완료된 배달 건수 조회 쿼리 -->
     <select id="getTotalCount" parameterType="int" resultType="int">
     SELECT COUNT(*)
-    FROM Deliveries d
-    JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    FROM deliveries d
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
     WHERE d.raiders_id = #{raiders_id}
     AND dh.delivery_history_status = '배달 완료';
     </select>
@@ -71,31 +72,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 특정 라이더와 배달 건에 대해 수수료 존재 여부 확인 쿼리 -->
     <select id="commissionExists" parameterType="map" resultType="int">
     SELECT COUNT(*)
-    FROM Commissions
+    FROM commissions
     WHERE raiders_id = #{raiders_id}
     AND deliveries_id = #{deliveries_id};
     </select>
 
     <!-- 새로운 수수료 정보를 삽입하는 쿼리 -->
     <insert id="insertCommission" parameterType="map">
-    INSERT INTO Commissions (raiders_id, deliveries_id, commission)
+    INSERT INTO commissions (raiders_id, deliveries_id, commission)
     VALUES (#{raiders_id}, #{deliveries_id}, #{commission});
     </insert>
 
     <!-- 페이징 처리된 완료된 배달 목록을 가져오는 쿼리 -->
-    <select id="selectPageList" parameterType="map" resultType="first.final_project.vo.CompletedDeliveryVo">
+    <select id="selectPageList" parameterType="map" resultType="CommissionVo">
     SELECT
         d.deliveries_id, r.rider_name, o.orders_id, o.orders_price, dh.delivery_history_status,
         o.orders_cdate, s.shop_name, a.addr_line1, a.addr_line2,
         COALESCE(c.commission, o.orders_price * 0.03) AS commission
     FROM
-        Deliveries d
-    JOIN Riders r ON d.raiders_id = r.raiders_id
-    JOIN Orders o ON d.orders_id = o.orders_id
-    JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN Shop s ON o.shop_id = s.shop_id
-    JOIN Addr a ON o.addr_id = a.addr_id
-    LEFT JOIN Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+        deliveries d
+    JOIN riders r ON d.raiders_id = r.raiders_id
+    JOIN orders o ON d.orders_id = o.orders_id
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN shop s ON o.shop_id = s.shop_id
+    JOIN addr a ON o.addr_id = a.addr_id
+    LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
     WHERE d.raiders_id = #{raiders_id}
     AND dh.delivery_history_status = '배달 완료'
     ORDER BY o.orders_cdate DESC
@@ -103,19 +104,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!-- 날짜 범위로 필터링된 배달 목록을 조회하는 쿼리 -->
-    <select id="selectPageListByDate" parameterType="map" resultType="first.final_project.vo.CompletedDeliveryVo">
+    <select id="selectPageListByDate" parameterType="map" resultType="CommissionVo">
     SELECT
         d.deliveries_id, r.rider_name, o.orders_id, o.orders_price, dh.delivery_history_status,
         o.orders_cdate, s.shop_name, a.addr_line1, a.addr_line2,
         COALESCE(c.commission, o.orders_price * 0.03) AS commission
     FROM
-        Deliveries d
-    JOIN Riders r ON d.raiders_id = r.raiders_id
-    JOIN Orders o ON d.orders_id = o.orders_id
-    JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN Shop s ON o.shop_id = s.shop_id
-    JOIN Addr a ON o.addr_id = a.addr_id
-    LEFT JOIN Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+        deliveries d
+    JOIN riders r ON d.raiders_id = r.raiders_id
+    JOIN orders o ON d.orders_id = o.orders_id
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN shop s ON o.shop_id = s.shop_id
+    JOIN addr a ON o.addr_id = a.addr_id
+    LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
     WHERE d.raiders_id = #{raiders_id}
     AND dh.delivery_history_status = '배달 완료'
         <if test="startDate != null and startDate != ''">
@@ -131,9 +132,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 날짜 범위에 따른 완료된 배달 건수 조회 쿼리 -->
     <select id="getTotalCountByDate" parameterType="map" resultType="int">
     SELECT COUNT(*)
-    FROM Deliveries d
-    JOIN Delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN Orders o ON d.orders_id = o.orders_id
+    FROM deliveries d
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN orders o ON d.orders_id = o.orders_id
     WHERE d.raiders_id = #{raiders_id}
     AND dh.delivery_history_status = '배달 완료'
         <if test="startDate != null and startDate != ''">
@@ -152,11 +153,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ELSE o.orders_price * 0.03
         END
     ), 0)
-    FROM Deliveries d
-    JOIN Orders o ON d.orders_id = o.orders_id
-    LEFT JOIN Commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+    FROM deliveries d
+    JOIN orders o ON d.orders_id = o.orders_id
+    LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
     WHERE d.raiders_id = #{raiders_id}
-    AND EXISTS (SELECT 1 FROM Delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료')
+    AND EXISTS (SELECT 1 FROM delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료')
         <if test="startDate != null and startDate != ''">
         AND o.orders_cdate &gt;= #{startDate}
         </if>

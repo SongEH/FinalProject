@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -67,40 +68,21 @@
     </style>
 
     <script type="text/javascript">
-        function send(f){
-            let notice_title = f.notice_title.value.trim();
-            let notice_type = f.notice_title.value.trim();
-            let notice_content = f.notice_title.value.trim();
+      function send(f) {
+        let notice_title = f.notice_title.value.trim();
+        let notice_type = f.notice_title.value.trim();
+        let notice_content = f.notice_title.value.trim();
 
-            if(notice_title ==""){
-                alert("제목을 입력하시오");
-                f.notice_title.value="";
-                f.notice_title.focus();
-                return;
-            }
-
-            if(notice_type ==""){
-                alert("유형을 선택하시오");
-                f.notice_type.value="";
-                f.notice_type.focus();
-                return;
-            }
-
-            if(notice_content ==""){
-                alert("내용을 입력하시오");
-                f.notice_content.value="";
-                f.notice_content.focus();
-                return;
-            }
-
-            f.action = "/notice/insert.do";
-            f.submit();
+        if (notice_title == "") {
+          alert("제목을 입력하시오");
+          f.notice_title.value = "";
+          f.notice_title.focus();
+          return;
         }
-    </script>
-</head>
+      }
+        </script>
 <body>
-
-   <%@include file="../common.jsp" %>
+   <%@ include file="../common.jsp" %>
 
   <%@include file="../header.jsp" %>
 

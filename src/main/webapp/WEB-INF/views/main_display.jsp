@@ -82,9 +82,9 @@ pageEncoding="UTF-8"%>
     <script>
     function shopListAll(element){
       var food_category = element.getAttribute('food_category');
-      alert(food_category);
+      // alert(food_category);
       let order_addr = $("#order_addr").val().trim();
-      alert(order_addr);
+      // alert(order_addr);
       if(order_addr==null || order_addr==""){
         alert("주소를 입력하시거나 로그인 후 이용할 수 있습니다.")
         return;
@@ -97,7 +97,7 @@ pageEncoding="UTF-8"%>
               "order_addr": order_addr
               },
       success :   function(res_data){
-              alert("성공");
+              // alert("성공");
               $("#shop_list_main_display").html(res_data).show();
               $("#main_display").hide();
               $(".nav-link").removeClass("active");

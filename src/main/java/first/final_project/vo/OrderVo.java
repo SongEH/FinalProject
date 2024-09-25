@@ -1,10 +1,10 @@
 package first.final_project.vo;
 
-import lombok.Data;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
 
 @Data
 @Alias("order")
@@ -37,7 +37,8 @@ public class OrderVo {
     private String member_phone; // 추가
     private int delivery_time; // 추가 
     private int menu_count;
-
+    
+    private int reviews_delete; // 리뷰삭제이력 확인 
     boolean hasReview;
 
 }

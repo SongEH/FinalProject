@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Alias("notice")
 public class NoticeVo {
-    
+
     private int notice_id;
     private String notice_title;
     private String notice_content;

@@ -56,7 +56,7 @@ public class ShopController {
     }
 
     public BigDecimal formatRatingInt(BigDecimal rating){
-        return rating.setScale(0, RoundingMode.CEILING);
+        return rating.setScale(0, RoundingMode.FLOOR);
     }
 
     @Autowired
@@ -127,7 +127,8 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/food_list.do")
-    public String shop_food_list(String food_category,String order_addr, 
+    public String shop_food_list(
+    @RequestParam(name="food_category", defaultValue = "all") String food_category,String order_addr, 
     @RequestParam(name="selectValue", required = false) String selectValue,
     @RequestParam(name="searchValue", required = false)String searchValue,
      Model model, RedirectAttributes ra) throws UnsupportedEncodingException {
@@ -328,7 +329,8 @@ public class ShopController {
             ShopVo vo = shop_Service.selectOne(shop_id);
             if(vo.getShop_rating()!=null){
                 BigDecimal shop_rating = formatRating(vo.getShop_rating());
-                BigDecimal shop_rate = formatRatingInt(vo.getShop_rating());
+                BigDecimal shop_rate_decimal = formatRatingInt(vo.getShop_rating());
+                int shop_rate = shop_rate_decimal.intValue();
                 System.out.println(shop_rating);
                 vo.setShop_rating(shop_rating);
                 vo.setShop_rate(shop_rate);

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <style>
@@ -21,7 +22,7 @@ header .login-section {
 }
 
 
-header .login {
+header .login, .insert {
     background-color: #F0A8D0;
     padding: 8px 15px;
     border-radius: 5px;
@@ -48,24 +49,45 @@ header .logout{
   border: none;
   margin-left:10px;
 }
-
 </style>
+<script>
+  window.onload = function() {
+            // Check if this script has been executed before in the current session
+            if (!sessionStorage.getItem('logoutChecked')) {
+                var user = '${sessionScope.user}';
+                if (!user || user === 'null') {
+                  sessionStorage.setItm('logoutChecked', 'false');
+                    window.location.href = '/logout.do';  // Redirect to logout or login page
+                }
+                // Set the flag so this check won't run again in this session
+                sessionStorage.setItem('logoutChecked', 'true');
+            }
+        };
+</script>
 <html lang="ko">
   <body>
     <header class="header">
+
+      
+      
       <c:choose>
-        <c:when test="${not empty sessionScope.user}">
+        <c:when test="${not empty sessionScope.userType}">
           <c:choose>
-            <c:when test="${sessionScope.user.member_name !=null}">
+            <c:when test="${sessionScope.userType == 'MEMBER'}">
               <a href="/main/display.do" style="text-decoration: none;
               color: inherit; ">
               <div class="logo" style="text-align:left;">한입만</div>
               </a>
             </c:when>
-            <c:when test="${sessionScope.user.owner_name !=null}">
+            <c:when test="${sessionScope.userType == 'OWNER'}">
               <a href="/order/accept.do" style="text-decoration: none;
               color: inherit; ">
-              <div class="logo" style="text-align:left;">한입만</div>
+                <div class="logo" style="text-align:left;">한입만</div>
+              </a>
+            </c:when>
+            <c:when test="${sessionScope.userType == 'ADMIN'}">
+              <a href="/admin/dashboard.do" style="text-decoration: none; color: inherit;">
+                <div class="logo" style="text-align:left;">한입만</div>
               </a>
             </c:when>
           </c:choose>
@@ -76,25 +98,30 @@ header .logout{
           <div class="logo" style="text-align:left;">한입만</div>
           </a>
         </c:otherwise>
-
       </c:choose>
 
       <c:choose>
-        <c:when test="${not empty sessionScope.user}">
+        <c:when test="${not empty sessionScope.userType}">
           <c:choose>
-              <c:when test="${sessionScope.user.member_name !=null}">
-                <span>Welcome ${sessionScope.user.member_name}님 안녕하세요.
-                  <input class="login" type="button" value="My Page" onclick="location.href='../order/list.do'"/>
-                  <input class="logout" type="button" value="로그아웃" onclick="location.href='../logout.do'"/>
+            <c:when test="${sessionScope.userType == 'MEMBER'}">
+              <span>Welcome ${sessionScope.user.member_name}님 안녕하세요.
+                  <input class="login" type="button" value="My Page" onclick="location.href='../member/mypage.do'"/>
+                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
                 </span>
-              </c:when>
-              <c:when test="${sessionScope.user.owner_name !=null}">
-                <span>Welcome ${sessionScope.user.owner_name}님
-                  <input class="login" type="button" value="Owner Dashboard" onclick="location.href='../owner/dashboard.do'">
-                  <input class="logout" type="button" value="로그아웃" onclick="location.href='../logout.do'"/>
-                </span>
-              </c:when>
-              
+            </c:when>
+            <c:when test="${sessionScope.userType == 'OWNER'}">
+              <span>Welcome ${sessionScope.user.owner_name}님
+                  <input class="login" type="button" value="Owner Dashboard" onclick="location.href='../owner/ownerpage.do'">
+                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+              </span>
+            </c:when>
+            <c:when test="${sessionScope.userType == 'ADMIN'}">
+              <span>Welcome ${sessionScope.user.admin_accountId}님
+                <input class="login" type="button" value="Admin Dashboard" onclick="location.href='../admin/member_list.do'">
+                <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+              </span>
+            </c:when>
+
           </c:choose>
         </c:when>
         <c:otherwise>
@@ -106,6 +133,7 @@ header .logout{
           </div>
         </c:otherwise>
       </c:choose>
+
     </header>
 </body>
 </html>

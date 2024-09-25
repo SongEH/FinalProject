@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>공지사항 등록</title>
     <style>
         body {
@@ -66,49 +68,43 @@
     </style>
 
     <script type="text/javascript">
-        function send(f){
-            let notice_title = f.notice_title.value.trim();
-            let notice_type = f.notice_title.value.trim();
-            let notice_content = f.notice_title.value.trim();
+      function send(f) {
+        let notice_title = f.notice_title.value.trim();
+        let notice_type = f.notice_title.value.trim();
+        let notice_content = f.notice_title.value.trim();
 
-            if(notice_title ==""){
-                alert("제목을 입력하시오");
-                f.notice_title.value="";
-                f.notice_title.focus();
-                return;
-            }
-
-            if(notice_type ==""){
-                alert("유형을 선택하시오");
-                f.notice_type.value="";
-                f.notice_type.focus();
-                return;
-            }
-
-            if(notice_content ==""){
-                alert("내용을 입력하시오");
-                f.notice_content.value="";
-                f.notice_content.focus();
-                return;
-            }
-
-            f.action = "/notice/insert.do";
-            f.submit();
+        if (notice_title == "") {
+          alert("제목을 입력하시오");
+          f.notice_title.value = "";
+          f.notice_title.focus();
+          return;
         }
-    </script>
-</head>
+      }
+        </script>
 <body>
+   <%@ include file="../common.jsp" %>
 
-    <!-- 메시지 표시 -->
-    <c:if test="${not empty message}">
-        <div class="alert alert-info">
-            ${message}
-        </div>
-    </c:if>
+  <%@include file="../header.jsp" %>
 
-    
-    <div class="container">
-        <h1>공지사항 등록</h1>
+  <%@include file="../sidebar.jsp" %>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+
+      <h1>공지사항 등록</h1>
+
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item active">Layouts</li>
+        </ol>
+      </nav>
+
+    </div><!-- End Page Title -->
+
+   <div class="container">
+        
         <form action="${pageContext.request.contextPath}/notice/insert_form.do" method="post">
             <input type="hidden" name="notice_id" value="${vo.notice_id}">
             <div class="form-group">
@@ -135,5 +131,9 @@
             </div>
         </form>
     </div>
+
+  </main><!-- End #main -->
+    
+    
 </body>
 </html>

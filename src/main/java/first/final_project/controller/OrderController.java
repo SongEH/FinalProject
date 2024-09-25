@@ -136,9 +136,13 @@ public class OrderController {
 		List<OrderVo> order_list = (List<OrderVo>) resultMap.get("order_list");
 
 		for (OrderVo vo : order_list) {
-			Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
-			boolean hasReview = (result != null) ? result : false;
-			vo.setHasReview(hasReview);
+			if (vo.getReviews_delete() == 1) {
+				vo.setHasReview(true);
+			} else {
+				Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
+				boolean hasReview = (result != null) ? result : false;
+				vo.setHasReview(hasReview);
+			}
 		}
 
 		// 결과적으로 request binding

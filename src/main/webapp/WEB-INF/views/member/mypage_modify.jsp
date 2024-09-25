@@ -1,15 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <title>회원정보수정</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>회원정보수정</title>
+    
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .form-group textarea {
+        resize: none;
+      }
+      .form-group button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      .form-group button:hover {
+        background-color: #0056b3;
+      }
+      
+    </style>
+
     <script type="text/javascript">
       function formatPhoneNumber(input) {
         let member_phone = input.value.replace(/\D/g, ""); // 숫자만 남기기
@@ -75,89 +131,16 @@
       } //end:send()
     </script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .pagetitle h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .mb-4 {
-            margin-bottom: 16px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="text"],
-        input[type="password"],
-        input[type="icon"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        input[type="button"] {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-        input[type="button"]:hover {
-            background-color: #0056b3;
-        }
-        .em_red {
-            color: red;
-        }
-        .flex {
-            display: flex;
-            justify-content: flex-end;
-        }
-        .breadcrumb {
-            padding: 8px 15px;
-            background: #e9ecef;
-            border-radius: 5px;
-            list-style: none;
-            display: flex;
-            gap: 5px;
-        }
-        .breadcrumb-item a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .breadcrumb-item.active {
-            color: #6c757d;
-        }
-    </style>
+    
+    
   </head>
   <body>
  
-    <%@include file="../common.jsp" %>
+    <%@ include file="../common.jsp"%>
 
-    <%@include file="../header.jsp" %>
+    <%@ include file="../header.jsp"%>
 
-    <%@include file="../sidebar.jsp" %>
+    <%@ include file="../sidebar.jsp"%>
 
     <main id="main" class="main">
       <div class="pagetitle">
@@ -179,8 +162,8 @@
           method="post"
         >
           <input type="hidden" name="member_id" value="${member.member_id}" />
-          <div class="container mx-auto p-6">
-            <div class="mb-4">
+          
+            <div class="form-group">
               <label for="name">이름:</label>
               <input
                 class="form-control"
@@ -189,7 +172,7 @@
                 value="${member.member_name}"
               />
             </div>
-            <div class="mb-4">
+            <div class="form-group">
               <label for="nickname">닉네임:</label>
               <input
                 class="form-control"
@@ -198,7 +181,7 @@
                 value="${member.member_nickname}"
               />
             </div>
-            <div class="mb-4">
+            <div class="form-group">
               <lable for="accountId">아이디:</lable>
               <input
                 class="form-control"
@@ -207,7 +190,7 @@
                 readonly
               />
             </div>
-            <div class="mb-4">
+            <div class="form-group">
               <label for="password">비밀번호:</label>
               <input
                 class="form-control"
@@ -216,7 +199,7 @@
                 value="${member.member_pwd}"
               />
             </div>
-            <div class="mb-4">
+            <div class="form-group">
               <label for="email"
                 >이메일:
                 <span class="em_red">*</span>
@@ -228,7 +211,7 @@
                 value="${member.member_email}"
               />
             </div>
-            <div class="mb-4">
+            <div class="form-group">
               <label for="phone">전화번호:</label>
               <input
                 class="form-control"
@@ -238,7 +221,7 @@
                 value="${member.member_phone}"
               />
             </div>
-            <div class="mb-4">
+            <div class="form-group">
               <lable for="grade">회원등급:</lable>
               <input
                 class="form-control"
@@ -247,15 +230,11 @@
                 readonly
               />
             </div>
-            <div class="flex justify-end">
-              <input type="button" value="수정하기" onclick="send(this.form);" />
-              <input
-                type="button"
-                value="돌아가기"
-                onclick="location.href='/member/mypage.do'"
-              />
+            <div class="form-group">
+              <button type="button" class="btn btn-primary" onclick="send(this.form);">수정</button>
+              <button type="button" class="btn btn-primary" onclick="location.href='/member/mypage.do'">취소</button>
             </div>
-          </div>
+          
         </form>
       </div>
     </main><!-- End #main -->

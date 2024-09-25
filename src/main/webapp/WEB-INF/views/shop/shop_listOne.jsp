@@ -182,6 +182,10 @@ pageEncoding="UTF-8"%>
       transform: scale(1.05);
       /* Make button slightly larger on hover */
     }
+    .star-empty{
+      color: white;
+      text-shadow: 0px 0px 0.5px black;
+    }
   </style>
   <script>
     function get_info(shop_id) {
@@ -212,7 +216,7 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert(res_data);
+          // alert(res_data);
           $("#menu_display").html(res_data).show();
           $('#reviews_display').hide();
           $("#shop_info_display").hide();
@@ -235,7 +239,7 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert("삭제 성공")
+          alert("삭제 성공");
           location.href = "/shop/list.do";
         },
         error: function (err) {
@@ -255,8 +259,8 @@ pageEncoding="UTF-8"%>
     }
 
     function get_review(shop_id) {
-      alert("도착");
-      alert(shop_id);
+      // alert("도착");
+      // alert(shop_id);
       $.ajax({
         url: "../reviews/listByShopId.do",
         method: "POST",
@@ -264,7 +268,7 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert(res_data);
+          // alert(res_data);
           $("#reviews_display").html(res_data).show();
           $("#menu_display").hide();
           $("#shop_info_display").hide();

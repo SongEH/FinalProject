@@ -110,53 +110,6 @@ pageEncoding='UTF-8'%>
     margin-left: auto;
 }
 </style>
-<!-- <script>
-
-  document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('.slideshow-container').forEach(container => {
-        const slides = container.querySelectorAll('.mySlides');
-        const numSlides = slides.length;
-
-        // Check for slides
-        if (numSlides === 0) {
-            console.log("No slides found.");
-            return;
-        }
-
-        let imagesLoaded = 0;
-
-        slides.forEach(slide => {
-            const img = slide.querySelector('img');
-            if (img) {
-                img.onload = () => {
-                    imagesLoaded++;
-                    if (imagesLoaded === numSlides) {
-                        // Show the first slide
-                        slides[0].classList.add('active');
-
-                        // Add classes based on the number of loaded images
-                        if (numSlides === 1) {
-                            container.classList.add('image-size-1');
-                        } else if (numSlides === 2) {
-                            container.classList.add('image-size-2');
-                        } else if (numSlides === 3) {
-                            container.classList.add('image-size-3');
-                            slides[0].classList.add('image-size-3-first');
-                            slides[1].classList.add('image-size-3-second');
-                            slides[2].classList.add('image-size-3-third');
-                        }
-                    }
-                };
-
-                img.onerror = () => {
-                    console.error("Error loading image:", img.src);
-                };
-            }
-        });
-    });
-});
-  </script> -->
-
 </head>
 <body>
     <div class="container">
@@ -168,7 +121,7 @@ pageEncoding='UTF-8'%>
                 <div class="reviews-item d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4>${reviews.member_name} &nbsp;&nbsp; ${reviews.reviews_cdate}</h4>
-                        <button class="btn btn-danger btn-sm btn-delete" onclick="reviews_del('${reviews.reviews_id}')">Delete</button>
+                        <!-- <button class="btn btn-danger btn-sm btn-delete" onclick="reviews_del('${reviews.reviews_id}')">Delete</button> -->
                     </div>
                     <div class="stars">
                         <c:forEach begin="1" end="${reviews.reviews_rating}">

@@ -156,4 +156,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             AND o.orders_cdate &lt;= #{endDate}
         </if>
     </select>
+
+    <update id="setHasReview" parameterType="int">
+        UPDATE orders o
+        SET o.reviews_delete = 1
+        WHERE o.orders_id = (
+            SELECT r.orders_id
+            FROM reviews r
+            WHERE r.reviews_id = #{reviews_id})
+    </update>
 </mapper>

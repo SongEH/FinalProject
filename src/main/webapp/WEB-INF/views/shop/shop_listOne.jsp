@@ -365,7 +365,6 @@ pageEncoding="UTF-8"%>
               <!-- <div class="right-panel text-center p-3"> -->
               <div style="background-color:black; color:white; padding: 7px;">
                 <h5>장바구니</h5>
-                <button class="btn btn-secondary" onclick="orderFromShop(3,'지혜맛집')">테스트</button>
               </div>
               <div style="border:1px solid gray; height:auto; min-height: 155px;">
                 <!-- 장바구니에 담긴 메뉴가 없습니다. -->

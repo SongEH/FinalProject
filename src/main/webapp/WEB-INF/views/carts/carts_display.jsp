@@ -69,16 +69,37 @@
 </head>
 
 <script>
+
+  // 회원용 장바구니 리스트 업데이트
+  function updateCartList() {
+      // 장바구니 목록을 업데이트하기 위한 AJAX 요청 - 한지혜
+      $.ajax({
+        url: '/carts/list2.do',
+        type: 'GET',
+        success: function (response) {
+          // 응답으로 받은 HTML을 장바구니 목록에 업데이트
+          $('#cart_list').html(response);
+        },
+        error: function (xhr, status, error) {
+          alert("장바구니 목록을 불러오는 데 실패했습니다: " + xhr.responseText);
+        }
+      });
+    }
+
   function deleteItem(cartsId) {
+    // 기본 클릭 이벤트를 차단합니다.
+    event.preventDefault();
+
     $.ajax({
       url: '/carts/delete2.do',
-      type: 'POST',
+      type: 'GET', // GET 방식으로 변경
       data: {
         carts_id: cartsId
       },
       success: function (response) {
-        alert("삭제되었습니다.");
-        location.reload();
+        alert(response); // 서버에서 보낸 메시지를 표시
+        updateCartList();
+        // location.reload(); // 필요시 페이지 새로고침
       },
       error: function (xhr, status, error) {
         alert("삭제에 실패했습니다: " + xhr.responseText);
@@ -86,15 +107,16 @@
     });
   }
 
-  
+
+
 
   function orderFromShop(shop_id, shop_name) {
-    // 기본 클릭 이벤트를 차단합니다.
-    event.preventDefault(); 
+    // 기본 클릭 이벤트를 차단. main/display.do로 가지않도록 막음
+    event.preventDefault();
 
     // 직접 페이지 이동
     window.location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
-}
+  }
 
   function updateQuantity(cartsId, operation) {
     // 수량 업데이트 로직 추가 필요
@@ -155,7 +177,6 @@
     장바구니 총 가격: ${totalPrice}원
   </div>
 
-  <button onclick='"/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;"'>되냐고</button>
 </body>
 
 

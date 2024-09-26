@@ -71,28 +71,44 @@
                               <label>가게전화번호</label>
                             </div>
                           </div>
-    
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="최소주문금액" name="shop_min_price" value="${vo.shop_min_price}">
                               <label>최소주문금액</label>
                             </div>
                           </div>
-    
-                          <div class="col-md-12">
+                          <div class="col-md-6">
                             <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="영업시간" name="shop_hours" value="${vo.shop_hours}">
-                              <label>영업시간</label>
+                              <input type="time" class="form-control" placeholder="영업오픈시간" name="shop_open_hour" value="${vo.shop_open_hour}">
+                              <label>영업 오픈 시간</label>
                             </div>
                           </div>
-    
+                          <div class="col-md-6">
+                            <div class="form-floating">
+                              <input type="time" class="form-control" placeholder="영업마감시간" name="shop_close_hour" value="${vo.shop_close_hour}">
+                              <label>영업 마감 시간</label>
+                            </div>
+                          </div>
                           <div class="col-md-12">
+                            <div class="form-floating">
+                              <select class="form-control" placeholder="휴무일" name="shop_close_day">
+                                <option class="form-control" value="monday" <c:if test="${vo.shop_close_day == 'monday'}">selected</c:if>>월요일</option>
+                                <option class="form-control" value="tuesday" <c:if test="${vo.shop_close_day == 'tuesday'}">selected</c:if>>화요일</option>
+                                <option class="form-control" value="wednesday" <c:if test="${vo.shop_close_day == 'wednesday'}">selected</c:if>>수요일</option>
+                                <option class="form-control" value="thursday" <c:if test="${vo.shop_close_day == 'thursday'}">selected</c:if>>목요일</option>
+                                <option class="form-control" value="friday" <c:if test="${vo.shop_close_day == 'friday'}">selected</c:if>>금요일</option>
+                                <option class="form-control" value="saturday" <c:if test="${vo.shop_close_day == 'saturday'}">selected</c:if>>토요일</option>
+                                <option class="form-control" value="sunday" <c:if test="${vo.shop_close_day == 'sunday'}">selected</c:if>>일요일</option>
+                              </select>
+                            </div>
+                          </div>
+                          <!-- <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="휴무일" name="shop_close_day" value="${vo.shop_close_day}">
                               <label>휴무일</label>
                             </div>
-                          </div>
-    
+                          </div> -->
+                          
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="배달지역" name="shop_area" value="${vo.shop_area}">

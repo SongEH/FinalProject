@@ -298,10 +298,10 @@ pageEncoding="UTF-8"%>
                     </c:if>
                   </div>
                   <div class="details">
-                    <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
+                    <!-- <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div> -->
                     <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>
                     <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
-                    <button class="btn btn-danger">4,000원 할인</button>
+                    <!-- <button class="btn btn-danger">4,000원 할인</button> -->
                   </div>
                 </span>
               </div>

@@ -13,14 +13,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shop_name, shop_img, shop_addr, food_category, shop_call, 
             shop_content, shop_min_price,  shop_rate, 
             shop_stemp_count, shop_review_count,
-            shop_hours,
+            shop_open_hour, shop_close_hour,
             shop_close_day,
             shop_area, shop_cdate, shop_mdate, shop_status, owner_id
         ) values (
             null,
             #{shop_name}, #{shop_img}, #{shop_addr}, #{food_category}, #{shop_call}, 
             #{shop_content}, #{shop_min_price}, default, 
-            default, default, #{shop_hours},
+            default, default, #{shop_open_hour},#{shop_close_hour}
             #{shop_close_day},
             #{shop_area}, default, default, #{shop_status}, #{owner_id}
         )
@@ -28,22 +28,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 전체 리스트 조회  -->
     <select id="selectList" parameterType="String" resultType="shop">
-    SELECT 
+        SELECT 
         s.*,
-        (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count, 
+        (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,
         (SELECT COUNT(*) 
-            FROM reviews r 
-            INNER JOIN orders o ON o.orders_id = r.orders_id 
-            WHERE o.shop_id = s.shop_id) AS reviews_count, 
+        FROM reviews r
+        INNER JOIN orders o ON o.orders_id = r.orders_id
+        WHERE o.shop_id = s.shop_id) AS reviews_count,
         (SELECT AVG(r.reviews_rating) 
-            FROM reviews r 
-            INNER JOIN orders o ON o.orders_id = r.orders_id 
-            WHERE o.shop_id = s.shop_id) AS shop_rating,
-		(SELECT count(*)
-			from ceoreview c
-            inner join reviews r on c.reviews_id = r.reviews_id
-            inner join orders o on o.orders_id = r.orders_id
-            where o.shop_id = s.shop_id) as ceoreview_count
+        FROM reviews r
+        INNER JOIN orders o ON o.orders_id = r.orders_id
+        WHERE o.shop_id = s.shop_id) AS shop_rating,
+        (SELECT COUNT(*) 
+        FROM ceoreview c
+        INNER JOIN reviews r ON c.reviews_id = r.reviews_id
+        INNER JOIN orders o ON o.orders_id = r.orders_id
+        WHERE o.shop_id = s.shop_id) AS ceoreview_count,
+        CASE 
+            WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
+            WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
+		    WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
+            ELSE '영업전'
+        END AS status
     FROM shop s
         <where>
             <if test="foodCategory != null and foodCategory != 'all'">
@@ -53,24 +59,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!-- 가게 정렬 -->
-    <select id="selectListValue" parameterType="map" resultType="shop">    
-        SELECT         
-            s.*,        
-            (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,         
-            (SELECT COUNT(*)             
-             FROM reviews r             
-             INNER JOIN orders o ON o.orders_id = r.orders_id             
-             WHERE o.shop_id = s.shop_id) AS reviews_count,         
-            (SELECT AVG(r.reviews_rating)             
-             FROM reviews r             
-             INNER JOIN orders o ON o.orders_id = r.orders_id             
-             WHERE o.shop_id = s.shop_id) AS shop_rating,		
-            (SELECT COUNT(*)             
-             FROM ceoreview c            
-             INNER JOIN reviews r ON c.reviews_id = r.reviews_id            
-             INNER JOIN orders o ON o.orders_id = r.orders_id            
-             WHERE o.shop_id = s.shop_id) AS ceoreview_count    
-        FROM shop s        
+    <!-- <select id="selectListValue" parameterType="map" resultType="shop">    
+        SELECT 
+            s.*,
+            (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,
+            (SELECT COUNT(*) 
+                FROM reviews r 
+                INNER JOIN orders o ON o.orders_id = r.orders_id 
+                WHERE o.shop_id = s.shop_id) AS reviews_count,
+            (SELECT AVG(r.reviews_rating) 
+                FROM reviews r 
+                INNER JOIN orders o ON o.orders_id = r.orders_id 
+                WHERE o.shop_id = s.shop_id) AS shop_rating,
+            (SELECT COUNT(*) 
+                FROM ceoreview c 
+                INNER JOIN reviews r ON c.reviews_id = r.reviews_id 
+                INNER JOIN orders o ON o.orders_id = r.orders_id 
+                WHERE o.shop_id = s.shop_id) AS ceoreview_count
+        FROM shop s 
         <where>            
             <if test="food_category !=null and food_category != 'all'">                
                 AND food_category = #{food_category}            
@@ -96,6 +102,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 </when>
             </choose>
         </if>
+    </select> -->
+
+    <select id="selectListValue" parameterType="map" resultType="shop">    
+        SELECT * 
+        FROM (
+            SELECT 
+                s.*,
+                (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,
+                (SELECT COUNT(*) 
+                 FROM reviews r
+                 INNER JOIN orders o ON o.orders_id = r.orders_id
+                 WHERE o.shop_id = s.shop_id) AS reviews_count,
+                (SELECT AVG(r.reviews_rating) 
+                 FROM reviews r
+                 INNER JOIN orders o ON o.orders_id = r.orders_id
+                 WHERE o.shop_id = s.shop_id) AS shop_rating,
+                (SELECT COUNT(*) 
+                 FROM ceoreview c
+                 INNER JOIN reviews r ON c.reviews_id = r.reviews_id
+                 INNER JOIN orders o ON o.orders_id = r.orders_id
+                 WHERE o.shop_id = s.shop_id) AS ceoreview_count,
+                CASE 
+                    WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
+                    WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
+                    WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
+                    ELSE '영업전'
+                END AS status
+            FROM shop s
+        ) AS shops_with_status
+        ORDER BY 
+            CASE 
+                WHEN status = '영업중' THEN 1
+                ELSE 2
+            END
+        <where>            
+            <if test="food_category !=null and food_category != 'all'">                
+                AND food_category = #{food_category}            
+            </if>
+            <if test="searchValue != null and searchValue !=''">
+                AND shop_name LIKE CONCAT('%', '${searchValue}', '%')
+            </if>
+        </where>
+        <if test="selectValue != null"> 
+            ORDER BY 
+            <choose>
+                <when test="selectValue == 'rank'">
+                    shop_id ASC 
+                </when>
+                <when test="selectValue == 'shop_rating'">
+                    shop_rating DESC
+                </when>
+                <when test="selectValue == 'reviews_count'">
+                    reviews_count DESC
+                </when>
+                <when test="selectValue == 'shop_min_price'">
+                    shop_min_price ASC
+                </when>
+            </choose>
+        </if>
+        ORDER BY 
+            CASE 
+                WHEN status = '영업중' THEN 1  
+                WHEN status = '영업전' THEN 2  
+                WHEN status = '휴무일' THEN 3 
+                ELSE 4 
+            END
     </select>
 
     <!-- 가게 1개 상세보기  -->
@@ -140,7 +212,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <!-- 가게 정보 업데이트 -->
-    <update id="update" parameterType="shop">
+    <!-- <update id="update" parameterType="shop">
         update shop set shop_name = #{shop_name},
                         shop_content = #{shop_content},
                         shop_addr = #{shop_addr},
@@ -155,6 +227,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                             , shop_img = #{shop_img}
                         </if>
                     where shop_id = #{shop_id}
+    </update> -->
+
+    <update id="update" parameterType="shop">
+        update shop set shop_name = #{shop_name},
+                        shop_content = #{shop_content},
+                        shop_addr = #{shop_addr},
+                        shop_call = #{shop_call},
+                        shop_min_price = #{shop_min_price},
+                        shop_open_hour = #{shop_open_hour},
+                        shop_close_hour = #{shop_close_hour},
+                        shop_close_day = #{shop_close_day},
+                        shop_area = #{shop_area},
+                        food_category = #{food_category},
+                        shop_status = #{shop_status}
+                        <if test="shop_img != null">
+                            , shop_img = #{shop_img}
+                        </if>
+                        where shop_id = #{shop_id}
     </update>
 
 

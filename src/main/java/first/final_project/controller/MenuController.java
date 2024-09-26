@@ -68,7 +68,8 @@ public class MenuController {
 
 	// shop_id로 메뉴 목록 조회 
 	@RequestMapping("listByShopId.do")
-	public String listByShopId(int shop_id, Model model) {
+	public String listByShopId(int shop_id,
+	@RequestParam(name="status", required = false)String status, Model model) {
 		System.out.println("listbyShopid 도착");
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
@@ -78,7 +79,7 @@ public class MenuController {
 		}
 		// model.addAttribute("list", list);
 		// return "menu/menu_listByShopId";
-
+		model.addAttribute("status", status);
 		model.addAttribute("menu_list", list);
 		return "menu/menu_list_display";
 
@@ -163,13 +164,10 @@ public class MenuController {
 		vo.setMenu_content(menu_content);
 
 		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
-		// vo.setShop_id(user.getShop_id()); // 로그인된 계정이 사장계정이어야하고, 사장VO안에 ShopID가 있어야
-		// 한다.
-		System.out.println(shop_id);
 		vo.setShop_id(shop_id);
 
 		// DB insert
-		int res = menu_mapper.insert(vo);
+		menu_mapper.insert(vo);
 
 		return "redirect:list.do";
 	}

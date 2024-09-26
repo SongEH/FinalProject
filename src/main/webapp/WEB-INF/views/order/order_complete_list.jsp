@@ -67,12 +67,12 @@
 
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>주문 목록</h1>
+            <h1>완료 주문 목록</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">주문 관리</li>
-                    <li class="breadcrumb-item active">주문 목록</li>
+                    <li class="breadcrumb-item">주문 관리</li>
+                    <li class="breadcrumb-item active">완료 주문 목록</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->

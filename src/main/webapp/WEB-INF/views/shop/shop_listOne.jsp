@@ -209,11 +209,12 @@ pageEncoding="UTF-8"%>
   </script>
   <script>
     // menu 호출 
-    function get_menu(shop_id) {
+    function get_menu(shop_id,status) {
       $.ajax({
         url: "../menu/listByShopId.do",
         data: {
-          "shop_id": shop_id
+          "shop_id": shop_id,
+          "status" : status,
         },
         success: function (res_data) {
           // alert(res_data);
@@ -291,6 +292,7 @@ pageEncoding="UTF-8"%>
   <form method="post">
     <!-- 표현은 하지않고 활용하기 위한 데이터  -->
     <input type="hidden" name="shop_id" value="${vo.shop_id}" />
+    <input type="hidden" name="status" value="${status}"/>
 
     <div class="container-custom">
       <div class="shop">
@@ -330,7 +332,7 @@ pageEncoding="UTF-8"%>
               <div class="col-sm-4" style="padding:0px">
                 <div class="menu-tab border">
                   <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
-                    onclick="get_menu('${vo.shop_id}')">
+                    onclick="get_menu('${vo.shop_id}', '${status}')">
                 </div>
               </div>
               <div class="col-sm-4" style="padding:0px">
@@ -373,10 +375,9 @@ pageEncoding="UTF-8"%>
               <div style="border:1px solid gray; height:auto; min-height: 155px;">
                 <!-- 장바구니에 담긴 메뉴가 없습니다. -->
 
+                <!-- 장바구니 목록 출력 -->
                 <div id="cart_list"></div>
-              </div>
-              <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
-              <!-- <button class="btn btn-secondary" disabled>주문하기</button> -->
+              </div>            
               <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
             </div>
             <!-- </div> -->

@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import first.final_project.dao.AdminMapper;
+import first.final_project.dao.OwnerAnswerMapper;
 import first.final_project.dao.OwnerInquiriesMapper;
 import first.final_project.dao.OwnerMapper;
+import first.final_project.vo.AdminVo;
+import first.final_project.vo.OwnerAnswerVo;
 import first.final_project.vo.OwnerInquiriesVo;
 import first.final_project.vo.OwnerVo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +34,13 @@ public class OwnerInquiriesController {
     OwnerInquiriesMapper owner_inquiries_mapper;
 
     @Autowired
+    OwnerAnswerMapper owner_answer_mapper;
+
+    @Autowired
     OwnerMapper owner_mapper;
+
+    @Autowired
+    AdminMapper admin_mapper;
 
     @RequestMapping("list.do")
     public String list(Model model){
@@ -64,9 +74,23 @@ public class OwnerInquiriesController {
 
         String content = vo.getO_inquiries_content().replace("\n", "<br/>");
         vo.setO_inquiries_content(content);
-
         model.addAttribute("vo", vo);
 
+        OwnerAnswerVo answer = owner_answer_mapper.selectOneFromIdx(o_inquiries_id);
+        if(answer != null){
+            String o_answer_content = answer.getO_answer_content().replace("\n", "<br/>");
+            answer.setO_answer_content(o_answer_content);
+            model.addAttribute("answer", answer);
+            model.addAttribute("answer", o_inquiries_id);
+
+            AdminVo admin = admin_mapper.selectOneFromIdx(answer.getAdmin_id());
+            if(admin != null){
+                model.addAttribute("admin_accountId", admin.getAdmin_accountId());
+            }
+        }
+        String userType = (String)session.getAttribute("userType");
+        model.addAttribute("userType", userType);
+        
         return "owner_inquiries/inquiries_detail";
     }
 
@@ -82,8 +106,7 @@ public class OwnerInquiriesController {
     }
 
     @RequestMapping("insert.do")
-    public String insert(String o_inquiries_title, String o_inquiries_content,
-            RedirectAttributes ra) {
+    public String insert(String o_inquiries_title, String o_inquiries_content) {
         OwnerVo owner = (OwnerVo) session.getAttribute("user");
         if (owner == null) {
             return "redirect:/login_form.do";
@@ -155,5 +178,35 @@ public class OwnerInquiriesController {
     public String delete(@RequestParam int o_inquiries_id) {
         owner_inquiries_mapper.delete(o_inquiries_id);
         return "redirect:/owner_inquiries/list.do";
+    }
+
+    @RequestMapping("answer_insert_form.do")
+    public String answer_insert_form(@RequestParam(value="o_inquiries_id", required = false) Integer o_inquiries_id,Model model){
+        String userType = (String)session.getAttribute("userType");
+        if("ADMIN".equals(userType)){
+            model.addAttribute("o_inquiries_id", o_inquiries_id);
+            System.out.println("o_inquiries_id :" + o_inquiries_id);
+            return "owner_answer/answer_insert_form";
+        }else{
+            return "redirect:/owner_inquiries/list.do";
+        }
+    }
+
+    @RequestMapping("answer_insert.do")
+    public String answer_insert(int o_inquiries_id,String o_answer_content){
+
+        AdminVo admin = (AdminVo)session.getAttribute("user");
+        if(admin == null){
+            System.out.println("admin:"+admin);
+            return "redirect:/login_form.do";
+        }
+        OwnerAnswerVo answer = new OwnerAnswerVo();
+        answer.setO_inquiries_id(o_inquiries_id);
+        answer.setO_answer_content(o_answer_content);
+        answer.setAdmin_id(admin.getAdmin_id());
+        System.out.println("o_inquiries_id :" + o_inquiries_id);
+        owner_answer_mapper.insert(answer);
+        
+        return "redirect:/owner_inquiries/detail.do?o_inquiries_id="+o_inquiries_id;
     }
 }    

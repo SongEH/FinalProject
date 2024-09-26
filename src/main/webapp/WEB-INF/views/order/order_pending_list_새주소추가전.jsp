@@ -19,14 +19,12 @@
 
   <script type="text/javascript">
     let order_name = '';
-    let addr_id = '';
-    let addrAll = '';
+    // 주문 이름 생성 
+    // 메뉴 개수가 1개 = 메뉴 이름 
+    // 메뉴 개수가 2개 이상 = 처음 메뉴 이름과 그외 메뉴 개수 표시 (예: 김치찌게 외 3개)
+
 
     document.addEventListener('DOMContentLoaded', function () {
-
-      // 주문 이름 생성 ---------------------------------------------------
-      // 메뉴 개수가 1개 = 메뉴 이름 
-      // 메뉴 개수가 2개 이상 = 처음 메뉴 이름과 그외 메뉴 개수 표시 (예: 김치찌게 외 3개)
 
       // 모든 cart_menuname 클래스를 가진 td 요소 선택
       const menuElements = document.querySelectorAll('.cart_menuname');
@@ -43,41 +41,6 @@
         }
       }
       console.log(order_name);
-
-      // 주소 라디오 버튼에 따라서 주소id 저장 ---------------------------------------------------
-      // 라디오 버튼의 change 이벤트 리스너 추가
-      const radioButtons = document.querySelectorAll('input[name="address_choice"]');
-
-      radioButtons.forEach(radio => {
-        radio.addEventListener('change', () => {
-          if (document.getElementById('saved_addr').checked) {
-            // 저장된 주소 선택 시
-            let selectElement = document.getElementById('addr_select');
-            let selectedOption = selectElement.options[selectElement.selectedIndex];
-            addr_id = selectedOption.value;
-            let addr_name = selectedOption.getAttribute('data-addr-name');
-            const addrLine1 = selectedOption.getAttribute('data-addr-line1');
-            const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-            addrAll = addrLine1 + " " + addrLine2;
-
-            // 출력
-            console.log("주소 ID:", addr_id);
-            console.log("주소 이름:", addr_name);
-            console.log("전체 주소:", addrAll);
-
-          } else {
-            // 현재 선택한 주소 선택 시
-            const orderAddrName = document.querySelector('input[name="order_addr_name"]').value;
-            const orderAddr = document.querySelector('input[name="order_addr"]').value;
-            const orderAddrDetail = document.querySelector('input[name="order_addr_detail"]').value;
-
-            // 출력
-            console.log("별칭:", orderAddrName);
-            console.log("선택 주소:", orderAddr);
-            console.log("세부 주소:", orderAddrDetail);
-          }
-        });
-      });
     });
 
     function requestPay(f) {
@@ -93,24 +56,27 @@
       let shop_id = f.shop_id.value;
 
 
-      // 1. 기존 주소 선택한 경우 : addr_id만 아래 결제 ajax data에 저장 
       // 주소
       let selectElement = document.getElementById('addr_select');
       let selectedOption = selectElement.options[selectElement.selectedIndex];
-      addr_id = selectedOption.value;
+      let addr_id = selectedOption.value;
       let addr_name = selectedOption.getAttribute('data-addr-name');
       // addr_all 변수에 합쳐서 저장
       const addrLine1 = selectedOption.getAttribute('data-addr-line1');
       const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-      addrAll = addrLine1 + " " + addrLine2;
-
-      // 2. 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
-
+      const addrAll = addrLine1 + " " + addrLine2;
 
       // 총 가격
       // total_price의 텍스트 값을 가져와서 orders_price에 저장
       const totalPriceElement = document.getElementById('total_price');
       const orders_price = parseFloat(totalPriceElement.textContent.replace(/[^0-9.-]+/g, ""));
+
+      // Example usage
+      // console.log('Selected Address ID:', addr_id);
+      // console.log('Selected Address Name:', addr_name);
+      // console.log('orders_price : ', orders_price);
+      // console.log('Addr All:', addrAll);
+      // console.log('shop_id:', shop_id);
 
 
       if (member_phone == '') {
@@ -261,8 +227,7 @@
                   </div>
 
                   <input type="text" class="form-control" placeholder="별칭" name="order_addr_name">
-                  <input type="text" class="form-control" placeholder="선택주소" name="order_addr" value="${order_addr}"
-                    readonly>
+                  <input type="text" class="form-control" placeholder="선택주소" name="order_addr" value="${order_addr}" readonly>
                   <input type="text" class="form-control" placeholder="세부주소" name="order_addr_detail">
                 </div>
 

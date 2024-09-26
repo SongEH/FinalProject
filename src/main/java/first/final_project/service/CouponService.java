@@ -25,28 +25,28 @@ public class CouponService {
     // 모든 회원에게 쿠폰 발행
     @Transactional
     public void issueCouponsForAllMembers3000() {
-        List<MemberVo> members = memberMapper.selectList(); // Get all members
+        List<MemberVo> members = memberMapper.selectList();
         for (MemberVo member : members) {
             CouponVo coupon = new CouponVo();
             coupon.setMember_id(member.getMember_id());
-            coupon.setDiscount_amount(3000); // Set default discount amount for all members
-            coupon.setCoupon_code(generateCouponCode()); // Generate coupon code
+            coupon.setDiscount_amount(3000);
+            coupon.setCoupon_code(generateCouponCode());
 
-            couponMapper.insertCoupon(coupon); // Issue coupon
+            couponMapper.insertCoupon(coupon);
         }
 
     }
 
     @Transactional
     public void issueCouponsForAllMembers5000() {
-        List<MemberVo> members = memberMapper.selectList(); // Get all members
+        List<MemberVo> members = memberMapper.selectList();
         for (MemberVo member : members) {
             CouponVo coupon = new CouponVo();
             coupon.setMember_id(member.getMember_id());
-            coupon.setDiscount_amount(5000); // Set default discount amount for all members
-            coupon.setCoupon_code(generateCouponCode()); // Generate coupon code
+            coupon.setDiscount_amount(5000);
+            coupon.setCoupon_code(generateCouponCode());
 
-            couponMapper.insertCoupon(coupon); // Issue coupon
+            couponMapper.insertCoupon(coupon);
         }
 
     }

@@ -59,7 +59,6 @@ public class CouponController {
     }
 
     // 관리자가 모든 발급된 쿠폰을 조회하는 메서드
-    // View issued coupons
     @RequestMapping("list.do")
     public String listCoupons(Model model) {
         List<CouponVo> coupons = couponService.getAllIssuedCoupons();

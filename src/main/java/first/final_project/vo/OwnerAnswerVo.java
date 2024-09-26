@@ -13,4 +13,5 @@ public class OwnerAnswerVo {
     private String o_answer_cdate;
     private int admin_id;
     private int o_inquiries_id;
+    private String admin_accountId;
 }

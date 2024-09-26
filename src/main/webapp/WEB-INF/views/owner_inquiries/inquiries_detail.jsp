@@ -118,6 +118,25 @@
             location.href = "delete.do?o_inquiries_id=" + o_inquiries_id;
         }
     </script>
+
+    <script type="text/javascript">
+        function del(o_answer_id) {
+            if (confirm("정말 삭제 하시겠습니까?") == false) return;
+            $.ajax({
+                url: "${pageContext.request.contextPath}/owner_inquiries/answer_delete.do",
+                type: "POST",
+                data: { o_answer_id: o_answer_id, o_inquiries_id: '${param.o_inquiries_id}' },
+                success: function(response) {
+                    alert("답변이 삭제되었습니다.");
+                    location.href = "${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id=" + '${param.o_inquiries_id}';
+                },
+                error: function(xhr) {
+                    alert("답변 삭제에 실패했습니다. 다시 시도해 주세요.");
+                }
+            });
+        }
+    </script>
+
 </head>
 <body>
 
@@ -172,24 +191,31 @@
 
             <c:if test="${sessionScope.userType == 'ADMIN'}">
                 <div class="admin-actions">
-                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_insert_form.do">답변 등록</a>
-                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_modify_form.do">답변 수정</a>
-                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_delete.do">답변 삭제</a>
+                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_insert_form.do?o_inquiries_id=${param.o_inquiries_id}">답변 등록</a>
                 </div>
             </c:if>
 
             <div class="admin-answer">
-                <c:if test="${not empty answer}">
-                    <div class="answer-content">
-                        <strong>답변 :</strong> ${answer.o_answer_content}
-                    </div>
-                    <div class="answer-cdate">
-                        ${answer.o_answer_cdate}
-                    </div>
-                    <div class="answer-author">
-                        <strong>작성자 :</strong> ${admin_accountId}
-                    </div>
-                </c:if>
+                <c:forEach var="answer" items="${answer_list}">
+                    <c:if test="${not empty answer}">
+                        <div class="answer-content">
+                            <strong>답변 :</strong> ${answer.o_answer_content}
+                        </div>
+                        <div class="answer-cdate">
+                            ${answer.o_answer_cdate}
+                        </div>
+                        <div class="answer-author">
+                            <strong>작성자 :</strong> ${answer.admin_accountId}
+                        </div>
+                    </c:if>
+                
+                    <c:if test="${sessionScope.userType == 'ADMIN'}">
+                        <div class="admin-actions">
+                            <button type="button" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/answer_modify_form.do?o_answer_id=${answer.o_answer_id}&o_inquiries_id=${param.o_inquiries_id}'">수정</button>
+                            <button type="button" onclick="del('${answer.o_answer_id}');">삭제</button>
+                        </div>
+                    </c:if>
+                </c:forEach>
             </div>
         </div>
             

@@ -68,16 +68,16 @@
 
     <script type="text/javascript">
         function send(f){
-            let o_answer_content = f.o_answer_content.value.trim();
+            let m_answer_content = f.m_answer_content.value.trim();
 
-            if(o_answer_content ==""){
+            if(m_answer_content ==""){
                 alert("내용을 입력하시오");
-                f.o_answer_content.value="";
-                f.o_answer_content.focus();
+                f.m_answer_content.value="";
+                f.m_answer_content.focus();
                 return;
             }
 
-            f.action = "${pageContext.request.contextPath}/owner_inquiries/answer_insert.do";
+            f.action = "${pageContext.request.contextPath}/member_inquiries/answer_modify.do";
             f.submit();
         }
     </script>
@@ -108,19 +108,19 @@
 
         <div class="container">
         
-        <form action="${pageContext.request.contextPath}/owner_inquiries/answer_insert_form.do" method="post">
+        <form action="${pageContext.request.contextPath}/member_inquiries/answer_modify_form.do" method="post">
             
-            <input type="hidden" name="o_inquiries_id" value="${param.o_inquiries_id}">
-            <input type="hidden" name="o_answer_id" value="${answer.o_answer_id}">
+            <input type="hidden" name="m_inquiries_id" value="${param.m_inquiries_id}">
+            <input type="hidden" name="m_answer_id" value="${vo.m_answer_id}">
             <div class="form-group">
-                <label for="o_answer_content">내용</label>
-                <textarea id="o_answer_content" name="o_answer_content" rows="5" required></textarea>
+                <label for="m_answer_content">내용</label>
+                <textarea id="m_answer_content" name="m_answer_content" rows="5" required>${vo.m_answer_content}</textarea>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" onclick="send(this.form);">
                     등록
                 </button>
-                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id='+'${param.o_inquiries_id}'">
+                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id='+'${param.m_inquiries_id}'">
                     취소
                 </button>
             </div>

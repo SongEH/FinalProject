@@ -22,13 +22,13 @@ public interface MemberMapper {
 
     int delete(int member_id);
 
-    void deactivate(int member_id);
+    // void deactivate(int member_id);
 
-    void updateOrderCount(int member_id, int newOrderCount);
+    // void updateOrderCount(int member_id, int newOrderCount);
 
-    void resetOrderCounts();
+    // void resetOrderCounts();
 
-    void resetGrades(int grade_id);
+    // void resetGrades(int grade_id);
 
     MemberVo getAddr(int member_id);
 

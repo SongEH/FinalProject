@@ -45,11 +45,11 @@
             font-weight: bold;
             color: #ff5733;
         }
-        .actions {
+        .member-actions {
             text-align: center;
             margin-bottom: 20px;
         }
-        .actions a {
+        .member-actions a {
             text-decoration: none;
             padding: 10px 20px;
             color: #fff;
@@ -57,7 +57,7 @@
             border-radius: 5px;
             font-size: 16px;
         }
-        .actions a:hover {
+        .member-actions a:hover {
             background-color: #0056b3;
         }
         .inquiries-list {
@@ -97,38 +97,7 @@
         .inquiries-title a:hover {
             text-decoration: underline;
         }
-        .modal {
-            display: none; /* Initially hidden */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 300px;
-            border-radius: 8px;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
+
     </style>
 </head>
 <body>
@@ -156,49 +125,37 @@
     </div><!-- End Page Title -->
 
     <div class="container">
-        <input type="hidden" id="inquiries_type" value="${vo.inquiries_type}">
-        <input type="hidden" id="inquiries_id" value="${vo.inquiries_id}">
+        <input type="hidden" id="inquiries_type" value="${vo.m_inquiries_type}">
+        <p>문의사항 작성자 ID: ${vo.memberAccountId}</p>
         
 
 
         <div class="filter">
-            <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=전체" class="${inquiries_type == '전체' ? 'active' : ''}">전체</a>
-            <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=결제문의" class="${inquiries_type == '결제문의' ? 'active' : ''}">결제문의</a>
-            <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=주문문의" class="${inquiries_type == '주문문의' ? 'active' : ''}">주문문의</a>
-            <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=서비스이용" class="${inquiries_type == '서비스이용' ? 'active' : ''}">서비스이용</a>
-            <a href="${pageContext.request.contextPath}/inquiries/list.do?inquiries_type=배송문의" class="${inquiries_type == '배송문의' ? 'active' : ''}">배송문의</a>
+            <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=전체" class="${m_inquiries_type == '전체' ? 'active' : ''}">전체</a>
+            <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=결제문의" class="${m_inquiries_type == '결제문의' ? 'active' : ''}">결제문의</a>
+            <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=주문문의" class="${m_inquiries_type == '주문문의' ? 'active' : ''}">주문문의</a>
+            <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=서비스이용" class="${m_inquiries_type == '서비스이용' ? 'active' : ''}">서비스이용</a>
+            <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=배송문의" class="${m_inquiries_type == '배송문의' ? 'active' : ''}">배송문의</a>
         </div>
 
         <c:if test="${sessionScope.userType == 'MEMBER'}">
-            <div class="actions">
-                <a href="${pageContext.request.contextPath}/inquiries/insert_form.do">문의사항 등록</a>
+            <div class="member-actions">
+                <a href="${pageContext.request.contextPath}/member_inquiries/insert_form.do">문의사항 등록</a>
             </div>
         </c:if>
-        <c:if test="${sessionScope.userType == 'OWNER'}">
-            <div class="actions">
-                <a href="${pageContext.request.contextPath}/inquiries/insert_form.do">문의사항 등록</a>
-            </div>
-        </c:if>
+       
 
         <div class="inquiries-list">
             <c:forEach var="inquiries" items="${list}">
                 <div class="inquiries-card">
                     <div class="inquiries-title">
-                        <a href="${pageContext.request.contextPath}/inquiries/detail.do?inquiries_id=${inquiries.inquiries_id}">${inquiries.inquiries_title}</a>
+                        <a href="${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id=${inquiries.m_inquiries_id}">${inquiries.m_inquiries_title}</a>
                     </div>
                     <div class="inquiries-date">
-                        작성일자: ${inquiries.inquiries_cdate}
+                        작성일자: ${inquiries.m_inquiries_cdate}
                     </div>
                     <div class="inquiries-author">
-                        작성자: 
-                        <c:choose>
-                            <c:when test="${not empty inquiries.memberAccountId}">
-                                ${inquiries.memberAccountId}
-                            </c:when>
-                            <c:when test="${not empty inquiries.ownerAccountId}">
-                                ${inquiries.ownerAccountId}
-                            </c:when>
-                        </c:choose>
+                        작성자: ${inquiries.memberAccountId}
                     </div>
                 </div>
             </c:forEach>

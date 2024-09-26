@@ -45,6 +45,7 @@ public class AddrController {
 
   @RequestMapping("addr_insert_form.do")
   public String addr_insert_form(String nextPath, Model model) {
+
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
@@ -66,6 +67,7 @@ public class AddrController {
       return "redirect:/login_form.do";
     }
 
+
     vo.setMember_id(user.getMember_id());
 
     addr_mapper.insert(vo);
@@ -73,7 +75,6 @@ public class AddrController {
     session.setAttribute("vo", vo);
 
     return "redirect:/addr/addr_list.do";
-  
   }
 
   @RequestMapping("addr_modify_form.do")

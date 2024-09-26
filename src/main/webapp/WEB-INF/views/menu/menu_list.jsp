@@ -39,27 +39,28 @@
 
 <body>
 
-
+  <!-- 공통 css import -->
   <%@include file="../common.jsp" %>
 
+  <!-- header import -->
   <%@include file="../header.jsp" %>
 
+  <!-- side bar import -->
   <%@include file="../sidebar.jsp" %>
 
   <main id="main" class="main">
     <div class="pagetitle">
-
-      <h1>Form Layouts</h1>
+      <h1>메뉴목록</h1>
 
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">메뉴관리</li>
+          <li class="breadcrumb-item active">메뉴목록</li>
         </ol>
       </nav>
-
-    </div><!-- End Page Title -->
+    </div>
+    <!-- End Page Title -->
 
     <div id="menu_sort" style="margin-bottom: 20px;">
       <select id="sortOption" class="form-control" onchange="optionChange()">

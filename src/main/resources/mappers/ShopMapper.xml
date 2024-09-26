@@ -46,7 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE o.shop_id = s.shop_id) AS ceoreview_count,
         CASE 
             WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
-            WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
+            WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) 
+            and TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
 		    WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
             ELSE '영업전'
         END AS status
@@ -105,50 +106,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select> -->
 
     <select id="selectListValue" parameterType="map" resultType="shop">    
-        SELECT * 
-        FROM (
-            SELECT 
-                s.*,
-                (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,
-                (SELECT COUNT(*) 
-                 FROM reviews r
-                 INNER JOIN orders o ON o.orders_id = r.orders_id
-                 WHERE o.shop_id = s.shop_id) AS reviews_count,
-                (SELECT AVG(r.reviews_rating) 
-                 FROM reviews r
-                 INNER JOIN orders o ON o.orders_id = r.orders_id
-                 WHERE o.shop_id = s.shop_id) AS shop_rating,
-                (SELECT COUNT(*) 
-                 FROM ceoreview c
-                 INNER JOIN reviews r ON c.reviews_id = r.reviews_id
-                 INNER JOIN orders o ON o.orders_id = r.orders_id
-                 WHERE o.shop_id = s.shop_id) AS ceoreview_count,
-                CASE 
-                    WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
-                    WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
-                    WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
-                    ELSE '영업전'
-                END AS status
-            FROM shop s
-        ) AS shops_with_status
-        ORDER BY 
-            CASE 
-                WHEN status = '영업중' THEN 1
-                ELSE 2
-            END
-        <where>            
-            <if test="food_category !=null and food_category != 'all'">                
-                AND food_category = #{food_category}            
+    SELECT 
+        s.*,
+            (SELECT COUNT(*)
+                FROM menu WHERE shop_id = s.shop_id) AS menu_count,
+            (SELECT COUNT(*) 
+                FROM reviews r
+                INNER JOIN orders o ON o.orders_id = r.orders_id
+                WHERE o.shop_id = s.shop_id) AS reviews_count,
+            (SELECT AVG(r.reviews_rating) 
+                FROM reviews r
+                INNER JOIN orders o ON o.orders_id = r.orders_id
+                WHERE o.shop_id = s.shop_id) AS shop_rating,
+            (SELECT COUNT(*) 
+                FROM ceoreview c
+                INNER JOIN reviews r ON c.reviews_id = r.reviews_id
+                INNER JOIN orders o ON o.orders_id = r.orders_id
+                WHERE o.shop_id = s.shop_id) AS ceoreview_count,
+        CASE 
+            WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
+            WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) 
+            and TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
+            WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
+            ELSE '영업전'
+        END AS status
+    FROM shop s
+        <where>
+            <if test="food_category !=null and food_category != 'all'">
+                AND food_category = #{food_category}
             </if>
             <if test="searchValue != null and searchValue !=''">
-                AND shop_name LIKE CONCAT('%', '${searchValue}', '%')
+                AND shop_name LIKE CONCAT('%', #{searchValue}, '%')
             </if>
         </where>
         <if test="selectValue != null"> 
             ORDER BY 
             <choose>
                 <when test="selectValue == 'rank'">
-                    shop_id ASC 
+                    shop_id ASC
                 </when>
                 <when test="selectValue == 'shop_rating'">
                     shop_rating DESC
@@ -161,13 +156,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 </when>
             </choose>
         </if>
-        ORDER BY 
-            CASE 
-                WHEN status = '영업중' THEN 1  
-                WHEN status = '영업전' THEN 2  
-                WHEN status = '휴무일' THEN 3 
-                ELSE 4 
-            END
     </select>
 
     <!-- 가게 1개 상세보기  -->

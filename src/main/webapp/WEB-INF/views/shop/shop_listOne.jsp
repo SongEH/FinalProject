@@ -25,111 +25,131 @@ pageEncoding="UTF-8"%>
         display: flex;
         margin: 0;
         position: relative; */
-      }
-      .row{
-        margin: 0;
-      }
-      panel-left, .panel-right {
-        padding: 10px;
-        /* border: 1px solid gray; */
-        /* background-color: #f9f9f9; */
-      }
-      .panel-left {
-        width: 70%;
-      }
-      .panel-right {
-        /* width: 330px; */
-        position: sticky;
-        top: 30px;
-      }
-       .shop{
-        /* width: 1000px; */
-        margin: auto;
-      }
-      
-      /* .shop-info { */
-        /* width: 600px; */
-      /* } */
-      .col-custom{
-        width:66.66667%;
-      }
-      .shop-info h1 {
-          font-size: 20px;
-          margin-bottom: 10px;
-      }
-      .shop-info img{
-        width: 60px;
-        height: 60px;
-        padding-left: 10px;
-      }
-      .shop-info .rating {
-        width: 100%;
-        display: flex;
-        align-items: center;
-      }
-      .shop-info .rating span {
-        font-size: 16px;
-        margin-left: 5px;
-      }
-      .shop-info .rating img{
-        width: 155px;
-        height: 155px;
-        padding: 0;
-      }
-      .menu-item img{
-        width: 80px;
-        height: 80px;
-        padding-right: 10px;
-        display: flex;
-        align-items: center;
-      }
-      .order_info{
-        width: 300px;
-        position: sticky;
-        top: 0;
-      }
-      #shop_name{
-        font-size: 16px;
-        padding: 10px;
-        border: 1px solid gray;
-      }
-      #shop_info{
-        padding: 10px;
-        border:1px solid grey;
-        border-top: none;
-      }
+    }
 
-      #shop_content{
-        padding: 10px;
-        border:1px solid grey;
-        border-top: none;
-        width: 100%;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden; 
-      }
-      .shop_info_list{
-        border: 1px solid grey;
-      }
-      .menu-tab input[type="button"] {
-        width: 100%;
-        height: 40px;
-        background-color: white;
-        border: 1px solid gray;
-      }
-      .menu-section {
-          width: 100%;
-          margin-top: 20px;
-          padding-top: 10px;
-      }
-      .menu-section .menu-title {
-          font-size: 18px;
-          margin-bottom: 5px;
-      }
-      .menu-tab {
-        display: flex;
-        align-items: center;
-      }
+    .row {
+      margin: 0;
+    }
+
+    panel-left,
+    .panel-right {
+      padding: 10px;
+      /* border: 1px solid gray; */
+      /* background-color: #f9f9f9; */
+    }
+
+    .panel-left {
+      width: 70%;
+    }
+
+    .panel-right {
+      /* width: 330px; */
+      position: sticky;
+      top: 30px;
+    }
+
+    .shop {
+      /* width: 1000px; */
+      margin: auto;
+    }
+
+    /* .shop-info { */
+    /* width: 600px; */
+    /* } */
+    .col-custom {
+      width: 66.66667%;
+    }
+
+    .shop-info h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .shop-info img {
+      width: 60px;
+      height: 60px;
+      padding-left: 10px;
+    }
+
+    .shop-info .rating {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .shop-info .rating span {
+      font-size: 16px;
+      margin-left: 5px;
+    }
+
+    .shop-info .rating img {
+      width: 155px;
+      height: 155px;
+      padding: 0;
+    }
+
+    .menu-item img {
+      width: 80px;
+      height: 80px;
+      padding-right: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .order_info {
+      width: 300px;
+      position: sticky;
+      top: 0;
+    }
+
+    #shop_name {
+      font-size: 16px;
+      padding: 10px;
+      border: 1px solid gray;
+    }
+
+    #shop_info {
+      padding: 10px;
+      border: 1px solid grey;
+      border-top: none;
+    }
+
+    #shop_content {
+      padding: 10px;
+      border: 1px solid grey;
+      border-top: none;
+      width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .shop_info_list {
+      border: 1px solid grey;
+    }
+
+    .menu-tab input[type="button"] {
+      width: 100%;
+      height: 40px;
+      background-color: white;
+      border: 1px solid gray;
+    }
+
+    .menu-section {
+      width: 100%;
+      margin-top: 20px;
+      padding-top: 10px;
+    }
+
+    .menu-section .menu-title {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .menu-tab {
+      display: flex;
+      align-items: center;
+    }
 
     .menu-tab input[type="button"] {
       flex-shrink: 0;
@@ -168,30 +188,33 @@ pageEncoding="UTF-8"%>
     }
   </style>
   <script>
-    function get_info(shop_id){
+    function get_info(shop_id) {
       $.ajax({
-      url     :     "../shop/select_info.do",
-      data    :      {"shop_id": shop_id},
-      success :   function(res_data){
-              // alert("menu호출");
-              $("#shop_info_display").html(res_data).show();
-              $("#menu_display").hide();
-              $('#reviews_display').hide();
+        url: "../shop/select_info.do",
+        data: {
+          "shop_id": shop_id
+        },
+        success: function (res_data) {
+          alert("menu호출");
+          $("#shop_info_display").html(res_data).show();
+          $("#menu_display").hide();
+          $('#reviews_display').hide();
 
-      },
-      error   :   function(err){
-      alert(err.responseText)
-      }
+        },
+        error: function (err) {
+          alert(err.responseText)
+        }
       });
     }
   </script>
   <script>
     // menu 호출 
-    function get_menu(shop_id) {
+    function get_menu(shop_id,status) {
       $.ajax({
         url: "../menu/listByShopId.do",
         data: {
-          "shop_id": shop_id
+          "shop_id": shop_id,
+          "status" : status,
         },
         success: function (res_data) {
           // alert(res_data);
@@ -260,11 +283,8 @@ pageEncoding="UTF-8"%>
     // }
   </script>
   <script>
-    // 주문 - 한지혜 추가 
-    function orderFromShop(shop_id, shop_name) {
-      // location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
-      history.pushState(null, '', "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name);
-    }
+    
+    
   </script>
 </head>
 
@@ -272,6 +292,7 @@ pageEncoding="UTF-8"%>
   <form method="post">
     <!-- 표현은 하지않고 활용하기 위한 데이터  -->
     <input type="hidden" name="shop_id" value="${vo.shop_id}" />
+    <input type="hidden" name="status" value="${status}"/>
 
     <div class="container-custom">
       <div class="shop">
@@ -286,22 +307,20 @@ pageEncoding="UTF-8"%>
                 <span>
                   <div class="stars">
                     <c:if test="${vo.shop_rating != null && vo.shop_rating > 0}">
-                    <c:set var="shopRateInt" value="${vo.shop_rate.intValue()}"/>
-                    <c:set var="empShopRate" value="${5 - shopRateInt}"/>
-                    <c:forEach begin="1" end="${shopRateInt}">
+                      <c:forEach begin="1" end="${vo.shop_rate}">
                         <i class="fa fa-star"></i>
-                    </c:forEach>
-                    <c:forEach begin="1" end="${empShopRate}">
+                      </c:forEach>
+                      <c:forEach begin="1" end="${5 - vo.shop_rate}">
                         <i class="fa fa-star star-empty"></i>
-                    </c:forEach>
-                    ${vo.shop_rating}
+                      </c:forEach>
+                      ${vo.shop_rating}
                     </c:if>
                   </div>
                   <div class="details">
-                    <!-- <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div> -->
+                    <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
                     <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>
                     <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
-                    <!-- <button class="btn btn-danger">4,000원 할인</button> -->
+                    <button class="btn btn-danger">4,000원 할인</button>
                   </div>
                 </span>
               </div>
@@ -313,7 +332,7 @@ pageEncoding="UTF-8"%>
               <div class="col-sm-4" style="padding:0px">
                 <div class="menu-tab border">
                   <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
-                    onclick="get_menu('${vo.shop_id}')">
+                    onclick="get_menu('${vo.shop_id}', '${status}')">
                 </div>
               </div>
               <div class="col-sm-4" style="padding:0px">
@@ -324,8 +343,7 @@ pageEncoding="UTF-8"%>
               </div>
               <div class="col-sm-4" style="padding:0px">
                 <div class="menu-tab border">
-                  <input type="button" id="infoButton" value="정보"
-                    onclick="get_info('${vo.shop_id}')" />
+                  <input type="button" id="infoButton" value="정보" onclick="get_info('${vo.shop_id}')" />
                 </div>
               </div>
             </div>
@@ -341,13 +359,13 @@ pageEncoding="UTF-8"%>
                 <div id="reviews_display"></div>
               </div>
               <!-- shop_info_list 출력 공간 -->
-                <div style="border:1px solid lightgray;">
-                  <div id="shop_info_display"></div>
-                </div>
+              <div style="border:1px solid lightgray;">
+                <div id="shop_info_display"></div>
+              </div>
             </div>
           </div>
 
-          <!-- 주문 영역 출력 공간  -->
+          <!-- 장바구니 영역 출력 공간  -->
           <div class="col-md-4 col-sm-12">
             <div class="order_info">
               <!-- <div class="right-panel text-center p-3"> -->
@@ -356,7 +374,9 @@ pageEncoding="UTF-8"%>
               </div>
               <div style="border:1px solid gray; height:auto; min-height: 155px;">
                 <!-- 장바구니에 담긴 메뉴가 없습니다. -->
+                <c:if test="${status == '영업중'}">
                 <div id="cart_list"></div>
+                </c:if>
               </div>
               <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
               <!-- <button class="btn btn-secondary" disabled>주문하기</button> -->
@@ -367,8 +387,8 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </div>
-  </div>
-</div>
+    </div>
+    </div>
 </body>
 
 </html>

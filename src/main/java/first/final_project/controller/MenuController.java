@@ -68,7 +68,8 @@ public class MenuController {
 
 	// shop_id로 메뉴 목록 조회 
 	@RequestMapping("listByShopId.do")
-	public String listByShopId(int shop_id, Model model) {
+	public String listByShopId(int shop_id,
+	@RequestParam(name="status", required = false)String status, Model model) {
 		System.out.println("listbyShopid 도착");
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
@@ -78,7 +79,7 @@ public class MenuController {
 		}
 		// model.addAttribute("list", list);
 		// return "menu/menu_listByShopId";
-
+		model.addAttribute("status", status);
 		model.addAttribute("menu_list", list);
 		return "menu/menu_list_display";
 

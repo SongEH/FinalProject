@@ -18,7 +18,7 @@ pageEncoding="UTF-8" %>
 
     $(document).ready(function () {
       if (userType === 'MEMBER') {
-        updateCartList(); // 페이지 로딩 시 함수 실행
+        updateCartList('${status}'); // 페이지 로딩 시 함수 실행
       } else if (userType === "UNKNOWN") {
         $('#cart_list').html('<p>로그인해주세요.</p>');
       }
@@ -126,11 +126,13 @@ pageEncoding="UTF-8" %>
     }
 
     // 회원용 장바구니 리스트 업데이트
-    function updateCartList() {
+    function updateCartList(status) {
       // 장바구니 목록을 업데이트하기 위한 AJAX 요청 - 한지혜
+
       $.ajax({
         url: '/carts/list2.do',
         type: 'GET',
+        data: {"status":status},
         success: function (response) {
           // 응답으로 받은 HTML을 장바구니 목록에 업데이트
           $('#cart_list').html(response);
@@ -157,6 +159,7 @@ pageEncoding="UTF-8" %>
 <body>
 
   <%@include file="popup.jsp" %>
+  ${status}
   <c:set var="userType" value="${sessionScope.userType}" />
   <!-- <section class="section" style="margin: auto;"> -->
   <!-- <div class="row align-items-top"> -->
@@ -201,7 +204,7 @@ pageEncoding="UTF-8" %>
                 <p class="card-text">${item.menu_price}원</p>
 
 
-                <c:if test="${userType == 'MEMBER'}">
+                <c:if test="${userType == 'MEMBER' && status =='영업중'}">
                   <input class="btn btn-info" type="button" value="장바구니담기"
                     onclick="menu_modal('${ item.menu_id }', '${ item.menu_soldout }');">
                 </c:if>

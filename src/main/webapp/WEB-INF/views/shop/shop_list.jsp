@@ -177,11 +177,11 @@ body {
     </script>
     
     <script>
-      function selectOne(shop_id){
-        // alert(shop_id);
+      function selectOne(shop_id, status){
         $.ajax({
           url     :     "/shop/select_one.do",
-          data    :      {"shop_id": shop_id},
+          data    :      {"shop_id": shop_id,
+                          "status": status},
           success :   function(res_data){
                 // alert("select_one.do 성공");
                 $("#select_one_display").html(res_data).show();
@@ -252,45 +252,72 @@ body {
 
     <div id="store_list">
       <div class="store-list mt-10" id="store-list" >
+        <!-- 영업중인 가게  -->
+        <c:forEach var="vo" items="${list}">
+          <c:if test="${vo.status =='영업중'}">
+            <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
+              <div class="store-left">
+                <div class="store-logo">
+                  <div class="image-container">
+                    <!-- 가게 로고 이미지 -->
+                    <img class="image-z2" src="${pageContext.request.contextPath}/resources/images/${vo.shop_img}" alt="Store 1 Logo">
+                    <!-- 이미지 위에 표시할 텍스트 -->
+                    <div class="overlay-text"></div>
+                  </div>
+                </div>
+                <div class="store-info">
+                  <strong>${vo.shop_name}</strong>
+                  <div>
+                    <span class="rating">★ ${vo.shop_rating}</span> 
+                    | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
+                  </div>
+                  <div>${vo.shop_min_price}원 이상 배달</div>
+                  <div class="delivery-time"></div>
+                </div>
+              </div>
+            </div>
+          </c:if>
+        </c:forEach>
+        <div>
+
+        </div>
+        <!-- 영업중이 아닌 가게 -->
         <c:forEach var="vo" items="${list}">
           <c:if test="${vo.status == '영업전' || vo.status=='휴무일'}">
             <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
-            <img class="image-z1" src="${pageContext.request.contextPath}/resources/images/back_black.png">
+              <img class="image-z1" src="${pageContext.request.contextPath}/resources/images/back_black.png">
             <c:if test="${vo.status == '영업전'}">
               <div class="text-over-image">가게 오픈 시간  ${fn:substring(vo.shop_open_hour, 0, 5)}</div>
             </c:if>
             <c:if test="${vo.status == '휴무일'}">
               <div class="text-over-image">금일은 휴무일입니다.</div>
             </c:if>
-          </c:if>
-          <c:if test="${vo.status == '영업중'}">
-            <div class="store" onclick="selectOne('${vo.shop_id}');">
-          </c:if>
               <div class="store-left">
-                  <div class="store-logo">
-                      <div class="image-container">
-                          <!-- 가게 로고 이미지 -->
-                          <img class="image-z2" src="${pageContext.request.contextPath}/resources/images/${vo.shop_img}" alt="Store 1 Logo">
-                          <!-- 이미지 위에 표시할 텍스트 -->
-                          <div class="overlay-text">Closed</div>
-                      </div>
+                <div class="store-logo">
+                  <div class="image-container">
+                    <!-- 가게 로고 이미지 -->
+                    <img class="image-z2" src="${pageContext.request.contextPath}/resources/images/${vo.shop_img}" alt="Store 1 Logo">
+                    <!-- 이미지 위에 표시할 텍스트 -->
+                    <div class="overlay-text">Closed</div>
                   </div>
-                  <div class="store-info">
-                      <strong>${vo.shop_name}</strong>
-                      <div>
-                          <span class="rating">★ ${vo.shop_rating}</span> 
-                          | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
-                      </div>
-                      <div>${vo.shop_min_price} 11,000원 이상 배달</div>
-                      <div class="delivery-time"></div>
+                </div>
+                <div class="store-info">
+                  <strong>${vo.shop_name}</strong>
+                  <div>
+                    <span class="rating">★ ${vo.shop_rating}</span> 
+                    | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
                   </div>
+                  <div>${vo.shop_min_price}원 이상 배달</div>
+                  <div class="delivery-time"></div>
+                </div>
               </div>
             </div>
+          </c:if>
         </c:forEach>
       </div>
     </div>
   </div>
- 
+
   <div id="store_list_display">
     <input type="hidden" id="order_addr" value="${order_addr}"/>
     <input type="hidden" id="food_category" value="${food_category}"/>

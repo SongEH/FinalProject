@@ -19,6 +19,7 @@
   background-position: center; /* Centers the image */
   padding: 10px; /* Adds padding around the search input and button */
   height: 100px;
+  margin-top: 60px;
 }
 
 

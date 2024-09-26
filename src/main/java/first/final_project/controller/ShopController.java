@@ -322,7 +322,9 @@ public class ShopController {
 
     // 가게 하나 선택
     @RequestMapping("/shop/select_one.do")
-    public String shop_selectOne(int shop_id, Model model) {
+    public String shop_selectOne(int shop_id,
+    @RequestParam(name="status", required = false)String status,
+    Model model) {
         System.out.println("shop_id : " + shop_id);
         
         try {
@@ -343,6 +345,7 @@ public class ShopController {
 
           
             model.addAttribute("vo", vo);
+            model.addAttribute("status", status);
           
             // if (vo != null) {
             //     vo.setMenu_count(counts != null ? counts.get("menu_count") : 0);

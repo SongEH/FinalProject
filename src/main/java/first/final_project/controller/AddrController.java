@@ -1,5 +1,7 @@
 package first.final_project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,15 +39,20 @@ public class AddrController {
 
     // user정보가 없을 경우에 로그인 폼으로 다시 돌아가기
     if (user == null) {
-      return "redirect:/login_form.do";
+      return "redirect:/member/login_form.do";
     }
+
+    Integer member_id = user.getMember_id();
+
+    List<AddrVo> addr_list = addr_mapper.selectList(member_id);
+
+    model.addAttribute("addr_list", addr_list);
 
     return "addr/addr_list";
   }
 
   @RequestMapping("addr_insert_form.do")
   public String addr_insert_form(String nextPath, Model model) {
-
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
@@ -60,13 +67,15 @@ public class AddrController {
   }
 
   @RequestMapping("addr_insert.do")
-  public String addr_insert(AddrVo vo) {
+  public String addr_insert(AddrVo vo, String nextPath) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
-      return "redirect:/login_form.do";
+      return "redirect:/member/login_form.do";
     }
 
+    //
+    System.out.println(nextPath);
 
     vo.setMember_id(user.getMember_id());
 
@@ -74,7 +83,12 @@ public class AddrController {
 
     session.setAttribute("vo", vo);
 
-    return "redirect:/addr/addr_list.do";
+    if (nextPath.equals("addr_list")) {
+      return "redirect:/addr/addr_list.do";
+    } else {
+      return "redirect:/order/pending_list.do";
+    }
+
   }
 
   @RequestMapping("addr_modify_form.do")
@@ -82,7 +96,7 @@ public class AddrController {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
-      return "redirect:/login_form.do";
+      return "redirect:/member/login_form.do";
     }
 
     AddrVo addr = addr_mapper.selectOneFromIdx(addr_id);
@@ -96,7 +110,7 @@ public class AddrController {
     return "addr/addr_modify_form";
   }
 
-  @RequestMapping("addr_modify.do")
+  @RequestMapping("addr_modify.do") 
   public String addr_modify(@RequestParam("addr_id") int addr_id,
       @RequestParam("addr_zipcode") String addr_zipcode,
       @RequestParam("addr_line1") String addr_line1,
@@ -105,7 +119,7 @@ public class AddrController {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
-      return "redirect:/login_form.do";
+      return "redirect:/member/login_form.do";
     }
 
     AddrVo vo = new AddrVo();
@@ -126,7 +140,7 @@ public class AddrController {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
-      return "redirect:/login_form.do";
+      return "redirect:/member/login_form.do";
     }
 
     addr_mapper.delete(addr_id);

@@ -54,6 +54,43 @@
             margin-top: 20px;
             text-align: right;
         }
+        .admin-answer {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+         .answer-cdate {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .answer-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .answer-author {
+            font-size: 14px;
+            color: #555;
+            margin-top: 20px;
+            text-align: right;
+        }
+        .admin-actions {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .admin-actions a {
+            text-decoration: none;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .admin-actions a:hover {
+            background-color: #0056b3;
+        }
         .back-button {
             display: block;
             width: 150px;
@@ -129,11 +166,34 @@
                     <button type="button" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/modify_form.do?o_inquiries_id=${vo.o_inquiries_id}'">수정</button>
                     <button type="button" onclick="del('${vo.o_inquiries_id}');">삭제</button>
                 </c:if>
-                
             </div>
-
-            
         </div>
+        <div class="container" style="margin-top: 20px;">
+
+            <c:if test="${sessionScope.userType == 'ADMIN'}">
+                <div class="admin-actions">
+                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_insert_form.do">답변 등록</a>
+                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_modify_form.do">답변 수정</a>
+                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_delete.do">답변 삭제</a>
+                </div>
+            </c:if>
+
+            <div class="admin-answer">
+                <c:if test="${not empty answer}">
+                    <div class="answer-content">
+                        <strong>답변 :</strong> ${answer.o_answer_content}
+                    </div>
+                    <div class="answer-cdate">
+                        ${answer.o_answer_cdate}
+                    </div>
+                    <div class="answer-author">
+                        <strong>작성자 :</strong> ${admin_accountId}
+                    </div>
+                </c:if>
+            </div>
+        </div>
+            
+        
 
     </main><!-- End #main -->
 

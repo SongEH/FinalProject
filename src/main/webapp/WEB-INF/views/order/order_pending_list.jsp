@@ -143,7 +143,7 @@
               },
               success: function (response) {
                 alert("결제가 성공적으로 완료되었습니다.");
-                window.location.href = '/main.do';
+                window.location.href = 'list.do';
               },
               error: function (error) {
                 alert("서버와의 통신에 실패했습니다.");

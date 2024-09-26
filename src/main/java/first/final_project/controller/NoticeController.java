@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/notice/")
 public class NoticeController {
-    
+
     @Autowired
     HttpSession session;
 
@@ -31,14 +31,14 @@ public class NoticeController {
     @Autowired
     AdminMapper admin_mapper;
 
-    //공지사항 조회(type별 조회)
+    // 공지사항 조회(type별 조회)
     @RequestMapping("list.do")
-    public String list(@RequestParam(value="notice_type",defaultValue="전체")String notice_type,Model model){
+    public String list(@RequestParam(value = "notice_type", defaultValue = "전체") String notice_type, Model model) {
 
         List<NoticeVo> list = notice_mapper.selectListByType(notice_type);
-        for(NoticeVo vo : list){
+        for (NoticeVo vo : list) {
             AdminVo admin = admin_mapper.selectOneFromIdx(vo.getAdmin_id());
-            if(admin == null){
+            if (admin == null) {
                 return "redirect:/login_form.do";
             }
             vo.setAdminAccountId(admin.getAdmin_accountId());
@@ -49,13 +49,13 @@ public class NoticeController {
     }
 
     @RequestMapping("detail.do")
-    public String detail(@RequestParam(value="notice_id",required = false) Integer notice_id,Model model){
-        if(notice_id == null){
+    public String detail(@RequestParam(value = "notice_id", required = false) Integer notice_id, Model model) {
+        if (notice_id == null) {
             return "redirect:/login_form.do";
         }
         NoticeVo vo = notice_mapper.selectOneFromIdx(notice_id);
-        if(vo == null){
-            //공지사항이 존재하지 않는 경우 처리
+        if (vo == null) {
+            // 공지사항이 존재하지 않는 경우 처리
             return "redirect:/notice/list.do";
         }
         AdminVo admin = admin_mapper.selectOneFromIdx(vo.getAdmin_id());
@@ -66,17 +66,17 @@ public class NoticeController {
 
         String content = vo.getNotice_content().replace("\n", "<br/>");
         vo.setNotice_content(content);
-        
+
         model.addAttribute("vo", vo);
         return "notice/notice_detail";
     }
 
     @RequestMapping("insert_form.do")
-    public String insert_form(){
+    public String insert_form() {
         String userType = (String) session.getAttribute("userType");
-        if("ADMIN".equals(userType)){
+        if ("ADMIN".equals(userType)) {
             return "notice/notice_insert_form";
-        }else{
+        } else {
             return "redirect:/login_form.do";
         }
     }
@@ -95,7 +95,7 @@ public class NoticeController {
         if ("ADMIN".equals(userType)) {
             // NoticeVo 객체 생성 및 필드 설정
             NoticeVo notice = new NoticeVo();
-            
+
             notice.setNotice_title(notice_title);
             notice.setNotice_content(notice_content);
             notice.setNotice_type(notice_type);
@@ -133,13 +133,13 @@ public class NoticeController {
         if (userType == null || !"ADMIN".equals(userType)) {
             return "redirect:/login_form.do"; // 로그인되지 않았거나 ADMIN이 아닌 경우 로그인 페이지로 리디렉션
         }
-        AdminVo admin = (AdminVo)session.getAttribute("user");
-        if(admin == null){
+        AdminVo admin = (AdminVo) session.getAttribute("user");
+        if (admin == null) {
             return "redirect:/login_form.do";
         }
 
-        System.out.println("admin_id:"+admin.getAdmin_id());
-        
+        System.out.println("admin_id:" + admin.getAdmin_id());
+
         NoticeVo notice = new NoticeVo();
         notice.setNotice_id(notice_id);
         notice.setNotice_title(notice_title);
@@ -152,7 +152,7 @@ public class NoticeController {
     }
 
     @RequestMapping("delete.do")
-    public String delete(@RequestParam int notice_id){
+    public String delete(@RequestParam int notice_id) {
         notice_mapper.delete(notice_id);
         return "redirect:/notice/list.do";
     }

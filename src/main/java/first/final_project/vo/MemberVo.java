@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @Alias("member")
 public class MemberVo {
-
     int member_id;
     String member_name;
     String member_nickname;
@@ -24,6 +23,4 @@ public class MemberVo {
     String addr_line2;
 
     String owner_name;
-
-    
 }

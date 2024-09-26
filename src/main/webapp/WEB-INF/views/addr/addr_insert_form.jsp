@@ -1,16 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Insert title here</title>
-    
+
     <script type="text/javascript">
       function execDaumPostcode() {
         new daum.Postcode({
@@ -147,106 +148,101 @@
     </style>
   </head>
   <body>
-
-    <%@include file="../common.jsp" %>
-
-    <%@include file="../header.jsp" %>
-
+    <%@include file="../common.jsp" %> <%@include file="../header.jsp" %>
     <%@include file="../sidebar.jsp" %>
 
-      <main id="main" class="main">
-        <div class="pagetitle">
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>주소등록</h1>
 
-          <h1>주소등록</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Forms</li>
+            <li class="breadcrumb-item active">Layouts</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
 
-          <nav>
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item">Forms</li>
-              <li class="breadcrumb-item active">Layouts</li>
-            </ol>
-          </nav>
+      <div class="container mx-auto p-6">
+        <div class="bg-white shadow-md rounded-lg p-6">
+          <form
+            action="${pageContext.request.contextPath}/addr/addr_insert_form.do"
+            method="post"
+          >
+            <input type="hidden" name="nextPath" value="${nextPath}" />
 
-        </div><!-- End Page Title -->
-
-        <div class="container mx-auto p-6">
-          
-          <div class="bg-white shadow-md rounded-lg p-6">
-            <form
-              action="${pageContext.request.contextPath}/addr/addr_insert_form.do"
-              method="post"
-            >
-
-            <input type="hidden" name="nextPath" value="${nextPath}">
-
-              <div class="mb-4">
-                <label for="zipcode">우편번호</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="addr_zipcode"
-                  id="addr_zipcode"
-                />
-                <input
-                  type="button"
-                  value="주소검색"
-                  class="form-control"
-                  onclick="execDaumPostcode()"
-                />
-              </div>
-              <div class="mb-4">
-                <label for="line1">기본주소</label>
-                <input
-                  type="text"
-                  name="addr_line1"
-                  id="addr_line1"
-                  class="form-control"
-                />
-              </div>
-              <div class="mb-4">
-                <label for="line2">상세주소</label>
-                <input
-                  type="text"
-                  name="addr_line2"
-                  id="addr_line2"
-                  class="form-control"
-                />
-              </div>
-              <div class="mb-4">
-                <label for="name">별칭</label>
-                <input
-                  type="text"
-                  name="addr_name"
-                  id="addr_name"
-                  class="form-control"
-                />
-                <select
-                  class="select, form-control"
-                  title="별칭 선택"
-                  value=""
-                  onclick="setAddrName(this.value);return false;"
-                >
-                  <option value="직접입력">-직접입력-</option>
-                  <option value="집">집</option>
-                  <option value="회사">회사</option>
-                  <option value="학원">학원</option>
-                </select>
-              </div>
-              <div class="flex justify-end">
-                <input
-                  type="button"
-                  value="이전으로"
-                  onclick="location.href='/addr/addr_list.do'"
-                />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" value="주소등록" onclick="send(this.form);" />
-              </div>
-            </form>
-          </div>
+            <div class="mb-4">
+              <label for="zipcode">우편번호</label>
+              <input
+                class="form-control"
+                type="text"
+                name="addr_zipcode"
+                id="addr_zipcode"
+              />
+              <input
+                type="button"
+                value="주소검색"
+                class="form-control"
+                onclick="execDaumPostcode()"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="line1">기본주소</label>
+              <input
+                type="text"
+                name="addr_line1"
+                id="addr_line1"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="line2">상세주소</label>
+              <input
+                type="text"
+                name="addr_line2"
+                id="addr_line2"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="name">별칭</label>
+              <input
+                type="text"
+                name="addr_name"
+                id="addr_name"
+                class="form-control"
+              />
+              <select
+                class="select, form-control"
+                title="별칭 선택"
+                value=""
+                onclick="setAddrName(this.value);return false;"
+              >
+                <option value="직접입력">-직접입력-</option>
+                <option value="집">집</option>
+                <option value="회사">회사</option>
+                <option value="학원">학원</option>
+              </select>
+            </div>
+            <div class="flex justify-end">
+              <input
+                type="button"
+                value="이전으로"
+                onclick="location.href='/addr/addr_list.do'"
+              />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input
+                type="button"
+                value="주소등록"
+                onclick="send(this.form);"
+              />
+            </div>
+          </form>
         </div>
-        
-      </main><!-- End #main -->
-
-
+      </div>
+    </main>
+    <!-- End #main -->
   </body>
 </html>

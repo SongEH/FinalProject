@@ -8,6 +8,6 @@ import lombok.Data;
 public class ReviewsImagesVo {
     private int reviews_images_id;
     private String reviews_img;
-    // 외래키 
-    private int reviews_id; 
+    // 외래키
+    private int reviews_id;
 }

@@ -3,6 +3,7 @@ package first.final_project.vo;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
+
 @Data
 @Alias("owner")
 public class OwnerVo {
@@ -20,5 +21,4 @@ public class OwnerVo {
 
     String member_name;
 
-   
 }

@@ -136,9 +136,9 @@ public class OrderController {
 		List<OrderVo> order_list = (List<OrderVo>) resultMap.get("order_list");
 
 		for (OrderVo vo : order_list) {
-			if(vo.getReviews_delete()==1){
+			if (vo.getReviews_delete() == 1) {
 				vo.setHasReview(true);
-			}else{
+			} else {
 				Boolean result = reviews_mapper.checkReviewExists(vo.getOrders_id());
 				boolean hasReview = (result != null) ? result : false;
 				vo.setHasReview(hasReview);
@@ -194,7 +194,7 @@ public class OrderController {
 
 	// 회원 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
-	public String insert(int shop_id, String shop_name, Model model) {
+	public String insert(int shop_id, String shop_name, Model model) { 
 
 		// 현재 로그인한 사용자
 		MemberVo user = (MemberVo) session.getAttribute("user");

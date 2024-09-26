@@ -30,7 +30,7 @@ public interface ShopService {
     // 가게 삭제하기
     int delete(int shop_id);
 
-    // Owner_id로 shop_id 찾아오기 
+    // Owner_id로 shop_id 찾아오기
     int select_one_shop_id(int owner_id);
 
     // 메뉴 개수와 리뷰 갯수 구하기 

@@ -373,10 +373,9 @@ pageEncoding="UTF-8"%>
               <div style="border:1px solid gray; height:auto; min-height: 155px;">
                 <!-- 장바구니에 담긴 메뉴가 없습니다. -->
 
+                <!-- 장바구니 목록 출력 -->
                 <div id="cart_list"></div>
-              </div>
-              <div style="border:1px solid gray; height:45px;">배달요금 <strong>2,000원</strong> 별도</div>
-              <!-- <button class="btn btn-secondary" disabled>주문하기</button> -->
+              </div>            
               <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
             </div>
             <!-- </div> -->

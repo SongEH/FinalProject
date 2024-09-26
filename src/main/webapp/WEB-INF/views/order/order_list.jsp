@@ -108,7 +108,6 @@
   <%@include file="../header.jsp" %>
 
   <%@include file="../sidebar.jsp" %>
-
   <main id="main" class="main">
     <div class="pagetitle">
 

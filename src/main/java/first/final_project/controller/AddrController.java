@@ -42,19 +42,16 @@ public class AddrController {
       return "redirect:/member/login_form.do";
     }
 
-    return "addr/addr_insert_form";
+    return "addr/addr_list";
   }
 
   @RequestMapping("addr_insert.do")
-  public String addr_insert(AddrVo vo, String nextPath) {
+  public String addr_insert(AddrVo vo) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
       return "redirect:/member/login_form.do";
     }
-
-    //
-    System.out.println(nextPath);
 
     vo.setMember_id(user.getMember_id());
 
@@ -62,11 +59,7 @@ public class AddrController {
 
     session.setAttribute("vo", vo);
 
-    if (nextPath.equals("addr_list")) {
-      return "redirect:/addr/addr_list.do";
-    } else {
-      return "redirect:/order/pending_list.do";
-    }
+    return "redirect:/addr/addr_list.do";
 
   }
 

@@ -41,7 +41,6 @@ public class CouponController {
         return "redirect:/coupon/success";
     }
 
-    // Success page after issuing coupons
     @RequestMapping("success")
     public String successPage() {
         return "coupon/success"; // Show success message

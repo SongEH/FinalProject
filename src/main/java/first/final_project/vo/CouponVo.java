@@ -1,6 +1,7 @@
 package first.final_project.vo;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.apache.ibatis.type.Alias;
 
@@ -14,8 +15,8 @@ public class CouponVo {
     private String coupon_code;
     private int discount_amount;
     private String member_name;
-    private Timestamp start_date;
-    private Timestamp used_date;
-    private Timestamp end_date;
+    private LocalDateTime start_date;
+    private LocalDateTime used_date;
+    private LocalDateTime end_date;
 
 }

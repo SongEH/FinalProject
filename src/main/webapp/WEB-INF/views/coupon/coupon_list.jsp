@@ -27,6 +27,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
               <th>쿠폰 번호</th>
               <th>할인 금액</th>
               <th>발행날짜</th>
+              <th>만료날짜</th>
               <th>사용여부</th>
             </tr>
           </thead>
@@ -37,6 +38,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                 <td>${coupon.coupon_code}</td>
                 <td>${coupon.discount_amount}</td>
                 <td>${coupon.start_date}</td>
+                <td>${coupon.end_date}</td>
                 <td>
                   <c:choose>
                     <c:when test="${coupon.used_date != null}">

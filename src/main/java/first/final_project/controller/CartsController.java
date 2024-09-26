@@ -58,7 +58,8 @@ public class CartsController {
 	// 회원용 shop_listOne.jsp 에서 보여질 장바구니 목록
 	@RequestMapping("list2.do")
 	public String list2(@RequestParam(name = "page", defaultValue = "1") int nowPage,
-			Model model) {
+	@RequestParam(name="status", required = false) String status,	
+	Model model) {
 
 		MemberVo user = (MemberVo) session.getAttribute("user");
 

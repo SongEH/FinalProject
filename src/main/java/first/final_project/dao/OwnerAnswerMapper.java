@@ -1,5 +1,7 @@
 package first.final_project.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import first.final_project.vo.OwnerAnswerVo;
@@ -9,7 +11,7 @@ public interface OwnerAnswerMapper {
 
     OwnerAnswerVo selectOne(int o_answer_id);
 
-    OwnerAnswerVo selectOneFromIdx(int o_inquiries_id);
+    List<OwnerAnswerVo> selectListFromIdx(int o_inquiries_id);
 
     int insert(OwnerAnswerVo vo);
 

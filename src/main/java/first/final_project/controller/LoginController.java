@@ -198,7 +198,7 @@ public class LoginController {
         session.setAttribute("user", user);
         session.setAttribute("userType", "ADMIN");
         
-        return "redirect:../main.do";
+        return "redirect:/admin/member_list.do";
     }
 
     // 로그아웃

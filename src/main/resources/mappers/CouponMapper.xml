@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.CouponMapper">
+    <!-- 모든 회원에게 쿠폰 발행 -->
+    <insert id="issueCouponsForAllMembers">
+        INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
+        SELECT m.member_id, LEFT(UUID(), 8), g.grade_discount, NOW()
+        FROM member m
+        JOIN grade g ON m.grade_id = g.grade_id
+         WHERE m.member_id = #{member_id};
+    </insert>
+
+    <!-- 특정 회원에게 쿠폰 발행 -->
+    <insert id="issueCouponForMember">
+        INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
+        SELECT m.member_id, LEFT(UUID(), 8), g.grade_discount, NOW()
+        FROM member m
+        JOIN grade g ON m.grade_id = g.grade_id
+        WHERE m.member_id = #{member_id};
+    </insert>
+    <!-- 등급 ID로 등급을 조회하는 SQL -->
+    <select id="getGradeById" parameterType="int" resultType="first.final_project.vo.GradeVo">
+        SELECT * FROM grade WHERE grade_id = #{grade_id}
+    </select>
+
+
+
+    <!-- Insert a coupon for a member -->
+    <insert id="insertCoupon">
+         INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date, grade_id)
+    VALUES (#{member_id}, #{coupon_code}, #{discount_amount}, NOW(), #{grade_id});
+    </insert>
+
+    <!-- Retrieve all coupons issued to a member -->
+    <select id="getCouponsByMemberId" resultType="first.final_project.vo.CouponVo">
+        SELECT coupon_code, discount_amount, start_date, used_date 
+        FROM coupon 
+        WHERE member_id = #{member_id};
+    </select>
+
+    <!-- Retrieve all issued coupons -->
+    <select id="getAllIssuedCoupons" resultType="first.final_project.vo.CouponVo">
+        SELECT c.coupon_code, c.discount_amount, c.start_date, c.used_date, m.member_name 
+        FROM coupon c 
+        JOIN member m ON c.member_id = m.member_id;
+    </select>
+</mapper>

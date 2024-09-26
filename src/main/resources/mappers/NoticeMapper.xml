@@ -7,11 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 공지사항 목록 조회(type별 필터링 조회) -->
     <select id="selectListByType" parameterType="String" resultType="notice">
         select * from notice 
-            <trim prefix="where">
-                <if test="notice_type != '전체'">  
-                  notice_type=#{notice_type} 
-                </if> 
-            </trim>
+        <trim prefix="where">
+            <if test="notice_type != '전체'">   notice_type=#{notice_type} 
+            </if>
+        </trim>
         order by notice_id desc
     </select>
 
@@ -25,10 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="update" parameterType="notice">
-        update notice set notice_title=#{notice_title},
-                          notice_content=#{notice_content},
-                          notice_type=#{notice_type},
-                          admin_id=#{admin_id}
+        update notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_type=#{notice_type}, admin_id=#{admin_id}
                           where notice_id=#{notice_id}
     </update>
 

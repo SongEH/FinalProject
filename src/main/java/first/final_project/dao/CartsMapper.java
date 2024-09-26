@@ -24,9 +24,9 @@ public interface CartsMapper {
     int delete(int carts_id);
 
     // 수정 (수량만 가능)
-    int update(int carts_id, int carts_quantity);  
+    int update(int carts_id, int carts_quantity);
 
-    // 메뉴id로 장바구니 검색 검색 
+    // 메뉴id로 장바구니 검색 검색
     CartsVo findByMenuId(int member_id, int shop_id, int menu_id);
 
     List<CartsVo> findPendingOrders(int member_id, int shop_id);
@@ -34,6 +34,5 @@ public interface CartsMapper {
     void updateOrderId(Map<String, Object> map);
 
     List<CartsVo> selectCartListByOrdersId(int orders_id);
-
 
 }

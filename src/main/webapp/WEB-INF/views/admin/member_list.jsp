@@ -4,18 +4,20 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <title>Member List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Member List</title>
+    
     <style>
-      body {
+     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
-        padding: 20px;
+        padding: 0px;
       }
 
       .container {
@@ -32,28 +34,7 @@
         color: #333;
       }
 
-      .bg-white {
-        background-color: #fff;
-        border-radius: 5px;
-        padding: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      .form-control {
-        width: calc(100% - 20px);
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-      }
-
-      .form-control:focus {
-        border-color: #007bff;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-      }
-
-      .btn {
+      input[type="button"] {
         background-color: #5cb85c;
         color: white;
         border: none;
@@ -63,22 +44,38 @@
         transition: background-color 0.3s;
       }
 
-      .btn:hover {
+      input[type="button"]:hover {
         background-color: #4cae4c;
       }
 
-      .flex {
-        display: flex;
-        justify-content: flex-end;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
       }
 
-      .flex > input {
-        margin-left: 10px;
+      table, th, td {
+        border: 1px solid #ddd;
       }
 
-      label {
-        font-weight: bold;
+      th, td {
+        padding: 12px;
+        text-align: left;
       }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      
     </style>
 
   </head>

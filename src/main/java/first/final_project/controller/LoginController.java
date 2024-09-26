@@ -85,9 +85,10 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
+        session.setAttribute("userType", "MEMBER");
         session.setAttribute("isLoggedIn", true);
-        session.setAttribute("userType", user);
 
+        session.setAttribute("currentUser", user.getMember_accountId());
         // 절대 경로 사용
         // String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
         // return "redirect:" + redirectUrl;
@@ -156,7 +157,8 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
-        session.setAttribute("userType", user);
+        session.setAttribute("userType", "OWNER");
+        session.setAttribute("currentUser", user.getOwner_accountId());
         System.out.println(user);
         // return "redirect:../main.do";
         // 태광 수정 
@@ -194,8 +196,8 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
-        session.setAttribute("userType", user);
-
+        session.setAttribute("userType", "ADMIN");
+        
         return "redirect:../main.do";
     }
 

@@ -10,14 +10,14 @@ import lombok.Data;
 @Alias("reviews")
 @Data
 public class ReviewsVo {
-    
-    // review column 
+
+    // review column
     private int reviews_id;
     private int reviews_rating;
     private String reviews_content;
     private String reviews_cdate;
 
-    // foreign key 
+    // foreign key
     private int orders_id;
     private int shop_id;
     private int member_id;
@@ -36,6 +36,6 @@ public class ReviewsVo {
 
     // CeoReviewVo vo = new CeoReviewVo();
 
-    // 이미지 저장 
+    // 이미지 저장
     List<ReviewsImagesVo> reviews_img_list = new ArrayList<>();
 }

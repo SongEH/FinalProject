@@ -2,12 +2,16 @@ package first.final_project.controller;
 
 import java.util.List;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.CartsMapper;
@@ -125,19 +129,38 @@ public class CartsController {
 	}
 
 	// carts_display.jsp에서 호출
-	@RequestMapping("delete2.do")
-	public String delete2(@RequestParam("carts_id") int carts_id, RedirectAttributes ra) {
-		// CartsVo 정보 얻어온다
-		CartsVo vo = carts_mapper.selectOne(carts_id);
-		
+	// @RequestMapping("delete2.do")
+	// public void delete2(@RequestParam("carts_id") int carts_id,
+	// RedirectAttributes ra) {
+	// System.out.println("delete2.do 호출\n\n");
+
+	// // CartsVo 정보 얻어온다
+	// CartsVo vo = carts_mapper.selectOne(carts_id);
+
+	// if (vo != null) {
+	// carts_mapper.delete(carts_id);
+	// System.out.println("삭제완\n\n");
+	// ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
+	// } else {
+	// ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
+	// }
+
+	// // return "redirect:/main/display.do"; // 적절한 리디렉션 URL
+
+	// // String referer = request.getHeader("Referer");
+	// // return "redirect:" + referer;
+	// }
+
+	@GetMapping("delete2.do")
+	@ResponseBody // JSON 응답을 반환
+	public ResponseEntity<String> deleteCartItem(@RequestParam("carts_id") int cartsId) {
+		CartsVo vo = carts_mapper.selectOne(cartsId);
+
 		if (vo != null) {
-			carts_mapper.delete(carts_id);
-			System.out.println("삭제 성공");
-			ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
-			return "redirect:../carts/list";
+			carts_mapper.delete(cartsId);
+			return ResponseEntity.ok("삭제되었습니다.");
 		} else {
-			ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
-			return "redirect:../error/error";
+			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("해당 항목을 찾을 수 없습니다.");
 		}
 		
 	}

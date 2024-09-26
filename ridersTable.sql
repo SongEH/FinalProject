@@ -99,12 +99,14 @@ CREATE TABLE delivery_history (
 );
 
 CREATE TABLE commissions (
-    commissions_id INT AUTO_INCREMENT PRIMARY KEY,
-    raiders_id INT NOT NULL,
-    commission DOUBLE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    commissions_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 기본 키
+    raiders_id INT NOT NULL,  -- Riders 테이블의 외래 키
+    deliveries_id INT,  -- 배달 ID (추가된 컬럼)
+    commission DOUBLE NOT NULL,  -- 커미션 금액
+    created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 생성 시간 (기본값: 현재 시간)
+    CONSTRAINT fk_raiders_commissions FOREIGN KEY (raiders_id) REFERENCES Riders(raiders_id) ON DELETE CASCADE,  -- 외래 키 제약 조건
+    CONSTRAINT unique_commission UNIQUE (raiders_id, deliveries_id)  -- raiders_id와 deliveries_id의 조합에 대한 중복 방지 제약 조건
 );
-
 -- Main으로 넘어오면서 추가 해야하는 테이블
 
 CREATE TABLE `menu` (

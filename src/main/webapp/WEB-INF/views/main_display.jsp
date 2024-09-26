@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+   // Assuming 'user' is the session attribute you want to check
+   Object user = session.getAttribute("user");
+   boolean isLoggedIn = (user != null);
+%>
+
 <!DOCTYPE html>
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -85,8 +91,15 @@ pageEncoding="UTF-8"%>
       // alert(food_category);
       let order_addr = $("#order_addr").val().trim();
       // alert(order_addr);
+      // let isLoggedIn = ${"#isLoggedIn"}.val().trim();
+
+      
+      if("${ empty user}"=="true" ){
+        alert("로그인 후 이용할 수 있습니다.");
+        return;
+      }
       if(order_addr==null || order_addr==""){
-        alert("주소를 입력하시거나 로그인 후 이용할 수 있습니다.")
+        alert("주소를  로그인 후 이용할 수 있습니다.")
         return;
       }
 

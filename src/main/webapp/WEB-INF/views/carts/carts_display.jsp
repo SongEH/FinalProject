@@ -150,7 +150,7 @@
       </c:if>
 
       <!-- 가게명 및 가게별 총 가격 초기화 -->
-      <p class="shop-info">가게명: ${item.shop_name}</p>
+      <p class="shop-info">가게명: ${item.shop_name} ${status}</p>
       <c:set var="currentShopId" value="${item.shop_id}" />
       <c:set var="currentShopName" value="${item.shop_name}" />
       <c:set var="currentShopTotal" value="0" />
@@ -173,10 +173,12 @@
     <!-- 가게별 총 가격 계산 -->
     <c:set var="currentShopTotal" value="${currentShopTotal + (item.carts_quantity * item.menu_price)}" />
     <c:set var="totalPrice" value="${totalPrice + (item.carts_quantity * item.menu_price)}" />
+    <c:set var="status" value="${item.status}"/>
   </c:forEach>
 
+  
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
-  <c:if test="${currentShopId != ''}">
+  <c:if test="${currentShopId !='' && status=='영업중'}">
     <p>총 가격: ${currentShopTotal}원</p>
     <button id="orderButton" class="order-button"
       onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>

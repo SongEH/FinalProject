@@ -42,16 +42,40 @@ public class AddrController {
       return "redirect:/member/login_form.do";
     }
 
+    Integer member_id = user.getMember_id();
+
+    List<AddrVo> addr_list = addr_mapper.selectList(member_id);
+
+    model.addAttribute("addr_list", addr_list);
+
     return "addr/addr_list";
   }
 
-  @RequestMapping("addr_insert.do")
-  public String addr_insert(AddrVo vo) {
+  @RequestMapping("addr_insert_form.do")
+  public String addr_insert_form(String nextPath, Model model) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
       return "redirect:/member/login_form.do";
     }
+
+    System.out.println(nextPath);
+
+    model.addAttribute("nextPath", nextPath);
+
+    return "addr/addr_insert_form";
+  }
+
+  @RequestMapping("addr_insert.do")
+  public String addr_insert(AddrVo vo, String nextPath) {
+    MemberVo user = (MemberVo) session.getAttribute("user");
+
+    if (user == null) {
+      return "redirect:/member/login_form.do";
+    }
+
+    //
+    System.out.println(nextPath);
 
     vo.setMember_id(user.getMember_id());
 
@@ -59,7 +83,11 @@ public class AddrController {
 
     session.setAttribute("vo", vo);
 
-    return "redirect:/addr/addr_list.do";
+    if (nextPath.equals("addr_list")) {
+      return "redirect:/addr/addr_list.do";
+    } else {
+      return "redirect:/order/pending_list.do";
+    }
 
   }
 
@@ -82,7 +110,7 @@ public class AddrController {
     return "addr/addr_modify_form";
   }
 
-  @RequestMapping("addr_modify.do")
+  @RequestMapping("addr_modify.do") 
   public String addr_modify(@RequestParam("addr_id") int addr_id,
       @RequestParam("addr_zipcode") String addr_zipcode,
       @RequestParam("addr_line1") String addr_line1,

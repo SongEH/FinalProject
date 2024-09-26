@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.OwnerAnswerMapper">
+
+    <select id="selectOneFromIdx" parameterType="int" resultType="owner_answer">
+        select * from owner_answer where o_inquiries_id=#{o_inquiries_id} 
+    </select>
+</mapper>
+
+

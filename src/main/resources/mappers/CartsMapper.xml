@@ -8,14 +8,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- <select id="selectList" resultType="carts">
      select * from carts order by carts_id desc
   </select> -->
-
+  
    <select id="selectList" parameterType="int" resultType="carts">
-     SELECT 
-         c.*,                         -- Carts 테이블의 모든 컬럼을 선택
-         s.shop_name   AS shop_name,    -- shop 테이블에서 가게명
-         m.menu_name   AS menu_name,    -- Menu 테이블에서 메뉴명
-         m.menu_img    AS menu_img,   -- Menu 테이블에서 메뉴이미지명
-         m.menu_price  AS menu_price  -- Menu 테이블에서 메뉴가격
+      SELECT 
+         c.*,                          
+         s.shop_name   AS shop_name,    
+         m.menu_name   AS menu_name,    
+         m.menu_img    AS menu_img,   
+         m.menu_price  AS menu_price,
+         CASE 
+            WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
+            WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) 
+            and TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
+            WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
+            ELSE '영업전'
+         END AS status  
       FROM 
          carts c
       JOIN 
@@ -23,11 +30,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       JOIN 
          shop s ON m.shop_id = s.shop_id
       WHERE
-        c.orders_id IS NULL
-        AND c.member_id = #{ member_id }
+         c.orders_id IS NULL
+         AND c.member_id = #{ member_id }
+      ORDER BY shop_id;
+   </select> 
+   
+<!--  초기 selectList 
+   <select id="selectList" parameterType="int" resultType="carts">
+      SELECT 
+         c.*,                          Carts 테이블의 모든 컬럼을 선택
+         s.shop_name   AS shop_name,    shop 테이블에서 가게명
+         m.menu_name   AS menu_name,     Menu 테이블에서 메뉴명
+         m.menu_img    AS menu_img,    Menu 테이블에서 메뉴이미지명
+         m.menu_price  AS menu_price   Menu 테이블에서 메뉴가격
+      FROM 
+         carts c
+      JOIN 
+         menu m ON c.menu_id = m.menu_id
+      JOIN 
+         shop s ON m.shop_id = s.shop_id
+      WHERE
+         c.orders_id IS NULL
+         AND c.member_id = #{ member_id }
       ORDER BY shop_id;
    </select>
-
+   -->
 
    <!-- Paging별 조회 -->
    <select id="selectPageList" parameterType="Map" resultType="carts">
@@ -140,15 +167,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          c.orders_id = #{orders_id}
    </select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

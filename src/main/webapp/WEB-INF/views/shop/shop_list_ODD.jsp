@@ -85,7 +85,6 @@ body {
 
 /* Each store block */
 .store {
-  position: relative;
   width: 48%;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -135,28 +134,54 @@ body {
 .form-control {
   width: 200px;
 }
+
+/* .store-list {
+  max-width: 1200px;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.store {
+  border: 1px solid #eee;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+.store-left {
+  display: flex;
+}
+.store-logo {
+  margin-right: 20px;
+}
+.store-logo img {
+  width: 60px;
+  height: 60px;
+}
+.store-info {
+  font-size: 14px;
+}
+.store-info strong {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 5px;
+}
+.store-info .rating {
+  color: orange;
+  margin-right: 10px;
+}
+.coupon {
+  background-color: #fff4f4;
+  color: red;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+} */
 .delivery-time {
   color: gray;
   font-size: 12px;
-}
-.image-z1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 이미지 비율을 유지하며 div에 맞게 조정 */
-    z-index: 1; /* z-index를 설정하여 이미지가 맨 위에 오도록 */
-}
-.text-over-image {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* 중앙 정렬 */
-  color: white; /* 글씨 색 */
-  font-size: 24px; /* 글씨 크기 */
-  font-weight: bold;
-  z-index: 2; /* 이미지 위로 텍스트가 오도록 설정 */
 }
 </style>
     <script>
@@ -177,11 +202,11 @@ body {
     </script>
     
     <script>
-      function selectOne(shop_id, status){
+      function selectOne(shop_id){
+        // alert(shop_id);
         $.ajax({
           url     :     "/shop/select_one.do",
-          data    :      {"shop_id": shop_id,
-                          "status": status},
+          data    :      {"shop_id": shop_id},
           success :   function(res_data){
                 // alert("select_one.do 성공");
                 $("#select_one_display").html(res_data).show();
@@ -252,72 +277,34 @@ body {
 
     <div id="store_list">
       <div class="store-list mt-10" id="store-list" >
-        <!-- 영업중인 가게  -->
         <c:forEach var="vo" items="${list}">
-          <c:if test="${vo.status =='영업중'}">
-            <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
+          ${vo.status}
+          <c:if>
+          <div class="store" onclick="selectOne('${vo.shop_id}');">
               <div class="store-left">
-                <div class="store-logo">
-                  <div class="image-container">
-                    <!-- 가게 로고 이미지 -->
-                    <img class="image-z2" src="${pageContext.request.contextPath}/resources/images/${vo.shop_img}" alt="Store 1 Logo">
-                    <!-- 이미지 위에 표시할 텍스트 -->
-                    <div class="overlay-text"></div>
+                  <div class="store-logo">
+                    <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Store 1 Logo">
                   </div>
-                </div>
-                <div class="store-info">
-                  <strong>${vo.shop_name}</strong>
-                  <div>
-                    <span class="rating">★ ${vo.shop_rating}</span> 
-                    | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
+                  <div class="store-info">
+                      <strong>${vo.shop_name}</strong>
+                      <div>
+                          <span class="rating">★ ${vo.shop_rating}</span>
+                          | 리뷰${vo.reviews_count} | 사장님댓글 ${vo.ceoreview_count}
+                      </div>
+                      <div>${vo.shop_min_price} 11,000원 이상 배달</div>
+                      <div class="delivery-time"></div>
                   </div>
-                  <div>${vo.shop_min_price}원 이상 배달</div>
-                  <div class="delivery-time"></div>
-                </div>
+                  <c:if test="${vo.status == '영업전' || vo.status == '휴무일'}">
+                    <img class="store-status-img" src="${pageContext.request.contextPath }/resources/images/closed.png" alt="영업전 또는 휴무일">
+                  </c:if>
               </div>
-            </div>
-          </c:if>
-        </c:forEach>
-        <div>
-
-        </div>
-        <!-- 영업중이 아닌 가게 -->
-        <c:forEach var="vo" items="${list}">
-          <c:if test="${vo.status == '영업전' || vo.status=='휴무일'}">
-            <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
-              <img class="image-z1" src="${pageContext.request.contextPath}/resources/images/back_black.png">
-            <c:if test="${vo.status == '영업전'}">
-              <div class="text-over-image">가게 오픈 시간  ${fn:substring(vo.shop_open_hour, 0, 5)}</div>
-            </c:if>
-            <c:if test="${vo.status == '휴무일'}">
-              <div class="text-over-image">금일은 휴무일입니다.</div>
-            </c:if>
-              <div class="store-left">
-                <div class="store-logo">
-                  <div class="image-container">
-                    <!-- 가게 로고 이미지 -->
-                    <img class="image-z2" src="${pageContext.request.contextPath}/resources/images/${vo.shop_img}" alt="Store 1 Logo">
-                    <!-- 이미지 위에 표시할 텍스트 -->
-                    <div class="overlay-text">Closed</div>
-                  </div>
-                </div>
-                <div class="store-info">
-                  <strong>${vo.shop_name}</strong>
-                  <div>
-                    <span class="rating">★ ${vo.shop_rating}</span> 
-                    | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
-                  </div>
-                  <div>${vo.shop_min_price}원 이상 배달</div>
-                  <div class="delivery-time"></div>
-                </div>
-              </div>
-            </div>
+          </div>
           </c:if>
         </c:forEach>
       </div>
     </div>
   </div>
-
+ 
   <div id="store_list_display">
     <input type="hidden" id="order_addr" value="${order_addr}"/>
     <input type="hidden" id="food_category" value="${food_category}"/>

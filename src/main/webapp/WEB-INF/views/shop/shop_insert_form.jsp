@@ -10,28 +10,18 @@
   <script>
   function send(f) {
     let shop_name = f.shop_name.value.trim();
-    // alert(f.shop_name.value);
     let shop_content = f.shop_content.value.trim();
-    // alert(f.shop_content.value);
     let shop_addr1 = f.shop_addr1.value.trim();
     let shop_addr2 = f.shop_addr2.value.trim();
     let shop_addr = shop_addr1 + " " + shop_addr2;
-    alert(shop_addr);
-    // alert(f.shop_addr.value);
     let shop_call= f.shop_call.value.trim();
-    // alert(f.shop_call.value);
     let shop_min_price = f.shop_min_price.value.trim();
-    // alert(f.shop_min_price.value);
-    let shop_hours = f.shop_hours.value.trim();
-    // alert(f.shop_hours.value);
-    let shop_close_day = f.shop_close_day.value.trim();
-    // alert(f.shop_close_day.value);
+    let shop_open_hour = f.shop_open_hour.value;
+    let shop_close_hour = f.shop_close_hour.value;
+    let shop_close_day = f.shop_close_day.value;
     let shop_area = f.shop_area.value.trim();
-    // alert(f.shop_area.value);
     let food_category = f.food_category.value;
-    // alert(f.food_category.value);
     let shop_status = f.shop_status.value;
-    // alert(f.shop_status.value);
 
     if(f.shop_name==""){
       alert("가게 이름을 작성해주세요")
@@ -153,7 +143,31 @@
                               <label>영업시간</label>
                             </div>
                           </div>
-    
+                          <div class="col-md-6">
+                            <div class="form-floating">
+                              <input type="time" class="form-control" placeholder="영업오픈시간" name="shop_open_hours">
+                              <label>영업 오픈 시간</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-floating">
+                              <input type="time" class="form-control" placeholder="영업마감시간" name="shop_close_hours">
+                              <label>영업 마감 시간</label>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-floating">
+                              <select class="form-control" placeholder="휴무일" name="shop_close_day">
+                                <option class="form-control" value="monday">월요일</option>
+                                <option class="form-control" value="tuesday">화요일</option>
+                                <option class="form-control" value="wednesday">수요일</option>
+                                <option class="form-control" value="thursday">목요일</option>
+                                <option class="form-control" value="friday">금요일</option>
+                                <option class="form-control" value="saturday">토요일</option>
+                                <option class="form-control" value="sunday">일요일</option>
+                              </select>
+                            </div>
+                          </div>
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="휴무일" name="shop_close_day">

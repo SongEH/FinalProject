@@ -1,7 +1,5 @@
 package first.final_project.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,22 +37,34 @@ public class AddrController {
 
     // user정보가 없을 경우에 로그인 폼으로 다시 돌아가기
     if (user == null) {
-      return "redirect:/member/login_form.do";
+      return "redirect:/login_form.do";
     }
 
-    return "addr/addr_insert_form";
+    return "addr/addr_list";
   }
 
-  @RequestMapping("addr_insert.do")
-  public String addr_insert(AddrVo vo, String nextPath) {
+  @RequestMapping("addr_insert_form.do")
+  public String addr_insert_form(String nextPath, Model model) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
       return "redirect:/member/login_form.do";
     }
 
-    //
     System.out.println(nextPath);
+
+    model.addAttribute("nextPath", nextPath);
+
+    return "addr/addr_insert_form";
+  }
+
+  @RequestMapping("addr_insert.do")
+  public String addr_insert(AddrVo vo) {
+    MemberVo user = (MemberVo) session.getAttribute("user");
+
+    if (user == null) {
+      return "redirect:/login_form.do";
+    }
 
     vo.setMember_id(user.getMember_id());
 
@@ -62,12 +72,8 @@ public class AddrController {
 
     session.setAttribute("vo", vo);
 
-    if (nextPath.equals("addr_list")) {
-      return "redirect:/addr/addr_list.do";
-    } else {
-      return "redirect:/order/pending_list.do";
-    }
-
+    return "redirect:/addr/addr_list.do";
+  
   }
 
   @RequestMapping("addr_modify_form.do")
@@ -75,7 +81,7 @@ public class AddrController {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
-      return "redirect:/member/login_form.do";
+      return "redirect:/login_form.do";
     }
 
     AddrVo addr = addr_mapper.selectOneFromIdx(addr_id);
@@ -98,7 +104,7 @@ public class AddrController {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
-      return "redirect:/member/login_form.do";
+      return "redirect:/login_form.do";
     }
 
     AddrVo vo = new AddrVo();
@@ -119,7 +125,7 @@ public class AddrController {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
-      return "redirect:/member/login_form.do";
+      return "redirect:/login_form.do";
     }
 
     addr_mapper.delete(addr_id);

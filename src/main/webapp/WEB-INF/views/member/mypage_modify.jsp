@@ -221,15 +221,7 @@
                 value="${member.member_phone}"
               />
             </div>
-            <div class="form-group">
-              <lable for="grade">회원등급:</lable>
-              <input
-                class="form-control"
-                type="icon"
-                value="${member.member_grade}"
-                readonly
-              />
-            </div>
+            
             <div class="form-group">
               <button type="button" class="btn btn-primary" onclick="send(this.form);">수정</button>
               <button type="button" class="btn btn-primary" onclick="location.href='/member/mypage.do'">취소</button>

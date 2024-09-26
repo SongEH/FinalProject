@@ -44,6 +44,11 @@
             color: #888;
             margin-bottom: 20px;
         }
+        .inquiries_type {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+        }
         .inquiries_content {
             font-size: 16px;
             line-height: 1.6;
@@ -76,9 +81,9 @@
     </style>
 
     <script type="text/javascript">
-        function del(inquiries_id) {
+        function del(m_inquiries_id) {
             if (confirm("정말 삭제 하시겠습니까?") == false) return;
-            location.href = "delete.do?inquiries_id=" + inquiries_id;
+            location.href = "delete.do?m_inquiries_id=" + m_inquiries_id;
         }
     </script>
 </head>
@@ -106,39 +111,36 @@
 
         </div><!-- End Page Title -->
 
-        <input type="hidden" id="inquiries_id" value="${vo.inquiries_id}">
+        
         <div class="container">
 
             <!-- 상세 정보 표시 영역 -->
             <div class="inquiries_detail">
                 <div class="inquiries_title">
-                    ${vo.inquiries_title}
+                    ${vo.m_inquiries_title}
                 </div>
                 <div class="inquiries_cdate">
-                    ${vo.inquiries_cdate}
+                    ${vo.m_inquiries_cdate}
+                </div>
+                <div class="inquiries_type">
+                    ${vo.m_inquiries_type}
                 </div>
                 <div class="inquiries_content">
-                    ${vo.inquiries_content}
+                    ${vo.m_inquiries_content}
                 </div>
                 <div class="inquiries-author">
-                        작성자: 
-                        <c:choose>
-                            <c:when test="${not empty inquiries.memberAccountId}">
-                                ${vo.memberAccountId}
-                            </c:when>
-                            <c:when test="${not empty inquiries.ownerAccountId}">
-                                ${vo.ownerAccountId}
-                            </c:when>
-                        </c:choose>
-                </div>
-                <c:if test="${isAuthor}">
-                    <button type="button" onclick="location.href='${pageContext.request.contextPath}/inquiries/modify_form.do?inquiries_id=${vo.inquiries_id}'">수정</button>
-                    <button type="button" onclick="del('${vo.inquiries_id}');">삭제</button>
+                    작성자: ${vo.memberAccountId}
+                </div>    
+
+                <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=전체" class="back-button">목록으로</a>
+                <c:if test="${userType == 'MEMBER' && vo.memberAccountId == currentUser }">
+                    <button type="button" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/modify_form.do?m_inquiries_id=${vo.m_inquiries_id}&m_inquiries_type=${vo.m_inquiries_type}'">수정</button>
+                    <button type="button" onclick="del('${vo.m_inquiries_id}');">삭제</button>
                 </c:if>
                 
             </div>
 
-            <a href="${pageContext.request.contextPath}/inquiries/list.do" class="back-button">목록으로</a>
+            
         </div>
 
     </main><!-- End #main -->

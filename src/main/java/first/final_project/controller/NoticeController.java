@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.AdminMapper;
 import first.final_project.dao.NoticeMapper;
@@ -83,7 +82,7 @@ public class NoticeController {
     }
 
     @RequestMapping("insert.do")
-    public String insert(String notice_title, String notice_content, String notice_type, RedirectAttributes ra) {
+    public String insert(String notice_title,String notice_content,String notice_type){
         // 세션에서 user 객체를 가져옴
         AdminVo admin = (AdminVo) session.getAttribute("user");
         if (admin == null) {
@@ -105,8 +104,6 @@ public class NoticeController {
             // 데이터베이스에 공지사항 삽입
             notice_mapper.insert(notice);
 
-            // 성공 메시지 추가 및 목록 페이지로 리다이렉트
-            ra.addFlashAttribute("message", "공지사항이 등록되었습니다");
             return "redirect:/notice/list.do";
         } else {
             // 권한이 없는 경우 로그인 페이지로 리다이렉트
@@ -131,8 +128,7 @@ public class NoticeController {
     }
 
     @RequestMapping("modify.do")
-    public String modify(int notice_id, String notice_title, String notice_content, String notice_type,
-            RedirectAttributes ra) {
+    public String modify(int notice_id, String notice_title, String notice_content, String notice_type) {
         String userType = (String) session.getAttribute("userType");
         if (userType == null || !"ADMIN".equals(userType)) {
             return "redirect:/login_form.do"; // 로그인되지 않았거나 ADMIN이 아닌 경우 로그인 페이지로 리디렉션
@@ -152,8 +148,6 @@ public class NoticeController {
         notice.setAdmin_id(admin.getAdmin_id());
 
         notice_mapper.update(notice);
-
-        ra.addFlashAttribute("message", "공지사항이 수정되었습니다.");
         return "redirect:/notice/detail.do?notice_id=" + notice_id;
     }
 

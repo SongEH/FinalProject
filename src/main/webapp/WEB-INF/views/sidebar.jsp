@@ -39,14 +39,144 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <i class="bi bi-person"></i><span>회원페이지</span
                     ><i class="bi bi-chevron-down ms-auto"></i>
                   </a>
-                  <ul
-                    id="member-management"
-                    class="nav-content collapse"
-                    data-bs-parent="#sidebar-nav"
-                  >
-                    <li>
-                      <a href="/member/mypage.do">
-                        <i class="bi bi-circle"></i><span>회원정보</span>
+                </li>
+                <li>
+                  <a href="/addr/addr_list.do">
+                    <i class="bi bi-circle"></i><span>주소정보</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-journal-text"></i><span>장바구니</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/order/list.do">
+                    <i class="bi bi-circle"></i><span>주문내역</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/carts/list.do">
+                    <i class="bi bi-circle"></i><span>장바구니</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/reviews/list.do">
+                    <i class="bi bi-circle"></i><span>리뷰내역</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/notice/list.do">
+                    <i class="bi bi-circle"></i><span>공지사항</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/member_inquiries/list.do">
+                    <i class="bi bi-circle"></i><span>문의사항</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </c:when>
+        <c:when test="${sessionScope.userType == 'ADMIN'}">
+          <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+              <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-journal-text"></i><span>관리자페이지</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/admin/member_list.do">
+                    <i class="bi bi-circle"></i><span>회원리스트</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/admin/owner_list.do">
+                    <i class="bi bi-circle"></i><span>사장리스트</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/admin/pending_requests.do">
+                    <i class="bi bi-circle"></i><span>승인요청</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/notice/list.do">
+                    <i class="bi bi-circle"></i><span>공지사항</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/member_inquiries/list.do">
+                    <i class="bi bi-circle"></i><span>회원 문의사항</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/owner_inquiries/list.do">
+                    <i class="bi bi-circle"></i><span>사장 문의사항</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </c:when>
+        <c:when test="${sessionScope.userType == 'OWNER'}">
+          <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#owner-management" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-person"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="owner-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/owner/ownerpage.do">
+                    <i class="bi bi-circle"></i><span>회원정보</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-journal-text"></i><span>메뉴관리</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/menu/list.do">
+                    <i class="bi bi-circle"></i><span>메뉴목록</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/menu/insert_form.do">
+                    <i class="bi bi-circle"></i><span>메뉴등록</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>가맹점관리</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <c:choose>
+                    <c:when test="${hasShop}">
+                      <a href="#" class="disabled-link">
+                        <i class="bi bi-circle"></i><span>가맹점 등록 완료</span>
                       </a>
                     </li>
                     <li>
@@ -358,8 +488,25 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   </ul>
                 </li>
               </ul>
-            </c:when>
-          </c:choose>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#notice-management" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-star"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="notice-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/notice/list.do">
+                    <i class="bi bi-circle"></i><span>공지사항</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/owner_inquiries/list.do">
+                    <i class="bi bi-circle"></i><span>문의사항</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </c:when>
       </c:choose>
 

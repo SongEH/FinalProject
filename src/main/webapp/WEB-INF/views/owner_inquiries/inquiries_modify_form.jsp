@@ -69,33 +69,26 @@
 
     <script type="text/javascript">
         function send(f){
-            let inquiries_title = f.inquiries_title.value.trim();
-            let inquiries_type = f.inquiries_type.value.trim();
-            let inquiries_content = f.inquiries_content.value.trim();
+            let o_inquiries_title = f.o_inquiries_title.value.trim();
+            
+            let o_inquiries_content = f.o_inquiries_content.value.trim();
             
 
-            if(inquiries_title ==""){
+            if(o_inquiries_title ==""){
                 alert("제목을 입력하시오");
-                f.inquiries_title.value="";
-                f.inquiries_title.focus();
+                f.o_inquiries_title.value="";
+                f.o_inquiries_title.focus();
                 return;
             }
 
-            if(inquiries_type ==""){
-                alert("유형을 선택하시오");
-                f.inquiries_type.value="";
-                f.inquiries_type.focus();
-                return;
-            }
-
-            if(inquiries_content ==""){
+            if(o_inquiries_content ==""){
                 alert("내용을 입력하시오");
-                f.inquiries_content.value="";
-                f.inquiries_content.focus();
+                f.o_inquiries_content.value="";
+                f.o_inquiries_content.focus();
                 return;
             }
 
-            f.action = "/inquiries/modify.do";
+            f.action = "${pageContext.request.contextPath}/owner_inquiries/modify.do";
             f.submit();
         }
     </script>
@@ -107,6 +100,7 @@
     <%@include file="../header.jsp" %>
 
     <%@include file="../sidebar.jsp" %>
+    
 
     <main id="main" class="main">
         <div class="pagetitle">
@@ -122,40 +116,30 @@
         </nav>
 
         </div><!-- End Page Title -->
-
-        <div class="container">
-            
-            <form action="${pageContext.request.contextPath}/inquiries/modify_form.do" method="post">
-                <input type="hidden" name="inquiries_id" value="${vo.inquiries_id}">
-                <div class="form-group">
-                    <label for="inquiries_title">제목</label>
-                    <input type="text" id="inquiries_title" name="inquiries_title" value="${vo.inquiries_title}" required>
-                </div>
-                <div class="form-group">
-                    <label for="inquiries_type">유형</label>
-                    <select class="select, form-control" id="inquiries_type" name="inquiries_type" required>
-                        <option value="전체" ${vo.inquiries_type == '전체' ? 'selected' : ''}>전체</option>
-                        <option value="결제문의" ${vo.inquiries_type == '결제문의' ? 'selected' : ''}>결제 문의</option>
-                        <option value="주문문의" ${vo.inquiries_type == '주문문의' ? 'selected' : ''}>주문 문의</option>
-                        <option value="서비스이용" ${vo.inquiries_type == '서비스이용' ? 'selected' : ''}>서비스 이용</option>
-                        <option value="배송문의" ${vo.inquiries_type == '배송문의' ? 'selected' : ''}>배송 문의</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inquiries_content">내용</label>
-                    <textarea id="inquiries_content" name="inquiries_content" rows="5" required>${vo.inquiries_content}</textarea>
-                </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary" onclick="send(this.form);">
-                        등록
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/inquiries/detail.do?inquries_id=${vo.inquiries_id}';">
-                        취소
-                    </button>
-                </div>
-            </form>
-        </div>
-
+        
+            <div class="container">
+                
+                <form action="${pageContext.request.contextPath}/owner_inquiries/modify_form.do" method="post">
+                    <input type="hidden" name="o_inquiries_id" value="${vo.o_inquiries_id}">
+                    <div class="form-group">
+                        <label for="o_inquiries_title">제목</label>
+                        <input type="text" id="o_inquiries_title" name="o_inquiries_title" value="${vo.o_inquiries_title}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="o_inquiries_content">내용</label>
+                        <textarea id="o_inquiries_content" name="o_inquiries_content" rows="5" required>${vo.o_inquiries_content}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                            수정
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id=${vo.o_inquiries_id}';">
+                            취소
+                        </button>
+                    </div>
+                </form>
+            </div>
+         
     </main><!-- End #main -->
     
 </body>

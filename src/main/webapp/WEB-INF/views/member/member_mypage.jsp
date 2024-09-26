@@ -181,15 +181,7 @@ pageEncoding="UTF-8"%>
             readonly
           />
         </div>
-        <div class="mb-4">
-          <lable for="grade">회원등급:</lable>
-          <input
-            class="form-control"
-            type="icon"
-            value="${member.member_grade}"
-            readonly
-          />
-        </div>
+        
         <div class="flex justify-end">
           <c:if test="${user.member_id eq member.member_id}">
             <input

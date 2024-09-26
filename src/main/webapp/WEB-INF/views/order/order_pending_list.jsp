@@ -93,8 +93,18 @@
       let shop_id = f.shop_id.value;
 
 
-      // 기존 주소 선택한 경우 : addr_id만 아래 결제 ajax data에 저장 
-      // 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
+      // 1. 기존 주소 선택한 경우 : addr_id만 아래 결제 ajax data에 저장 
+      // 주소
+      let selectElement = document.getElementById('addr_select');
+      let selectedOption = selectElement.options[selectElement.selectedIndex];
+      addr_id = selectedOption.value;
+      let addr_name = selectedOption.getAttribute('data-addr-name');
+      // addr_all 변수에 합쳐서 저장
+      const addrLine1 = selectedOption.getAttribute('data-addr-line1');
+      const addrLine2 = selectedOption.getAttribute('data-addr-line2');
+      addrAll = addrLine1 + " " + addrLine2;
+
+      // 2. 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
 
 
       // 총 가격

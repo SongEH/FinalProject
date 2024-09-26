@@ -68,32 +68,32 @@
 
     <script type="text/javascript">
         function send(f){
-            let inquiries_title = f.inquiries_title.value.trim();
-            let inquiries_type = f.inquiries_type.value.trim();
-            let inquiries_content = f.inquiries_content.value.trim();
+            let m_inquiries_title = f.m_inquiries_title.value.trim();
+            let m_inquiries_type = f.m_inquiries_type.value.trim();
+            let m_inquiries_content = f.m_inquiries_content.value.trim();
             
-            if(inquiries_title ==""){
+            if(m_inquiries_title ==""){
                 alert("제목을 입력하시오");
-                f.inquiries_title.value="";
-                f.inquiries_title.focus();
+                f.m_inquiries_title.value="";
+                f.m_inquiries_title.focus();
                 return;
             }
 
-            if(inquiries_type ==""){
+            if(m_inquiries_type ==""){
                 alert("유형을 선택하시오");
-                f.inquiries_type.value="";
-                f.inquiries_type.focus();
+                f.m_inquiries_type.value="";
+                f.m_inquiries_type.focus();
                 return;
             }
 
-            if(inquiries_content ==""){
+            if(m_inquiries_content ==""){
                 alert("내용을 입력하시오");
-                f.inquiries_content.value="";
-                f.inquiries_content.focus();
+                f.m_inquiries_content.value="";
+                f.m_inquiries_content.focus();
                 return;
             }
 
-            f.action = "/inquiries/insert.do";
+            f.action = "/member_inquiries/insert.do";
             f.submit();
         }
     </script>
@@ -124,15 +124,15 @@
 
         <div class="container">
         
-        <form action="${pageContext.request.contextPath}/inquiries/insert_form.do" method="post">
-            <input type="hidden" name="inquiries_id" value="${vo.inquiries_id}">
+        <form action="${pageContext.request.contextPath}/member_inquiries/insert_form.do" method="post">
+            <input type="hidden" name="m_inquiries_id" value="${vo.m_inquiries_id}">
             <div class="form-group">
-                <label for="inquiries_title">제목</label>
-                <input type="text" id="inquiries_title" name="inquiries_title" required>
+                <label for="m_inquiries_title">제목</label>
+                <input type="text" id="m_inquiries_title" name="m_inquiries_title" required>
             </div>
             <div class="form-group">
-                <label for="inquiries_type">유형</label>
-                <select class="select, form-control" id="inquiries_type" name="inquiries_type" required>
+                <label for="m_inquiries_type">유형</label>
+                <select class="select, form-control" id="m_inquiries_type" name="m_inquiries_type" required>
                     <option value="전체">전체</option>
                     <option value="결제문의">결제 문의</option>
                     <option value="주문문의">주문 문의</option>
@@ -141,8 +141,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="inquiries_content">내용</label>
-                <textarea id="inquiries_content" name="inquiries_content" rows="5" required></textarea>
+                <label for="m_inquiries_content">내용</label>
+                <textarea id="m_inquiries_content" name="m_inquiries_content" rows="5" required></textarea>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" onclick="send(this.form);">

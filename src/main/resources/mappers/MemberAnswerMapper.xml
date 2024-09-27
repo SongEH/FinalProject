@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.MemberAnswerMapper">
+
+    <select id="selectOne" parameterType="int" resultType="member_answer">
+        select * from member_answer where m_answer_id=#{m_answer_id} 
+    </select>
+
+    <select id="selectListFromIdx" parameterType="int" resultType="member_answer">
+        select * from member_answer where m_inquiries_id=#{m_inquiries_id} order by m_answer_id desc
+    </select>
+
+    <insert id="insert" parameterType="member_answer">
+        insert into member_answer(m_answer_content,admin_id,m_inquiries_id)
+        values(#{m_answer_content},#{admin_id},#{m_inquiries_id})
+    </insert>
+
+    <update id="update" parameterType="member_answer">
+        update member_answer set m_answer_content=#{m_answer_content}, admin_id=#{admin_id}, m_inquiries_id=#{m_inquiries_id}
+                                where m_answer_id=#{m_answer_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from member_answer where m_answer_id=#{m_answer_id}
+    </delete>
+</mapper>
+
+

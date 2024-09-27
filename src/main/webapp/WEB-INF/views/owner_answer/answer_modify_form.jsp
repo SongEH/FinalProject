@@ -77,7 +77,7 @@
                 return;
             }
 
-            f.action = "${pageContext.request.contextPath}/owner_inquiries/answer_insert.do";
+            f.action = "${pageContext.request.contextPath}/owner_inquiries/answer_modify.do";
             f.submit();
         }
     </script>
@@ -108,13 +108,13 @@
 
         <div class="container">
         
-        <form action="${pageContext.request.contextPath}/owner_inquiries/answer_insert_form.do" method="post">
+        <form action="${pageContext.request.contextPath}/owner_inquiries/answer_modify_form.do" method="post">
             
             <input type="hidden" name="o_inquiries_id" value="${param.o_inquiries_id}">
-            <input type="hidden" name="o_answer_id" value="${answer.o_answer_id}">
+            <input type="hidden" name="o_answer_id" value="${vo.o_answer_id}">
             <div class="form-group">
                 <label for="o_answer_content">내용</label>
-                <textarea id="o_answer_content" name="o_answer_content" rows="5" required></textarea>
+                <textarea id="o_answer_content" name="o_answer_content" rows="5" required>${vo.o_answer_content}</textarea>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" onclick="send(this.form);">

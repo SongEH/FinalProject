@@ -183,8 +183,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <input type="hidden" name="menu_soldout" value="0" />
 
                 <div class="text-center">
-                  <input class="btn btn-success" type="button" value="메인화면" onclick="location.href='list.do'" />
-                  <input class="btn btn-primary" type="button" value="메뉴등록" onclick="send(this.form);" />
+                  <input class="button_style" type="button" value="메인화면" onclick="location.href='list.do'" />
+                  <input class="button_style" type="button" value="메뉴등록" onclick="send(this.form);" />
                 </div>
               </form>
               <!-- End floating Labels Form -->

@@ -15,18 +15,7 @@
   </script>
 
   <script>
-    function insert_review(orders_id) {
-      // $.ajax({
-      // url     :     "../reviews/insert_form.do",
-      // data    :      {"orders_id": orders_id},
-      // success :   function(res_data){
-      //         alert("리뷰 등록이 완료되었습니다.");
-      //         ("reviews_list_display").html(res_data);
-      // },
-      // error   :   function(err){
-      // alert(error.responseText)
-      // }
-      // });
+    function insert_review(orders_id) {  
       location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
     }
   </script>
@@ -108,6 +97,7 @@
   <%@include file="../header.jsp" %>
 
   <%@include file="../sidebar.jsp" %>
+
   <main id="main" class="main">
     <div class="pagetitle">
 
@@ -139,7 +129,7 @@
           <label for="endDate">종료 날짜:</label>
           <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-left: 10px">
+        <button type="submit" class="button_style" style="margin-left: 10px">
           검색
         </button>
       </form>
@@ -180,16 +170,16 @@
                               <p class="card-text">가격 ${vo.orders_price}원</p>
                     </td>
                     <td>
-                      <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
+                      <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
                         onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
-                      <input class="btn btn-info" type="button" id="btn_popup_update" value="배송조회"
+                      <input class="button_style" type="button" id="btn_popup_update" value="배송조회"
                         onclick="modify_menu('${vo.orders_id}');">
                       <c:choose>
                         <c:when test="${vo.hasReview}">
-                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
+                          <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
                         </c:when>
                         <c:otherwise>
-                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
+                          <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성"
                             onclick="insert_review('${vo.orders_id}');">
                         </c:otherwise>
                       </c:choose>

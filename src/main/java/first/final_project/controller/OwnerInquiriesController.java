@@ -101,7 +101,7 @@ public class OwnerInquiriesController {
         if ("OWNER".equals(userType)) {
             return "owner_inquiries/inquiries_insert_form";
         } else {
-            return "redirec:/login_form.do";
+            return "redirect:/login_form.do";
         }
 
     }
@@ -116,7 +116,6 @@ public class OwnerInquiriesController {
         String userType = (String) session.getAttribute("userType");
         if ("OWNER".equals(userType)) {
             OwnerInquiriesVo vo = new OwnerInquiriesVo();
-
             vo.setO_inquiries_title(o_inquiries_title);
             vo.setO_inquiries_content(o_inquiries_content);
             vo.setOwner_id(owner.getOwner_id());

@@ -87,4 +87,6 @@
 
   <!-- Template Main JS File -->
   <script src="../resources/assets/js/main.js"></script>
+
+
 </html>

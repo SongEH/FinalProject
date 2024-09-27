@@ -37,13 +37,13 @@
         }
         .filter a {
             text-decoration: none;
-            color: #007bff;
+            color: #f0a8d0;
             margin: 0 10px;
             font-size: 16px;
         }
         .filter a.active {
             font-weight: bold;
-            color: #ff5733;
+            color: #e090b5;
         }
         .owner-actions {
             text-align: center;
@@ -53,12 +53,13 @@
             text-decoration: none;
             padding: 10px 20px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #f0a8d0;
             border-radius: 5px;
             font-size: 16px;
         }
         .owner-actions a:hover {
-            background-color: #0056b3;
+            background-color: #e090b5;
+            color: #fff;
         }
         .inquiries-list {
             display: flex;

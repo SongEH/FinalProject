@@ -15,25 +15,14 @@
   </script>
 
   <script>
-    function insert_review(orders_id) {
-      // $.ajax({
-      // url     :     "../reviews/insert_form.do",
-      // data    :      {"orders_id": orders_id},
-      // success :   function(res_data){
-      //         alert("리뷰 등록이 완료되었습니다.");
-      //         ("reviews_list_display").html(res_data);
-      // },
-      // error   :   function(err){
-      // alert(error.responseText)
-      // }
-      // });
+    function insert_review(orders_id) {  
       location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
     }
   </script>
 
 
   <!-- polling 방식으로 주문상태 업데이트 -->
-  <script>
+  <!-- <script>
     function fetchOrders() {
       $.ajax({
         url: `/order/order_list.do`, // 주문 내역을 가져오는 API 경로
@@ -67,6 +56,21 @@
 
     // 특정 주기 마다 주문 내역을 가져옵니다.
     setInterval(fetchOrders, 30000); // 10000ms = 10초
+  </script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+  <script>
+    var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+    var stompClient = Stomp.over(socket);
+
+    // WebSocket 연결 설정
+    stompClient.connect({}, function (frame) {
+      // 주문 상태 업데이트 메시지 구독
+      stompClient.subscribe('/topic/orders', function (message) {
+        location.reload(); // 메시지 수신 시 페이지 새로고침
+      });
+    });
   </script>
 
 
@@ -102,8 +106,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">주문&리뷰</li>
+          <li class="breadcrumb-item active">주문내역</li>
         </ol>
       </nav>
 
@@ -125,7 +129,7 @@
           <label for="endDate">종료 날짜:</label>
           <input type="date" id="endDate" name="endDate" value="${param.endDate}" class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-left: 10px">
+        <button type="submit" class="button_style" style="margin-left: 10px">
           검색
         </button>
       </form>
@@ -166,16 +170,16 @@
                               <p class="card-text">가격 ${vo.orders_price}원</p>
                     </td>
                     <td>
-                      <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
+                      <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
                         onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
-                      <input class="btn btn-info" type="button" id="btn_popup_update" value="배송조회"
+                      <input class="button_style" type="button" id="btn_popup_update" value="배송조회"
                         onclick="modify_menu('${vo.orders_id}');">
                       <c:choose>
                         <c:when test="${vo.hasReview}">
-                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
+                          <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
                         </c:when>
                         <c:otherwise>
-                          <input class="btn btn-danger" type="button" id="btn_popup_delete" value="리뷰작성"
+                          <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성"
                             onclick="insert_review('${vo.orders_id}');">
                         </c:otherwise>
                       </c:choose>

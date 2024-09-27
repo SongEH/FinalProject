@@ -17,14 +17,38 @@
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <meta charset="UTF-8" />
 
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const orderAddr = document.getElementById("order_addr").value; // 입력된 주소
+      const addrOptions = document.querySelectorAll("#addr_select option"); // 주소 옵션들
+      const addrSelect = document.getElementById("addr_select");
+      let addressFound = false;
+
+      addrOptions.forEach(option => {
+        // 기존 주소와 일치하는지 확인
+        if (option.dataset.addrLine1 === orderAddr) {
+          document.getElementById("saved_addr").checked = true; // 기존 주소 라디오 버튼 체크
+          addressFound = true;
+
+          // addr_select에서 해당 옵션을 기본 선택으로 설정
+          addrSelect.value = option.value; // 일치하는 옵션을 기본 선택으로 설정
+          document.getElementById("order_addr").value = ""; // order_addr 필드 빈 값으로 설정
+        }
+      });
+    });
+  </script>
+
   <script type="text/javascript">
     let order_name = '';
-    // 주문 이름 생성 
-    // 메뉴 개수가 1개 = 메뉴 이름 
-    // 메뉴 개수가 2개 이상 = 처음 메뉴 이름과 그외 메뉴 개수 표시 (예: 김치찌게 외 3개)
-
+    let addr_id = '';
+    let addrAll = '';
 
     document.addEventListener('DOMContentLoaded', function () {
+
+      // 주문 이름 생성 
+      // 메뉴 개수가 1개 = 메뉴 이름 
+      // 메뉴 개수가 2개 이상 = 처음 메뉴 이름과 그외 메뉴 개수 표시 (예: 김치찌게 외 3개)
 
       // 모든 cart_menuname 클래스를 가진 td 요소 선택
       const menuElements = document.querySelectorAll('.cart_menuname');
@@ -33,16 +57,17 @@
       if (menuElements.length > 0) {
         // 첫 번째 메뉴 이름
         order_name = menuElements[0].textContent.trim();
-
-        // 총 개수가 2개 이상일 경우
-        if (menuElements.length > 1) {
-          // 첫 번째 메뉴 이름과 나머지 메뉴 개수
-          order_name += " 외 " + (menuElements.length - 1) + "개";
-        }
       }
-      console.log(order_name);
+      // 총 개수가 2개 이상일 경우
+      if (menuElements.length > 1) {
+        // 첫 번째 메뉴 이름과 나머지 메뉴 개수
+        order_name += " 외 " + (menuElements.length - 1) + "개";
+      }
     });
+  </script>
 
+  <script>
+    // 결제 버튼 클릭시 
     function requestPay(f) {
 
       // 입력값 검증
@@ -56,27 +81,10 @@
       let shop_id = f.shop_id.value;
 
 
-      // 주소
-      let selectElement = document.getElementById('addr_select');
-      let selectedOption = selectElement.options[selectElement.selectedIndex];
-      let addr_id = selectedOption.value;
-      let addr_name = selectedOption.getAttribute('data-addr-name');
-      // addr_all 변수에 합쳐서 저장
-      const addrLine1 = selectedOption.getAttribute('data-addr-line1');
-      const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-      const addrAll = addrLine1 + " " + addrLine2;
-
       // 총 가격
       // total_price의 텍스트 값을 가져와서 orders_price에 저장
       const totalPriceElement = document.getElementById('total_price');
       const orders_price = parseFloat(totalPriceElement.textContent.replace(/[^0-9.-]+/g, ""));
-
-      // Example usage
-      // console.log('Selected Address ID:', addr_id);
-      // console.log('Selected Address Name:', addr_name);
-      // console.log('orders_price : ', orders_price);
-      // console.log('Addr All:', addrAll);
-      // console.log('shop_id:', shop_id);
 
 
       if (member_phone == '') {
@@ -100,6 +108,47 @@
         return;
       }
 
+
+      // 주소 처리 -------------------------------------------------
+      // 1. 기존 주소 선택한 경우 : addr_id만 아래 결제 ajax data에 저장 
+      if (document.getElementById('saved_addr').checked) {
+        let selectElement = document.getElementById('addr_select');
+        let selectedOption = selectElement.options[selectElement.selectedIndex];
+        addr_id = selectedOption.value;
+
+        // addr_all 변수에 합쳐서 저장
+        addrAll = selectedOption.getAttribute('data-addr-line1') + " " + selectedOption.getAttribute('data-addr-line2');
+      }
+
+      // 2. 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
+      if (document.getElementById('current_addr').checked) {
+        const addr_zipcode = f.order_addr_zipcode.value.trim();
+        const addr_name = f.order_addr_name.value.trim();
+        const addr_line1 = f.order_addr.value.trim();
+        const addr_line2 = f.order_addr_detail.value.trim();
+        addrAll = addr_line1 + " " + addr_line2;
+
+        // AJAX 요청으로 새로운 주소 저장
+        $.ajax({
+          type: 'POST',
+          url: '/addr/addr_insert2.do',
+          data: {
+            addr_zipcode: addr_zipcode,
+            addr_name: addr_name,
+            addr_line1: addr_line1,
+            addr_line2: addr_line2
+          },
+          success: function (response) {
+            addr_id = response; // 서버에서 반환된 addr_id를 사용
+          },
+          error: function () {
+            alert("주소 등록 실패! 다시 시도해 주세요.");
+          }
+        });
+      }
+
+
+
       // -------------------------- 결제 --------------------
 
       // 가맹점 식별코드
@@ -119,7 +168,6 @@
         function (rsp) {
           // callback
           if (rsp.success) {
-            alert("rsp.success");
             // 결제 성공 시 서버로 데이터 전송
             $.ajax({
               // url: "/api/payment/data/" + rsp.imp_uid, // 서버의 결제 정보를 받는 endpoint
@@ -156,6 +204,12 @@
       );
     }
   </script>
+
+  <script>
+    function addr_insert() {
+
+    }
+  </script>
 </head>
 
 <body>
@@ -176,8 +230,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">주문&리뷰</li>
+          <li class="breadcrumb-item active">주문하기</li>
         </ol>
       </nav>
 
@@ -190,7 +244,7 @@
           <div class="card">
             <div class="card-body">
 
-              <h5 class="card-title">Floating labels Form</h5>
+              <h5 class="card-title">${shop_name}</h5>
 
               <!-- Floating Labels Form -->
               <form class="row g-3" method="POST">
@@ -202,12 +256,14 @@
                 <input type="hidden" name="member_name" value="${user.getMember_name()}">
 
                 <div class="col-md-12">
+                  <div class="form-check">
+                    <input type="radio" id="saved_addr" name="address_choice" class="form-check-input" checked>
+                    <label class="form-check-label" for="saved_addr">주소</label>
+                  </div>
+
                   <div class="form-floating">
                     <select id="addr_select" name="addr_id" class="form-select">
                       <c:forEach var="addr" items="${addr_list}">
-                        <!-- <input type="text" class="form-control" placeholder="기본주소" name="addr_line1"
-                        value="${addr.addr_line1}" readonly>
-                      <label>${addr.addr_name}</label> -->
                         <option value="${addr.addr_id}" data-addr-name="${addr.addr_name}"
                           data-addr-line1="${addr.addr_line1}" data-addr-line2="${addr.addr_line2}">
                           ${addr.addr_name} : ${addr.addr_line1} ${addr.addr_line2}
@@ -218,7 +274,25 @@
                   </div>
                 </div>
 
-                <input type="button" value="주소 등록" onclick="location.href='/addr/addr_insert_form.do?nextPath=order_pending_list'" />
+                <div class="col-md-12">
+                  <div class="form-check">
+                    <input type="radio" id="current_addr" name="address_choice" class="form-check-input">
+                    <label class="form-check-label" for="current_addr">새로 등록할 주소</label>
+                  </div>
+
+
+                  <input type="text" class="form-control" placeholder="우편번호" name="order_addr_zipcode"
+                    id="order_addr_zipcode" value="${order_addr_zipcode}" readonly>
+                  <input type="text" class="form-control" placeholder="별칭" name="order_addr_name">
+                  <input type="text" class="form-control" placeholder="선택주소" name="order_addr" id="order_addr"
+                    value="${order_addr}" readonly>
+                  <input type="text" class="form-control" placeholder="세부주소" name="order_addr_detail">
+
+
+                </div>
+
+
+
 
                 <div class="col-md-12">
                   <div class="form-floating">
@@ -278,20 +352,6 @@
 
                     <!-- 항목 리스트를 반복 처리 -->
                     <c:forEach var="vo" items="${list}">
-                      <!-- 상점 ID가 변경되었는지 확인 -->
-                      <c:if test="${currentShopId != vo.shop_id}">
-                        <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
-                        <c:set var="currentShopId" value="${vo.shop_id}" />
-
-                        <!-- 상점 ID를 헤더로 표시 -->
-                        <tr>
-                          <th colspan="5" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
-                            가게명 : ${vo.shop_name}
-                          </th>
-                        </tr>
-                      </c:if>
-
-                      <!-- 상점 항목 정보를 출력 -->
                       <tr>
                         <td class="cart_menuimg">
                           <div>
@@ -315,11 +375,6 @@
                       <td id="total_quantity">0</td>
                       <td colspan="1" class="text-right"><strong>총 가격:</strong></td>
                       <td id="total_price">0</td>
-                    </tr>
-                    <tr>
-                      <td colspan="5" class="text-right">
-                        <strong>주문 항목:</strong> <span id="orders_name"></span>
-                      </td>
                     </tr>
                   </tfoot>
 
@@ -350,6 +405,7 @@
                             totalPrice += total;
 
                             totalPriceElement.textContent = currencyFormatter.format(total);
+                            priceElement.textContent = currencyFormatter.format(price);
                           }
                         });
 
@@ -368,9 +424,9 @@
 
                   <div class="text-center">
 
-                    <input class="btn btn-success" type="button" value="메인화면" onclick="location.href='list.do'">
+                    <input class="button_style" type="button" value="취소" onclick="location.href='list.do'">
 
-                    <input type="button" id="kakaoPay" onclick="requestPay(this.form);" value="결제">
+                    <input type="button" class="button_style" id="kakaoPay" onclick="requestPay(this.form);" value="결제">
                   </div>
               </form>
             </div>

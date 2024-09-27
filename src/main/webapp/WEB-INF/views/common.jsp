@@ -88,5 +88,20 @@
   <!-- Template Main JS File -->
   <script src="../resources/assets/js/main.js"></script>
 
+  <style>
+    .button_style {
+      background-color: #f0a8d0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      padding: 10px 15px;
+    } 
+  
+    .button_style:hover {
+      background-color: #e090b5;
+    }
+  </style>
 
 </html>

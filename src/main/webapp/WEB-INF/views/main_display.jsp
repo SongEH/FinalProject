@@ -129,7 +129,7 @@ pageEncoding="UTF-8"%>
         new daum.Postcode({
               oncomplete: function(data) {
                   // 사용자 주소를 받아올 변수를 정의한다.
-                    // let addr = '';
+                    let addr = '';
                     
                     //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                     if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우(R)
@@ -140,6 +140,9 @@ pageEncoding="UTF-8"%>
                     
                     // 부모창의 주소칸에 받아온 주소를 넣는다.
                     $("#order_addr").val(addr);
+
+                    // 부모창의 주소칸에 받아온 우편번호를 넣는다.
+                    $("#order_addr_zipcode").val(data.zonecode);                  
               }
           }).open();
       }

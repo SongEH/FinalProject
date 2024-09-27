@@ -46,6 +46,7 @@
     <div class="search-bar" style="margin-top:0;">
         <input type="text" id="order_addr" name="order_addr" placeholder="주소 설정 또는 로그인 후 이용할 수 있습니다." value="${order_addr}" readonly>
         <button type="button" id="addressSearch" onclick="findAddr()">주소설정</button>
+        <input type="text" id="order_addr_zipcode" name="order_addr_zipcode" value="${order_addr_zipcode}">
     </div>
 </body>
 </html>

@@ -194,7 +194,7 @@ public class OrderController {
 
 	// 회원 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
-	public String insert(int shop_id, String shop_name, String order_addr, Model model) { 
+	public String insert(int shop_id, String shop_name, String order_addr, String order_addr_zipcode, Model model) { 
 
 		// 현재 로그인한 사용자
 		MemberVo user = (MemberVo) session.getAttribute("user");
@@ -208,6 +208,7 @@ public class OrderController {
 		model.addAttribute("shop_id", shop_id);
 		model.addAttribute("shop_name", shop_name);
 		model.addAttribute("order_addr", order_addr);
+		model.addAttribute("order_addr_zipcode", order_addr_zipcode);
 
 		// 주소 처리
 		List<AddrVo> addr_list = addr_mapper.selectList(user.getMember_id());

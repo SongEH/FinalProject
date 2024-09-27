@@ -26,9 +26,17 @@ public class MainDisplayController {
         
         if(user!=null){
             MemberVo vo = member_mapper.getAddr(user.getMember_id());
+
+            if(vo==null){
+                // vo가 null일 경우의 처리 (예: 리다이렉트 또는 오류 메시지)
+                model.addAttribute("errorMessage", "주소 정보가 존재하지 않습니다.");
+                return "redirect:/addr/addr_insert_form.do"; // 주소 입력 폼으로 리다이렉트
+            }
+
             if(vo.getAddr_line1() != null && !vo.getAddr_line1().isEmpty()){
                 sb.append(vo.getAddr_line1());
             }
+
             if (vo.getAddr_line2() != null && !vo.getAddr_line2().isEmpty() && !"null".equals(vo.getAddr_line2())){
                 sb.append(" ");
                 sb.append(vo.getAddr_line2());

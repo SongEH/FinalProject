@@ -117,7 +117,7 @@
       
       <!-- <input type="hidden" name="addr_id" id="${addr.addr_id}" /> -->
       <div class="container">
-        <input
+        <input class="button_style"
         type="button"
         value="주소 등록"
         onclick="location.href='/addr/addr_insert_form.do?nextPath=addr_list'"
@@ -139,10 +139,10 @@
               <td>${addr.addr_line2}</td>
               <td>${addr.addr_name}</td>
               <td>
-                <input type="button" class="btn btn-success" value="수정" onclick="location.href='addr_modify_form.do?addr_id=${addr.addr_id}'">
+                <input type="button" class="button_style" value="수정" onclick="location.href='addr_modify_form.do?addr_id=${addr.addr_id}'">
               </td>
               <td>
-                <input type="button" class="btn btn-success" value="삭제" onclick="del('${addr.addr_id}')">
+                <input type="button" class="button_style" value="삭제" onclick="del('${addr.addr_id}')">
               </td>
             </tr>
           </c:forEach>

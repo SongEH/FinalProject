@@ -121,7 +121,7 @@
           <td>${member.member_email}</td>
           <td>${member.member_phone}</td>
           <td>
-            <a href="delete_member.do?member_id=${member.member_id}">Delete</a>
+            <button class="button_style" onclick="location.href='delete.do?member_id=${member.member_id}'">Delete</button>
           </td>
         </tr>
       </c:forEach>

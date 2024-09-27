@@ -51,14 +51,15 @@
         }
         .form-group button {
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #f0a8d0;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         .form-group button:hover {
-            background-color: #0056b3;
+            background-color: #e090b5;
+            color: #fff;
         }
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
@@ -127,8 +128,11 @@
                 <textarea id="o_inquiries_content" name="o_inquiries_content" rows="5" required></textarea>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                <button type="button" class="button_style" onclick="send(this.form);">
                     등록
+                </button>
+                <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/list.do'">
+                    취소
                 </button>
             </div>
         </form>

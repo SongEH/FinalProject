@@ -88,7 +88,6 @@
   <!-- Template Main JS File -->
   <script src="../resources/assets/js/main.js"></script>
 
-
   <style>
     .button_style {
       background-color: #f0a8d0;
@@ -104,4 +103,5 @@
       background-color: #e090b5;
     }
   </style>
+
 </html>

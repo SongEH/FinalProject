@@ -84,12 +84,13 @@
             text-decoration: none;
             padding: 10px 20px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #f0a8d0;
             border-radius: 5px;
             font-size: 16px;
         }
         .admin-actions a:hover {
-            background-color: #0056b3;
+            background-color: #e090b5;
+            color: #fff;
         }
         .back-button {
             display: block;
@@ -99,12 +100,13 @@
             text-align: center;
             font-size: 16px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #f0a8d0;
             border-radius: 5px;
             text-decoration: none;
         }
         .back-button:hover {
-            background-color: #0056b3;
+            background-color: #e090b5;
+            color: #fff;
         }
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
@@ -182,8 +184,8 @@
 
                 <a href="${pageContext.request.contextPath}/owner_inquiries/list.do" class="back-button">목록으로</a>
                 <c:if test="${userType == 'OWNER' && vo.owner_accountId == currentUser}">
-                    <button type="button" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/modify_form.do?o_inquiries_id=${vo.o_inquiries_id}'">수정</button>
-                    <button type="button" onclick="del('${vo.o_inquiries_id}');">삭제</button>
+                    <button type="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/modify_form.do?o_inquiries_id=${vo.o_inquiries_id}'">수정</button>
+                    <button type="button_style" onclick="del('${vo.o_inquiries_id}');">삭제</button>
                 </c:if>
             </div>
         </div>

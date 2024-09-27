@@ -22,12 +22,19 @@ pageEncoding="UTF-8" %>
     #pop_image {
       width: 300px;
       height: 300px;
-      border: 2px solid gray;
-      outline: 2px solid black;
+      border-radius: 5px;
     }
 
     #pop_content {
       min-height: 80px;
+    }
+
+    #pop_quantity {
+      width: 100px;
+    }
+
+    #content1{
+      text-align: center;
     }
   </style>
 </head>
@@ -35,7 +42,7 @@ pageEncoding="UTF-8" %>
 <body>
   <!-- 공통 css import -->
   <%@include file="../common.jsp" %>
-  
+
   <!-- 이미지 팝업  -->
   <!-- Modal -->
   <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
@@ -57,19 +64,21 @@ pageEncoding="UTF-8" %>
           <input type="hidden" id="pop_hidden_menuid" />
           <input type="hidden" id="pop_hidden_shopid" />
 
-          <h5 class="modal-title" id="pop_title">메뉴명</h5>
-          <p>
-            <strong>설명:</strong>
-            <span id="pop_content">메뉴에 대한 자세한 설명이 여기에 들어갑니다.</span>
-          </p>
-          <p><strong>가격:</strong> <span id="pop_price">₩00,000</span></p>
+          <div id="content1">
+            <h5 class="modal-title" id="pop_title">메뉴명</h5>
+            <br>
+            <p>
+              <strong>설명:</strong>
+              <span id="pop_content">메뉴에 대한 자세한 설명이 여기에 들어갑니다.</span>
+            </p>
+            <p><strong>가격:</strong> <span id="pop_price">₩00,000</span></p>
 
-          <!-- 수량 입력 -->
-          <p>
-            <strong>수량:</strong>
-            <input type="number" id="pop_quantity" class="form-control" min="1" max="50" value="1" />
-          </p>
-
+            <!-- 수량 입력 -->
+            <p>
+              <labe><span><strong>수량:</strong></span></labe>
+              <input type="number" id="pop_quantity" class="form-control" min="1" max="50" value="1" />
+            </p>
+          </div>
           <div class="modal-footer">
             <button type="button" class="button_style" data-bs-dismiss="modal">
               닫기

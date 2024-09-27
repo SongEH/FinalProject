@@ -244,7 +244,7 @@
           <div class="card">
             <div class="card-body">
 
-              <h5 class="card-title">Floating labels Form</h5>
+              <h5 class="card-title">${shop_name}</h5>
 
               <!-- Floating Labels Form -->
               <form class="row g-3" method="POST">
@@ -352,20 +352,6 @@
 
                     <!-- 항목 리스트를 반복 처리 -->
                     <c:forEach var="vo" items="${list}">
-                      <!-- 상점 ID가 변경되었는지 확인 -->
-                      <c:if test="${currentShopId != vo.shop_id}">
-                        <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
-                        <c:set var="currentShopId" value="${vo.shop_id}" />
-
-                        <!-- 상점 ID를 헤더로 표시 -->
-                        <tr>
-                          <th colspan="5" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
-                            가게명 : ${vo.shop_name}
-                          </th>
-                        </tr>
-                      </c:if>
-
-                      <!-- 상점 항목 정보를 출력 -->
                       <tr>
                         <td class="cart_menuimg">
                           <div>
@@ -389,11 +375,6 @@
                       <td id="total_quantity">0</td>
                       <td colspan="1" class="text-right"><strong>총 가격:</strong></td>
                       <td id="total_price">0</td>
-                    </tr>
-                    <tr>
-                      <td colspan="5" class="text-right">
-                        <strong>주문 항목:</strong> <span id="orders_name"></span>
-                      </td>
                     </tr>
                   </tfoot>
 
@@ -424,6 +405,7 @@
                             totalPrice += total;
 
                             totalPriceElement.textContent = currencyFormatter.format(total);
+                            priceElement.textContent = currencyFormatter.format(price);
                           }
                         });
 

@@ -377,8 +377,7 @@ pageEncoding="UTF-8"%>
 
                 <!-- 장바구니 목록 출력 -->
                 <div id="cart_list"></div>
-              </div>            
-              <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
+              </div>                          
             </div>
             <!-- </div> -->
           </div>

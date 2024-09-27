@@ -127,7 +127,7 @@
 
     // 직접 페이지 이동
     window.location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name + "&order_addr=" +
-    orderAddrValue + "&order_addr_zipcode=" + orderAddrZipCodeValue ;
+      orderAddrValue + "&order_addr_zipcode=" + orderAddrZipCodeValue;
   }
 
   function updateQuantity(cartsId, operation) {
@@ -137,6 +137,9 @@
 </script>
 
 <body>
+  <!-- 공통 css import -->
+  <%@include file="../common.jsp" %>
+
   <c:set var="currentShopId" value="" />
   <c:set var="currentShopTotal" value="0" />
   <c:set var="totalPrice" value="0" />
@@ -148,11 +151,12 @@
       <!-- 이전 가게의 주문 버튼과 총 가격 표시 -->
       <c:if test="${currentShopId != ''}">
         <p>총 가격: ${currentShopTotal}원</p>
-        <button class="order-button" onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
+        <button class="order-button button_style"
+          onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
       </c:if>
 
       <!-- 가게명 및 가게별 총 가격 초기화 -->
-      <p class="shop-info">가게명: ${item.shop_name} ${status}</p>
+      <p class="shop-info">가게명: ${item.shop_name}</p>
       <c:set var="currentShopId" value="${item.shop_id}" />
       <c:set var="currentShopName" value="${item.shop_name}" />
       <c:set var="currentShopTotal" value="0" />
@@ -168,21 +172,21 @@
           <button onclick="updateQuantity('${item.carts_id}', 'plus')">+</button>
         </div>
         <span>${item.carts_quantity * item.menu_price}원</span>
-        <button class="delete-button" onclick="deleteItem('${item.carts_id}')">삭제</button>
+        <button class="delete-button button_style" onclick="deleteItem('${item.carts_id}')">삭제</button>
       </div>
     </div>
 
     <!-- 가게별 총 가격 계산 -->
     <c:set var="currentShopTotal" value="${currentShopTotal + (item.carts_quantity * item.menu_price)}" />
     <c:set var="totalPrice" value="${totalPrice + (item.carts_quantity * item.menu_price)}" />
-    <c:set var="status" value="${item.status}"/>
+    <c:set var="status" value="${item.status}" />
   </c:forEach>
 
-  
+
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
   <c:if test="${currentShopId !='' && status=='영업중'}">
     <p>총 가격: ${currentShopTotal}원</p>
-    <button id="orderButton" class="order-button"
+    <button id="orderButton" class="order-button button_style"
       onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
   </c:if>
 

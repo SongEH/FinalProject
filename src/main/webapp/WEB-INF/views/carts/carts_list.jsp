@@ -14,22 +14,17 @@
   </style>
 
   <script>
+    // 장바구니에서 삭제
     function delete_carts(carts_id) {
       if (confirm("정말 삭제하시겠습니까?") == false) return;
-
       location.href = "delete.do?carts_id=" + carts_id;
     }
 
-
-
     // 주문 
     function orderFromShop(shop_id, shop_name) {
-
       location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name;
-
     }
   </script>
-
 </head>
 
 
@@ -95,7 +90,7 @@
                       <th colspan="7" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
                         가게명 : ${vo.shop_name}
                         <!-- 주문 버튼 추가 -->
-                        <button class="btn btn-primary"
+                        <button class="button_style"
                           onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문</button>
                       </th>
                     </tr>
@@ -124,17 +119,15 @@
                     </td>
 
                     <td>
-                      <input class="btn btn-danger" type="button" value="삭제" onclick="delete_carts('${vo.carts_id}');">
-                      <input class="btn btn-info" type="button" id="edit_${vo.carts_id}" value="수정"
+                      <input class="button_style" type="button" value="삭제" onclick="delete_carts('${vo.carts_id}');">
+                      <input class="button_style" type="button" id="edit_${vo.carts_id}" value="수정"
                         onclick="editQuantity('${vo.carts_id}');">
-                      <button class="btn btn-success" id="save_${vo.carts_id}" onclick="saveQuantity('${vo.carts_id}')"
+                      <button class="button_style" id="save_${vo.carts_id}" onclick="saveQuantity('${vo.carts_id}')"
                         style="display: none;">저장</button>
                     </td>
                   </tr>
                 </c:forEach>
               </tbody>
-
-
 
               <tfoot>
                 <tr>

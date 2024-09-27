@@ -17,23 +17,25 @@
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <meta charset="UTF-8" />
 
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const orderAddrInput = document.getElementById('order_addr'); // 선택주소 입력 필드
-      const orderAddrValue = orderAddrInput.value; // 선택주소 값
-      const addrOptions = document.querySelectorAll('#addr_select option'); // 주소 옵션들
+      const orderAddr = document.getElementById("order_addr").value; // 입력된 주소
+      const addrOptions = document.querySelectorAll("#addr_select option"); // 주소 옵션들
+      const addrSelect = document.getElementById("addr_select");
+      let addressFound = false;
 
-      let matchFound = Array.from(addrOptions).some(option =>
-        option.dataset.addrLine1 === orderAddrValue // 주소 일치 여부 확인
-      );
+      addrOptions.forEach(option => {
+        // 기존 주소와 일치하는지 확인
+        if (option.dataset.addrLine1 === orderAddr) {
+          document.getElementById("saved_addr").checked = true; // 기존 주소 라디오 버튼 체크
+          addressFound = true;
 
-      if (matchFound) {
-        orderAddrInput.value = ""; // 선택주소 입력 필드 비우기
-        document.getElementById('saved_addr').checked = true; // 주소 라디오 버튼 선택
-      } else {
-        document.getElementById('current_addr').checked = true; // 새로 등록할 주소 라디오 버튼 선택
-        orderAddrInput.value = orderAddrValue; // 선택주소 입력 필드에 order_addr 값 넣기
-      }
+          // addr_select에서 해당 옵션을 기본 선택으로 설정
+          addrSelect.value = option.value; // 일치하는 옵션을 기본 선택으로 설정
+          document.getElementById("order_addr").value = ""; // order_addr 필드 빈 값으로 설정
+        }
+      });
     });
   </script>
 
@@ -44,7 +46,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-      // 주문 이름 생성 ---------------------------------------------------
+      // 주문 이름 생성 
       // 메뉴 개수가 1개 = 메뉴 이름 
       // 메뉴 개수가 2개 이상 = 처음 메뉴 이름과 그외 메뉴 개수 표시 (예: 김치찌게 외 3개)
 
@@ -61,45 +63,10 @@
         // 첫 번째 메뉴 이름과 나머지 메뉴 개수
         order_name += " 외 " + (menuElements.length - 1) + "개";
       }
-
-
-      // 주소 라디오 버튼에 따라서 주소id 저장 ---------------------------------------------------
-      // 라디오 버튼의 change 이벤트 리스너 추가
-      const radioButtons = document.querySelectorAll('input[name="address_choice"]');
-
-      // radioButtons.forEach(radio => {
-      //   radio.addEventListener('change', () => {
-      //     if (document.getElementById('saved_addr').checked) {
-      //       // 저장된 주소 선택 시
-      //       let selectElement = document.getElementById('addr_select');
-      //       let selectedOption = selectElement.options[selectElement.selectedIndex];
-      //       addr_id = selectedOption.value;
-      //       let addr_name = selectedOption.getAttribute('data-addr-name');
-      //       const addrLine1 = selectedOption.getAttribute('data-addr-line1');
-      //       const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-      //       addrAll = addrLine1 + " " + addrLine2;
-
-      //       // 출력
-      //       console.log("주소 ID:", addr_id);
-      //       console.log("주소 이름:", addr_name);
-      //       console.log("전체 주소:", addrAll);
-
-      //     } else {
-      //       // 현재 선택한 주소 선택 시
-      //       const orderAddrName = document.querySelector('input[name="order_addr_name"]').value;
-      //       const orderAddr = document.querySelector('input[name="order_addr"]').value;
-      //       const orderAddrDetail = document.querySelector('input[name="order_addr_detail"]').value;
-
-      //       // 출력
-      //       console.log("별칭:", orderAddrName);
-      //       console.log("선택 주소:", orderAddr);
-      //       console.log("세부 주소:", orderAddrDetail);
-      //     }
-      //   });
-      // });
-
     });
+  </script>
 
+  <script>
     // 결제 버튼 클릭시 
     function requestPay(f) {
 
@@ -144,19 +111,17 @@
 
       // 주소 처리 -------------------------------------------------
       // 1. 기존 주소 선택한 경우 : addr_id만 아래 결제 ajax data에 저장 
-      // 주소
-      let selectElement = document.getElementById('addr_select');
-      let selectedOption = selectElement.options[selectElement.selectedIndex];
-      addr_id = selectedOption.value;
-      let addr_name = selectedOption.getAttribute('data-addr-name');
-      // addr_all 변수에 합쳐서 저장
-      const addrLine1 = selectedOption.getAttribute('data-addr-line1');
-      const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-      addrAll = addrLine1 + " " + addrLine2;
+      if (document.getElementById('saved_addr').checked) {
+        let selectElement = document.getElementById('addr_select');
+        let selectedOption = selectElement.options[selectElement.selectedIndex];
+        addr_id = selectedOption.value;
+
+        // addr_all 변수에 합쳐서 저장
+        addrAll = selectedOption.getAttribute('data-addr-line1') + " " + selectedOption.getAttribute('data-addr-line2');
+      }
 
       // 2. 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
       if (document.getElementById('current_addr').checked) {
-       
         const addr_zipcode = f.order_addr_zipcode.value.trim();
         const addr_name = f.order_addr_name.value.trim();
         const addr_line1 = f.order_addr.value.trim();
@@ -167,7 +132,7 @@
         $.ajax({
           type: 'POST',
           url: '/addr/addr_insert2.do',
-          data: { // JSON 문자열로 변환
+          data: {
             addr_zipcode: addr_zipcode,
             addr_name: addr_name,
             addr_line1: addr_line1,
@@ -175,7 +140,6 @@
           },
           success: function (response) {
             addr_id = response; // 서버에서 반환된 addr_id를 사용
-
           },
           error: function () {
             alert("주소 등록 실패! 다시 시도해 주세요.");
@@ -183,7 +147,7 @@
         });
       }
 
-      
+
 
       // -------------------------- 결제 --------------------
 
@@ -280,7 +244,7 @@
           <div class="card">
             <div class="card-body">
 
-              <h5 class="card-title">Floating labels Form</h5>
+              <h5 class="card-title">${shop_name}</h5>
 
               <!-- Floating Labels Form -->
               <form class="row g-3" method="POST">
@@ -388,20 +352,6 @@
 
                     <!-- 항목 리스트를 반복 처리 -->
                     <c:forEach var="vo" items="${list}">
-                      <!-- 상점 ID가 변경되었는지 확인 -->
-                      <c:if test="${currentShopId != vo.shop_id}">
-                        <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
-                        <c:set var="currentShopId" value="${vo.shop_id}" />
-
-                        <!-- 상점 ID를 헤더로 표시 -->
-                        <tr>
-                          <th colspan="5" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
-                            가게명 : ${vo.shop_name}
-                          </th>
-                        </tr>
-                      </c:if>
-
-                      <!-- 상점 항목 정보를 출력 -->
                       <tr>
                         <td class="cart_menuimg">
                           <div>
@@ -425,11 +375,6 @@
                       <td id="total_quantity">0</td>
                       <td colspan="1" class="text-right"><strong>총 가격:</strong></td>
                       <td id="total_price">0</td>
-                    </tr>
-                    <tr>
-                      <td colspan="5" class="text-right">
-                        <strong>주문 항목:</strong> <span id="orders_name"></span>
-                      </td>
                     </tr>
                   </tfoot>
 
@@ -460,6 +405,7 @@
                             totalPrice += total;
 
                             totalPriceElement.textContent = currencyFormatter.format(total);
+                            priceElement.textContent = currencyFormatter.format(price);
                           }
                         });
 
@@ -478,9 +424,9 @@
 
                   <div class="text-center">
 
-                    <input class="btn btn-success" type="button" value="메인화면" onclick="location.href='list.do'">
+                    <input class="button_style" type="button" value="취소" onclick="location.href='list.do'">
 
-                    <input type="button" id="kakaoPay" onclick="requestPay(this.form);" value="결제">
+                    <input type="button" class="button_style" id="kakaoPay" onclick="requestPay(this.form);" value="결제">
                   </div>
               </form>
             </div>

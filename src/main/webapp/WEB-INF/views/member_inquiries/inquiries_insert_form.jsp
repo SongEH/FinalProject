@@ -145,8 +145,11 @@
                 <textarea id="m_inquiries_content" name="m_inquiries_content" rows="5" required></textarea>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                <button type="button" class="button_style" onclick="send(this.form);">
                     등록
+                </button>
+                <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/list.do'">
+                    취소
                 </button>
             </div>
         </form>

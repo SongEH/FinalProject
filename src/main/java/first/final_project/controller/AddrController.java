@@ -88,18 +88,13 @@ public class AddrController {
   // 주문할 때 새 주소 추가시 - 한지혜
   @RequestMapping("addr_insert2.do")
   @ResponseBody
-  public Map<String, Object> addr_insert2(
+  public int addr_insert2(
       @RequestParam String addr_zipcode,
       @RequestParam String addr_name,
       @RequestParam String addr_line1,
       @RequestParam String addr_line2) {
 
     MemberVo user = (MemberVo) session.getAttribute("user");
-
-    if (user == null) {
-      // 사용자 인증이 필요한 경우
-      return Map.of("message", "로그인이 필요합니다.");
-    }
 
     AddrVo vo = new AddrVo();
     vo.setMember_id(user.getMember_id());
@@ -109,10 +104,15 @@ public class AddrController {
     vo.setAddr_line2(addr_line2);
 
     // db insert
-    addr_mapper.insert(vo);
+    int addr_id = addr_mapper.insertNewAddr(vo);
+
+    // MAPPER 하나 더 만들고 int로 받아서 그걸 리턴하기!!!
+    addr_mapper.insertNewAddr(vo); // DB에 주소 추가
+    System.out.println("생성된 addr_id: " + vo.getAddr_id()); // 생성된 ID 확인
+
 
     // 필요한 경우 addr_id도 반환
-    return Map.of("addr_id", vo.getAddr_id());
+    return vo.getAddr_id();
   }
 
   @RequestMapping("addr_modify_form.do")

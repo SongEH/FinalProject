@@ -49,8 +49,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">주문&리뷰</li>    
+          <li class="breadcrumb-item active">장바구니</li>    
         </ol>
       </nav>
 

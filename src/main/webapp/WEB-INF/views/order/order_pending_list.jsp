@@ -156,9 +156,8 @@
 
       // 2. 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
       if (document.getElementById('current_addr').checked) {
-        alert("전");
+       
         const addr_zipcode = f.order_addr_zipcode.value.trim();
-        alert(addr_zipcode);
         const addr_name = f.order_addr_name.value.trim();
         const addr_line1 = f.order_addr.value.trim();
         const addr_line2 = f.order_addr_detail.value.trim();
@@ -175,10 +174,8 @@
             addr_line2: addr_line2
           },
           success: function (response) {
-            // 서버에서 addr_id를 받아와야 합니다.
-            addr_id = response.addr_id; // 서버에서 반환된 addr_id를 사용
+            addr_id = response; // 서버에서 반환된 addr_id를 사용
 
-            alert("addr_id" + addr_id);
           },
           error: function () {
             alert("주소 등록 실패! 다시 시도해 주세요.");
@@ -207,7 +204,6 @@
         function (rsp) {
           // callback
           if (rsp.success) {
-            alert("rsp.success");
             // 결제 성공 시 서버로 데이터 전송
             $.ajax({
               // url: "/api/payment/data/" + rsp.imp_uid, // 서버의 결제 정보를 받는 endpoint
@@ -270,8 +266,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">주문&리뷰</li>
+          <li class="breadcrumb-item active">주문하기</li>
         </ol>
       </nav>
 

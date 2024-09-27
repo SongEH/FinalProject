@@ -17,6 +17,26 @@
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <meta charset="UTF-8" />
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const orderAddrInput = document.getElementById('order_addr'); // 선택주소 입력 필드
+      const orderAddrValue = orderAddrInput.value; // 선택주소 값
+      const addrOptions = document.querySelectorAll('#addr_select option'); // 주소 옵션들
+
+      let matchFound = Array.from(addrOptions).some(option =>
+        option.dataset.addrLine1 === orderAddrValue // 주소 일치 여부 확인
+      );
+
+      if (matchFound) {
+        orderAddrInput.value = ""; // 선택주소 입력 필드 비우기
+        document.getElementById('saved_addr').checked = true; // 주소 라디오 버튼 선택
+      } else {
+        document.getElementById('current_addr').checked = true; // 새로 등록할 주소 라디오 버튼 선택
+        orderAddrInput.value = orderAddrValue; // 선택주소 입력 필드에 order_addr 값 넣기
+      }
+    });
+  </script>
+
   <script type="text/javascript">
     let order_name = '';
     let addr_id = '';
@@ -35,51 +55,52 @@
       if (menuElements.length > 0) {
         // 첫 번째 메뉴 이름
         order_name = menuElements[0].textContent.trim();
-
-        // 총 개수가 2개 이상일 경우
-        if (menuElements.length > 1) {
-          // 첫 번째 메뉴 이름과 나머지 메뉴 개수
-          order_name += " 외 " + (menuElements.length - 1) + "개";
-        }
       }
-      console.log(order_name);
+      // 총 개수가 2개 이상일 경우
+      if (menuElements.length > 1) {
+        // 첫 번째 메뉴 이름과 나머지 메뉴 개수
+        order_name += " 외 " + (menuElements.length - 1) + "개";
+      }
+
 
       // 주소 라디오 버튼에 따라서 주소id 저장 ---------------------------------------------------
       // 라디오 버튼의 change 이벤트 리스너 추가
       const radioButtons = document.querySelectorAll('input[name="address_choice"]');
 
-      radioButtons.forEach(radio => {
-        radio.addEventListener('change', () => {
-          if (document.getElementById('saved_addr').checked) {
-            // 저장된 주소 선택 시
-            let selectElement = document.getElementById('addr_select');
-            let selectedOption = selectElement.options[selectElement.selectedIndex];
-            addr_id = selectedOption.value;
-            let addr_name = selectedOption.getAttribute('data-addr-name');
-            const addrLine1 = selectedOption.getAttribute('data-addr-line1');
-            const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-            addrAll = addrLine1 + " " + addrLine2;
+      // radioButtons.forEach(radio => {
+      //   radio.addEventListener('change', () => {
+      //     if (document.getElementById('saved_addr').checked) {
+      //       // 저장된 주소 선택 시
+      //       let selectElement = document.getElementById('addr_select');
+      //       let selectedOption = selectElement.options[selectElement.selectedIndex];
+      //       addr_id = selectedOption.value;
+      //       let addr_name = selectedOption.getAttribute('data-addr-name');
+      //       const addrLine1 = selectedOption.getAttribute('data-addr-line1');
+      //       const addrLine2 = selectedOption.getAttribute('data-addr-line2');
+      //       addrAll = addrLine1 + " " + addrLine2;
 
-            // 출력
-            console.log("주소 ID:", addr_id);
-            console.log("주소 이름:", addr_name);
-            console.log("전체 주소:", addrAll);
+      //       // 출력
+      //       console.log("주소 ID:", addr_id);
+      //       console.log("주소 이름:", addr_name);
+      //       console.log("전체 주소:", addrAll);
 
-          } else {
-            // 현재 선택한 주소 선택 시
-            const orderAddrName = document.querySelector('input[name="order_addr_name"]').value;
-            const orderAddr = document.querySelector('input[name="order_addr"]').value;
-            const orderAddrDetail = document.querySelector('input[name="order_addr_detail"]').value;
+      //     } else {
+      //       // 현재 선택한 주소 선택 시
+      //       const orderAddrName = document.querySelector('input[name="order_addr_name"]').value;
+      //       const orderAddr = document.querySelector('input[name="order_addr"]').value;
+      //       const orderAddrDetail = document.querySelector('input[name="order_addr_detail"]').value;
 
-            // 출력
-            console.log("별칭:", orderAddrName);
-            console.log("선택 주소:", orderAddr);
-            console.log("세부 주소:", orderAddrDetail);
-          }
-        });
-      });
+      //       // 출력
+      //       console.log("별칭:", orderAddrName);
+      //       console.log("선택 주소:", orderAddr);
+      //       console.log("세부 주소:", orderAddrDetail);
+      //     }
+      //   });
+      // });
+
     });
 
+    // 결제 버튼 클릭시 
     function requestPay(f) {
 
       // 입력값 검증
@@ -91,20 +112,6 @@
       let orders_srequest = f.orders_srequest.value.trim();
 
       let shop_id = f.shop_id.value;
-
-
-      // 1. 기존 주소 선택한 경우 : addr_id만 아래 결제 ajax data에 저장 
-      // 주소
-      let selectElement = document.getElementById('addr_select');
-      let selectedOption = selectElement.options[selectElement.selectedIndex];
-      addr_id = selectedOption.value;
-      let addr_name = selectedOption.getAttribute('data-addr-name');
-      // addr_all 변수에 합쳐서 저장
-      const addrLine1 = selectedOption.getAttribute('data-addr-line1');
-      const addrLine2 = selectedOption.getAttribute('data-addr-line2');
-      addrAll = addrLine1 + " " + addrLine2;
-
-      // 2. 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
 
 
       // 총 가격
@@ -134,6 +141,50 @@
         return;
       }
 
+
+      // 주소 처리 -------------------------------------------------
+      // 1. 기존 주소 선택한 경우 : addr_id만 아래 결제 ajax data에 저장 
+      // 주소
+      let selectElement = document.getElementById('addr_select');
+      let selectedOption = selectElement.options[selectElement.selectedIndex];
+      addr_id = selectedOption.value;
+      let addr_name = selectedOption.getAttribute('data-addr-name');
+      // addr_all 변수에 합쳐서 저장
+      const addrLine1 = selectedOption.getAttribute('data-addr-line1');
+      const addrLine2 = selectedOption.getAttribute('data-addr-line2');
+      addrAll = addrLine1 + " " + addrLine2;
+
+      // 2. 새로운 주소 선택한 경우 : 새 주소를 주소테이블에 저장하고 새로운 addr_id 저장
+      if (document.getElementById('current_addr').checked) {
+       
+        const addr_zipcode = f.order_addr_zipcode.value.trim();
+        const addr_name = f.order_addr_name.value.trim();
+        const addr_line1 = f.order_addr.value.trim();
+        const addr_line2 = f.order_addr_detail.value.trim();
+        addrAll = addr_line1 + " " + addr_line2;
+
+        // AJAX 요청으로 새로운 주소 저장
+        $.ajax({
+          type: 'POST',
+          url: '/addr/addr_insert2.do',
+          data: { // JSON 문자열로 변환
+            addr_zipcode: addr_zipcode,
+            addr_name: addr_name,
+            addr_line1: addr_line1,
+            addr_line2: addr_line2
+          },
+          success: function (response) {
+            addr_id = response; // 서버에서 반환된 addr_id를 사용
+
+          },
+          error: function () {
+            alert("주소 등록 실패! 다시 시도해 주세요.");
+          }
+        });
+      }
+
+      
+
       // -------------------------- 결제 --------------------
 
       // 가맹점 식별코드
@@ -153,7 +204,6 @@
         function (rsp) {
           // callback
           if (rsp.success) {
-            alert("rsp.success");
             // 결제 성공 시 서버로 데이터 전송
             $.ajax({
               // url: "/api/payment/data/" + rsp.imp_uid, // 서버의 결제 정보를 받는 endpoint
@@ -190,6 +240,12 @@
       );
     }
   </script>
+
+  <script>
+    function addr_insert() {
+
+    }
+  </script>
 </head>
 
 <body>
@@ -210,8 +266,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">주문&리뷰</li>
+          <li class="breadcrumb-item active">주문하기</li>
         </ol>
       </nav>
 
@@ -260,15 +316,19 @@
                     <label class="form-check-label" for="current_addr">새로 등록할 주소</label>
                   </div>
 
+
+                  <input type="text" class="form-control" placeholder="우편번호" name="order_addr_zipcode"
+                    id="order_addr_zipcode" value="${order_addr_zipcode}" readonly>
                   <input type="text" class="form-control" placeholder="별칭" name="order_addr_name">
-                  <input type="text" class="form-control" placeholder="선택주소" name="order_addr" value="${order_addr}"
-                    readonly>
+                  <input type="text" class="form-control" placeholder="선택주소" name="order_addr" id="order_addr"
+                    value="${order_addr}" readonly>
                   <input type="text" class="form-control" placeholder="세부주소" name="order_addr_detail">
+
+
                 </div>
 
 
-                <input type="button" value="주소 등록"
-                  onclick="location.href='/addr/addr_insert_form.do?nextPath=order_pending_list'" />
+
 
                 <div class="col-md-12">
                   <div class="form-floating">

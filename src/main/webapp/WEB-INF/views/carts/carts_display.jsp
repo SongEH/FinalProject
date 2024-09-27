@@ -113,9 +113,11 @@
 
     // order_addr 요소를 선택합니다.
     const orderAddrInput = document.getElementById('order_addr');
+    const orderAddrZipCodeInput = document.getElementById('order_addr_zipcode');
 
     // value 값을 가져옵니다.
     const orderAddrValue = orderAddrInput.value;
+    const orderAddrZipCodeValue = orderAddrZipCodeInput.value;
 
     // 가져온 값을 콘솔에 출력합니다.
     console.log(orderAddrValue);
@@ -125,7 +127,7 @@
 
     // 직접 페이지 이동
     window.location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name + "&order_addr=" +
-    orderAddrValue;
+    orderAddrValue + "&order_addr_zipcode=" + orderAddrZipCodeValue ;
   }
 
   function updateQuantity(cartsId, operation) {

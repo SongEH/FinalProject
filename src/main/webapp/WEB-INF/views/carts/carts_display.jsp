@@ -43,14 +43,6 @@
       text-align: right;
     }
 
-    .delete-button {
-      background-color: #ff4d4d;
-      color: white;
-      padding: 5px 10px;
-      border: none;
-      cursor: pointer;
-    }
-
     .shop-info {
       margin-top: 20px;
       font-size: 16px;
@@ -64,6 +56,12 @@
       padding: 5px 10px;
       border: none;
       cursor: pointer;
+    }
+
+    .small_btn{
+      width:25px !important;
+      height:25px !important;
+      padding:3px !important;
     }
   </style>
 </head>
@@ -149,14 +147,14 @@
     <!-- 가게별 구분 -->
     <c:if test="${item.shop_id != currentShopId}">
       <!-- 이전 가게의 주문 버튼과 총 가격 표시 -->
-      <c:if test="${currentShopId != ''}">
-        <p>총 가격: ${currentShopTotal}원</p>
+      <c:if test="${currentShopId != '' && status=='영업중'}">
+        <p>총 가격: ${currentShopTotal}원
         <button class="order-button button_style"
-          onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
+          onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button></p>
       </c:if>
 
       <!-- 가게명 및 가게별 총 가격 초기화 -->
-      <p class="shop-info">가게명: ${item.shop_name}</p>
+      <p class="shop-info">${item.shop_name}</p>
       <c:set var="currentShopId" value="${item.shop_id}" />
       <c:set var="currentShopName" value="${item.shop_name}" />
       <c:set var="currentShopTotal" value="0" />
@@ -167,12 +165,12 @@
       <div class="menu-details">
         <span class="menu-name">${item.menu_name}</span>
         <div class="quantity-controls">
-          <button onclick="updateQuantity('${item.carts_id}', 'minus')">-</button>
+          <button class="button_style small_btn" onclick="updateQuantity('${item.carts_id}', 'minus')">-</button>
           <span>${item.carts_quantity}</span>
-          <button onclick="updateQuantity('${item.carts_id}', 'plus')">+</button>
+          <button class="button_style small_btn" onclick="updateQuantity('${item.carts_id}', 'plus')">+</button>
         </div>
         <span>${item.carts_quantity * item.menu_price}원</span>
-        <button class="delete-button button_style" onclick="deleteItem('${item.carts_id}')">삭제</button>
+        <button class="button_style small_btn" onclick="deleteItem('${item.carts_id}')">x</button>
       </div>
     </div>
 
@@ -185,9 +183,9 @@
 
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
   <c:if test="${currentShopId !='' && status=='영업중'}">
-    <p>총 가격: ${currentShopTotal}원</p>
-    <button id="orderButton" class="order-button button_style"
-      onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
+    <p>총 가격: ${currentShopTotal}원
+    <button class="order-button button_style"
+      onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button></p>
   </c:if>
 
   <!-- 전체 가격 출력 -->

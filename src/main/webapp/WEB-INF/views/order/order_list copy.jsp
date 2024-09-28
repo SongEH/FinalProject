@@ -75,13 +75,30 @@
 
 
   <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      /* Align logo to the left and login to the right */
+      align-items: center;
+      /* Vertically center the items */
+      padding: 10px;
+      /* Optional: Add some padding */
+      background-color: #F0A8D0;
+    }
+  </style>
+
+  <style>
     .menu-card {
       background-color: white;
       border-radius: 8px;
-      padding: 20px 20px;
+      padding: 2px 15px;
       /* 상하 2px, 좌우 15px */
       margin-bottom: 20px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      padding-bottom: 7px !important;
     }
 
     .menu-img {
@@ -139,60 +156,75 @@
           검색
         </button>
       </form>
-      <br>
-      <c:forEach var="vo" items="${list}">
-        <c:if test="${vo.orders_isdelete == 0}">
-          <div class="menu-card">
-            <table>
+
+
+
+      <section class="section">
+
+
+        <table>
+          <c:forEach var="vo" items="${list}">
+            <c:if test="${vo.orders_isdelete == 0}">
               <tr id="order-${vo.orders_id}">
                 <!-- 각 주문에 고유 ID를 부여 -->
-                <td style="width: 150px; vertical-align: center;">
-                  <img src="../resources/images/${vo.shop_img}" class="menu-img" alt="...">
-                </td>
-                <td style="padding-left: 15px; vertical-align: top;">
-                  <h5>
-                    ${vo.shop_name}
-                    <span class="orders-status" style="color:red;">${vo.orders_status}</span>
-                  </h5>
-                  <c:if test="${vo.orders_status != '배달 완료' && vo.delivery_time != 0}">
-                    <p class="delivery-time">배달 소요 시간: ${vo.delivery_time}분</p>
-                  </c:if>
-                  <p class="card-text">주문일시 :
-                    <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
-                  </p>
-                  <p class="card-text">메뉴 : ${vo.orders_name}, ${vo.menu_count}개</p>
-                  <p class="card-text">가격 : ${vo.orders_price}원</p>
-                  <div>
-                    <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
-                      onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
-                    <input class="button_style" type="button" id="btn_popup_update" value="배송조회"
-                      onclick="modify_menu('${vo.orders_id}');">
-                    <c:choose>
-                      <c:when test="${vo.hasReview}">
-                        <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
-                      </c:when>
-                      <c:otherwise>
-                        <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성"
-                          onclick="insert_review('${vo.orders_id}');">
-                      </c:otherwise>
-                    </c:choose>
+                <td>
+                  <div class="card mb-3">
+                    <div class="row g-0" lass="photo">
+                      <div class="col-md-4">
+                        <img src="../resources/images/${vo.shop_img}" class="img-fluid rounded-start" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            <p class="orders-status" style="color:red;">${vo.orders_status}</p>${vo.shop_name}
+                          </h5>
+                          <c:if test="${vo.orders_status != '배달 완료' && vo.delivery_time != 0}">
+                            <p class="delivery-time">배달 소요 시간: ${vo.delivery_time}분</p>
+                          </c:if>
+                          <p class="card-text">주문일시 : 
+                            <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
+                          </p>
+                          <p class="card-text">메뉴 : ${vo.orders_name}, ${vo.menu_count}개</p>
+                          <p class="card-text">가격 : ${vo.orders_price}원</p>
+                          <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
+                            onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
+                          <input class="button_style" type="button" id="btn_popup_update" value="배송조회"
+                            onclick="modify_menu('${vo.orders_id}');">
+                          <c:choose>
+                            <c:when test="${vo.hasReview}">
+                              <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
+                            </c:when>
+                            <c:otherwise>
+                              <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성"
+                                onclick="insert_review('${vo.orders_id}');">
+                            </c:otherwise>
+                          </c:choose>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </td>
+                </td>          
               </tr>
-            </table>
-          </div>
-        </c:if>
-      </c:forEach>
-    </c:if>
+            </c:if>
+          </c:forEach>
+        </table>
 
-    <!-- 페이징 처리 -->
-    <div style="text-align: center; margin-top: 20px; font-size: 15px">
-      ${pageMenu}
+        <!-- 페이징 처리 -->
+        <div style="text-align: center; margin-top: 20px; font-size: 15px">
+          ${pageMenu}
+        </div>
+
+        <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
+        <input type="hidden" name="startDate" value="${param.startDate}" />
+        <input type="hidden" name="endDate" value="${param.endDate}" />
+    </c:if>
+    </div>
     </div>
 
-    <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
-    <input type="hidden" name="startDate" value="${param.startDate}" />
-    <input type="hidden" name="endDate" value="${param.endDate}" />
+    </section>
+
+
+
 
   </main><!-- End #main -->
 </body>

@@ -72,34 +72,8 @@ pageEncoding="UTF-8"%>
             justify-content: flex-end;
         }
 
-        .flex > input {
-            margin-left: 10px;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
 
-        .flex > input:hover {
-            background-color: #0056b3;
-        }
 
-        input[type="button"] {
-            background-color: #28a745; /* Success color */
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        input[type="button"]:hover {
-            background-color: #218838; /* Darker green */
-        }
     </style>
   </head>
   <body>
@@ -118,16 +92,17 @@ pageEncoding="UTF-8"%>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">회원관리</li>
+          <li class="breadcrumb-item active">회원정보</li>
         </ol>
       </nav>
 
     </div><!-- End Page Title -->
 
-    <input type="hidden" name="member_id" value="${member.member_id}" />
     
-    <div class="container mx-auto p-6">
+    
+    <div class="container">
+      <input type="hidden" name="member_id" value="${member.member_id}" />
       <div class="mb-4">
         <lable for="name">이름:</lable>
         <input
@@ -172,33 +147,36 @@ pageEncoding="UTF-8"%>
           value="${member.member_email}"
           readonly
         />
-        <div class="mb-4">
-          <lable for="phone">전화번호:</lable>
-          <input
-            class="form-control"
-            type="text"
-            value="${member.member_phone}"
-            readonly
-          />
-        </div>
+      </div>
+      <div class="mb-4">
+        <lable for="phone">전화번호:</lable>
+        <input
+          class="form-control"
+          type="text"
+          value="${member.member_phone}"
+          readonly
+        />
+      </div>
         
-        <div class="flex justify-end">
-          <c:if test="${user.member_id eq member.member_id}">
-            <input
-              type="button"
-              value="회원 수정"
-              onclick="location.href='mypage/modify_form.do?member_id=${member.member_id}'"
-            />
-            <input
-              type="button"
-              value="회원 탈퇴"
-              onclick="del('${ member.member_id }');"
-            />
-          </c:if>
-        </div>
+      <div class="flex justify-end">
+        <c:if test="${user.member_id eq member.member_id}">
+          <input style="margin-right: 10px;"
+            type="button"
+            class="button_style"
+            value="회원 수정"
+            onclick="location.href='mypage/modify_form.do?member_id=${member.member_id}'"
+          />
+          <input
+            type="button"
+            class="button_style"
+            value="회원 탈퇴"
+            onclick="del('${ member.member_id }');"
+          />
+        </c:if>
       </div>
     </div>
 
   </main>
+
   </body>
 </html>

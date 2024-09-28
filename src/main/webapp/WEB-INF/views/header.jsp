@@ -96,7 +96,7 @@ header .logout{
               </a>
             </c:when>
             <c:when test="${sessionScope.userType == 'ADMIN'}">
-              <a href="/admin/dashboard.do" style="text-decoration: none; color: inherit;">
+              <a href="/admin/member_list.do" style="text-decoration: none; color: inherit;">
                 <div class="logo" style="text-align:left;">한입만</div>
               </a>
             </c:when>
@@ -146,3 +146,4 @@ header .logout{
     </header>
 </body>
 </html>
+

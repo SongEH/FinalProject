@@ -147,8 +147,8 @@ prefix="c" %>
         <!-- 관리자 전용 액션 버튼 -->
         <c:if test="${userType == 'ADMIN'}">
           <div class="admin-actions">
-            <a href="${pageContext.request.contextPath}/notice/insert_form.do"
-              >공지사항 등록</a
+            <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/notice/insert_form.do'"
+              >공지사항 등록</button
             >
           </div>
         </c:if>

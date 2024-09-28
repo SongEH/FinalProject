@@ -189,6 +189,7 @@
                 value="${addr.addr_zipcode}"
               />
               <input
+                class="button_style"
                 type="button"
                 value="주소검색"
                 class="form-control"

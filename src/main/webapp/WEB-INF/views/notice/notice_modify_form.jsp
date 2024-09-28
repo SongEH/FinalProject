@@ -49,7 +49,7 @@
         .form-group textarea {
             resize: none;
         }
-        .form-group button {
+        /* .form-group button {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
@@ -59,7 +59,7 @@
         }
         .form-group button:hover {
             background-color: #0056b3;
-        }
+        } */
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
             word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
@@ -109,13 +109,13 @@
     <main id="main" class="main">
         <div class="pagetitle">
 
-        <h1>Form Layouts</h1>
+        <h1>공지사항 수정</h1>
 
         <nav>
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">공지&문의</li>
+            <li class="breadcrumb-item active">공지사항</li>
             </ol>
         </nav>
 
@@ -123,7 +123,7 @@
 
         <c:if test="${userType == 'ADMIN'}">
             <div class="container">
-                <h1>공지사항 수정</h1>
+                
                 <form action="${pageContext.request.contextPath}/notice/modify_form.do" method="post">
                     <input type="hidden" name="notice_id" value="${vo.notice_id}">
                     <div class="form-group">
@@ -145,10 +145,10 @@
                         <textarea id="notice_content" name="notice_content" rows="5" required>${vo.notice_content}</textarea>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                        <button type="button" class="button_style" onclick="send(this.form);">
                             수정
                         </button>
-                        <button type="button" class="btn btn-primary" 
+                        <button type="button" class="button_style" 
                         onclick="location.href='${pageContext.request.contextPath}/notice/detail.do?notice_id=${vo.notice_id}';">
                             취소
                         </button>

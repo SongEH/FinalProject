@@ -98,7 +98,7 @@ public class ShopController {
 
             // 모든 가게에 대해 좌표 계산 후 반경 내 가게 필터링
             for (ShopVo shop : allShops) {
-                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
+                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
                 double distance = kakaoMapService.calculateDistance(customerCoordinates[0], customerCoordinates[1],
                                                                     shopCoordinates[0], shopCoordinates[1]);
                 if (distance <= radius) {
@@ -171,7 +171,7 @@ public class ShopController {
 
             // 모든 가게에 대해 좌표 계산 후 반경 내 가게 필터링
             for (ShopVo shop : allShops) {
-                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
+                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
                 double distance = kakaoMapService.calculateDistance(customerCoordinates[0], customerCoordinates[1],
                                                                     shopCoordinates[0], shopCoordinates[1]);
                 if (distance <= radius) {
@@ -384,7 +384,7 @@ public class ShopController {
             // System.out.println(vo.getShop_id());
             model.addAttribute("vo", vo);
 
-            // 가게 리스트 확인 
+            // 가게 등록 여부 확인  
             Boolean result = shop_Service.hasShop(user.getOwner_id());
             System.out.println("result : " + result);
             Boolean hasShop = (result != null) ? result : false;

@@ -59,9 +59,24 @@
                           </div>
     
                           <div class="col-md-12">
-                            <div class="form-floating">
-                              <input type="text" class="form-control" placeholder="가게주소" name="shop_addr" value="${vo.shop_addr}">
-                              <label>가게주소</label>
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="shop_addr1" placeholder="주소찾기 버튼을 눌러주세요." name="shop_addr1" value="${vo.shop_addr1}" readonly>
+                                    <label>가게주소</label>
+                                </div>
+                              </div>
+                              <div class="col-md-5">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="shop_addr2" placeholder="상세주소를 입력해주세요" name="shop_addr2" value="${vo.shop_addr2}">
+                                    <label>상세주소</label>
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-floating">
+                                    <button type="button" class="form-control" style="background-color: #F7B5CA;"  id="addressSearch" onclick="findAddr()">주소 찾기</button>
+                                </div>
+                              </div>
                             </div>
                           </div>
     
@@ -131,14 +146,6 @@
                                 <option class="form-control" value="desserts" <c:if test="${vo.food_category == 'desserts'}">selected</c:if>>카페·디저트</option>
                                 <option class="form-control" value="fast_food" <c:if test="${vo.food_category == 'fast_food'}">selected</c:if>>패스트푸드</option>
                             </select>
-                            </div>
-                          </div>
-    
-                          <div class="col-md-12">
-                            <div class="form-floating form-control">
-                              <input type="radio" name="shop_status" value="영업전" checked="checked">영업전</input>
-                              <input type="radio" name="shop_status" value="영업중">영업중</input>
-                              <input type="radio" name="shop_status" value="휴무일">휴무일</input>
                             </div>
                           </div>
     

@@ -109,6 +109,11 @@ pageEncoding="UTF-8" %>
                   </a>
                 </li>
                 <li>
+                  <a href="/admin/shop_list.do">
+                    <i class="bi bi-circle"></i><span>가게리스트</span>
+                  </a>
+                </li>
+                <li>
                   <a href="/admin/pending_requests.do">
                     <i class="bi bi-circle"></i><span>승인요청</span>
                   </a>

@@ -9,7 +9,7 @@ pageEncoding='UTF-8'%>
 <style>
   .shop_info p{
       color: #FFC6C6;
-      display: inline-block;
+      /* display: inline-block; */
   }
 </style>
 </head>

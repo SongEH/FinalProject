@@ -32,6 +32,7 @@ public class ShopVo {
     private String shop_mdate;
     private String shop_status;
     private int owner_id;
+    private String owner_name;
 
     // SQL Cal result
     private int menu_count;

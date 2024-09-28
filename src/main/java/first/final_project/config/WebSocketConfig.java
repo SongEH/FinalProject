@@ -1,10 +1,13 @@
 package first.final_project.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+import first.final_project.TimeTraceAop;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -19,5 +22,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws-orders").withSockJS(); // 웹소켓 엔드포인트
+    }
+
+    // AOP
+    @Bean
+    public TimeTraceAop TimeTraceAop(){
+        return new TimeTraceAop();
     }
 }

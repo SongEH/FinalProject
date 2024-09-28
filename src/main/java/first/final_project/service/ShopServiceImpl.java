@@ -23,10 +23,10 @@ public class ShopServiceImpl implements ShopService {
     }
 
     // 가게 전체 리스트
-    // @Override
-    // public List<ShopVo> selectList() {
-    // return shopMapper.selectList();
-    // }
+    @Override
+    public List<ShopVo> selectListAll() {
+    return shopMapper.selectListAll();
+    }
 
     // 가게 카테고리별 출력
     @Override

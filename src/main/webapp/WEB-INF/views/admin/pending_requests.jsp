@@ -126,15 +126,15 @@
             <td>${request.owner_license}</td>
             <td>${request.approval_status}</td>
             <td>
-              <a
-                href="${pageContext.request.contextPath}/admin/approve_request.do?owner_id=${request.owner_id}"
-                >승인</a
+              <button class="button_style"
+                onclick="locaion.href='${pageContext.request.contextPath}/admin/approve_request.do?owner_id=${request.owner_id}'"
+                >승인</button
               >
             </td>
             <td>
-              <a
-                href="${pageContext.request.contextPath}/admin/reject_request.do?owner_id=${request.owner_id}"
-                >거절</a
+              <button class="button_style"
+              onclick="locaion.href='${pageContext.request.contextPath}/admin/reject_request.do?owner_id=${request.owner_id}'"
+                >거절</button
               >
             </td>
           </tr>

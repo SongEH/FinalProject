@@ -50,7 +50,7 @@ prefix="c" %>
         .form-group textarea {
             resize: vertical;
         }
-        .form-group button {
+        /* .form-group button {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
@@ -60,7 +60,7 @@ prefix="c" %>
         }
         .form-group button:hover {
             background-color: #0056b3;
-        }
+        } */
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
             word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
@@ -129,7 +129,7 @@ prefix="c" %>
                     등록
                 </button>
                 <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/notice/list.do'">
-                    등록
+                    취소
                 </button>
             </div>
         </form>

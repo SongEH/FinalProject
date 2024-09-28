@@ -129,7 +129,7 @@
 
         <c:if test="${sessionScope.userType == 'OWNER'}">
             <div class="owner-actions">
-                <a href="${pageContext.request.contextPath}/owner_inquiries/insert_form.do">문의사항 등록</a>
+                <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/insert_form.do'">문의사항 등록</button>
             </div>
         </c:if>
        

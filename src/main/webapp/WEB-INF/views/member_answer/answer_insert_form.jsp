@@ -49,7 +49,7 @@
         .form-group textarea {
             resize: vertical;
         }
-        .form-group button {
+        /* .form-group button {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
@@ -59,7 +59,7 @@
         }
         .form-group button:hover {
             background-color: #0056b3;
-        }
+        } */
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
             word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
@@ -117,10 +117,10 @@
                 <textarea id="m_answer_content" name="m_answer_content" rows="5" required></textarea>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                <button type="button" class="button_style" onclick="send(this.form);">
                     등록
                 </button>
-                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id='+'${param.m_inquiries_id}'">
+                <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id='+'${param.m_inquiries_id}'">
                     취소
                 </button>
             </div>

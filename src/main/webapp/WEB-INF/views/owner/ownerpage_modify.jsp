@@ -127,11 +127,10 @@
 
       </div><!-- End Page Title -->
 
-        <form
-        action="${pageContext.request.contextPath}/owner/ownerpage/modify.do"
-        method="post">
+        
         <input type="hidden" name="owner_id" value="${owner.owner_id}" />
         <div class="container mx-auto p-6">
+          <form action="${pageContext.request.contextPath}/owner/ownerpage/modify.do" method="post">
           <div class="mb-4">
             <label for="name">이름:</label>
             <input
@@ -200,9 +199,9 @@
             />
           </div>
           <div class="flex justify-end">
-            <input type="button" value="수정하기" onclick="send(this.form);" />
+            <input type="button" class="button_style" value="수정하기" onclick="send(this.form);" />
             <input
-              type="button"
+              type="button" class="button_style"
               value="돌아가기"
               onclick="location.href='/owner/ownerpage.do'"
             />

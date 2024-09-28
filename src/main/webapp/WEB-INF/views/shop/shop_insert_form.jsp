@@ -13,7 +13,7 @@
     let shop_content = f.shop_content.value.trim();
     let shop_addr1 = f.shop_addr1.value.trim();
     let shop_addr2 = f.shop_addr2.value.trim();
-    let shop_addr = shop_addr1 + " " + shop_addr2;
+    // let shop_addr = shop_addr1 + " " + shop_addr2;
     let shop_call= f.shop_call.value.trim();
     let shop_min_price = f.shop_min_price.value.trim();
     let shop_open_hour = f.shop_open_hour.value;

@@ -450,6 +450,23 @@ public class ShopController {
         System.out.println("변경할 이미지가 없습니다. ");
         try {
             System.out.println("업데이트전");
+            System.out.println(vo.getShop_name());
+            System.out.println(vo.getShop_content());
+            System.out.println(vo.getShop_addr1());
+            System.out.println(vo.getShop_addr2());
+            System.out.println(vo.getShop_call());
+            System.out.println(vo.getShop_min_price());
+            System.out.println(vo.getShop_open_hour());
+            System.out.println(vo.getShop_close_hour());
+            System.out.println(vo.getShop_close_day());
+            System.out.println(vo.getFood_category());
+            System.out.println(vo.getShop_img());
+
+            if(vo.getShop_img()==null){
+                vo.setShop_img(filename);
+                System.out.println(vo.getShop_img());
+            }
+            
             int res = shop_Service.update(vo);
             System.out.println("가게수정 완료");
             return "redirect:modify_form.do";

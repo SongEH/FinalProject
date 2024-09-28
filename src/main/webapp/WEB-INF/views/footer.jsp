@@ -11,7 +11,7 @@ pageEncoding='UTF-8'%>
   padding-bottom: 65px;
   font-size: 12px;
   color: #999;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   width: 100%;
 }
 
@@ -51,7 +51,6 @@ pageEncoding='UTF-8'%>
 <body>
    <!-- ======= Footer ======= -->
    <footer id="footer" class="footer">
-    <div class="container" style="margin:auto">
       <div class="footer">
         <div class="footer-menu" style="border-top: 1px solid gray; border-bottom: 1px solid gray;">
           <ul>
@@ -95,7 +94,7 @@ pageEncoding='UTF-8'%>
           </ul>
         </div>  <!-- foot_menu_list end -->
 
-        <div class="row" style="margin-bottom: 10px;">
+        <div class="row" style="margin-top: 30px;">
           <div class="col-lg-2 col-md-2" style="width:20%">
             <div class="card" style="width:100%">
               <img class="card-img-top" src="../bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
@@ -157,7 +156,6 @@ pageEncoding='UTF-8'%>
           <P> Copyright <strong>2024 [Developer / A Bite project Team]. All right reserved. </strong></P>
         </div>
       </div>
-    </div>
   </footer>
   <!-- End Footer -->
 </body>

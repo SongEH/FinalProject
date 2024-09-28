@@ -122,6 +122,9 @@ pageEncoding="UTF-8"%>
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      display: -webkit-box;   
+      -webkit-box-orient: vertical; /* Set orientation to vertical */
+      -webkit-line-clamp: 3;
     }
 
     .shop_info_list {
@@ -185,6 +188,19 @@ pageEncoding="UTF-8"%>
     .star-empty{
       color: white;
       text-shadow: 0px 0px 0.5px black;
+    }
+    .container .container {
+      width: auto; /* Override specific styles */
+      max-width: none; /* Reset width restrictions */
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    footer{
+      margin: auto;
+      padding:0;
+      border-top: none;   
     }
   </style>
   <script>

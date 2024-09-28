@@ -23,31 +23,44 @@ header .login-section {
 
 
 header .login, .insert {
-    background-color: #F0A8D0;
+    /* background-color: #F0A8D0; */
     padding: 8px 15px;
-    border-radius: 5px;
-    color: black;
-    text-decoration: none;
-    border: none;
+    /* border-radius: 5px; */
+    /* color: black; */
+    /* text-decoration: none; */
+    /* border: none; */
     margin-left: 10px; /* Space between the welcome text and button */
 }
 header .insert {
-    background-color: #F0A8D0;
-    padding: 8px 15px;
-    border-radius: 5px;
-    color: black;
-    text-decoration: none;
-    border: none;
+    /* background-color: #F0A8D0; */
+    /* padding: 8px 15px; */
+    /* border-radius: 5px; */
+    /* color: black; */
+    /* text-decoration: none; */
+    /* border: none; */
     margin-left: 10px; /* Space between the welcome text and button */
 }
 header .logout{
-  background-color: #F0A8D0;
-  padding: 8px 15px;
-  border-radius: 5px;
-  color: black;
-  text-decoration: none;
-  border: none;
+  /* background-color: #F0A8D0; */
+  /* padding: 8px 15px; */
+  /* border-radius: 5px; */
+  /* color: black; */
+  /* text-decoration: none; */
+  /* border: none; */
   margin-left:10px;
+}
+.button_style {
+  background-color: #f0a8d0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 10px 15px;
+} 
+
+.button_style:hover {
+  background-color: #e090b5;
 }
 </style>
 <script>
@@ -102,20 +115,20 @@ header .logout{
           <c:choose>
             <c:when test="${sessionScope.userType == 'MEMBER'}">
               <span>Welcome ${sessionScope.user.member_name}님 안녕하세요.
-                  <input class="login" type="button" value="My Page" onclick="location.href='../member/mypage.do'"/>
-                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+                  <input class="login button_style" type="button" value="My Page" onclick="location.href='../member/mypage.do'"/>
+                  <input class="logout button_style" type="button" value="logOut" onclick="location.href='../logout.do'"/>
                 </span>
             </c:when>
             <c:when test="${sessionScope.userType == 'OWNER'}">
               <span>Welcome ${sessionScope.user.owner_name}님
-                  <input class="login" type="button" value="Owner Dashboard" onclick="location.href='../owner/ownerpage.do'">
-                  <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+                  <input class="login button_style" type="button" value="Owner Dashboard" onclick="location.href='../owner/ownerpage.do'">
+                  <input class="logout button_style" type="button" value="logOut" onclick="location.href='../logout.do'"/>
               </span>
             </c:when>
             <c:when test="${sessionScope.userType == 'ADMIN'}">
               <span>Welcome ${sessionScope.user.admin_accountId}님
-                <input class="login" type="button" value="Admin Dashboard" onclick="location.href='../admin/member_list.do'">
-                <input class="logout" type="button" value="logOut" onclick="location.href='../logout.do'"/>
+                <input class="login button_style" type="button" value="Admin Dashboard" onclick="location.href='../admin/member_list.do'">
+                <input class="logout button_style" type="button" value="logOut" onclick="location.href='../logout.do'"/>
               </span>
             </c:when>
 
@@ -123,9 +136,9 @@ header .logout{
         </c:when>
         <c:otherwise>
           <div class="login-section">
-            <input class="login" type="button" value="로그인" 
+            <input class="login button_style" type="button" value="로그인" 
             onclick="location.href='/login_form.do'"/>
-            <input class="insert" type="button" value="회원가입" 
+            <input class="insert button_style" type="button" value="회원가입" 
             onclick="location.href='/insert_form.do'"/>
           </div>
         </c:otherwise>

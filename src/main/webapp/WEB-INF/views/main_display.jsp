@@ -62,6 +62,7 @@ pageEncoding="UTF-8"%>
         width: 200px;
         height: 200px;
         float: left;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
 
       .card img {
@@ -70,6 +71,11 @@ pageEncoding="UTF-8"%>
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         margin: auto;
+        transition: transform 0.2s ease;
+      }
+
+      .card:hover img {
+        transform: scale(1.1); /* Slightly enlarge the image */
       }
 
       .card p {
@@ -78,12 +84,17 @@ pageEncoding="UTF-8"%>
       }
       .card:hover {
         cursor: pointer;
+        transform: scale(1.05); /* Slightly enlarge the card */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a shadow */
+        background-color: #FFC6C6;
       }
 
       .footer {
         text-align: center;
         margin: 20px 0;
+        margin-top: 50px;
       }
+      
     </style>
     <script>
     function shopListAll(element){
@@ -211,7 +222,7 @@ pageEncoding="UTF-8"%>
   <div>
     <div id="shop_list_main_display"></div>
   </div>
-  <div style="margin-top: 50px;">
+  <div class="container" style="margin:auto">
     <%@ include file="footer.jsp" %>
   </div>
 </body>

@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insert" parameterType="shop">
         insert into shop (
             shop_id,
-            shop_name, shop_img, shop_addr, food_category, shop_call, 
+            shop_name, shop_img, shop_addr1, shop_addr2, food_category, shop_call, 
             shop_content, shop_min_price,  shop_rate, 
             shop_stemp_count, shop_review_count,
             shop_open_hour, shop_close_hour,
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shop_area, shop_cdate, shop_mdate, shop_status, owner_id
         ) values (
             null,
-            #{shop_name}, #{shop_img}, #{shop_addr}, #{food_category}, #{shop_call}, 
+            #{shop_name}, #{shop_img}, #{shop_addr1}, #{shop_addr2}, #{food_category}, #{shop_call}, 
             #{shop_content}, #{shop_min_price}, default, 
             default, default, #{shop_open_hour},#{shop_close_hour}
             #{shop_close_day},
@@ -219,15 +219,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update" parameterType="shop">
         update shop set shop_name = #{shop_name},
                         shop_content = #{shop_content},
-                        shop_addr = #{shop_addr},
+                        shop_addr1 = #{shop_addr1},
+                        shop_addr2 = #{shop_addr2},
                         shop_call = #{shop_call},
                         shop_min_price = #{shop_min_price},
                         shop_open_hour = #{shop_open_hour},
                         shop_close_hour = #{shop_close_hour},
                         shop_close_day = #{shop_close_day},
                         shop_area = #{shop_area},
-                        food_category = #{food_category},
-                        shop_status = #{shop_status}
+                        food_category = #{food_category}
                         <if test="shop_img != null">
                             , shop_img = #{shop_img}
                         </if>

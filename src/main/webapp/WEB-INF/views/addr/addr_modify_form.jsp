@@ -237,13 +237,13 @@
               </select>
             </div>
             <div class="flex justify-end">
-              <input
+              <input class="button_style"
                 type="button"
                 value="이전으로"
                 onclick="location.href='/addr/addr_list.do'"
               />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="주소수정" onclick="send(this.form);" />
+              <input class="button_style" type="button" value="주소수정" onclick="send(this.form);" />
             </div>
           </form>
         </div>

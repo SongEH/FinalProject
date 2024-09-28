@@ -125,7 +125,10 @@ prefix="c" %>
                 <textarea id="notice_content" name="notice_content" rows="5" required></textarea>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                <button type="button" class="button_style" onclick="send(this.form);">
+                    등록
+                </button>
+                <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/notice/list.do'">
                     등록
                 </button>
             </div>

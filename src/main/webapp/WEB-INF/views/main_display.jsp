@@ -139,6 +139,9 @@ pageEncoding="UTF-8"%>
                     }
                     // 부모창의 주소칸에 받아온 주소를 넣는다.
                     $("#order_addr").val(addr);
+
+                    // 부모창의 주소칸에 받아온 우편번호를 넣는다.
+                    $("#order_addr_zipcode").val(data.zonecode);                  
               }
           }).open();
       }

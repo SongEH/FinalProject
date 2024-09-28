@@ -97,6 +97,7 @@
         .inquiries-title a:hover {
             text-decoration: underline;
         }
+        
 
     </style>
 </head>
@@ -126,16 +127,26 @@
 
     <div class="container">
         <input type="hidden" id="inquiries_type" value="${vo.m_inquiries_type}">
-        <p>문의사항 작성자 ID: ${vo.memberAccountId}</p>
+        <!-- <p>문의사항 작성자 ID: ${vo.memberAccountId}</p> -->
         
 
 
         <div class="filter">
+            
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=전체" class="${m_inquiries_type == '전체' ? 'active' : ''}">전체</a>
+        
+            
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=결제문의" class="${m_inquiries_type == '결제문의' ? 'active' : ''}">결제문의</a>
+         
+          
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=주문문의" class="${m_inquiries_type == '주문문의' ? 'active' : ''}">주문문의</a>
+            
+            
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=서비스이용" class="${m_inquiries_type == '서비스이용' ? 'active' : ''}">서비스이용</a>
+            
+           
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=배송문의" class="${m_inquiries_type == '배송문의' ? 'active' : ''}">배송문의</a>
+           
         </div>
 
         <c:if test="${sessionScope.userType == 'MEMBER'}">

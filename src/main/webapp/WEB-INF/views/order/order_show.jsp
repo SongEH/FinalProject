@@ -135,10 +135,10 @@
               <p>가게 요청사항 ${ vo.orders_srequest }</p>
               <p>배달 요청사항 ${ vo.orders_drequest }</p>
 
-              <input class="btn btn-danger" type="button" value="주문내역삭제"
+              <input class="button_style" type="button" value="주문내역삭제"
                     onclick="delete_order('${vo.orders_id}');">
             
-              <button>같은 메뉴 담기</button>
+              <!-- <button>같은 메뉴 담기</button> -->
             </div>
           </div>
         </div>

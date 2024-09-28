@@ -132,7 +132,9 @@ pageEncoding="UTF-8" %>
       $.ajax({
         url: '/carts/list2.do',
         type: 'GET',
-        data: {"status":status},
+        data: {
+          "status": status
+        },
         success: function (response) {
           // 응답으로 받은 HTML을 장바구니 목록에 업데이트
           $('#cart_list').html(response);
@@ -158,8 +160,10 @@ pageEncoding="UTF-8" %>
 
 <body>
 
-  <%@include file="popup.jsp" %>
+  <%@include file="menu_popup.jsp" %>
+
   ${status}
+
   <c:set var="userType" value="${sessionScope.userType}" />
   <!-- <section class="section" style="margin: auto;"> -->
   <!-- <div class="row align-items-top"> -->
@@ -205,15 +209,15 @@ pageEncoding="UTF-8" %>
 
 
                 <c:if test="${userType == 'MEMBER' && status =='영업중'}">
-                  <input class="btn btn-info" type="button" value="장바구니담기"
+                  <input class="button_style" type="button" value="장바구니담기"
                     onclick="menu_modal('${ item.menu_id }', '${ item.menu_soldout }');">
                 </c:if>
                 <c:if test="${userType == 'OWNER'}">
-                  <input class="btn btn-info" type="button" id="btn_popup_update" value="상세보기"
+                  <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
                     onclick="show_menu('${item.menu_id}');">
-                  <input class="btn btn-info" type="button" id="btn_popup_update" value="수정"
+                  <input class="button_style" type="button" id="btn_popup_update" value="수정"
                     onclick="modify_menu('${item.menu_id}');">
-                  <input class="btn btn-danger" type="button" id="btn_popup_delete" value="삭제"
+                  <input class="button_style" type="button" id="btn_popup_delete" value="삭제"
                     onclick="delete_menu('${item.menu_id}');">
                 </c:if>
               </div>
@@ -227,5 +231,6 @@ pageEncoding="UTF-8" %>
   </div>
   </section>
 </body>
+
 
 </html>

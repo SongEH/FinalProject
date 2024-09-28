@@ -222,7 +222,7 @@
                   <div class="form-floating">
                     <img src="../resources/images/${ vo.menu_img }" id="my_img">
                     <br>
-                    <input class="btn  btn-info" type="button" value="이미지편집" onclick="ajaxFileUpload();">
+                    <input class="button_style" type="button" value="이미지편집" onclick="ajaxFileUpload();">
                     <label>사진</label>
                   </div>
                 </div>
@@ -264,9 +264,9 @@
                 <input type="hidden" name="menu_soldout" value="0">
 
                 <div class="text-center">
-                  <input class="btn btn-success" type="button" value="목록으로" onclick="location.href='list.do'">
+                  <input class="button_style" type="button" value="목록으로" onclick="location.href='list.do'">
 
-                  <input class="btn btn-primary" type="button" value="수정완료" onclick="send(this.form);">
+                  <input class="button_style" type="button" value="수정완료" onclick="send(this.form);">
                 </div>
               </form><!-- End floating Labels Form -->
 

@@ -407,8 +407,17 @@ pageEncoding="UTF-8"%>
     </script>
   </head>
   <body>
+
+    <%@include file="common.jsp" %>
+
+    <%@include file="header.jsp" %>
+
+    
+
+    <main id="main" class="main">
+
     <div class="container mt-4">
-      <h2>Singup Page</h2>
+      
       <div class="row">
         <div class="col-md-4">
           <div class="card" style="width: 18rem">
@@ -416,7 +425,7 @@ pageEncoding="UTF-8"%>
             <div class="card-body">
               <h5 class="card-title">Owner Singup</h5>
               <button
-                class="btn btn-secondary mt-2"
+                class="button_style"
                 onclick="showSignupModal('owner')"
               >
                 Sign Up as Owner
@@ -431,7 +440,7 @@ pageEncoding="UTF-8"%>
             <div class="card-body">
               <h5 class="card-title">Member Singup</h5>
               <button
-                class="btn btn-secondary mt-2"
+                class="button_style"
                 onclick="showSignupModal('member')"
               >
                 Sign Up as Member
@@ -613,14 +622,14 @@ pageEncoding="UTF-8"%>
 
               <button
                 type="button"
-                class="btn btn-primary"
+                class="button_style"
                 onclick="location.href='../main.do'"
               >
                 메인화면
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
+                class="button_style"
                 onclick="owner_send(this.form);"
               >
                 가입하기
@@ -771,14 +780,14 @@ pageEncoding="UTF-8"%>
 
               <button
                 type="button"
-                class="btn btn-primary"
+                class="button_style"
                 onclick="location.href='../main.do'"
               >
                 Home
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
+                class="button_style"
                 onclick="member_send(this.form);"
               >
                 가입하기
@@ -788,7 +797,7 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </div>
-
+    </main>
     <!-- end -->
   </body>
 </html>

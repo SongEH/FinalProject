@@ -158,13 +158,13 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <select class="form-control" placeholder="휴무일" name="shop_close_day">
-                                <option class="form-control" value="monday">월요일</option>
-                                <option class="form-control" value="tuesday">화요일</option>
-                                <option class="form-control" value="wednesday">수요일</option>
-                                <option class="form-control" value="thursday">목요일</option>
-                                <option class="form-control" value="friday">금요일</option>
-                                <option class="form-control" value="saturday">토요일</option>
-                                <option class="form-control" value="sunday">일요일</option>
+                                <option class="form-control" value="Monday">월요일</option>
+                                <option class="form-control" value="Tuesday">화요일</option>
+                                <option class="form-control" value="Wednesday">수요일</option>
+                                <option class="form-control" value="Thursday">목요일</option>
+                                <option class="form-control" value="Friday">금요일</option>
+                                <option class="form-control" value="Saturday">토요일</option>
+                                <option class="form-control" value="Sunday">일요일</option>
                               </select>
                             </div>
                           </div>

@@ -106,6 +106,11 @@
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>주문 목록</h1>
+            <div style="display: flex; justify-content: flex-end;">
+                <input type="button" value="영업시작"/>
+                <input type="button" name="" value="휴무일" />
+            </div>
+
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>

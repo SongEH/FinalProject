@@ -195,7 +195,6 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert("menu호출");
           $("#shop_info_display").html(res_data).show();
           $("#menu_display").hide();
           $('#reviews_display').hide();

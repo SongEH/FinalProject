@@ -112,22 +112,22 @@ prefix="c" %>
           <div class="notice-author">작성자: ${vo.adminAccountId}</div>
         </div>
 
-        <a
-          href="${pageContext.request.contextPath}/notice/list.do?notice_type=전체"
+        <button class="button_style"
+          onclick="location.href='${pageContext.request.contextPath}/notice/list.do?notice_type=전체'"
           class="back-button"
-          >목록으로</a
+          >목록으로</button
         >
         <c:if test="${userType == 'ADMIN'}">
           <button
             type="button"
-            class="btn btn-primary"
+            class="button_style"
             onclick="location.href='${pageContext.request.contextPath}/notice/modify_form.do?notice_id=${vo.notice_id}&notice_type=${vo.notice_type}'"
           >
             수정
           </button>
           <button
             type="button"
-            class="btn btn-primary"
+            class="button_style"
             onclick="del('${vo.notice_id}');"
           >
             삭제

@@ -117,10 +117,10 @@
                 <textarea id="o_answer_content" name="o_answer_content" rows="5" required>${vo.o_answer_content}</textarea>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                <button type="button" class="button_style" onclick="send(this.form);">
                     등록
                 </button>
-                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id='+'${param.o_inquiries_id}'">
+                <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id='+'${param.o_inquiries_id}'">
                     취소
                 </button>
             </div>

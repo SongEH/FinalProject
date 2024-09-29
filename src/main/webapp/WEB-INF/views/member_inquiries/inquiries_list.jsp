@@ -151,7 +151,7 @@
 
         <c:if test="${sessionScope.userType == 'MEMBER'}">
             <div class="member-actions">
-                <a href="${pageContext.request.contextPath}/member_inquiries/insert_form.do">문의사항 등록</a>
+                <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/insert_form.do'">문의사항 등록</button>
             </div>
         </c:if>
        

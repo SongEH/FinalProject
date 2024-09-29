@@ -128,73 +128,73 @@
 
     <body>
 
-      <%@include file="../common.jsp" %>
+      <%@ include file="../common.jsp" %>
 
-        <%@include file="../header.jsp" %>
+      <%@ include file="../header.jsp" %>
 
-          <%@include file="../sidebar.jsp" %>
+      <%@ include file="../sidebar.jsp" %>
 
-            <main id="main" class="main">
-              <div class="pagetitle">
+      <main id="main" class="main">
+        <div class="pagetitle">
 
-                <h1>회원정보수정</h1>
+          <h1>회원정보수정</h1>
 
-                <nav>
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">회원관리</li>
-                    <li class="breadcrumb-item active">회원정보</li>
-                  </ol>
-                </nav>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item">회원관리</li>
+              <li class="breadcrumb-item active">회원정보</li>
+            </ol>
+          </nav>
 
-              </div><!-- End Page Title -->
+        </div><!-- End Page Title -->
 
-              <div class="container">
-                <div class="bg-white shadow-md rounded-lg p-6">
-                  <form action="${pageContext.request.contextPath}/member/mypage/modify_form.do" method="get">
-                    <input type="hidden" name="member_id" value="${member.member_id}" />
+        <div class="container">
+          <div class="bg-white shadow-md rounded-lg p-6">
+            <form action="${pageContext.request.contextPath}/member/mypage/modify_form.do" method="get">
+              <input type="hidden" name="member_id" value="${member.member_id}" />
 
-                    <div class="mb-4">
-                      <label for="name">이름:</label>
-                      <input class="form-control" type="text" name="member_name" value="${member.member_name}" />
-                    </div>
-                    <div class="mb-4">
-                      <label for="nickname">닉네임:</label>
-                      <input class="form-control" type="text" name="member_nickname"
-                        value="${member.member_nickname}" />
-                    </div>
-                    <div class="mb-4">
-                      <lable for="accountId">아이디:</lable>
-                      <input class="form-control" type="text" value="${member.member_accountId}" readonly />
-                    </div>
-                    <div class="mb-4">
-                      <label for="password">비밀번호:</label>
-                      <input class="form-control" type="password" name="member_pwd" value="${member.member_pwd}" />
-                    </div>
-                    <div class="mb-4">
-                      <label for="email">이메일:
-                        <span class="em_red">*</span>
-                      </label>
-                      <input class="form-control" type="text" name="member_email" value="${member.member_email}" />
-                    </div>
-                    <div class="mb-4">
-                      <label for="phone">전화번호:</label>
-                      <input class="form-control" type="text" name="member_phone" oninput="formatPhoneNumber(this);"
-                        value="${member.member_phone}" />
-                    </div>
-
-                    <div class="flex justify-end">
-                      <button type="button" class="button_style" onclick="send(this.form);">수정</button>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <button type="button" class="button_style"
-                        onclick="location.href='${pageContext.request.contextPath}/member/mypage.do'">취소</button>
-                    </div>
-
-                  </form>
-                </div>
+              <div class="mb-4">
+                <label for="name">이름:</label>
+                <input class="form-control" type="text" name="member_name" value="${member.member_name}" />
+              </div>
+              <div class="mb-4">
+                <label for="nickname">닉네임:</label>
+                <input class="form-control" type="text" name="member_nickname"
+                  value="${member.member_nickname}" />
+              </div>
+              <div class="mb-4">
+                <lable for="accountId">아이디:</lable>
+                <input class="form-control" type="text" value="${member.member_accountId}" readonly />
+              </div>
+              <div class="mb-4">
+                <label for="password">비밀번호:</label>
+                <input class="form-control" type="password" name="member_pwd" value="${member.member_pwd}" />
+              </div>
+              <div class="mb-4">
+                <label for="email">이메일:
+                  <span class="em_red">*</span>
+                </label>
+                <input class="form-control" type="text" name="member_email" value="${member.member_email}" />
+              </div>
+              <div class="mb-4">
+                <label for="phone">전화번호:</label>
+                <input class="form-control" type="text" name="member_phone" oninput="formatPhoneNumber(this);"
+                  value="${member.member_phone}" />
               </div>
 
-            </main><!-- End #main -->
+              <div class="flex justify-end">
+                <button type="button" class="button_style" onclick="send(this.form);">수정</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="button_style"
+                  onclick="location.href='${pageContext.request.contextPath}/member/mypage.do'">취소</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </main><!-- End #main -->
 
     </body>
 

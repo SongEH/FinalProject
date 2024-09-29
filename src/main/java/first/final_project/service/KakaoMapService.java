@@ -18,7 +18,7 @@ public class KakaoMapService {
     public double[] getCoordinates(String address) throws Exception {
         String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + address;
 
-        System.out.println("address" + address);
+        // System.out.println("address" + address);
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -70,8 +71,6 @@ public class ShopController {
     @RequestMapping("/shop/list.do")
     public String shop_list(String food_category,String order_addr,String activeCategory, Model model, RedirectAttributes ra) {
 
- 
-
         System.out.println(food_category);
         System.out.println(order_addr);
 
@@ -87,6 +86,9 @@ public class ShopController {
 
         // 가게 리스트 필터링
         List<ShopVo> allShops = shop_Service.selectList(food_category);
+
+        // 가게 영업유무 업데이트
+        int res = shop_Service.updateStatus();
         
         list = new ArrayList<>();
 
@@ -160,6 +162,7 @@ public class ShopController {
         // 가게 리스트 필터링
         List<ShopVo> allShops = shop_Service.selectListValue(selectMap);
         // List<ShopVo> allShops = shop_Service.selectList(food_category);
+        int res = shop_Service.updateStatus();
         
         list = new ArrayList<>();
 
@@ -490,4 +493,22 @@ public class ShopController {
         }
         return "redirect:shoplist.do";
     }
+
+    // 트라이중 
+    // @RequestMapping("/shop/set_holiday.do")
+    // @ResponseBody
+    // public String set_holiday(RedirectAttributes ra){
+
+    //     OwnerVo user = (OwnerVo) session.getAttribute("user");
+    //     if(user==null){
+    //         ra.addAttribute("reason", "session_timeout");
+    //         return "redirect:../login_form.do";
+    //     }
+
+    //     int shop_id = shop_Service.select_one_shop_id(user.getOwner_id());
+
+    //     int res = shop_Service.setHoliday(shop_id);
+
+    //     return "";
+    // } 
 }

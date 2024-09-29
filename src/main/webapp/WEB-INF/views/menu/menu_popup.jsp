@@ -15,7 +15,6 @@ pageEncoding="UTF-8" %>
       border: 1px solid gray;
       margin-bottom: 10px;
       padding: 5px;
-
       box-shadow: 1px 1px 1px black;
     }
 
@@ -33,8 +32,25 @@ pageEncoding="UTF-8" %>
       width: 100px;
     }
 
-    #content1{
+    #content1 {
       text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    input[type="number"] {
+      width: 50px;
     }
   </style>
 </head>
@@ -65,19 +81,25 @@ pageEncoding="UTF-8" %>
           <input type="hidden" id="pop_hidden_shopid" />
 
           <div id="content1">
-            <h5 class="modal-title" id="pop_title">메뉴명</h5>
             <br>
-            <p>
-              <strong>설명:</strong>
-              <span id="pop_content">메뉴에 대한 자세한 설명이 여기에 들어갑니다.</span>
-            </p>
-            <p><strong>가격:</strong> <span id="pop_price">₩00,000</span></p>
+            <h5 class="modal-title" id="pop_title">메뉴명</h5>
 
-            <!-- 수량 입력 -->
-            <p>
-              <labe><span><strong>수량:</strong></span></labe>
-              <input type="number" id="pop_quantity" class="form-control" min="1" max="50" value="1" />
-            </p>
+            <table>
+              <tr>
+                <th>설명</th>
+                <td id="pop_content">메뉴에 대한 자세한 설명이 여기에 들어갑니다.</td>
+              </tr>
+              <tr>
+                <th>가격</th>
+                <td id="pop_price">₩00,000</td>
+              </tr>
+              <tr>
+                <th>수량</th>
+                <td>
+                  <input type="number" id="pop_quantity" class="form-control" min="1" max="50" value="1" />
+                </td>
+              </tr>
+            </table>
           </div>
           <div class="modal-footer">
             <button type="button" class="button_style" data-bs-dismiss="modal">
@@ -88,11 +110,6 @@ pageEncoding="UTF-8" %>
             </button>
           </div>
         </div>
-        <!--   
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div> -->
       </div>
     </div>
   </div>

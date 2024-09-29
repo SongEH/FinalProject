@@ -40,12 +40,12 @@
     <div class="pagetitle">
 
       <h1>장바구니목록</h1>
-
+      <br>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">주문&리뷰</li>    
-          <li class="breadcrumb-item active">장바구니</li>    
+          <li class="breadcrumb-item">주문&리뷰</li>
+          <li class="breadcrumb-item active">장바구니</li>
         </ol>
       </nav>
 
@@ -59,162 +59,156 @@
       <section class="section">
         <div class="row align-items-top">
           <div class="col-lg-10">
+            <!-- 현재 상점 ID를 저장할 변수 초기화 -->
+            <c:set var="currentShopId" value="" />
 
-            <!-- Card with an image on left -->
-            <!-- 장바구니 항목 테이블 -->
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>이미지</th>
-                  <th>메뉴명</th>
-                  <th>메뉴개수</th>
-                  <th>메뉴가격</th>
-                  <th>총 가격</th>
-                  <th>추가일자</th>
-                  <th></th>
-                </tr>
-              </thead>
-
-
-              <tbody id="cartItems">
-                <!-- 현재 상점 ID를 저장할 변수 초기화 -->
-                <c:set var="currentShopId" value="" />
-
-                <!-- 항목 리스트를 반복 처리 -->
-                <c:forEach var="vo" items="${list}">
-                  <!-- 상점 ID가 변경되었는지 확인 -->
-                  <c:if test="${currentShopId != vo.shop_id}">
-                    <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
-                    <c:set var="currentShopId" value="${vo.shop_id}" />
+            <!-- 가게별 출력 -->
+            <c:forEach var="vo" items="${list}">
+              <!-- 상점 ID가 변경되었는지 확인 -->
+              <c:if test="${currentShopId != vo.shop_id}">
+                <!-- 새로운 상점 ID가 발견되면 현재 상점 ID를 업데이트 -->
+                <c:set var="currentShopId" value="${vo.shop_id}" />
+                <table class="table">
+                  <thead>
                     <tr>
                       <th colspan="7" style="background-color: #f8f9fa; text-align: left; padding: 10px;">
                         가게명 : ${vo.shop_name}
-                        <!-- 주문 버튼 추가 -->
                         <button class="button_style"
                           onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문</button>
                       </th>
                     </tr>
-                  </c:if>
+                    <tr>
+                      <th>이미지</th>
+                      <th>메뉴명</th>
+                      <th>메뉴개수</th>
+                      <th>메뉴가격</th>
+                      <th>총 가격</th>
+                      <th>추가일자</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+              </c:if>
 
-                  <!-- 상점 항목 정보를 출력 -->
-                  <tr>
-                    <td class="cart_menuimg">
-                      <div>
-                        <img src="../resources/images/${vo.menu_img}" class="img-fluid rounded" alt="..." width="150px">
-                      </div>
-                    </td>
-                    <td class="cart_menuname">${vo.menu_name}</td>
-
-                    <td class="cart_quantity">
-                      <input type="number" class="form-control quantity-input" id="quantity_${vo.carts_id}"
-                        value="${vo.carts_quantity}" min="1" max="50" disabled>
-                    </td>
-
-                    <td class="cart_price">${vo.menu_price}</td>
-                    <td class="cart_total_price">
-                      ${vo.menu_price * vo.carts_quantity}
-                    </td>
-                    <td class="cart_cdate">
-                      <fmt:formatDate value="${vo.carts_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
-                    </td>
-
-                    <td>
-                      <input class="button_style" type="button" value="삭제" onclick="delete_carts('${vo.carts_id}');">
-                      <input class="button_style" type="button" id="edit_${vo.carts_id}" value="수정"
-                        onclick="editQuantity('${vo.carts_id}');">
-                      <button class="button_style" id="save_${vo.carts_id}" onclick="saveQuantity('${vo.carts_id}')"
-                        style="display: none;">저장</button>
-                    </td>
-                  </tr>
-                </c:forEach>
-              </tbody>
-
-              <tfoot>
+              <!-- 메뉴 출력 -->
+              <tbody id="cartItems">
                 <tr>
-                  <td colspan="3" class="text-right"><strong>총 개수:</strong></td>
-                  <td id="total_quantity">0</td>
-                  <td colspan="2" class="text-right"><strong>총 가격:</strong></td>
-                  <td id="total_price">0</td>
-                </tr>
-              </tfoot>
+                  <td class="cart_menuimg">
+                    <div>
+                      <img src="../resources/images/${vo.menu_img}" class="img-fluid rounded" alt="..." width="100px">
+                    </div>
+                  </td>
+                  <td class="cart_menuname">${vo.menu_name}</td>
 
-              <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                  const currencyFormatter = new Intl.NumberFormat('ko-KR', {
-                    style: 'currency',
-                    currency: 'KRW',
-                    minimumFractionDigits: 0
+                  <td class="cart_quantity">
+                    <input type="number" class="form-control quantity-input" id="quantity_${vo.carts_id}"
+                      value="${vo.carts_quantity}" min="1" max="50" disabled>
+                  </td>
+
+                  <td class="cart_price">${vo.menu_price}</td>
+                  <td class="cart_total_price">
+                    ${vo.menu_price * vo.carts_quantity}
+                  </td>
+                  <td class="cart_cdate">
+                    <fmt:formatDate value="${vo.carts_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
+                  </td>
+
+                  <td>
+                    <input class="button_style" type="button" value="삭제" onclick="delete_carts('${vo.carts_id}');">
+                    <input class="button_style" type="button" id="edit_${vo.carts_id}" value="수정"
+                      onclick="editQuantity('${vo.carts_id}');">
+                    <button class="button_style" id="save_${vo.carts_id}" onclick="saveQuantity('${vo.carts_id}')"
+                      style="display: none;">저장</button>
+                  </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+            <br>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="text-right"><strong>총 개수:</strong></td>
+                <td id="total_quantity">0</td>
+                <td colspan="2" class="text-right"><strong>총 가격:</strong></td>
+                <td id="total_price">0</td>
+              </tr>
+            </tfoot>
+
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                const currencyFormatter = new Intl.NumberFormat('ko-KR', {
+                  style: 'currency',
+                  currency: 'KRW',
+                  minimumFractionDigits: 0
+                });
+
+                function updateTotals() {
+                  let totalQuantity = 0;
+                  let totalPrice = 0;
+
+                  // 각 행을 순회하며 총 개수와 총 가격 계산
+                  document.querySelectorAll('#cartItems tr').forEach(row => {
+                    const quantityInput = row.querySelector('.quantity-input');
+                    const priceElement = row.querySelector('.cart_price');
+                    const totalPriceElement = row.querySelector('.cart_total_price');
+
+                    if (quantityInput && priceElement && totalPriceElement) {
+                      const quantity = parseInt(quantityInput.value) || 0;
+                      const price = parseFloat(priceElement.textContent) || 0;
+                      const total = quantity * price;
+
+                      totalQuantity += quantity;
+                      totalPrice += total;
+
+                      totalPriceElement.textContent = currencyFormatter.format(total);
+                    }
                   });
 
-                  function updateTotals() {
-                    let totalQuantity = 0;
-                    let totalPrice = 0;
+                  document.getElementById('total_quantity').textContent = totalQuantity;
+                  document.getElementById('total_price').textContent = currencyFormatter.format(totalPrice);
+                }
 
-                    // 각 행을 순회하며 총 개수와 총 가격 계산
-                    document.querySelectorAll('#cartItems tr').forEach(row => {
-                      const quantityInput = row.querySelector('.quantity-input');
-                      const priceElement = row.querySelector('.cart_price');
-                      const totalPriceElement = row.querySelector('.cart_total_price');
+                updateTotals();
 
-                      if (quantityInput && priceElement && totalPriceElement) {
-                        const quantity = parseInt(quantityInput.value) || 0;
-                        const price = parseFloat(priceElement.textContent) || 0;
-                        const total = quantity * price;
+                window.editQuantity = function (id) {
+                  const quantityInput = document.getElementById("quantity_" + id);
+                  const saveButton = document.getElementById("save_" + id);
+                  const editButton = document.getElementById("edit_" + id);
 
-                        totalQuantity += quantity;
-                        totalPrice += total;
+                  if (quantityInput && saveButton) {
+                    quantityInput.disabled = false;
+                    saveButton.style.display = 'inline';
+                    editButton.style.display = 'none';
+                  }
+                };
 
-                        totalPriceElement.textContent = currencyFormatter.format(total);
+                window.saveQuantity = function (id) {
+                  const quantityInput = document.getElementById("quantity_" + id);
+                  const saveButton = document.getElementById("save_" + id);
+                  const editButton = document.getElementById("edit_" + id);
+
+                  if (quantityInput && saveButton) {
+                    const newQuantity = quantityInput.value;
+
+                    $.ajax({
+                      url: '/carts/modify.do',
+                      type: 'POST',
+                      data: {
+                        carts_id: id,
+                        carts_quantity: newQuantity
+                      },
+                      success: function (response) {
+                        quantityInput.disabled = true;
+                        saveButton.style.display = 'none';
+                        editButton.style.display = 'inline';
+                        updateTotals();
+                      },
+                      error: function (xhr, status, error) {
+                        console.error(`Error updating quantity for ID ${id}: ${error}`);
                       }
                     });
-
-                    document.getElementById('total_quantity').textContent = totalQuantity;
-                    document.getElementById('total_price').textContent = currencyFormatter.format(totalPrice);
                   }
-
-                  updateTotals();
-
-                  window.editQuantity = function (id) {
-                    const quantityInput = document.getElementById("quantity_" + id);
-                    const saveButton = document.getElementById("save_" + id);
-                    const editButton = document.getElementById("edit_" + id);
-
-                    if (quantityInput && saveButton) {
-                      quantityInput.disabled = false;
-                      saveButton.style.display = 'inline';
-                      editButton.style.display = 'none';
-                    }
-                  };
-
-                  window.saveQuantity = function (id) {
-                    const quantityInput = document.getElementById("quantity_" + id);
-                    const saveButton = document.getElementById("save_" + id);
-                    const editButton = document.getElementById("edit_" + id);
-
-                    if (quantityInput && saveButton) {
-                      const newQuantity = quantityInput.value;
-
-                      $.ajax({
-                        url: '/carts/modify.do',
-                        type: 'POST',
-                        data: {
-                          carts_id: id,
-                          carts_quantity: newQuantity
-                        },
-                        success: function (response) {
-                          quantityInput.disabled = true;
-                          saveButton.style.display = 'none';
-                          editButton.style.display = 'inline';
-                          updateTotals();
-                        },
-                        error: function (xhr, status, error) {
-                          console.error(`Error updating quantity for ID ${id}: ${error}`);
-                        }
-                      });
-                    }
-                  };
-                });
-              </script>
+                };
+              });
+            </script>
 
           </div>
         </div>

@@ -334,8 +334,9 @@
                   </div>
                 </div>
 
+                <h5>메뉴목록</h5>
                 <!-- 장바구니 항목 테이블 -->
-                <table class="table table-bordered">
+                <table class="table">
                   <thead>
                     <tr>
                       <th>이미지</th>
@@ -356,7 +357,7 @@
                         <td class="cart_menuimg">
                           <div>
                             <img src="../resources/images/${vo.menu_img}" class="img-fluid rounded" alt="..."
-                              width="150px">
+                              width="80px">
                           </div>
                         </td>
                         <td class="cart_menuname">${vo.menu_name}</td>
@@ -422,16 +423,17 @@
                     });
                   </script>
 
-                  <div class="text-center">
 
-                    <input class="button_style" type="button" value="취소" onclick="location.href='list.do'">
-
-                    <input type="button" class="button_style" id="kakaoPay" onclick="requestPay(this.form);" value="결제">
-                  </div>
               </form>
             </div>
           </div>
           </table>
+          <div class="text-center">
+
+            <input class="button_style" type="button" value="취소" onclick="location.href='list.do'">
+
+            <input type="button" class="button_style" id="kakaoPay" onclick="requestPay(this.form);" value="결제">
+          </div>
         </div>
       </div>
     </section>

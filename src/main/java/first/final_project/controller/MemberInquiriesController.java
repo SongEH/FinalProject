@@ -18,12 +18,16 @@ import first.final_project.dao.AdminMapper;
 import first.final_project.dao.MemberAnswerMapper;
 import first.final_project.dao.MemberInquiriesMapper;
 import first.final_project.dao.MemberMapper;
+import first.final_project.dao.OwnerInquiriesMapper;
 import first.final_project.vo.AdminVo;
 import first.final_project.vo.MemberAnswerVo;
 import first.final_project.vo.MemberInquiriesVo;
 import first.final_project.vo.MemberVo;
+import first.final_project.vo.OwnerInquiriesVo;
+import first.final_project.vo.CountVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/member_inquiries/")
@@ -46,6 +50,9 @@ public class MemberInquiriesController {
 
     @Autowired
     AdminMapper admin_mapper;
+
+    @Autowired
+    OwnerInquiriesMapper owner_inquiries_mapper;
 
     @RequestMapping("list.do")
     public String list(@RequestParam(value = "m_inquiries_type", defaultValue = "전체") String m_inquiries_type,
@@ -276,27 +283,27 @@ public class MemberInquiriesController {
     }
 
     @RequestMapping("answer_count.do")
-@ResponseBody
-public Integer answer_count(
-        @RequestParam(value = "m_inquiries_type", defaultValue = "전체") String m_inquiries_type) {
-    
-    List<MemberInquiriesVo> list = member_inquiries_mapper.selectListByType(m_inquiries_type);
-    int null_answer_count = 0; // Initialize the count
+    @ResponseBody
+    public CountVo answer_count(
+            @RequestParam(value = "m_inquiries_type", defaultValue = "전체") String m_inquiries_type) {
+        
+        List<MemberInquiriesVo> list = member_inquiries_mapper.selectListByType(m_inquiries_type);
+        int null_answer_count = 0; // Initialize the count
 
-    for (MemberInquiriesVo vo : list) {
-        MemberVo member = member_mapper.selectOneFromIdx(vo.getMember_id());
-        if (member == null) {
-            // You can throw an exception or handle it differently, but you cannot return an HTTP status
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized"); 
+        for (int i=list.size()-1; i < list.size(); i++) {
+            MemberInquiriesVo vo = list.get(i);
+            null_answer_count = vo.getNull_answer_count(); // Get the value (last value in loop)
         }
-        vo.setMemberAccountId(member.getMember_accountId());
 
-        // Collect null_answer_count
-        null_answer_count = vo.getNull_answer_count(); // Get the value (last value in loop)
+        List<OwnerInquiriesVo> owner_list = owner_inquiries_mapper.selectList();
+        int owner_null_answer_count = 0;
+        for(int i=owner_list.size()-1; i < owner_list.size(); i++){
+            OwnerInquiriesVo Ovo = owner_list.get(i);
+            owner_null_answer_count = Ovo.getOwner_null_answer_count();
+        }
+        
+        return new CountVo(null_answer_count, owner_null_answer_count); // Return the count directly
     }
-
-    return null_answer_count; // Return the count directly
-}
 
 
 

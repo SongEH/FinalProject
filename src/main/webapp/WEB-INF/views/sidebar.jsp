@@ -27,11 +27,10 @@ pageEncoding="UTF-8" %>
   </style>
   <script>
     // 문의사항 답변 상황 확인 
-    function null_count() {
+    $(document).ready(function() {
+    // Only execute if ajaxExecuted is false and status is 0
     let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
     let status = 0; // Example status
-                // xptmxm
-    // Only execute if ajaxExecuted is false and status is 0
     if (!ajaxExecuted && status === 0) {
         $.ajax({
             url: "../member_inquiries/answer_count.do", // Adjust the URL if needed
@@ -39,24 +38,26 @@ pageEncoding="UTF-8" %>
             data: { m_inquiries_type: "전체" }, // Pass any parameters if necessary
             success: function(response) {
                 // response now contains the integer value of null_answer_count directly
-                console.log("Null Answer Count: " + response);
+                // alert("Null Answer Count: " + response.null_answer_count);
+                // alert("owner_null_answer_count:" + response.owner_null_answer_count)
 
                 // Update the HTML to show the count next to the link
-                if (response !== null) {
-                    $('#nullAnswerCount').text(response); // Set the count in the span
-                } else {
-                    $('#nullAnswerCount').text('0'); // Set to 0 or handle accordingly
-                }
+                if (response.null_answer_count !== null && response.null_answer_count > 0 ) {
+                    $('#null_answer_count').text(response.null_answer_count); // Set the count in the span
+                } 
+
+                if (response.owner_null_answer_count !== null && response.owner_null_answer_count > 0 ) {
+                    $('#owner_null_answer_count').text(response.owner_null_answer_count); // Set the count in the span
+                } 
 
                 // Set ajaxExecuted to true to prevent future executions
-                ajaxExecuted = true; 
             },
             error: function(err) {
                 alert(err.responseText);
             }
         });
     }
-};
+});
 
 
 
@@ -179,12 +180,14 @@ pageEncoding="UTF-8" %>
                 <li>
                   <a href="/member_inquiries/list.do">
                     <i class="bi bi-circle"></i><span>회원 문의사항</span>
-                    <span id="nullAnswerCount" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
+                    <span id="null_answer_count" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
                   </a>
                 </li>
                 <li>
                   <a href="/owner_inquiries/list.do">
                     <i class="bi bi-circle"></i><span>사장 문의사항</span>
+                    <span id="owner_null_answer_count" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
+
                   </a>
                 </li>
               </ul>

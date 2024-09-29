@@ -30,7 +30,7 @@ pageEncoding="UTF-8" %>
     function null_count() {
     let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
     let status = 0; // Example status
-
+                // xptmxm
     // Only execute if ajaxExecuted is false and status is 0
     if (!ajaxExecuted && status === 0) {
         $.ajax({

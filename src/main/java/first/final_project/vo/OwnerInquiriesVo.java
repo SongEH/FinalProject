@@ -13,4 +13,7 @@ public class OwnerInquiriesVo {
     private String o_inquiries_cdate;
     private int owner_id;
     private String owner_accountId;
+
+    private int owner_null_answer_count;
+    private String o_answer_content;
 }

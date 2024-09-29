@@ -160,7 +160,13 @@
             <c:forEach var="inquiries" items="${list}">
                 <div class="inquiries-card">
                     <div class="inquiries-title">
-                        <a href="${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id=${inquiries.m_inquiries_id}">${inquiries.m_inquiries_title}</a>
+                        <a href="${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id=${inquiries.m_inquiries_id}">${inquiries.m_inquiries_title}
+                            <c:if test="${inquiries.m_answer_content == null}">
+                                <span class="badge rounded-pill bg-warning">
+                                ❗️미답변 
+                                </span>
+                            </c:if>
+                        </a>
                     </div>
                     <div class="inquiries-date">
                         작성일자: ${inquiries.m_inquiries_cdate}

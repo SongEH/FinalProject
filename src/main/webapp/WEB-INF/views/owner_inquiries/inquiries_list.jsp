@@ -139,6 +139,11 @@
                 <div class="inquiries-card">
                     <div class="inquiries-title">
                         <a href="${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id=${inquiries.o_inquiries_id}">${inquiries.o_inquiries_title}</a>
+                        <c:if test="${inquiries.o_answer_content == null}">
+                            <span class="badge rounded-pill bg-warning">
+                            ❗️미답변 
+                            </span>
+                        </c:if>
                     </div>
                     <div class="inquiries-date">
                         작성일자: ${inquiries.o_inquiries_cdate}

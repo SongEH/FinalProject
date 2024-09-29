@@ -25,7 +25,43 @@ pageEncoding="UTF-8" %>
         cursor: default; /* Show a default cursor instead of a pointer */
     }
   </style>
+  <script>
+    // 문의사항 답변 상황 확인 
+    function null_count() {
+    let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
+    let status = 0; // Example status
 
+    // Only execute if ajaxExecuted is false and status is 0
+    if (!ajaxExecuted && status === 0) {
+        $.ajax({
+            url: "../member_inquiries/answer_count.do", // Adjust the URL if needed
+            method: "GET",
+            data: { m_inquiries_type: "전체" }, // Pass any parameters if necessary
+            success: function(response) {
+                // response now contains the integer value of null_answer_count directly
+                console.log("Null Answer Count: " + response);
+
+                // Update the HTML to show the count next to the link
+                if (response !== null) {
+                    $('#nullAnswerCount').text(response); // Set the count in the span
+                } else {
+                    $('#nullAnswerCount').text('0'); // Set to 0 or handle accordingly
+                }
+
+                // Set ajaxExecuted to true to prevent future executions
+                ajaxExecuted = true; 
+            },
+            error: function(err) {
+                alert(err.responseText);
+            }
+        });
+    }
+};
+
+
+
+
+  </script>
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <c:choose>
@@ -131,8 +167,8 @@ pageEncoding="UTF-8" %>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
+              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" onclick="null_count();">
+                <i class="bi bi-layout-text-window-reverse" ></i><span >공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -143,6 +179,7 @@ pageEncoding="UTF-8" %>
                 <li>
                   <a href="/member_inquiries/list.do">
                     <i class="bi bi-circle"></i><span>회원 문의사항</span>
+                    <span id="nullAnswerCount" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
                   </a>
                 </li>
                 <li>

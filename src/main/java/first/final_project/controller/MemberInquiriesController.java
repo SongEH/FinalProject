@@ -3,10 +3,15 @@ package first.final_project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.AdminMapper;
@@ -269,4 +274,30 @@ public class MemberInquiriesController {
         member_answer_mapper.delete(m_answer_id);
         return "redirect:/member_inquiries/detail.do?m_inquiries_id=" + m_inquiries_id;
     }
+
+    @RequestMapping("answer_count.do")
+@ResponseBody
+public Integer answer_count(
+        @RequestParam(value = "m_inquiries_type", defaultValue = "전체") String m_inquiries_type) {
+    
+    List<MemberInquiriesVo> list = member_inquiries_mapper.selectListByType(m_inquiries_type);
+    int null_answer_count = 0; // Initialize the count
+
+    for (MemberInquiriesVo vo : list) {
+        MemberVo member = member_mapper.selectOneFromIdx(vo.getMember_id());
+        if (member == null) {
+            // You can throw an exception or handle it differently, but you cannot return an HTTP status
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized"); 
+        }
+        vo.setMemberAccountId(member.getMember_accountId());
+
+        // Collect null_answer_count
+        null_answer_count = vo.getNull_answer_count(); // Get the value (last value in loop)
+    }
+
+    return null_answer_count; // Return the count directly
+}
+
+
+
 }

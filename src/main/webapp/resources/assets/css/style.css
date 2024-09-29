@@ -610,7 +610,7 @@ h6 {
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background-color: #FFEBD4;
+  background-color: #F6F9FF;
 }
 
 @media (max-width: 1199px) {

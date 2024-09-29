@@ -12,8 +12,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
+  <%@include file="../common.jsp" %>
+
   <div class="container">
     <input type="hidden" id="order_addr" value="${order_addr}"/>
     <input type="hidden" id="food_category" value="${food_category}"/>

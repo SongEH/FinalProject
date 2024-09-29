@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import first.final_project.dao.AdminMapper;
 import first.final_project.dao.MemberMapper;
 import first.final_project.dao.OwnerMapper;
+import first.final_project.service.ShopService;
 import first.final_project.vo.AdminVo;
 import first.final_project.vo.MemberVo;
 import first.final_project.vo.OwnerVo;
+import first.final_project.vo.ShopVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -35,6 +37,9 @@ public class AdminController {
 
     @Autowired
     MemberMapper member_mapper;
+
+    @Autowired
+    ShopService shop_Service;
 
     // 관리자페이지
     @RequestMapping("adminpage.do")
@@ -91,6 +96,22 @@ public class AdminController {
 
         return "redirect:adminpage.do";
     }
+
+    // 관리자 페이지에서 가게 목록 조회  
+    @RequestMapping("shop_list.do")
+    public String shopList(Model model){
+        List<ShopVo> shop_list = shop_Service.selectListAll();
+        model.addAttribute("shop_list", shop_list);
+        return "admin/shop_list";
+    }
+
+    //  관리자 페이지에서 가게 삭제
+    @RequestMapping("delete_shop.do")
+    public String deleteShop(@RequestParam("shop_id")int shop_id){
+        shop_Service.delete(shop_id);
+
+        return "redirect:shop_list.do";
+    } 
 
     // 관리자가 대기 중인 사장 등록 요청 확인
     @RequestMapping("pending_requests.do")

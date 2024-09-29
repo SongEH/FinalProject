@@ -10,7 +10,7 @@ public interface ShopService {
     int insert(ShopVo vo);
 
     // 가게 전체 리스트 출력
-    // List<ShopVo> selectList();
+    List<ShopVo> selectListAll();
 
     // 가게 카테고리별 출력
     List<ShopVo> selectList(String food_category);

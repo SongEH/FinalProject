@@ -11,7 +11,7 @@ import first.final_project.vo.ShopVo;
 public interface ShopMapper {
 
     // 가게 전체 출력
-    // List<ShopVo> selectList();
+    List<ShopVo> selectListAll();
 
     // 가게 카테고리별 출력
     List<ShopVo> selectList(String food_category);

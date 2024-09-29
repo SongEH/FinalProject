@@ -138,7 +138,7 @@ pageEncoding="UTF-8" %>
   <!-- popup:Modal -->
   <%@include file="menu_popup.jsp" %>
 
-  ${status}
+  <!-- ${status} -->
 
   <c:set var="userType" value="${sessionScope.userType}" />
 

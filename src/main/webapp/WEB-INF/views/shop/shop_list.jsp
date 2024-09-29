@@ -254,7 +254,8 @@ body {
       <div class="store-list mt-10" id="store-list" >
         <!-- 영업중인 가게  -->
         <c:forEach var="vo" items="${list}">
-          <c:if test="${vo.status =='영업중'}">
+          <c:if test="${vo.shop_status =='영업중'}">
+            ${vo.status}
             <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
               <div class="store-left">
                 <div class="store-logo">
@@ -283,13 +284,14 @@ body {
         </div>
         <!-- 영업중이 아닌 가게 -->
         <c:forEach var="vo" items="${list}">
-          <c:if test="${vo.status == '영업전' || vo.status=='휴무일'}">
+          <c:if test="${vo.shop_status == '영업전' || vo.shop_status=='휴무일'}">
+            ${vo.status}
             <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
               <img class="image-z1" src="${pageContext.request.contextPath}/resources/images/back_black.png">
-            <c:if test="${vo.status == '영업전'}">
+            <c:if test="${vo.shop_status == '영업전'}">
               <div class="text-over-image">가게 오픈 시간  ${fn:substring(vo.shop_open_hour, 0, 5)}</div>
             </c:if>
-            <c:if test="${vo.status == '휴무일'}">
+            <c:if test="${vo.shop_status == '휴무일'}">
               <div class="text-over-image">금일은 휴무일입니다.</div>
             </c:if>
               <div class="store-left">

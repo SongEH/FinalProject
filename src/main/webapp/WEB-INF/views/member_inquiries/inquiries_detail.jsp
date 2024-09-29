@@ -159,9 +159,9 @@
 
         <nav>
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">공지&문의</li>
+                <li class="breadcrumb-item active">문의사항</li>
             </ol>
         </nav>
 

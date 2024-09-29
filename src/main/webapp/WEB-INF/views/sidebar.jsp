@@ -35,7 +35,7 @@ pageEncoding="UTF-8" %>
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#member-management" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>회원페이지</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-person"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="member-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -45,7 +45,7 @@ pageEncoding="UTF-8" %>
                 </li>
                 <li>
                   <a href="/addr/addr_list.do">
-                    <i class="bi bi-circle"></i><span>주소정보</span>
+                    <i class="bi bi-circle"></i><span>주소목록</span>
                   </a>
                 </li>
               </ul>
@@ -95,7 +95,7 @@ pageEncoding="UTF-8" %>
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
               <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>관리자페이지</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-person"></i><span>관리자페이지</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -158,12 +158,12 @@ pageEncoding="UTF-8" %>
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#owner-management" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-person"></i><span>사장관리</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="owner-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                   <a href="/owner/ownerpage.do">
-                    <i class="bi bi-circle"></i><span>회원정보</span>
+                    <i class="bi bi-circle"></i><span>사장정보</span>
                   </a>
                 </li>
               </ul>

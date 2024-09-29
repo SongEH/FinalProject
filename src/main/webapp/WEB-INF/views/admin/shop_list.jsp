@@ -95,8 +95,8 @@
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">관리자페이지</li>
+            <li class="breadcrumb-item active">가게리스트</li>
           </ol>
         </nav>
 

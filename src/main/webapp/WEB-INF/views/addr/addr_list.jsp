@@ -44,20 +44,6 @@
         color: #333;
       }
 
-      input[type="button"] {
-        background-color: #5cb85c;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
-
-      input[type="button"]:hover {
-        background-color: #4cae4c;
-      }
-
       table {
         width: 100%;
         border-collapse: collapse;
@@ -102,13 +88,13 @@
     <main id="main" class="main">
       <div class="pagetitle">
 
-        <h1>주소 정보</h1>
+        <h1>주소목록</h1>
 
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">회원관리</li>
+            <li class="breadcrumb-item active">주소목록</li>
           </ol>
         </nav>
 

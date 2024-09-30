@@ -22,7 +22,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         <div class="order-info">
           <div><strong>주문 번호:</strong> ${order.orders_id}</div>
           <div><strong>가계 이름:</strong> ${order.shop_name}</div>
-          <div><strong>가계 위치:</strong> ${order.shop_addr}</div>
+          <div><strong>가계 위치:</strong> ${order.shop_addr1} ${order.shop_addr2}</div>
           <div><strong>음식 가격:</strong> ${order.orders_price}원</div>
           <div><strong>요청 사항:</strong> ${order.orders_srequest}</div>
           <div>

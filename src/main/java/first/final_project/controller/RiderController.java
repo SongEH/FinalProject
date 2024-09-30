@@ -191,7 +191,7 @@ public class RiderController {
         // 입력 값이 비어있는지 확인
         if (orderIdStr.isEmpty() || riderIdStr.isEmpty()) {
             response.put("error", "Order ID 또는 Rider ID가 없습니다.");
-            return "index"; // JSP 페이지로 이동
+            return "riders/main.do"; // JSP 페이지로 이동
         }
 
         try {
@@ -206,25 +206,26 @@ public class RiderController {
             response.put("resultMessage", resultMessage);
             response.put("success", result);
 
-            // System.out.println("Order assignment result: " + result);
 
             // 주문 테이블 업테이트 실행
             if (result) {
-                riderService.updateOrderStatus(orders_id, "배차 완료");
+                riderService.updateOrderStatus(orders_id, "조리 중");
 
-                // WebSocket을 통해 클라이언트에 실시간 알림 전송
-                messagingTemplate.convertAndSend("/topic/orders", "Order " + orders_id + " has been assigned.");
+                // 서버 측: 주문이 들어왔을 때 전송할 메시지
+                Map<String, Object> message = new HashMap<>();
+                message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+                message.put("orders_id", orders_id); // 주문 ID
 
-                return "redirect:/riders/orderProgress"; // 성공 시 진행 상황 페이지로 리다이렉트
-                // System.out.println("Order status updated to '배차 완료'");
+                messagingTemplate.convertAndSend("/topic/orders", message);
+
+                return "redirect:/riders/progress"; // 성공 시 진행 상황 페이지로 리다이렉트
             }
 
         } catch (NumberFormatException e) {
             response.put("error", "Order ID 또는 Rider ID가 잘못되었습니다.");
-            // System.out.println("NumberFormatException occurred: " + e.getMessage());
         }
 
-        return "riders/delivery";
+        return "redirect:/riders/waiting-orders";
     }
 
     // 배차 대기 중인 주문 리스트
@@ -241,6 +242,7 @@ public class RiderController {
         }
 
         int raiders_id = user.getRaiders_id();
+        session.setAttribute("raiders_id", raiders_id);
 
         List<OrderVo> orders = riderService.getOrdersByStatus("배차 대기", raiders_id);
 
@@ -280,32 +282,40 @@ public class RiderController {
 
     // 픽업 완료 처리
     @PostMapping("/pickup")
-    public String pickupOrder(@RequestParam("orders_id") int orders_id) {
+    public String pickupOrder(@RequestParam("orders_id") int orders_id, @RequestParam("raiders_id") int raiders_id) {
         // 주문 상태를 '배달 중'으로 변경
         riderService.updateOrderStatus(orders_id, "배달 중");
 
         // 배달 이력 상태도 '배달 중'으로 업데이트
         riderService.updateDeliveryHistory(orders_id, "배달 중");
 
-        // 현재 세션 ID를 포함하여 WebSocket 메시지 전송
-        String sessionId = session.getId();
-        messagingTemplate.convertAndSend("/topic/orders", sessionId + ": 주문 정보가 업데이트되었습니다.");
+        // 서버 측: 주문이 들어왔을 때 전송할 메시지
+        Map<String, Object> message = new HashMap<>();
+        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+        message.put("orders_id", orders_id); // 주문 ID
+        message.put("raiders_id", raiders_id); // 라이더 ID
+
+        messagingTemplate.convertAndSend("/topic/orders", message);
 
         return "redirect:/riders/progress"; // 진행 상황 페이지로 리다이렉트
     }
 
     // 배달 완료 처리
     @PostMapping("/completeDelivery")
-    public String completeDelivery(@RequestParam("orders_id") int orders_id) {
+    public String completeDelivery(@RequestParam("orders_id") int orders_id, @RequestParam("raiders_id") int raiders_id) {
         // 주문 상태를 '배달 완료'로 변경
         riderService.updateOrderStatus(orders_id, "배달 완료");
 
         // 배달 이력 상태도 '배달 완료'로 업데이트
         riderService.updateDeliveryHistory(orders_id, "배달 완료");
 
-        // 현재 세션 ID를 포함하여 WebSocket 메시지 전송
-        String sessionId = session.getId();
-        messagingTemplate.convertAndSend("/topic/orders", sessionId + ": 주문 정보가 업데이트되었습니다.");
+        // 서버 측: 주문이 들어왔을 때 전송할 메시지
+        Map<String, Object> message = new HashMap<>();
+        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+        message.put("orders_id", orders_id); // 주문 ID
+        message.put("raiders_id", raiders_id); // 라이더 ID
+
+        messagingTemplate.convertAndSend("/topic/orders", message);
 
         return "redirect:/riders/completed"; // 진행 상황 페이지로 리다이렉트
     }
@@ -324,10 +334,10 @@ public class RiderController {
 
         try {
             // 경로 계산을 위한 주소 정보 가져오기
-            String customerAddress = addr.getAddr_line1() + " " + addr.getAddr_line2(); // 주소 1, 2 결합
-            String shopAddress = shop.getShop_addr();
+            String customerAddress = addr.getAddr_line1() + " " + addr.getAddr_line2(); // 고객 주소 1, 2 결합
+            String shopAddress = shop.getShop_addr1() + " " + shop.getShop_addr2(); // 가계 주소 1, 2 결합
 
-            double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
+            double[] shopCoordinates = kakaoMapService.getCoordinates(shopAddress);
             double[] customerCoordinates = kakaoMapService.getCoordinates(customerAddress);
 
             model.addAttribute("shopAddress", shopAddress);

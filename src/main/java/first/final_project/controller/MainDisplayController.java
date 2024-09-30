@@ -44,6 +44,8 @@ public class MainDisplayController {
             String order_addr = sb.toString();
             System.out.println(order_addr);
             model.addAttribute("order_addr", order_addr);
+        }else{
+            model.addAttribute("order_addr", "");
         }
         return "main_display";
     }

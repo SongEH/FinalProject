@@ -172,6 +172,5 @@ prefix="c" %>
     </main>
     <!-- End #main -->
 
-    <%@include file="../footer.jsp" %>
   </body>
 </html>

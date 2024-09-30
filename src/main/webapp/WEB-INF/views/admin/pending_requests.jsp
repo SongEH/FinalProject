@@ -33,20 +33,6 @@
         color: #333;
       }
 
-      input[type="button"] {
-        background-color: #5cb85c;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
-
-      input[type="button"]:hover {
-        background-color: #4cae4c;
-      }
-
       table {
         width: 100%;
         border-collapse: collapse;
@@ -127,13 +113,13 @@
             <td>${request.approval_status}</td>
             <td>
               <button class="button_style"
-                onclick="locaion.href='${pageContext.request.contextPath}/admin/approve_request.do?owner_id=${request.owner_id}'"
+                onclick="location.href='${pageContext.request.contextPath}/admin/approve_request.do?owner_id='+'${request.owner_id}'"
                 >승인</button
               >
             </td>
             <td>
               <button class="button_style"
-              onclick="locaion.href='${pageContext.request.contextPath}/admin/reject_request.do?owner_id=${request.owner_id}'"
+              onclick="location.href='${pageContext.request.contextPath}/admin/reject_request.do?owner_id='+'${request.owner_id}'"
                 >거절</button
               >
             </td>

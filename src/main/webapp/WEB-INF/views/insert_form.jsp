@@ -17,8 +17,8 @@ pageEncoding="UTF-8"%>
       function showSignupModal(userType) {
         // Hide all modals
 
-        $("#ownerSignupModal").hide();
-        $("#memberSignupModal").hide();
+        $("#ownerLoginModal").modal("hide");
+        $("#memberLoginModal").modal("hide");
 
         // Show the selected modal
         if (userType === "owner") {
@@ -481,7 +481,7 @@ pageEncoding="UTF-8"%>
               <input type="hidden" name="owner_email" id="owner_email" />
               <input type="hidden" name="owner_bankbook" id="owner_bankbook" />
               <div class="form-group">
-                <label for="owner_name">Name:</label>
+                <label for="owner_name">이름:</label>
                 <input
                   type="text"
                   class="form-control"
@@ -491,7 +491,7 @@ pageEncoding="UTF-8"%>
                 />
               </div>
               <div class="form-group">
-                <label for="owner_accountId">ID:</label>
+                <label for="owner_accountId">아이디:</label>
                 <input
                   type="text"
                   class="form-control"
@@ -503,7 +503,7 @@ pageEncoding="UTF-8"%>
                 <span id="owner_accountId_msg" />
               </div>
               <div class="form-group">
-                <label for="owner_pwd">Password:</label>
+                <label for="owner_pwd">비밀번호:</label>
                 <input
                   type="password"
                   class="form-control"
@@ -513,7 +513,7 @@ pageEncoding="UTF-8"%>
                 />
               </div>
               <div class="form-group">
-                <label for="owner_confirmPwd">Confirm Password:</label>
+                <label for="owner_confirmPwd">비밀번호 확인:</label>
                 <input
                   type="password"
                   class="form-control"
@@ -524,44 +524,48 @@ pageEncoding="UTF-8"%>
                 />
                 <span id="owner_confirmMsg"></span>
               </div>
-              <div class="form-group">
-                <label for="owner_email"
-                  >이메일<span class="em_red">*</span></label
-                >
-                <input
-                  class="form-control"
-                  type="text"
-                  id="owner_email_id"
-                  name="owner_email_id"
-                  value=""
-                  title="이메일 아이디"
-                  maxlength="18"
-                  required
-                />
+              <div class="form-group row">
+                <label for="owner_email" class="col-form-label">이메일<span class="em_red">*</span></label>
+                <div class="col-sm-4">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="owner_email_id"
+                    name="owner_email_id"
+                    value=""
+                    title="이메일 아이디"
+                    maxlength="18"
+                    required
+                  />
+                </div>
                 @
-                <input
-                  class="form-control"
-                  type="text"
-                  id="owner_email_domain"
-                  name="owner_email_domain"
-                  value=""
-                  title="이메일 도메인"
-                  maxlength="18"
-                  required
-                />
-                <select
-                  class="select, form-control"
-                  title="이메일 도메인 주소 선택"
-                  onclick="setOwnerEmailDomain(this.value);return false;"
-                >
-                  <option value="직접입력">-선택-</option>
-                  <option value="naver.com">naver.com</option>
-                  <option value="google.com">google.com</option>
-                  <option value="hanmail.net">hanmail.net</option>
-                  <option value="daum.net">daum.net</option>
-                  <option value="kakao.com">kakao.com</option>
-                  <option value="nate.com">nate.com</option>
-                </select>
+                <div class="col-sm-4">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="owner_email_domain"
+                    name="owner_email_domain"
+                    value=""
+                    title="이메일 도메인"
+                    maxlength="18"
+                    required
+                  />
+                </div>
+                <div class="col-sm-3">
+                  <select
+                    class="form-control"
+                    title="이메일 도메인 주소 선택"
+                    onclick="setOwnerEmailDomain(this.value);return false;"
+                  >
+                    <option value="직접입력">-선택-</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="google.com">google.com</option>
+                    <option value="hanmail.net">hanmail.net</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="kakao.com">kakao.com</option>
+                    <option value="nate.com">nate.com</option>
+                  </select>
+                </div>
               </div>
               <div class="form-group">
                 <label for="owner_phone">전화번호</label>
@@ -585,45 +589,50 @@ pageEncoding="UTF-8"%>
                   oninput="formatOwnerLicense(this);"
                 />
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label for="owner_bankbook">법인통장번호</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="bank_name"
-                  name="bank_name"
-                  value=""
-                  title="은행"
-                  required
-                />
-                <select
-                  class="select, form-control"
-                  title="은행선택"
-                  onclick="setOwnerBank(this.value);return false;"
-                >
-                  <option value="은행선택">-선택-</option>
-                  <option value="농협">농협</option>
-                  <option value="기업">기업</option>
-                  <option value="하나">하나</option>
-                  <option value="국민">국민</option>
-                  <option value="신한">신한</option>
-                  <option value="카카오뱅크">카카오뱅크</option>
-                </select>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="bank_number"
-                  name="bank_number"
-                  title="은행계좌번호"
-                  maxlength="12"
-                  required
-                />
+                <div class="col-sm-3">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="bank_name"
+                    name="bank_name"
+                    value=""
+                    title="은행"
+                    required
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="bank_number"
+                    name="bank_number"
+                    title="은행계좌번호"
+                    maxlength="12"
+                    required
+                  />
+                </div>
+                <div class="col-sm-3">
+                  <select
+                    class="form-control"
+                    title="은행선택"
+                    onclick="setOwnerBank(this.value);return false;"
+                  >
+                    <option value="은행선택">-선택-</option>
+                    <option value="농협">농협</option>
+                    <option value="기업">기업</option>
+                    <option value="하나">하나</option>
+                    <option value="국민">국민</option>
+                    <option value="신한">신한</option>
+                    <option value="카카오뱅크">카카오뱅크</option>
+                  </select>
+                </div>
               </div>
-
               <button
                 type="button"
                 class="button_style"
-                onclick="location.href='../main.do'"
+                onclick="location.href='/main/display.do'"
               >
                 메인화면
               </button>
@@ -672,7 +681,7 @@ pageEncoding="UTF-8"%>
             >
               <input type="hidden" name="member_email" id="member_email" />
               <div class="form-group">
-                <label for="member_name">Name:</label>
+                <label for="member_name">이름:</label>
                 <input
                   class="form-control"
                   type="text"
@@ -682,7 +691,7 @@ pageEncoding="UTF-8"%>
                 />
               </div>
               <div class="form-group">
-                <label for="member_nickname">NickName:</label>
+                <label for="member_nickname">닉네임:</label>
                 <input
                   class="form-control"
                   type="text"
@@ -694,7 +703,7 @@ pageEncoding="UTF-8"%>
                 <span id="member_nickname_msg" />
               </div>
               <div class="form-group">
-                <label for="member_accountId">ID:</label>
+                <label for="member_accountId">아이디:</label>
                 <input
                   type="text"
                   class="form-control"
@@ -706,7 +715,7 @@ pageEncoding="UTF-8"%>
                 <span id="member_accountId_msg" />
               </div>
               <div class="form-group">
-                <label for="member_pwd">Password:</label>
+                <label for="member_pwd">비밀번호:</label>
                 <input
                   type="password"
                   class="form-control"
@@ -716,7 +725,7 @@ pageEncoding="UTF-8"%>
                 />
               </div>
               <div class="form-group">
-                <label for="member_confirmPwd">Confirm Password:</label>
+                <label for="member_confirmPwd">비밀번호 확인:</label>
                 <input
                   type="password"
                   class="form-control"
@@ -727,47 +736,53 @@ pageEncoding="UTF-8"%>
                 />
                 <span id="member_confirmMsg"></span>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label for="member_email"
-                  >Email<span class="em_red">*</span></label
+                  >이메일<span class="em_red">*</span></label
                 >
-                <input
-                  class="form-control"
-                  type="text"
-                  id="member_email_id"
-                  name="member_email_id"
-                  value=""
-                  title="이메일 아이디"
-                  maxlength="18"
-                  required
-                />
+                <div class="col-sm-4">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="member_email_id"
+                    name="member_email_id"
+                    value=""
+                    title="이메일 아이디"
+                    maxlength="18"
+                    required
+                  />
+                </div>
                 @
-                <input
-                  class="form-control"
-                  type="text"
-                  id="member_email_domain"
-                  name="member_email_domain"
-                  value=""
-                  title="이메일 도메인"
-                  maxlength="18"
-                  required
-                />
-                <select
-                  class="select, form-control"
-                  title="이메일 도메인 주소 선택"
-                  onclick="setMemberEmailDomain(this.value);return false;"
-                >
-                  <option value="직접입력">-선택-</option>
-                  <option value="naver.com">naver.com</option>
-                  <option value="google.com">google.com</option>
-                  <option value="hanmail.net">hanmail.net</option>
-                  <option value="daum.net">daum.net</option>
-                  <option value="kakao.com">kakao.com</option>
-                  <option value="nate.com">nate.com</option>
-                </select>
+                <div class="col-sm-4">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="member_email_domain"
+                    name="member_email_domain"
+                    value=""
+                    title="이메일 도메인"
+                    maxlength="18"
+                    required
+                  />
+                </div> 
+                <div class="col-sm-3">
+                  <select
+                    class="select, form-control"
+                    title="이메일 도메인 주소 선택"
+                    onclick="setMemberEmailDomain(this.value);return false;"
+                  >
+                    <option value="직접입력">-선택-</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="google.com">google.com</option>
+                    <option value="hanmail.net">hanmail.net</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="kakao.com">kakao.com</option>
+                    <option value="nate.com">nate.com</option>
+                  </select>
+                </div>
               </div>
               <div class="form-group">
-                <label for="member_phone">Phone</label>
+                <label for="member_phone">전화번호</label>
                 <input
                   class="form-control"
                   type="text"
@@ -781,9 +796,9 @@ pageEncoding="UTF-8"%>
               <button
                 type="button"
                 class="button_style"
-                onclick="location.href='../main.do'"
+                onclick="location.href='/main/display.do'"
               >
-                Home
+                메인화면
               </button>
               <button
                 type="button"

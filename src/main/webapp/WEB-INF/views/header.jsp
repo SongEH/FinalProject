@@ -122,20 +122,21 @@ header .logout{
           <c:choose>
             <c:when test="${sessionScope.userType == 'MEMBER'}">
               <span>${sessionScope.user.member_name}님 안녕하세요👋
-                  <input class="login button_style" type="button" value="마이페이지" onclick="location.href='/member/mypage.do'"/>
-                  <input class="logout button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
+                  <input class="button_style" type="button" value="마이페이지" onclick="location.href='/member/mypage.do'"/>
+                  <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
                 </span>
             </c:when>
             <c:when test="${sessionScope.userType == 'OWNER'}">
               <span>${sessionScope.user.owner_name}님 안녕하세요👋
-                  <input class="login button_style" type="button" value="관리페이지" onclick="location.href='/owner/ownerpage.do'">
-                  <input class="logout button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
+                  <input class="button_style" type="button" value="관리페이지" onclick="location.href='/owner/ownerpage.do'">
+                  <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
               </span>
             </c:when>
             <c:when test="${sessionScope.userType == 'ADMIN'}">
               <span>${sessionScope.user.admin_accountId}님 안녕하세요👋
-                <input class="login button_style" type="button" value="가맹점관리페이지" onclick="location.href='/admin/member_list.do'">
-                <input class="logout button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
+                <input class="button_style" type="button" value="가맹점관리페이지" onclick="location.href='/admin/member_list.do'">
+                <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
+
               </span>
             </c:when>
 
@@ -143,9 +144,9 @@ header .logout{
         </c:when>
         <c:otherwise>
           <div class="login-section">
-            <input class="login button_style" type="button" value="로그인" 
+            <input class="button_style" type="button" value="로그인" 
             onclick="location.href='/login_form.do'"/>
-            <input class="insert button_style" type="button" value="회원가입" 
+            <input class="button_style" type="button" value="회원가입" 
             onclick="location.href='/insert_form.do'"/>
           </div>
         </c:otherwise>

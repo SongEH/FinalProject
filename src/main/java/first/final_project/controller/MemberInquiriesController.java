@@ -3,15 +3,11 @@ package first.final_project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.AdminMapper;
@@ -20,11 +16,11 @@ import first.final_project.dao.MemberInquiriesMapper;
 import first.final_project.dao.MemberMapper;
 import first.final_project.dao.OwnerInquiriesMapper;
 import first.final_project.vo.AdminVo;
+import first.final_project.vo.CountVo;
 import first.final_project.vo.MemberAnswerVo;
 import first.final_project.vo.MemberInquiriesVo;
 import first.final_project.vo.MemberVo;
 import first.final_project.vo.OwnerInquiriesVo;
-import first.final_project.vo.CountVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -167,9 +163,6 @@ public class MemberInquiriesController {
             vo.setMemberAccountId(member_accountId.getMember_accountId());
         }
 
-        System.out.println("------------------------------------------------");
-        System.out.println(vo);
-        System.out.println("------------------------------------------------");
 
         model.addAttribute("vo", vo);
         return "member_inquiries/inquiries_modify_form";

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.AdminMapper;
 import first.final_project.dao.NoticeMapper;
@@ -38,10 +39,9 @@ public class NoticeController {
         List<NoticeVo> list = notice_mapper.selectListByType(notice_type);
         for (NoticeVo vo : list) {
             AdminVo admin = admin_mapper.selectOneFromIdx(vo.getAdmin_id());
-            if (admin == null) {
-                return "redirect:/login_form.do";
+            if (admin != null) {
+                vo.setAdminAccountId(admin.getAdmin_accountId());
             }
-            vo.setAdminAccountId(admin.getAdmin_accountId());
         }
         model.addAttribute("list", list);
         model.addAttribute("notice_type", notice_type);
@@ -59,10 +59,9 @@ public class NoticeController {
             return "redirect:/notice/list.do";
         }
         AdminVo admin = admin_mapper.selectOneFromIdx(vo.getAdmin_id());
-        if (admin == null) {
-            return "redirect:/login_form.do";
+        if (admin != null) {
+            vo.setAdminAccountId(admin.getAdmin_accountId());
         }
-        vo.setAdminAccountId(admin.getAdmin_accountId());
 
         String content = vo.getNotice_content().replace("\n", "<br/>");
         vo.setNotice_content(content);
@@ -82,7 +81,7 @@ public class NoticeController {
     }
 
     @RequestMapping("insert.do")
-    public String insert(String notice_title,String notice_content,String notice_type){
+    public String insert(String notice_title, String notice_content, String notice_type) {
         // 세션에서 user 객체를 가져옴
         AdminVo admin = (AdminVo) session.getAttribute("user");
         if (admin == null) {
@@ -95,7 +94,6 @@ public class NoticeController {
         if ("ADMIN".equals(userType)) {
             // NoticeVo 객체 생성 및 필드 설정
             NoticeVo notice = new NoticeVo();
-
             notice.setNotice_title(notice_title);
             notice.setNotice_content(notice_content);
             notice.setNotice_type(notice_type);
@@ -128,7 +126,8 @@ public class NoticeController {
     }
 
     @RequestMapping("modify.do")
-    public String modify(int notice_id, String notice_title, String notice_content, String notice_type) {
+    public String modify(int notice_id, String notice_title, String notice_content, String notice_type,
+            RedirectAttributes ra) {
         String userType = (String) session.getAttribute("userType");
         if (userType == null || !"ADMIN".equals(userType)) {
             return "redirect:/login_form.do"; // 로그인되지 않았거나 ADMIN이 아닌 경우 로그인 페이지로 리디렉션
@@ -148,6 +147,8 @@ public class NoticeController {
         notice.setAdmin_id(admin.getAdmin_id());
 
         notice_mapper.update(notice);
+
+        ra.addFlashAttribute("message", "공지사항이 수정되었습니다.");
         return "redirect:/notice/detail.do?notice_id=" + notice_id;
     }
 

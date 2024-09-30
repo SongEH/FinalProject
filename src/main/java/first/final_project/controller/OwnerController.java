@@ -64,7 +64,7 @@ public class OwnerController {
     public String ownerPageDelete(@RequestParam int owner_id) {
         owner_mapper.delete(owner_id);
         session.invalidate();
-        return "redirect:/main.do";
+        return "redirect:/main/display.do";
     }
 
 }

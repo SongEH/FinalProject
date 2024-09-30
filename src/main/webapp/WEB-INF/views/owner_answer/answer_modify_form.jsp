@@ -43,17 +43,6 @@
         .form-group textarea {
             resize: vertical;
         }
-        .form-group button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .form-group button:hover {
-            background-color: #0056b3;
-        }
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
             word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
@@ -88,7 +77,8 @@
     <main id="main" class="main">
         <div class="pagetitle">
 
-        <h1>답변 등록</h1><br>
+        <h1>답변 수정</h1><br>
+
 
         <nav>
             <ol class="breadcrumb">
@@ -112,7 +102,7 @@
             </div>
             <div class="form-group">
                 <button type="button" class="button_style" onclick="send(this.form);">
-                    등록
+                    수정
                 </button>
                 <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id='+'${param.o_inquiries_id}'">
                     취소

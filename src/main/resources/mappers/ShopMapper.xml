@@ -61,7 +61,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateStatus" parameterType="shop">
         UPDATE shop
         SET shop_status = CASE
-            WHEN shop_status = '휴무일' THEN '휴무일'
             WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = shop_close_day THEN '휴무일'
             WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) 
                 AND TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(shop_open_hour) THEN '영업중'

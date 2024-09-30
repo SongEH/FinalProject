@@ -79,7 +79,7 @@ public class MenuController {
 	// shop_listOne.jsp에서 회원에게 보여지는 메뉴 목록 (shop_id로 조회)
 	@RequestMapping("listByShopId.do")
 	public String listByShopId(int shop_id,
-			@RequestParam(name = "status", required = false) String status, Model model) {
+	@RequestParam(name="shop_status", required = false)String shop_status, Model model) {
 		System.out.println("listbyShopid 도착");
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
@@ -89,7 +89,7 @@ public class MenuController {
 		}
 		// model.addAttribute("list", list);
 		// return "menu/menu_listByShopId";
-		model.addAttribute("status", status);
+		model.addAttribute("shop_status", shop_status);
 		model.addAttribute("menu_list", list);
 		return "menu/menu_list_display";
 

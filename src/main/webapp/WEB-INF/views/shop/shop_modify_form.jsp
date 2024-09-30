@@ -8,6 +8,7 @@
       <meta charset="utf-8">
       <script type="text/javascript" src="${pageContext.request.contextPath}/resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     </head>
 
     <script>
@@ -38,6 +39,7 @@
       }
     }
 
+    
     </script>
     <script>
     var oEditors = [];
@@ -73,6 +75,38 @@
         });
     
       });
+
+      function findAddr() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        // Define a variable to receive the user address.
+        let addr = '';
+
+        // The address value according to the address type selected by the user
+        if (data.userSelectedType === 'R') { // If the user selects the road name address (R)
+            addr = data.roadAddress;
+        } else { // If the user selects the Jibun address (J)
+            addr = data.jibunAddress;
+        }
+
+        // Enter the received address in the address box
+        $("#shop_addr1").val(addr);
+      }
+    }).open();
+  }
+    </script>
+    <script>
+      $(document).ready(function(){
+
+        setTimeout(showMessage, 100);
+
+      });
+
+      function showMessage(){
+        if("${param.reason=='shop_modify_success'}" =="true"){
+        alert("수정이 완료되었습니다.")
+      }
+      }
     </script>
 
     <body>
@@ -104,7 +138,7 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="상호명" name="shop_name" value="${vo.shop_name}">
-                              <label style="color:#F0A8D0;">상호명</label>
+                              <label >상호명</label>
                             </div>
                           </div>
     
@@ -113,18 +147,18 @@
                               <div class="col-md-5">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="shop_addr1" placeholder="주소찾기 버튼을 눌러주세요." name="shop_addr1" value="${vo.shop_addr1}" readonly>
-                                    <label style="color:#F0A8D0;">가게주소</label>
+                                    <label >가게주소</label>
                                 </div>
                               </div>
                               <div class="col-md-5">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="shop_addr2" placeholder="상세주소를 입력해주세요" name="shop_addr2" value="${vo.shop_addr2}">
-                                    <label style="color:#F0A8D0;">상세주소</label>
+                                    <label >상세주소</label>
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="form-floating">
-                                    <button type="button" class="form-control" style="background-color: #F7B5CA;"  id="addressSearch" onclick="findAddr()">주소 찾기</button>
+                                    <button type="button" class="form-control" style="background-color: #F7B5CA; padding-bottom: 10px;"  id="addressSearch" onclick="findAddr()">주소 찾기</button>
                                 </div>
                               </div>
                             </div>
@@ -133,25 +167,25 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="가게 전화번호" name="shop_call" id="shop_call" value="${vo.shop_call}" oninput="formatPhoneNumber(this);">
-                              <label style="color:#F0A8D0;">가게전화번호</label>
+                              <label >가게전화번호</label>
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="최소주문금액" name="shop_min_price" value="${vo.shop_min_price}">
-                              <label style="color:#F0A8D0;">최소주문금액</label>
+                              <label >최소주문금액</label>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-floating">
                               <input type="time" class="form-control" placeholder="영업오픈시간" name="shop_open_hour" value="${vo.shop_open_hour}">
-                              <label style="color:#F0A8D0;">영업 오픈 시간</label>
+                              <label >영업 오픈 시간</label>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-floating">
                               <input type="time" class="form-control" placeholder="영업마감시간" name="shop_close_hour" value="${vo.shop_close_hour}">
-                              <label style="color:#F0A8D0;">영업 마감 시간</label>
+                              <label >영업 마감 시간</label>
                             </div>
                           </div>
                           <div class="col-md-12">
@@ -165,7 +199,7 @@
                                 <option class="form-control" value="saturday" <c:if test="${vo.shop_close_day == 'saturday'}">selected</c:if>>토요일</option>
                                 <option class="form-control" value="sunday" <c:if test="${vo.shop_close_day == 'sunday'}">selected</c:if>>일요일</option>
                               </select>
-                              <label style="color:#F0A8D0;">휴무일</label>
+                              <label >휴무일</label>
                             </div>
                           </div>
                           
@@ -184,19 +218,20 @@
                                 <option class="form-control" value="desserts" <c:if test="${vo.food_category == 'desserts'}">selected</c:if>>카페·디저트</option>
                                 <option class="form-control" value="fast_food" <c:if test="${vo.food_category == 'fast_food'}">selected</c:if>>패스트푸드</option>
                             </select>
-                            <label style="color:#F0A8D0;">음식 카테고리</label>
+                            <label >음식 카테고리</label>
                             </div>
                           </div>
     
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input class="form-control" type="file" name="photo" value="${vo.shop_img}">
-                              <label style="color:#F0A8D0;">사진</label>
+                              <span>기존 이미지 파일명 : ${vo.shop_img}</span>
+                              <label >사진</label>
                             </div>
                           </div>
 
                           <div class="col-md-12">
-                            <label style="color:#F0A8D0;">가게소개글 </label>
+                            <label >가게소개글 </label>
                             <div class="form-floating" style="width: 100%; border-radius: 5px;">
                                 <textarea class="form-control" placeholder="소개글" name="shop_content" id="shop_content" rows="7" style="height:300px; resize:none; width: 90%;">${vo.shop_content}</textarea>
                             </div>
@@ -205,7 +240,7 @@
                           <div class="text-center">
                             <!-- <button type="submit" class="btn btn-primary">Submit</button>
                           <button type="reset" class="btn btn-secondary">Reset</button> -->
-                            <input class="button_style" type="button" value="메인화면" onclick="location.href='list.do'">
+                            <!-- <input class="button_style" type="button" value="메인화면" onclick="location.href='list.do'"> -->
     
                             <input class="button_style" id="modifyShop" type="button" value="가게수정" onclick="send(this.form);">
                           </div>

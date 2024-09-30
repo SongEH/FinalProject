@@ -50,7 +50,7 @@ pageEncoding='UTF-8'%>
 </head>
 <body>
    <!-- ======= Footer ======= -->
-   <footer id="footer" class="footer">
+   <div id="footer" class="footer" style="margin: auto;">
       <div class="footer">
         <div class="footer-menu" style="border-top: 1px solid gray; border-bottom: 1px solid gray;">
           <ul>
@@ -124,7 +124,7 @@ pageEncoding='UTF-8'%>
           </div>
           <div class="col-lg-2 col-md-2" style="width:20%">
             <div class="card" style="width:100%">
-              <img class="card-img-top" src="../bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+              <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/한지혜.png" alt="Card image" style="width:100%; padding: 0;border-radius: 10px;" >
               <div class="card-body">
                 <h4 class="card-title">한지혜</h4>
                 <a href="#" class="btn btn-primary">See Profile</a>
@@ -156,7 +156,7 @@ pageEncoding='UTF-8'%>
           <P> Copyright <strong>2024 [Developer / A Bite project Team]. All right reserved. </strong></P>
         </div>
       </div>
-  </footer>
+  </div>
   <!-- End Footer -->
 </body>
 </html>

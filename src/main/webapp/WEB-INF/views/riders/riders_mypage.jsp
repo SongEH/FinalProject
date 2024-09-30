@@ -74,7 +74,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <input type="hidden" name="raiders_id" value="${rider.raiders_id}" />
-    <h1>회&nbsp;원&nbsp;정&nbsp;보 여긴 riders_mypage</h1>
+    <h1>라&nbsp;이&nbsp;더&nbsp;정&nbsp;보</h1>
     <div class="container">
       <div class="mb-4">
         <label for="name" class="form-label">이름:</label>

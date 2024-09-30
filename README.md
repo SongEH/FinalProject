@@ -1,24 +1,54 @@
-# FinalProject
+# 한입만
+![한입만](https://github.com/user-attachments/assets/1a7b8e27-442c-442d-a127-96b2b3d4ace8)
 
+# 프로젝트 설명
 글로벌 아이티 7e강의장 Final Project!
+1조의 Final Project인 한입만 배달 시스템
 
+## 개발 환경
+
+![Java](https://img.shields.io/badge/Java-17-007396?logo=java&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.3-6DB33F?logo=springboot&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.8.6-C71A36?logo=apachemaven&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazonaws&logoColor=white)
+
+## 협업 툴
+
+![Notion](https://img.shields.io/badge/Notion-000000?logo=notion&logoColor=white)
+![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)
+![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
+
+## 기타
+
+![ERDCloud](https://img.shields.io/badge/ERDCloud-00C7B7?logoColor=white)
+
+# 개발 정보
+global it
 풀스택 프레임워크(자바,스프링)기반 데이터 융합SW개발자 과정 (7회차)
 2024.04.04 ~ 2024.10.07
 
 선택 주제 : 상품 자종 주문 및 딜리버리 관리 웹 서비스 시스템
 
-Final Project시작
-2024.08.22 ~
+Final Project 개발 기간
+2024.08.22 ~ 2024.10.04
 
-클라우드 ERD
+# 클라우드 ERD (권한 필요)
 https://www.erdcloud.com/d/cd5tCqegTyFd9srKc
 
-fulltest1
--> merge2 --> pull->손유정 -> 제발
+![{07F6DE08-8897-4C8D-979A-62787C91FE60}](https://github.com/user-attachments/assets/84a0c041-4d4a-470c-b0aa-d1e46130133c)
 
-24-09-06 천태광 main merge
+# Git 브랜치 전략
+![269341571-ceeda2bb-cc43-441d-aadb-a373d2e53c33](https://github.com/user-attachments/assets/5eb190ce-eff2-47df-94ad-1a056969cd55)
 
-24-09-10 손유정 
-사용자 음식 주문 시 주문 건과 회원 등급 변경 처리 
-매월 1일 자정이 지나면 주문 건과 회원 등급은 초기화 처리
+저장소를 효과적으로 활용하기 위해 곤모슬팀은 Github-Flow 전략 브랜치를 생성한다.
+Main : 프로덕션 코드. 항상 Main을 기준으로 branch 생성
+{이슈번호}-{개발자 이름}-{개발할 기능 이름} : 이슈마다 브랜치를 생성하여 기능 개발 완료 이후 main에 merge
 
+### 설치
+
+```bash
+git clone https://github.com/SongEH/FinalProject
+cd SongEH/FinalProject
+npm install

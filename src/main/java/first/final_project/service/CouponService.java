@@ -26,7 +26,7 @@ public class CouponService {
     @Autowired
     private GradeMapper gradeMapper;
 
-    // 모든 회원에게 등급에 맞는 쿠폰 발행
+    모든 회원에게 등급에 맞는 쿠폰 발행
     @Transactional
     public void issueCouponsForAllMembers() {
         List<MemberVo> members = memberMapper.selectList(); // 모든 회원 조회

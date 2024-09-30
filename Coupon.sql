@@ -12,8 +12,6 @@ FOREIGN KEY (member_id) REFERENCES member(member_id) ON DELETE CASCADE
 
 
 
-
-
 -- 쿠폰 만료 설정 트리거
 DELIMITER $$
 CREATE TRIGGER set_end_date_before_insert

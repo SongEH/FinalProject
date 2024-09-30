@@ -48,7 +48,8 @@
         margin: 10px;
       }
 
-      .dropdown .btn-secondary {
+      .dropdown,
+      .btn-secondary {
         background-color: #f0a8d0;
         border: none;
         color: white;
@@ -57,8 +58,9 @@
         border-radius: 5px;
       }
 
-      .dropdown .btn-secondary:hover {
-        background-color: #e090b5;
+      .dropdown,
+      .btn-secondary:hover {
+        background-color: #e090b5 !important;
       }
 
       .dropdown-content {
@@ -340,7 +342,7 @@
         <div class="header">배달 현황</div>
 
         <div class="greeting">
-          <p>${user.rider_name}입니다.</p>
+          <p>${user.rider_name} 라이더님 환영합니다.</p>
           <button onclick="location.href ='main.do'" class="btn btn-secondary">
             로그아웃
           </button>

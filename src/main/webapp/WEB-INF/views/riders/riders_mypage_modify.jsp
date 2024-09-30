@@ -120,7 +120,7 @@ pageEncoding="UTF-8"%>
     </script>
   </head>
   <body>
-    <h1>회원 정보 수정 여긴 riders_mypage_modify</h1>
+    <h1>라이더 정보</h1>
     <form action="${pageContext.request.contextPath}/riders/mypage/modify.do">
       <input
         type="hidden"

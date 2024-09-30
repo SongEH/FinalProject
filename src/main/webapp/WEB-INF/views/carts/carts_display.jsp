@@ -59,10 +59,10 @@
       cursor: pointer;
     }
 
-    .small_btn{
-      width:25px !important;
-      height:25px !important;
-      padding:3px !important;
+    .small_btn {
+      width: 25px !important;
+      height: 25px !important;
+      padding: 3px !important;
     }
   </style>
 </head>
@@ -139,6 +139,7 @@
   <!-- 공통 css import -->
   <%@include file="../common.jsp" %>
 
+
   <c:set var="currentShopId" value="" />
   <c:set var="currentShopTotal" value="0" />
   <c:set var="totalPrice" value="0" />
@@ -155,21 +156,24 @@
     <tbody>
       <c:forEach var="item" items="${list}">
         <c:if test="${item.shop_id != currentShopId}">
+          <!-- 가게명 표시 -->
+          <p class="shop-info">${item.shop_name}</p>
+
           <!-- 이전 가게의 주문 버튼과 총 가격 표시 -->
-          <c:if test="${currentShopId != '' && shop_status=='영업중'}">
-            <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
+          <c:if test="${currentShopId != '' && status == '영업중'}">
+            <p>총 가격:
+              <fmt:formatNumber value="${currentShopTotal}" pattern="#,###" />원
               <button class="order-button button_style"
                 onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
             </p>
           </c:if>
-  
-          <!-- 가게명 및 가게별 총 가격 초기화 -->
-          <p class="shop-info">${item.shop_name}</p>
+
+          <!-- 가게별 총 가격 초기화 -->
           <c:set var="currentShopId" value="${item.shop_id}" />
           <c:set var="currentShopName" value="${item.shop_name}" />
           <c:set var="currentShopTotal" value="0" />
         </c:if>
-  
+
         <!-- 메뉴 아이템 표시 -->
         <tr>
           <td style="padding: 10px;">${item.menu_name}</td>
@@ -180,12 +184,14 @@
               <button class="button_style small_btn" onclick="updateQuantity('${item.carts_id}', 'plus')">+</button>
             </div>
           </td>
-          <td style="padding: 10px; text-align: right;"><fmt:formatNumber value="${item.carts_quantity * item.menu_price}" pattern="#,###"/>원</td>
+          <td style="padding: 10px; text-align: right;">
+            <fmt:formatNumber value="${item.carts_quantity * item.menu_price}" pattern="#,###" />원
+          </td>
           <td style="padding: 10px; text-align: center;">
             <button class="button_style small_btn" onclick="deleteItem('${item.carts_id}')">x</button>
           </td>
         </tr>
-  
+
         <!-- 가게별 총 가격 계산 -->
         <c:set var="currentShopTotal" value="${currentShopTotal + (item.carts_quantity * item.menu_price)}" />
         <c:set var="totalPrice" value="${totalPrice + (item.carts_quantity * item.menu_price)}" />
@@ -193,20 +199,24 @@
       </c:forEach>
     </tbody>
   </table>
-  
+
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
-  <c:if test="${currentShopId != '' && shop_status=='영업중'}">
-    <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
+  <c:if test="${currentShopId != '' && status == '영업중'}">
+    <p>총 가격:
+      <fmt:formatNumber value="${currentShopTotal}" pattern="#,###" />원
       <button class="order-button button_style"
         onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
     </p>
   </c:if>
-  
+
   <!-- 전체 가격 출력 -->
   <div class="total-price">
-    장바구니 총 가격: <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원
+    장바구니 총 가격:
+    <fmt:formatNumber value="${totalPrice}" pattern="#,###" />원
   </div>
-  
+
+
+
 
 </body>
 

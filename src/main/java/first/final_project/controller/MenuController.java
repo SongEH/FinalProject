@@ -112,7 +112,7 @@ public class MenuController {
 		model.addAttribute("menu_list", menu_list);
 		System.out.println("menu_list : \n" + menu_list);
 
-		return "menu/menu_list"; // 여기 바꿔야 됨
+		return "menu/menu_display"; // 변경 필요
 
 	}
 

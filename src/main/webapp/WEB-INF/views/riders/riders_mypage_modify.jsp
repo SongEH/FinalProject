@@ -204,8 +204,7 @@ pageEncoding="UTF-8"%>
         <div class="mb-4">
           <label for="phone">전화번호:</label>
           <input class="form-control" type="text" name="riders_phone"
-          value="${vo.riders_phone}" <<<<<<< HEAD
-          oninput="formatPhoneNumber(this);"
+          value="${vo.riders_phone}" oninput="formatPhoneNumber(this);"
         </div>
 
         <div class="mb-4">

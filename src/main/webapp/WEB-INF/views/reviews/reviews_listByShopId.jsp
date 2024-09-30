@@ -108,7 +108,7 @@ width: 100%;
           </c:if>
         </div>
         <div class="mt-3">
-          <div>${reviews.orders_name}</div>
+          <div>주문한 음식 : ${reviews.orders_name}</div>
           <div>${reviews.reviews_content}</div>
         </div>
         <c:choose>

@@ -42,7 +42,22 @@ pageEncoding='UTF-8'%>
   text-decoration: none;
 }
 
-  </style>
+</style>
+<script>
+  // Card flip logicconst flipCard = document.getElementById('flipCard');
+  const flipBackButton = document.getElementById('flipBack');
+
+  // Flip to the back of the card
+  flipCard.addEventListener('click', function() {
+    flipCard.classList.add('flipped');
+  });
+
+  // Flip back to the front of the card
+  flipBackButton.addEventListener('click', function(event) {
+    event.stopPropagation(); // Stop event propagation to prevent triggering the card flip again
+    flipCard.classList.remove('flipped');
+  });
+</script>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
@@ -97,50 +112,54 @@ pageEncoding='UTF-8'%>
         <div class="row" style="margin-top: 30px;">
           <div class="col-lg-2 col-md-2" style="width:20%">
             <div class="card" style="width:100%">
-              <img class="card-img-top" src="../bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+              <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/김수만.png" alt="Card image" style="width:100%; padding: 0;border-radius: 10px;" >
               <div class="card-body">
                 <h4 class="card-title">김수만</h4>
-                <a href="#" class="btn btn-primary">See Profile</a>
+                <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
               </div>
             </div>
           </div>
+
           <div class="col-lg-2 col-md-2" style="width:20%">
             <div class="card" style="width:100%">
-              <img class="card-img-top" src="../bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+              <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/송은호.png" alt="Card image" style="width:100%; padding: 0;border-radius: 10px;" >
               <div class="card-body">
                 <h4 class="card-title">송은호</h4>
-                <a href="#" class="btn btn-primary">See Profile</a>
+                <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
               </div>
             </div>
           </div>
+
           <div class="col-lg-2 col-md-2" style="width:20%">
             <div class="card" style="width:100%">
-              <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/천태광.png" alt="Card image" style="width:100%; padding: 0;border-radius: 10px;">
+              <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/천태광.png" alt="Card image" style="width:100%; padding: 0;border-radius: 10px;" >
               <div class="card-body">
                 <h4 class="card-title">천태광</h4>
-                <a href="#" class="btn btn-primary">See Profile</a>
+                <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
               </div>
             </div>
           </div>
+
           <div class="col-lg-2 col-md-2" style="width:20%">
             <div class="card" style="width:100%">
               <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/한지혜.png" alt="Card image" style="width:100%; padding: 0;border-radius: 10px;" >
               <div class="card-body">
                 <h4 class="card-title">한지혜</h4>
-                <a href="#" class="btn btn-primary">See Profile</a>
+                <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
               </div>
             </div>
           </div>
+
           <div class="col-lg-2 col-md-2" style="width:20%">
             <div class="card" style="width:100%">
-              <img class="card-img-top" src="../bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+              <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/손유정.png" alt="Card image" style="width:100%; padding: 0;border-radius: 10px;" >
               <div class="card-body">
                 <h4 class="card-title">손유정</h4>
-                <a href="#" class="btn btn-primary">See Profile</a>
+                <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
               </div>
             </div>
           </div>
-        </div> row card end
+        </div> 
         
         <!-- <div class="row" style="margin-top: 30px;">
           <div class="col-lg-2 col-md-2">

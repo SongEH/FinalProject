@@ -161,7 +161,7 @@
                     <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
                   </p>
                   <p class="card-text">메뉴 : ${vo.orders_name}, ${vo.menu_count}개</p>
-                  <p class="card-text">가격 : ${vo.orders_price}원</p>
+                  <p class="card-text">가격 : <fmt:formatNumber value="${vo.orders_price}" pattern="#,###"/>원</p>
                   <div>
                     <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
                       onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
@@ -169,7 +169,7 @@
                       onclick="modify_menu('${vo.orders_id}');">
                     <c:choose>
                       <c:when test="${vo.hasReview}">
-                        <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성" disabled>
+                        <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성완료" style="cursor: default; pointer-events: none; color:rgb(229, 84, 84)" disabled>
                       </c:when>
                       <c:otherwise>
                         <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성"

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -177,11 +179,11 @@ body {
     </script>
     
     <script>
-      function selectOne(shop_id, status){
+      function selectOne(shop_id, shop_status){
         $.ajax({
           url     :     "/shop/select_one.do",
           data    :      {"shop_id": shop_id,
-                          "status": status},
+                          "shop_status": shop_status},
           success :   function(res_data){
                 // alert("select_one.do 성공");
                 $("#select_one_display").html(res_data).show();
@@ -255,8 +257,8 @@ body {
         <!-- 영업중인 가게  -->
         <c:forEach var="vo" items="${list}">
           <c:if test="${vo.shop_status =='영업중'}">
-            ${vo.status}
-            <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
+            <!-- ${vo.shop_status} -->
+            <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.shop_status}');">
               <div class="store-left">
                 <div class="store-logo">
                   <div class="image-container">
@@ -272,7 +274,7 @@ body {
                     <span class="rating">★ ${vo.shop_rating}</span> 
                     | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
                   </div>
-                  <div>${vo.shop_min_price}원 이상 배달</div>
+                  <div><fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/>원 이상 배달</div>
                   <div class="delivery-time"></div>
                 </div>
               </div>
@@ -285,8 +287,8 @@ body {
         <!-- 영업중이 아닌 가게 -->
         <c:forEach var="vo" items="${list}">
           <c:if test="${vo.shop_status == '영업전' || vo.shop_status=='휴무일'}">
-            ${vo.status}
-            <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.status}');">
+            <!-- ${vo.shop_status} -->
+            <div class="store" onclick="selectOne('${vo.shop_id}', '${vo.shop_status}');">
               <img class="image-z1" src="${pageContext.request.contextPath}/resources/images/back_black.png">
             <c:if test="${vo.shop_status == '영업전'}">
               <div class="text-over-image">가게 오픈 시간  ${fn:substring(vo.shop_open_hour, 0, 5)}</div>
@@ -309,7 +311,7 @@ body {
                     <span class="rating">★ ${vo.shop_rating}</span> 
                     | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
                   </div>
-                  <div>${vo.shop_min_price}원 이상 배달</div>
+                  <div><fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/>원 이상 배달</div>
                   <div class="delivery-time"></div>
                 </div>
               </div>
@@ -320,14 +322,9 @@ body {
     </div>
   </div>
 
-  <div id="store_list_display">
-    <input type="hidden" id="order_addr" value="${order_addr}"/>
-    <input type="hidden" id="food_category" value="${food_category}"/>
-  </div>
-
   <div>
-      <!-- Add more stores similarly -->
-    <div id="insert_form_display"></div>
+    <!-- Add more stores similarly -->
+  <div id="insert_form_display"></div>
   </div>
   <div>
     <div id="select_list_category_display"></div>
@@ -335,6 +332,13 @@ body {
   <div>
     <div id="select_one_display"></div>
   </div>
+
+  <div id="store_list_display">
+    <input type="hidden" id="order_addr" value="${order_addr}"/>
+    <input type="hidden" id="food_category" value="${food_category}"/>
+  </div>
+
+ 
 
 </main>
 </body>

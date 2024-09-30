@@ -1,7 +1,8 @@
 <%@ page language='java' contentType='text/html; charset=UTF-8'
-pageEncoding='UTF-8'%> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fn"
-uri="http://java.sun.com/jsp/jstl/functions" %>
+pageEncoding='UTF-8'%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +85,7 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
       url: "delete.do",
       data: { reviews_id: reviews_id },
       success: function (res_data) {
-        // alert("성공");
+        alert("리뷰가 삭제되었습니다.");
         location.href = "list.do";
       },
       error: function (err) {
@@ -187,7 +188,7 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
 
                         <div class="mt-3">
                           <div>주문한 메뉴 : ${vo.orders_name}</div>
-                          <div>주문한 가격 : ${vo.orders_price}</div>
+                          <div>주문한 가격 : <fmt:formatNumber value="${vo.orders_price}" pattern="#,###"/>원</div>
                         </div>
                         <c:choose>
                           <c:when test="${vo.hasCeoReview}">

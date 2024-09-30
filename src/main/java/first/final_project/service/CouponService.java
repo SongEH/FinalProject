@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import first.final_project.dao.CouponMapper;
-import first.final_project.dao.GradeMapper;
 import first.final_project.dao.MemberMapper;
 import first.final_project.vo.CouponVo;
-import first.final_project.vo.GradeVo;
 import first.final_project.vo.MemberVo;
 
 @Service
@@ -23,31 +21,37 @@ public class CouponService {
     @Autowired
     private CouponMapper couponMapper;
 
-    @Autowired
-    private GradeMapper gradeMapper;
-
     // 모든 회원에게 등급에 맞는 쿠폰 발행
     @Transactional
-    public void issueCouponsForAllMembers() {
-        List<MemberVo> members = memberMapper.selectList(); // 모든 회원 조회
-        System.out.println(memberMapper.selectList());
+    public void issueCouponsForAllMembers3000() {
+        List<MemberVo> members = memberMapper.selectList();
         for (MemberVo member : members) {
-            GradeVo grade = gradeMapper.getGradeById(member.getGrade_id()); // 회원의 등급 조회
+            CouponVo coupon = new CouponVo();
+            coupon.setMember_id(member.getMember_id());
+            coupon.setDiscount_amount(3000);
+            coupon.setCoupon_code(generateCouponCode());
 
-            if (grade != null) {
-                CouponVo coupon = new CouponVo();
-                coupon.setMember_id(member.getMember_id());
-                coupon.setDiscount_amount(grade.getGrade_discount()); // 등급에 맞는 할인 금액 설정
-                coupon.setCoupon_code(generateCouponCode()); // 쿠폰 코드 생성
-                coupon.setGrade_id(grade.getGrade_id());
-
-                couponMapper.insertCoupon(coupon); // 쿠폰 발행
-            }
+            couponMapper.insertCoupon(coupon);
         }
+
     }
 
-    public List<CouponVo> getCouponsForMember(int memberId) {
-        return couponMapper.getCouponsByMemberId(memberId);
+    @Transactional
+    public void issueCouponsForAllMembers5000() {
+        List<MemberVo> members = memberMapper.selectList();
+        for (MemberVo member : members) {
+            CouponVo coupon = new CouponVo();
+            coupon.setMember_id(member.getMember_id());
+            coupon.setDiscount_amount(5000);
+            coupon.setCoupon_code(generateCouponCode());
+
+            couponMapper.insertCoupon(coupon);
+        }
+
+    }
+
+    public List<CouponVo> getCouponsForMember(int member_id) {
+        return couponMapper.getCouponsByMemberId(member_id);
     }
 
     // 고유 쿠폰 코드 생성
@@ -59,5 +63,4 @@ public class CouponService {
     public List<CouponVo> getAllIssuedCoupons() {
         return couponMapper.getAllIssuedCoupons();
     }
-
 }

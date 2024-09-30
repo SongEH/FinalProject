@@ -29,13 +29,18 @@ public class CouponController {
     }
 
     // 쿠폰 발행 버튼을 클릭했을 때 호출
-    @RequestMapping("issue.do")
-    public String issueCouponsForMembers() {
-        couponService.issueCouponsForAllMembers();
+    @RequestMapping("issue3000.do")
+    public String issueCouponsForMembers3000() {
+        couponService.issueCouponsForAllMembers3000();
         return "redirect:/coupon/success"; // 성공 페이지로 리디렉션
     }
 
-    // Success page after issuing coupons
+    @RequestMapping("issue5000.do")
+    public String issueCouponsForMembers5000() {
+        couponService.issueCouponsForAllMembers5000();
+        return "redirect:/coupon/success";
+    }
+
     @RequestMapping("success")
     public String successPage() {
         return "coupon/success"; // Show success message
@@ -53,7 +58,6 @@ public class CouponController {
     }
 
     // 관리자가 모든 발급된 쿠폰을 조회하는 메서드
-    // View issued coupons
     @RequestMapping("list.do")
     public String listCoupons(Model model) {
         List<CouponVo> coupons = couponService.getAllIssuedCoupons();

@@ -27,6 +27,7 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
+
       input[type="button"] {
         background-color: #5cb85c;
         color: white;
@@ -121,13 +122,13 @@
             <td>${request.approval_status}</td>
             <td>
               <button class="button_style"
-                onclick="locaion.href='${pageContext.request.contextPath}/admin/approve_request.do?owner_id=${request.owner_id}'"
+                onclick="location.href='${pageContext.request.contextPath}/admin/approve_request.do?owner_id='+'${request.owner_id}'"
                 >승인</button
               >
             </td>
             <td>
               <button class="button_style"
-              onclick="locaion.href='${pageContext.request.contextPath}/admin/reject_request.do?owner_id=${request.owner_id}'"
+              onclick="location.href='${pageContext.request.contextPath}/admin/reject_request.do?owner_id='+'${request.owner_id}'"
                 >거절</button
               >
             </td>

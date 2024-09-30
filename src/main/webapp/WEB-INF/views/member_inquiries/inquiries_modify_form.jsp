@@ -44,17 +44,6 @@
         .form-group textarea {
             resize: vertical;
         }
-        .form-group button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .form-group button:hover {
-            background-color: #0056b3;
-        }
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
             word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */

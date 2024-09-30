@@ -12,7 +12,7 @@ pageEncoding="UTF-8" %>
 <html lang="ko">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   
   <style>
     .disabled-link {
@@ -33,7 +33,7 @@ pageEncoding="UTF-8" %>
     let status = 0; // Example status
     if (!ajaxExecuted && status === 0) {
         $.ajax({
-            url: "../member_inquiries/answer_count.do", // Adjust the URL if needed
+            url: "/member_inquiries/answer_count.do", // Adjust the URL if needed
             method: "GET",
             data: { m_inquiries_type: "전체" }, // Pass any parameters if necessary
             success: function(response) {

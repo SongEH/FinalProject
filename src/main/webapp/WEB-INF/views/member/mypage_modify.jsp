@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <!DOCTYPE html>
-    <html lang="ko">
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  <!DOCTYPE html>
+  <html lang="ko">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -73,8 +72,8 @@
           }
 
           f.action = "${pageContext.request.contextPath}/member/mypage/modify.do";
-          f.submit(); //전송
-        } //end:send()
+          f.submit(); 
+        } 
       </script>
 
       <style>
@@ -121,11 +120,11 @@
 
     <body>
 
-      <%@ include file="../common.jsp" %>
+      <%@include file="../common.jsp" %>
 
-      <%@ include file="../header.jsp" %>
+      <%@include file="../header.jsp" %>
 
-      <%@ include file="../sidebar.jsp" %>
+      <%@include file="../sidebar.jsp" %>
 
       <main id="main" class="main">
         <div class="pagetitle">
@@ -142,9 +141,9 @@
 
         </div><!-- End Page Title -->
 
-        <div class="container">
-          <div class="bg-white shadow-md rounded-lg p-6">
-            <form action="${pageContext.request.contextPath}/member/mypage/modify_form.do" method="get">
+        <div class="container mx-auto p-6">
+          
+            <form action="${pageContext.request.contextPath}/member/mypage/modify.do" method="post">
               <input type="hidden" name="member_id" value="${member.member_id}" />
 
               <div class="mb-4">
@@ -178,13 +177,13 @@
 
               <div class="flex justify-end">
                 <button type="button" class="button_style" onclick="send(this.form);">수정</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;
                 <button type="button" class="button_style"
-                  onclick="location.href='${pageContext.request.contextPath}/member/mypage.do'">취소</button>
+                  onclick="location.href='/member/mypage.do'">취소</button>
               </div>
 
             </form>
-          </div>
+          
         </div>
 
       </main><!-- End #main -->

@@ -119,20 +119,6 @@
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
       }
 
-      .btn {
-        background-color: #5cb85c;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
-
-      .btn:hover {
-        background-color: #4cae4c;
-      }
-
       .flex {
         display: flex;
         justify-content: flex-end;

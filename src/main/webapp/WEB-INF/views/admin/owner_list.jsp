@@ -114,7 +114,7 @@
           <td>${owner.owner_license}</td>
           <td>${owner.approval_status}</td>
           <td>
-            <button class="button_style" onclick="locaion.href='delete_owner.do?owner_id=${owner.owner_id}'">Delete</button>
+            <button class="button_style" onclick="location.href='/admin/delete_owner.do?owner_id='+'${owner.owner_id}'">Delete</button>
           </td>
         </tr>
       </c:forEach>

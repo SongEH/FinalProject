@@ -60,18 +60,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
-    <script>
+    <script>  
+        var currentShopId = '<%= session.getAttribute("shop_id") %>';
+    
         var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
         var stompClient = Stomp.over(socket);
-
+    
         // WebSocket 연결 설정
         stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+    
             // 주문 상태 업데이트 메시지 구독
             stompClient.subscribe('/topic/orders', function (message) {
-                location.reload(); // 메시지 수신 시 페이지 새로고침
+                var receivedMessage = JSON.parse(message.body); // JSON 형식으로 메시지 파싱
+    
+                // 메시지에 있는 shopId와 현재 가게의 ID가 일치하는지 확인
+                if ( receivedMessage.shop_id == currentShopId && receivedMessage.orderStatus === '주문이 들어왔습니다.') {
+                    alert("새로운 주문이 도착했습니다: 주문 번호 - " + receivedMessage.orders_id);
+                    location.reload(); // 페이지 새로고침
+                } else {
+                    location.reload();
+                }
             });
         });
     </script>
+    
 
     <!-- polling 방식으로 주문상태 업데이트 -->
     <!-- <script>

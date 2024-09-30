@@ -16,7 +16,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import first.final_project.dao.CartsMapper;
 import first.final_project.service.PaymentService;
+import first.final_project.vo.OrderVo;
 import first.final_project.vo.PaymentVo;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PaymentController {
@@ -29,6 +31,9 @@ public class PaymentController {
 
     @Autowired
     SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    HttpSession session;
 
     // public PaymentController(PaymentService paymentService) {
     // this.paymentService = paymentService;
@@ -51,7 +56,7 @@ public class PaymentController {
     // order table에 insert
     @RequestMapping(value = "/payment/insert.do")
     @ResponseBody
-    public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id) {
+    public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id, HttpSession session) {
 
         //System.out.println(vo);
 
@@ -71,8 +76,13 @@ public class PaymentController {
             // update 메서드 호출
             carts_mapper.updateOrderId(map);
 
-            // WebSocket을 통해 가계에 메시지 전송
-		    messagingTemplate.convertAndSend("/topic/orders", "주문이 들어왔습니다.");
+            // 서버 측: 주문이 들어왔을 때 전송할 메시지
+            Map<String, Object> message = new HashMap<>();
+            message.put("orderStatus", "주문이 들어왔습니다."); // 주문 상태
+            message.put("orders_id", orders_id); // 주문 ID
+            message.put("shop_id", shop_id); // 가게 ID
+
+            messagingTemplate.convertAndSend("/topic/orders", message);
         } catch (Exception e) {
             e.printStackTrace();
         }

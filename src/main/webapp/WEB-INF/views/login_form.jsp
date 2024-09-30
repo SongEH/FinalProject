@@ -101,9 +101,7 @@ pageEncoding="UTF-8"%>
       }
     </script>
     <!-- 태광 아래부분 추가 에러메시지 호출   -->
-    <script>
-      bod.y;
-    </script>
+  
     <style>
       /* 메인 이미지 배치 및 흐리게 처리 */
       .background-image {

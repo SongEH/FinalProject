@@ -16,6 +16,9 @@ public interface PaymentMapper {
     // 결제 내역 수정
     int update(PaymentVo vo);
 
+    // 가계 id 가져오기
+    PaymentVo selectPaymentByOrderId(@Param("orders_id") int orders_id);
+
     // // 결제 취소
     // PaymentVo selectPaymentByOrderId(@Param("orders_id") int orders_id);
 }

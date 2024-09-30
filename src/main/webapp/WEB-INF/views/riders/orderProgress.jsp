@@ -10,6 +10,7 @@
 
     <script>
       var sessionId = '<%= session.getId() %>'; // 현재 세션 ID
+      var raiders_id = '<%= session.getAttribute("raiders_id") %>';
     
       var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
       var stompClient = Stomp.over(socket);
@@ -18,24 +19,24 @@
       stompClient.connect({}, function (frame) {
           // 주문 상태 업데이트 메시지 구독
           stompClient.subscribe('/topic/orders', function (message) {
-              var receivedMessage = message.body;
-              var senderSessionId = receivedMessage.split(":")[0]; // 메시지에서 세션 ID 추출
-    
-              // 자신이 보낸 메시지는 무시
-              if (sessionId !== senderSessionId) {
-                  location.reload(); // 다른 라이더나 가게에서 보낸 메시지만 처리
+              var receivedMessage = JSON.parse(message.body); // JSON 형식으로 메시지 파싱
+              // 자신의 배달이 아닌 것과 자신이 보낸 메시지는 무시
+              if (receivedMessage.orders_status === '주문 정보가 업데이트되었습니다.') {
+                  // 알림 메시지
+                  alert("배달 하실 주문 정보가 업데이트되었습니다. : 주문 번호 - " + receivedMessage.orders_id);
+                  location.reload();
+              } else{
+                  location.reload();
               }
           });
       });
     </script>
-    
   </head>
   <body>
     <div class="container">
     <div class="content-wrapper">
     <div id="content">
     <h2>진행 중인 주문</h2>
-
     <c:choose>
       <c:when test="${empty orders}">
         <p>${message}</p>
@@ -48,7 +49,7 @@
               <div><strong>주문 상태:</strong> ${order.orders_status}</div>
               <div><strong>배달 상태:</strong> ${order.delivery_history_status}</div>
               <div><strong>가계 이름:</strong> ${order.shop_name}</div>
-              <div><strong>가계 주소:</strong> ${order.shop_addr}</div>
+              <div><strong>가계 주소:</strong> ${order.shop_addr1} ${order.shop_addr2}</div>
               <div><strong>회원 이름:</strong> ${order.member_nickname}</div>
               <div>
                 <strong>배달 장소:</strong> ${order.addr_line1}
@@ -75,6 +76,11 @@
                     type="hidden"
                     name="orders_id"
                     value="${order.orders_id}"
+                  />
+                  <input
+                    type="hidden"
+                    name="raiders_id"
+                    value="<%= session.getAttribute("raiders_id") %>"
                   />
                   <button type="submit" class="assign-button">픽업 하기</button>
                 </form>
@@ -115,6 +121,11 @@
                     type="hidden"
                     name="orders_id"
                     value="${order.orders_id}"
+                  />
+                  <input
+                    type="hidden"
+                    name="raiders_id"
+                    value="<%= session.getAttribute("raiders_id") %>"
                   />
                   <button type="submit" class="assign-button">배달 완료</button>
                 </form>

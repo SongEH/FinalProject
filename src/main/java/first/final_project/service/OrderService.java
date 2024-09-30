@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +20,8 @@ public class OrderService {
     @Autowired
     private OrderMapper order_mapper;
 
-    // Websocket 활성화 시 주석 풀기
-    // @Autowired
-    // private SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     public List<OrderVo> getAcceptOrderList(int owner_id, String status) {
         Map<String, Object> params = new HashMap<>();
@@ -37,7 +37,11 @@ public class OrderService {
         order_mapper.updateOrderStatus(orders_id, status);
 
         // WebSocket으로 실시간 메시지 전송
-        // messagingTemplate.convertAndSend("/topic/orders", "주문 상태가 업데이트 되었습니다.");
+        Map<String, Object> message = new HashMap<>();
+        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+        message.put("orders_id", orders_id); // 주문 ID
+
+        messagingTemplate.convertAndSend("/topic/orders", message);
     }
 
     public void deleteOrder(int orders_id) {

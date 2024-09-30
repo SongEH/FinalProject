@@ -113,6 +113,11 @@ public class PaymentService {
     // public PaymentVo getPaymentByOrderId(int orders_id) {
     //     return paymentMapper.selectPaymentByOrderId(orders_id);
     // }
+
+    // shop_id 가져오기(웹소켓)
+    public PaymentVo getPaymentByOrderId(int orders_id) {
+        return paymentMapper.selectPaymentByOrderId(orders_id);
+    }
     
 
 }

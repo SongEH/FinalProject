@@ -15,7 +15,21 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
     <main id="main" class="main">
       <h1>쿠폰 발행하기</h1>
-      <button onclick="location.href ='issue.do'">쿠폰 발행하기</button>
+      <input
+        class="button_style"
+        type="button"
+        id="btn_popup_update"
+        value="3천원권 발행"
+        onclick="location.href ='issue3000.do'"
+      />
+
+      <input
+        class="button_style"
+        type="button"
+        id="btn_popup_update"
+        value="5천원권 발행"
+        onclick="location.href ='issue5000.do'"
+      />
     </main>
   </body>
 </html>

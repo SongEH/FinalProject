@@ -60,7 +60,7 @@ pageEncoding="UTF-8"%>
       }
       .login-container button:hover,
       .login-container .btn:hover {
-        background-color: #e090b5;
+        background-color: #f0a8d0;
       }
       .login-container .link {
         margin-top: 15px;
@@ -72,10 +72,10 @@ pageEncoding="UTF-8"%>
       }
       .login-container .btn-info {
         background-color: #f0a8d0;
-        border-color: #e090b5;
+        border-color: #f0a8d0;
       }
       .login-container .btn-info:hover {
-        background-color: #e090b5;
+        background-color: #f0a8d0;
       }
       /* 반응형 스타일 */
       @media (max-width: 768px) {

@@ -1,6 +1,5 @@
 package first.final_project.vo;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.apache.ibatis.type.Alias;

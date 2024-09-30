@@ -63,4 +63,5 @@ public class CouponService {
     public List<CouponVo> getAllIssuedCoupons() {
         return couponMapper.getAllIssuedCoupons();
     }
+
 }

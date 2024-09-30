@@ -18,30 +18,35 @@ pageEncoding="UTF-8"%>
 
     <style>
       body {
-        background-color: white; /* 배경색 */
-        color: #333; /* 텍스트 색상 */
         font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0px;
       }
+
       h1 {
-        color: #f0a8d0; /* 제목 색상 */
         text-align: center;
-        padding: 20px;
+        color: #333;
+        margin-bottom: 20px;
       }
       .container {
-        background-color: #fff; /* 컨테이너 배경색 */
+        max-width: 800px;
+        margin: auto;
+        background: white;
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        margin: 30px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
       .form-control {
-        background-color: #f7b5ca; /* 입력 필드 배경색 */
-        border: 1px solid #f0a8d0; /* 입력 필드 테두리 색상 */
-        color: #333; /* 입력 필드 텍스트 색상 */
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
       }
       .form-control[readonly] {
-        background-color: #ffc6c6; /* 읽기 전용 필드 배경색 */
+        background-color: #f9f9f9;
       }
       .mb-4 {
         margin-bottom: 20px;
@@ -63,6 +68,29 @@ pageEncoding="UTF-8"%>
       input[type="button"]:hover {
         background-color: #f7b5ca; /* 버튼 호버 색상 */
       }
+
+      /* 반응형 스타일 */
+      @media (max-width: 768px) {
+        .login-container {
+          padding: 20px; /* 모바일에서 패딩 감소 */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-container h1 {
+          font-size: 20px; /* 제목 폰트 사이즈 줄임 */
+        }
+
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+          font-size: 14px; /* 폰트 크기 축소 */
+        }
+
+        .login-container button,
+        .login-container .btn {
+          font-size: 14px; /* 버튼 폰트 사이즈 줄임 */
+        }
+      }
     </style>
 
     <script>
@@ -74,7 +102,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <input type="hidden" name="raiders_id" value="${rider.raiders_id}" />
-    <h1>회&nbsp;원&nbsp;정&nbsp;보 여긴 riders_mypage</h1>
+    <h1>회&nbsp;원&nbsp;정&nbsp;보</h1>
     <div class="container">
       <div class="mb-4">
         <label for="name" class="form-label">이름:</label>
@@ -138,9 +166,12 @@ pageEncoding="UTF-8"%>
             value="내역보기"
             onclick="location.href='mypage/list.do?raiders_id=${vo.raiders_id}'"
           />
-          <a href="${pageContext.request.contextPath}/riders/delivery">
-            <input type="button" value="메인이동" />
-          </a>
+
+          <input
+            type="button"
+            value="메인이동"
+            onclick="location.href='${pageContext.request.contextPath}/riders/delivery'"
+          />
 
           <input
             type="button"

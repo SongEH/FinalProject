@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%>
           background-color: #fff;
           padding: 30px;
           border-radius: 10px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         
       }
 
       .header {
@@ -53,28 +53,7 @@ pageEncoding="UTF-8"%>
           height: 45px;
       }
 
-      .btn-primary {
-          background-color: #F0A8D0;
-          border-color: #FFEBD4;
-          width: 100%;
-          height: 50px;
-          font-size: 16px;
-          font-weight: bold;
-          border-radius: 10px;
-          position: relative;
-      }
-
-      .btn-primary:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border: 2px solid #FFEBD4;
-          border-radius: 10px;
-          pointer-events: none;
-      }
+      
 
       .password-info {
           font-size: 12px;
@@ -107,7 +86,7 @@ pageEncoding="UTF-8"%>
       .button-group button {
           width: 48%;
           padding: 15px;
-          background-color: #FFC6C6;
+          background-color: #f0a8d0;
           color: white;
           border: none;
           border-radius: 5px;
@@ -116,7 +95,7 @@ pageEncoding="UTF-8"%>
       }
 
       .button-group button:hover {
-          background-color: #555;
+          background-color: #f0a8d0;
       }
 
       .location-select,
@@ -131,17 +110,32 @@ pageEncoding="UTF-8"%>
       }
 
       .options button {
-          background-color: #f5f5f5;
-          border: 1px solid #ddd;
+          background-color: #f0a8d0;
+          border: 1px solid #f0a8d0;
           border-radius: 5px;
           padding: 10px;
           cursor: pointer;
       }
 
       .options button.selected {
-          background-color: #FFC6C6;
-          border-color: #FFC6C6;
+          background-color: #f0a8d0;
+          border-color: #f0a8d0;
       }
+  </style>
+  <style>
+    .button_style {
+      background-color: #f0a8d0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      padding: 10px 15px;
+    } 
+  
+    .button_style:hover {
+      background-color: #e090b5;
+    }
   </style>
     <script type="text/javascript">
      
@@ -252,7 +246,7 @@ pageEncoding="UTF-8"%>
       <div class="wrapper">
         <div class="container">
           <div class="header">
-            <h2>회원가입 riders_insert_form</h2>
+            <h2>회원가입</h2>
           </div>
           <div class="form-group">
             <label for="rider_name">로그인 시 사용할 이름을 입력해 주세요</label>
@@ -293,6 +287,7 @@ pageEncoding="UTF-8"%>
           </div>
           <div> &nbsp;</div>
           <div class="form-group">
+            <label for="riders_region">배달지역 선택</label>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="riders_region" value="서울">
               <label class="form-check-label" for="inlineCheckbox1">서울</label>
@@ -308,8 +303,10 @@ pageEncoding="UTF-8"%>
           </div>
         
           <div class="button-group">
-            <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">로그인 화면 으로</button> 
-            <button type="button" class="btn btn-primary" onclick="send(this.form);">가입하기</button> 
+            <!-- <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">로그인 화면 으로</button> 
+            <button type="button" class="btn btn-primary" onclick="send(this.form);">가입하기</button> -->
+           <input class="button_style" type="button" id="btn_popup_update" value="로그인 화면으로" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">
+            <input class="button_style" type="button" id="btn_popup_updated" value="가입하기" onclick="send(this.form);">
           </div>
         </div>
       </div>

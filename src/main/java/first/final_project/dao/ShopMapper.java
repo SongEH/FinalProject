@@ -35,7 +35,7 @@ public interface ShopMapper {
     int delete(int shop_id);
 
     // ownerid로 shopid 검색
-    int select_one_shop_id(int owner_id);
+    Integer select_one_shop_id(int owner_id);
 
     // menu 갯수와 reviews 갯수 구하기 
     Map<String, Integer> selectMenuAndReviewsCount(int shop_id);

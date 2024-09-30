@@ -121,21 +121,22 @@ header .logout{
         <c:when test="${not empty sessionScope.userType}">
           <c:choose>
             <c:when test="${sessionScope.userType == 'MEMBER'}">
-              <span>Welcome ${sessionScope.user.member_name}님 안녕하세요.
-                  <input class="button_style" type="button" value="My Page" onclick="location.href='/member/mypage.do'"/>
-                  <input class="button_style" type="button" id="logOut" value="logOut" onclick="location.href='/logout.do'"/>
+              <span>${sessionScope.user.member_name}님 안녕하세요👋
+                  <input class="button_style" type="button" value="마이페이지" onclick="location.href='/member/mypage.do'"/>
+                  <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
                 </span>
             </c:when>
             <c:when test="${sessionScope.userType == 'OWNER'}">
-              <span>Welcome ${sessionScope.user.owner_name}님
-                  <input class="button_style" type="button" value="Owner Dashboard" onclick="location.href='/owner/ownerpage.do'">
-                  <input class="button_style" type="button" id="logOut" value="logOut" onclick="location.href='/logout.do'"/>
+              <span>${sessionScope.user.owner_name}님 안녕하세요👋
+                  <input class="button_style" type="button" value="관리페이지" onclick="location.href='/owner/ownerpage.do'">
+                  <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
               </span>
             </c:when>
             <c:when test="${sessionScope.userType == 'ADMIN'}">
-              <span>Welcome ${sessionScope.user.admin_accountId}님
-                <input class="button_style" type="button" value="Admin Dashboard" onclick="location.href='/admin/member_list.do'">
-                <input class="button_style" type="button" id="logOut" value="logOut" onclick="location.href='/logout.do'"/>
+              <span>${sessionScope.user.admin_accountId}님 안녕하세요👋
+                <input class="button_style" type="button" value="가맹점관리페이지" onclick="location.href='/admin/member_list.do'">
+                <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
+
               </span>
             </c:when>
 

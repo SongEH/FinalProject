@@ -38,12 +38,6 @@ pageEncoding="UTF-8"%>
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
         .mb-4 {
             margin-bottom: 16px;
         }
@@ -87,7 +81,7 @@ pageEncoding="UTF-8"%>
   <main id="main" class="main">
     <div class="pagetitle">
 
-     <h1>회&nbsp;원&nbsp;정&nbsp;보</h1>
+     <h1>회원정보</h1><br>
 
       <nav>
         <ol class="breadcrumb">

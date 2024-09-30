@@ -76,7 +76,46 @@
         } 
       </script>
 
-   
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4;
+        }
+
+        .container {
+          width: 800px;
+          margin: auto;
+          padding: 20px;
+          background-color: #ffffff;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+          margin-bottom: 15px;
+        }
+
+        .form-group label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+        }
+
+        .form-group textarea {
+          resize: vertical;
+        }
+      </style>
+
     </head>
 
     <body>
@@ -90,7 +129,7 @@
       <main id="main" class="main">
         <div class="pagetitle">
 
-          <h1>회원정보수정</h1>
+          <h1>회원정보수정</h1><br>
 
           <nav>
             <ol class="breadcrumb">

@@ -67,7 +67,7 @@
 
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>완료 주문 목록</h1>
+            <h1>완료 주문 목록</h1><br>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>

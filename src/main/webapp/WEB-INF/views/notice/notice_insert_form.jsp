@@ -13,7 +13,6 @@ prefix="c" %>
     <title>공지사항 등록</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -26,11 +25,7 @@ prefix="c" %>
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
+        
         .form-group {
             margin-bottom: 15px;
         }
@@ -108,7 +103,7 @@ prefix="c" %>
   <main id="main" class="main">
     <div class="pagetitle">
 
-      <h1>공지사항 등록</h1>
+      <h1>공지사항 등록</h1><br>
 
       <nav>
         <ol class="breadcrumb">

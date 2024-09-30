@@ -14,49 +14,6 @@
     integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous">
   </script>
 
-  <script>
-    function insert_review(orders_id) {
-      location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
-    }
-  </script>
-
-
-  <!-- polling 방식으로 주문상태 업데이트 -->
-  <!-- <script>
-    function fetchOrders() {
-      $.ajax({
-        url: `/order/order_list.do`, // 주문 내역을 가져오는 API 경로
-        data: {
-          type: 'member'
-        }, // type 데이터를 전달
-        method: 'GET',
-        success: function (orders) {
-
-          orders.forEach(order => {
-            console.log(order.orders_id, order.orders_status);
-
-            let orders_id = '#order-' + order.orders_id;
-            let orderRow = $(orders_id);
-            let orderStatusElement = orderRow.find('.orders-status')[0]; // jQuery로 선택한 후, 첫 번째 요소 가져오기
-
-            console.log("orderRow" + orderRow);
-            if (orderStatusElement) {
-              orderStatusElement.textContent = order.orders_status; // 상태 업데이트
-              console.log("Status updated for order " + order.orders_id);
-            } else {
-              console.log("요소를 찾을 수 없습니다: " + orders_id); // 요소를 찾지 못했을 경우 로그 출력
-            }
-          });
-        },
-        error: function (err) {
-          console.error('주문을 가져오는 중 오류 발생:', err);
-        }
-      });
-    }
-
-    // 특정 주기 마다 주문 내역을 가져옵니다.
-    setInterval(fetchOrders, 30000); // 10000ms = 10초
-  </script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
@@ -73,6 +30,11 @@
     });
   </script>
 
+  <script>
+    function insert_review(orders_id) {
+      location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
+    }
+  </script>
 
   <style>
     .menu-card {
@@ -183,16 +145,17 @@
           </div>
         </c:if>
       </c:forEach>
+      <!-- 페이징 처리 -->
+      <div style="text-align: center; margin-top: 20px; font-size: 15px">
+        ${pageMenu}
+      </div>
+
+      <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
+      <input type="hidden" name="startDate" value="${param.startDate}" />
+      <input type="hidden" name="endDate" value="${param.endDate}" />
     </c:if>
 
-    <!-- 페이징 처리 -->
-    <div style="text-align: center; margin-top: 20px; font-size: 15px">
-      ${pageMenu}
-    </div>
 
-    <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
-    <input type="hidden" name="startDate" value="${param.startDate}" />
-    <input type="hidden" name="endDate" value="${param.endDate}" />
 
   </main><!-- End #main -->
 </body>

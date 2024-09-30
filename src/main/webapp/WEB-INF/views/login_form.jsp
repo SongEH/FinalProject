@@ -101,9 +101,7 @@ pageEncoding="UTF-8"%>
       }
     </script>
     <!-- 태광 아래부분 추가 에러메시지 호출   -->
-    <script>
-      bod.y;
-    </script>
+  
     <style>
       /* 메인 이미지 배치 및 흐리게 처리 */
       .background-image {
@@ -205,15 +203,7 @@ pageEncoding="UTF-8"%>
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="adminLoginModalLabel">Admin Login</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <h5 class="modal-title" id="adminLoginModalLabel">Admin Login</h5>          
             </div>
             <div class="modal-body">
               <form
@@ -268,15 +258,7 @@ pageEncoding="UTF-8"%>
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="ownerLoginModalLabel">Owner Login</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <h5 class="modal-title" id="ownerLoginModalLabel">Owner Login</h5>                  
             </div>
             <div class="modal-body">
               <form
@@ -334,14 +316,6 @@ pageEncoding="UTF-8"%>
               <h5 class="modal-title" id="memberLoginModalLabel">
                 Member Login
               </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
               <form

@@ -112,7 +112,7 @@
 
     <div class="pagetitle">
 
-      <h1>주문상세보기</h1>
+      <h1>주문상세보기</h1><br>
       <br>
       <nav>
         <ol class="breadcrumb">

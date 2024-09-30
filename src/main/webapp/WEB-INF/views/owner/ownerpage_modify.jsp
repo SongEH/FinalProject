@@ -115,7 +115,7 @@
     <main id="main" class="main">
       <div class="pagetitle">
 
-        <h1>사장정보 수정</h1>
+        <h1>사장정보 수정</h1><br>
 
         <nav>
           <ol class="breadcrumb">

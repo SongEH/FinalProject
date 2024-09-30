@@ -78,7 +78,7 @@ public class AdminController {
             session.removeAttribute("member_user");
         }
 
-        return "redirect:adminpage.do";
+        return "redirect:/admin/member_list.do";
     }
 
     // 관리자 페이지에서 사장 목록을 조회
@@ -94,7 +94,7 @@ public class AdminController {
     public String deleteOwner(@RequestParam("owner_id") int owner_id) {
         owner_mapper.delete(owner_id);
 
-        return "redirect:adminpage.do";
+        return "redirect:/admin/member_list.do";
     }
 
     // 관리자 페이지에서 가게 목록 조회  
@@ -129,7 +129,7 @@ public class AdminController {
             owner.setApproval_status("APPROVED");
             owner_mapper.update_status(owner);
         }
-        return "redirect:adminpage.do";
+        return "redirect:/admin/pending_requests.do";
     }
 
     // 관리자가 사장 거절 처리
@@ -140,6 +140,6 @@ public class AdminController {
             owner.setApproval_status("REJECTED");
             owner_mapper.update_status(owner);
         }
-        return "redirect:adminpage.do";
+        return "redirect:/admin/pending_requests.do";
     }
 }

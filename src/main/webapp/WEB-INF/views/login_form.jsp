@@ -16,9 +16,9 @@ pageEncoding="UTF-8"%>
     <script type="text/javascript">
       function showLoginModal(userType) {
         // Hide all modals
-        $("#adminLoginModal").hide();
-        $("#ownerLoginModal").hide();
-        $("#memberLoginModal").hide();
+        $("#adminLoginModal").modal("hide");
+        $("#ownerLoginModal").modal("hide");
+        $("#memberLoginModal").modal("hide");
 
         // Show the selected modal
         if (userType === "admin") {

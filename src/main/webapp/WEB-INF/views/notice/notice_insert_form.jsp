@@ -79,8 +79,25 @@ prefix="c" %>
           f.notice_title.focus();
           return;
         }
+
+        if (notice_type == "") {
+          alert("유형을 선택하시오");
+          f.notice_type.value = "";
+          f.notice_type.focus();
+          return;
+        }
+
+        if (notice_content == "") {
+          alert("내용을 입력하시오");
+          f.notice_content.value = "";
+          f.notice_content.focus();
+          return;
+        }
+
+        f.action="/notice/insert.do";
+        f.submit();
       }
-        </script>
+    </script>
 <body>
    <%@ include file="../common.jsp" %>
 
@@ -106,7 +123,6 @@ prefix="c" %>
    <div class="container">
         
         <form action="${pageContext.request.contextPath}/notice/insert_form.do" method="post">
-            <input type="hidden" name="notice_id" value="${vo.notice_id}">
             <div class="form-group">
                 <label for="notice_title">제목</label>
                 <input type="text" id="notice_title" name="notice_title" required>

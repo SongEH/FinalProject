@@ -169,8 +169,9 @@ public class OwnerInquiriesController {
     }
 
     @RequestMapping("delete.do")
-    public String delete(@RequestParam int o_inquiries_id) {
+    public String delete(@RequestParam(value="o_inquiries_id", defaultValue="0")int o_inquiries_id) {
         owner_inquiries_mapper.delete(o_inquiries_id);
+
         return "redirect:/owner_inquiries/list.do";
     }
 

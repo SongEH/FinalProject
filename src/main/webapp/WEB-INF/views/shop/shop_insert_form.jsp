@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <!DOCTYPE html>
     <html lang="ko">
 
@@ -87,7 +88,9 @@
       } else {
         input.value = shop_call;
       }
-    }
+  }
+
+
   </script>
   <script>
   $(document).ready(function() {
@@ -113,7 +116,17 @@
 			oEditors.getById["shop_content"].exec("UPDATE_CONTENTS_FIELD", []);
 			$("#frm").submit();
 		});
+
+
+    setTimeout(showMessage, 100);
 });
+
+    function showMessage(){
+      if("${param.reason=='Register_shop'}" =="true"){
+        alert("가맹점 등록 후 이용할 수 있습니다. ")
+      }
+    }
+
   </script>
 <style>
   #addressSearch:hover{
@@ -150,7 +163,7 @@
                   <div class="col-lg-10">
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title">Floating labels Form</h5>
+                        <h5 class="card-title">Floating labels Form </h5>
 
                         <!-- Floating Labels Form -->
                         <form class="row g-3" id="frm" method="POST" action="insert.do" enctype="multipart/form-data">
@@ -159,7 +172,7 @@
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="상호명" name="shop_name" id="shop_name">
                               <span id="shop_name_msg"></span>
-                              <label style="color:#F0A8D0;">상호명</label>
+                              <label >상호명</label>
                             </div>
                           </div>
     
@@ -168,13 +181,13 @@
                               <div class="col-md-5">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="shop_addr1" placeholder="주소찾기 버튼을 눌러주세요." name="shop_addr1" readonly>
-                                    <label style="color:#F0A8D0;">가게주소</label>
+                                    <label >가게주소</label>
                                 </div>
                               </div>
                               <div class="col-md-5">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="shop_addr2" placeholder="상세주소를 입력해주세요" name="shop_addr2">
-                                    <label style="color:#F0A8D0;">상세주소</label>
+                                    <label >상세주소</label>
                                 </div>
                               </div>
                               <div class="col-md-2">
@@ -188,27 +201,27 @@
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input type="text" class="form-control" placeholder="가게 전화번호" name="shop_call" id="shop_call" pattern="\d{2,3}-\d{3,4}-\d{4}" maxlength="11" oninput="formatPhoneNumber(this);">
-                              <label style="color:#F0A8D0;">가게전화번호</label>
+                              <label >가게전화번호</label>
                             </div>
                           </div>
     
                           <div class="col-md-12">
                             <div class="form-floating">
-                              <input type="number" class="form-control" placeholder="최소주문금액" name="shop_min_price">
-                              <label style="color:#F0A8D0;">최소주문금액</label>
+                              <input type="number" class="form-control" placeholder="최소주문금액" name="shop_min_price" >
+                              <label >최소주문금액</label>
                             </div>
                           </div>
 
                           <div class="col-md-6">
                             <div class="form-floating">
                               <input type="time" class="form-control" placeholder="영업오픈시간" name="shop_open_hour" value="00:00">
-                              <label style="color:#F0A8D0;">영업 오픈 시간 (오픈시간을 입력하지 않을 경우 항상 영업중으로 표기됩니다.)</label>
+                              <label >영업 오픈 시간 (미입력시 항상 영업중으로 표기됩니다.)</label>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-floating">
                               <input type="time" class="form-control" placeholder="영업마감시간" name="shop_close_hour" value="00:00">
-                              <label style="color:#F0A8D0;">영업 마감 시간 (영업 마감시간을 입력하지 않을 경우 자정을 기준으로 영업이 종료됩니다.)</label>
+                              <label >영업 마감 시간 (미입력시 항상 영업중으로 표기됩니다.)</label>
                             </div>
                           </div>
                           <div class="col-md-12">
@@ -223,7 +236,7 @@
                                 <option class="form-control" value="Saturday">토요일</option>
                                 <option class="form-control" value="Sunday">일요일</option>
                               </select>
-                              <label style="color:#F0A8D0;">휴무일 </label>
+                              <label >휴무일 </label>
                             </div>
                           </div>
     
@@ -242,21 +255,21 @@
                                 <option class="form-control" value="desserts">카페·디저트</option>
                                 <option class="form-control" value="fast_food">패스트푸드</option>
                               </select>
-                              <label style="color:#F0A8D0;">음식 카테고리 </label>
+                              <label >음식 카테고리 </label>
                             </div>
                           </div>
     
                           <div class="col-md-12">
                             <div class="form-floating">
                               <input class="form-control" type="file" name="photo">
-                              <label style="color:#F0A8D0;">사진</label>
+                              <label >사진</label>
                             </div>
                           </div>
 
                           <div class="col-md-12">
                             <div class="form-floating" style="width: 100%;">
                                 <textarea class="form-control" placeholder="소개글" name="shop_content" id="shop_content" rows="7" style="height:200px; resize:none;"></textarea>
-                                <label style="color:#F0A8D0;">가게소개글 </label>
+                                <label >가게소개글 </label>
                             </div>
                           </div>
     

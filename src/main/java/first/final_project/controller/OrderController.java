@@ -1,6 +1,7 @@
 package first.final_project.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -258,6 +259,11 @@ public class OrderController {
 
 		int owner_id = user.getOwner_id();
 
+		// session에 shop_id 삽입
+		int shop_id = shop_Service.select_one_shop_id(owner_id);
+		session.setAttribute("shop_id", shop_id);
+
+		// 주문 대기 상태의 주문 정보를 가져옴
 		List<OrderVo> orders = orderService.getAcceptOrderList(owner_id, "주문 대기");
 
 		if (orders == null || orders.isEmpty()) {
@@ -283,30 +289,34 @@ public class OrderController {
 	// 주문 접수
 	@GetMapping("accept")
 	public String acceptOrderList(@RequestParam("orders_id") int orders_id) {
+		
 		// 주문 상태를 '배차 대기'로 변경
 		orderService.updateOrderStatus(orders_id, "배차 대기");
-		// WebSocket을 통해 라이더에게 메시지 전송
-		messagingTemplate.convertAndSend("/topic/orders", "주문 정보가 업데이트되었습니다.");
-		return "redirect:/order/accept.do";
-	}
 
-	// 조리시작
-	@GetMapping("startCooking")
-	public String startCooking(@RequestParam("orders_id") int orders_id) {
-		// 주문 상태를 '조리 중'로 변경
-		orderService.updateOrderStatus(orders_id, "조리 중");
-		// WebSocket을 통해 라이더에게 메시지 전송
-		messagingTemplate.convertAndSend("/topic/orders", "주문 정보가 업데이트되었습니다.");
+		// 서버 측: 주문이 들어왔을 때 전송할 메시지
+        Map<String, Object> message = new HashMap<>();
+        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+        message.put("orders_id", orders_id); // 주문 ID
+
+        messagingTemplate.convertAndSend("/topic/orders", message);
+
 		return "redirect:/order/accept.do";
 	}
 
 	// 픽업대기 (조리완료시)
 	@GetMapping("endCooking")
 	public String endCooking(@RequestParam("orders_id") int orders_id) {
+
 		// 주문 상태를 '픽업 대기'로 변경
 		orderService.updateOrderStatus(orders_id, "픽업 대기");
-		// WebSocket을 통해 라이더에게 메시지 전송
-		messagingTemplate.convertAndSend("/topic/orders", "주문 정보가 업데이트되었습니다.");
+
+        // 서버 측: 주문이 들어왔을 때 전송할 메시지
+        Map<String, Object> message = new HashMap<>();
+        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+        message.put("orders_id", orders_id); // 주문 ID
+
+        messagingTemplate.convertAndSend("/topic/orders", message);	
+
 		return "redirect:/order/accept.do";
 	}
 

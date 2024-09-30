@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
     <style>
       body {
         background-color: #f8f9fa;
-        font-family: "Arial", sans-serif;
+        /* font-family: "Arial", sans-serif; */
       }
       .menu-section {
         margin-bottom: 40px;

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -12,8 +14,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
+  <%@include file="../common.jsp" %>
+
   <div class="container">
     <input type="hidden" id="order_addr" value="${order_addr}"/>
     <input type="hidden" id="food_category" value="${food_category}"/>
@@ -28,7 +33,6 @@
                   <!-- 가게 로고 이미지 -->
                   <img class="image-z2" src="${pageContext.request.contextPath}/resources/images/${vo.shop_img}" alt="Store 1 Logo">
                   <!-- 이미지 위에 표시할 텍스트 -->
-                  <div class="overlay-text">Closed</div>
                 </div>
               </div>
               <div class="store-info">
@@ -37,7 +41,7 @@
                   <span class="rating">★ ${vo.shop_rating}</span> 
                   | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
                 </div>
-                <div>${vo.shop_min_price}원 이상 배달</div>
+                <div><fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/>원 이상 배달</div>
                 <div class="delivery-time"></div>
               </div>
             </div>
@@ -73,7 +77,7 @@
                   <span class="rating">★ ${vo.shop_rating}</span> 
                   | 리뷰 ${vo.reviews_count} | 사장님 댓글 ${vo.ceoreview_count}
                 </div>
-                <div>${vo.shop_min_price}원 이상 배달</div>
+                <div><fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/>원 이상 배달</div>
                 <div class="delivery-time"></div>
               </div>
             </div>

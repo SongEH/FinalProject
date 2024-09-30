@@ -29,7 +29,8 @@ public class OrderVo {
     private String shop_name; // 추가
     private String deliveries_method; // 추가
     private String shop_status; // 추가
-    private String shop_addr; // 추가
+    private String shop_addr1; // 추가
+    private String shop_addr2; // 추가
     private String member_nickname; // 추가
     private String addr_line1; // 추가
     private String addr_line2; // 추가

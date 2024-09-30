@@ -118,7 +118,13 @@ public class ReviewsController {
             ra.addAttribute("reason", "session_timeout");
             return "redirect:../member/login.do";
         }
-        int shop_id = order_mapper.getShopIdByOrderId(user.getOwner_id());
+        
+        Integer shop_id = order_mapper.getShopIdByOrderId(user.getOwner_id());
+        System.out.println(shop_id);
+        if (shop_id == null) {
+            ra.addAttribute("reason", "Register_shop");
+            return "redirect:../shop/insert_form.do";
+        }
         System.out.println("shop_id : " + shop_id);
         List<ReviewsVo> list = reviewsMapper.selectListByShopId(shop_id);
 

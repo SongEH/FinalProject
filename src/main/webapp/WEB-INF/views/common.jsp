@@ -114,6 +114,12 @@
     src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');
   }
 
+  html,
+  table,
+  td,
+  th,
+  button,
+  label,
   body,
   h1,
   h2,
@@ -121,9 +127,12 @@
   h4,
   h5,
   h6,
+  li,
   input,
   textarea,
-  select, a, p {
+  select,
+  a,
+  p {
     font-family: 'Noto Sans KR', sans-serif !important;
   }
 </style>

@@ -24,46 +24,50 @@ public class CommissionService {
 
     // 필터 없이 전체 라이더의 완료된 배달 목록을 페이징 처리하여 가져오는 메서드
     public Map<String, Object> getPagedDeliveries(int raiders_id, int page) {
-        // 한 페이지에 보여줄 배달 목록의 개수
+        // Number of delivery lists to display on one page
         int blockList = MyCommon.Commission.BLOCK_LIST;
-        // 한 화면에 보여줄 페이지 번호의 개수
+        // Number of page numbers to display on one screen
         int blockPage = MyCommon.Commission.BLOCK_PAGE;
-        // 해당 라이더의 완료된 배달 총 개수를 가져옴
+        // Get the total number of completed deliveries for that rider
         int rowTotal = commissionMapper.getTotalCount(raiders_id);
 
-        // 전체 페이지 수 계산
+        // Calculate total number of pages
         int totalPage = (rowTotal + blockList - 1) / blockList;
-        // 페이지 경계 처리 (1보다 작을 경우 1로, 전체 페이지 수보다 클 경우 마지막 페이지로 설정)
+        // Process page boundaries (set to 1 if less than 1, set to last page if greater
+        // than the total number of pages)
         if (page < 1)
             page = 1;
         if (page > totalPage)
             page = totalPage;
 
-        // 페이징 처리에 따른 시작점(offset) 계산
+        // Calculate starting point (offset) according to paging processing
         int offset = (page - 1) * blockList;
+        if (offset < 0) {
+            offset = 0; // Prevent negative offset
+        }
 
-        // 데이터베이스 쿼리에 사용할 파라미터를 Map에 담아 전달
+        // Parameters to be used in database queries are passed in a Map
         Map<String, Object> params = new HashMap<>();
-        params.put("raiders_id", raiders_id); // 라이더 ID
-        params.put("offset", offset); // 가져올 데이터의 시작 위치
-        params.put("blockList", blockList); // 한 페이지당 가져올 목록 개수
+        params.put("raiders_id", raiders_id); // rider ID
+        params.put("offset", offset); // Starting position of data to import
+        params.put("blockList", blockList); // Number of lists to retrieve per page
 
-        // 페이징 처리된 배달 목록을 가져옴
+        // Get the paged delivery list
         List<CommissionVo> deliveries = commissionMapper.selectPageList(params);
 
-        // 페이징 메뉴를 생성 (HTML 형태로 페이지 번호 목록을 생성)
+        // Create a paging menu (create a list of page numbers in HTML format)
         String pageMenu = Paging.getPaging("list.do?raiders_id=" + raiders_id, page, rowTotal, blockList, blockPage);
 
-        // 라이더의 총 수수료를 계산
+        // Calculate the rider's total fee
         double totalCommission = commissionMapper.selectTotalCommission(raiders_id);
 
-        // 결과를 Map에 담아 반환 (배달 목록, 총 수수료, 페이지 메뉴)
+        // Return results in Map (delivery list, total commission, page menu)
         Map<String, Object> result = new HashMap<>();
-        result.put("deliveries", deliveries); // 배달 목록
-        result.put("totalCommission", totalCommission); // 총 수수료
-        result.put("pageMenu", pageMenu); // 페이지 메뉴
+        result.put("deliveries", deliveries); // delivery list
+        result.put("totalCommission", totalCommission); // total fee
+        result.put("pageMenu", pageMenu); // page menu
 
-        return result; // JSP로 반환할 데이터
+        return result; // Data to return to JSP
     }
 
     // 필터(날짜 범위)가 적용된 데이터를 페이징 처리하여 가져오는 메서드

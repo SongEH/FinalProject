@@ -40,7 +40,13 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         필터 적용
       </button>
     </form>
-
+    <input
+      class="button_style"
+      type="button"
+      id="btn_popup_update"
+      value="마이페이지"
+      onclick="location.href ='../mypage.do'"
+    />
     <!-- 완료된 배달 정보 테이블 -->
     <table border="1" id="delivery-table" class="table table-striped">
       <thead>

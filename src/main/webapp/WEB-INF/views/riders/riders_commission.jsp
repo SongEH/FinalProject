@@ -11,7 +11,21 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    .button_style {
+      background-color: #f0a8d0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      padding: 10px 15px;
+    }
 
+    .button_style:hover {
+      background-color: #e090b5;
+    }
+  </style>
   <body>
     <!-- 날짜 필터링 폼 -->
     <form action="list.do" method="get" class="form-inline">
@@ -24,6 +38,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
           name="startDate"
           value="${param.startDate}"
           class="form-control"
+          style="width: 200px"
         />
       </div>
       <div class="form-group" style="margin-left: 10px">
@@ -34,19 +49,21 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
           name="endDate"
           value="${param.endDate}"
           class="form-control"
+          style="width: 200px"
         />
       </div>
-      <button type="submit" class="btn btn-primary" style="margin-left: 10px">
+      <button type="submit" class="button_style" style="margin-left: 10px">
         필터 적용
       </button>
+      <input
+        class="button_style"
+        type="button"
+        id="btn_popup_update"
+        value="마이페이지"
+        onclick="location.href ='../mypage.do'"
+      />
     </form>
-    <input
-      class="button_style"
-      type="button"
-      id="btn_popup_update"
-      value="마이페이지"
-      onclick="location.href ='../mypage.do'"
-    />
+
     <!-- 완료된 배달 정보 테이블 -->
     <table border="1" id="delivery-table" class="table table-striped">
       <thead>

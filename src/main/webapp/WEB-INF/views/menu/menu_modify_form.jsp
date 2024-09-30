@@ -169,7 +169,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>메뉴 수정</h1>
+      <h1>메뉴 수정</h1><br>
 
       <nav>
         <ol class="breadcrumb">

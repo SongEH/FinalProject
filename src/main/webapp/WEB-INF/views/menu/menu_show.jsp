@@ -49,7 +49,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>메뉴상세보기</h1>
+      <h1>메뉴상세보기</h1><br>
 
       <nav>
         <ol class="breadcrumb">

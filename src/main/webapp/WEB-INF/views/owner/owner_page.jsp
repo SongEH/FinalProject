@@ -24,7 +24,6 @@
 
         <style>
             body {
-                font-family: Arial, sans-serif;
                 background-color: #f4f4f4;
                 margin: 0;
                 padding: 0px;
@@ -37,12 +36,6 @@
                 padding: 20px;
                 border-radius: 8px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            h1 {
-                text-align: center;
-                color: #333;
-                margin-bottom: 20px;
             }
 
             .mb-4 {
@@ -89,7 +82,7 @@
         <main id="main" class="main">
             <div class="pagetitle">
 
-                <h1>사장정보</h1>
+                <h1>사장정보</h1><br>
 
                 <nav>
                     <ol class="breadcrumb">
@@ -122,7 +115,7 @@
                     <input class="form-control" type="text" value="${owner.owner_email}" readonly />
                 </div>
                 <div class="mb-4">
-                    <label for="phone">전화번호:</labllabele>
+                    <label for="phone">전화번호:</label>
                     <input class="form-control" type="text" value="${owner.owner_phone}" readonly />
                 </div>
                 <div class="mb-4">

@@ -14,10 +14,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      select * from menu where menu_id=#{ menu_id }
   </select>
 
-   <!-- 가게 번호에 따른 메뉴 리스트 호출  -->
-   <select id="selectMenuList" parameterType="int" resultType="menu">
+  <!-- 가게 번호에 따른 메뉴 리스트 호출  -->
+  <select id="selectMenuList" parameterType="int" resultType="menu">
     select * from menu where shop_id = ${shop_id}
-   </select>
+  </select>
 
   <!-- 등록 -->
   <insert id="insert" parameterType="menu">
@@ -75,20 +75,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT *
     FROM menu
     WHERE shop_id = #{shop_id}
-      AND (
     <choose>
       <when test="selectValue == 'rank_popularity'">
-                  menu_popularity = 1
+            AND menu_popularity = 1 AND menu_soldout != 1 AND menu_hidden != 1
       </when>
       <when test="selectValue == 'rank_soldout'">
-                  menu_soldout = 1
+            AND menu_soldout = 1 AND menu_popularity != 1 AND menu_hidden != 1
       </when>
       <when test="selectValue == 'rank_hidden'">
-                  menu_hidden = 1
+            AND menu_hidden = 1 AND menu_soldout != 1 AND menu_hidden != 1
       </when>
+      <when test="selectValue == 'rank_normal'"> 
+            AND menu_popularity != 1 AND menu_soldout != 1 AND menu_hidden != 1
+      </when>
+      <otherwise>
+        <!-- selectValue가 'rank'일 경우에는 아무 조건도 추가하지 않음 -->
+      </otherwise>
     </choose>
-      )
+    ORDER BY menu_id DESC
   </select>
+
 
 
 

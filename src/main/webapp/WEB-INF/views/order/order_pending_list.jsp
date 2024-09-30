@@ -225,7 +225,7 @@
   <main id="main" class="main">
     <div class="pagetitle">
 
-      <h1>주문하기</h1>
+      <h1>주문하기</h1><br>
 
       <nav>
         <ol class="breadcrumb">

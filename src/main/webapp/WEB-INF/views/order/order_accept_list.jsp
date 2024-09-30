@@ -101,10 +101,8 @@
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>주문 목록</h1>
+      <h1>주문 목록</h1><br>
       <div style="display: flex; justify-content: flex-end;">
-        <!-- <input type="button" class="button_style" style="margin-right: 10px;" value="영업시작" onclick=""/>
-                <input type="button" class="button_style" value="휴무일" onclick="setHoliday()" /> -->
       </div>
 
       <nav>

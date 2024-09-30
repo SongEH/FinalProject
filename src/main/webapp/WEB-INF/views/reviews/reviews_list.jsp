@@ -114,7 +114,8 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">리뷰내역</li>
+            <li class="breadcrumb-item">주문&리뷰</li>
+            <li class="breadcrumb-item active">리뷰내역</li>
           </ol>
         </nav>
       </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -224,12 +225,12 @@ pageEncoding="UTF-8"%>
   </script>
   <script>
     // menu 호출 
-    function get_menu(shop_id,status) {
+    function get_menu(shop_id,shop_status) {
       $.ajax({
         url: "../menu/listByShopId.do",
         data: {
           "shop_id": shop_id,
-          "status" : status,
+          "shop_status" : shop_status,
         },
         success: function (res_data) {
           // alert(res_data);
@@ -296,18 +297,25 @@ pageEncoding="UTF-8"%>
     }
     // location.href="../reviews/listByShopId.do?shop_id=" + shop_id;
     // }
-  </script>
-  <script>
-    
-    
-  </script>
+
+     // 천 단위 콤마 추가하는 함수
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // shop_min_price 값에 콤마 추가
+    let shop_min_price = document.getElementById("shop_min_price");
+    let price = shop_min_price.innerHTML; // ${vo.shop_min_price} 값 가져오기
+    shop_min_price.innerHTML = formatNumber(price);
+    </script>
+
 </head>
 
 <body>
   <form method="post">
     <!-- 표현은 하지않고 활용하기 위한 데이터  -->
     <input type="hidden" name="shop_id" value="${vo.shop_id}" />
-    <input type="hidden" name="status" value="${status}"/>
+    <input type="hidden" name="shop_status" value="${shop_status}"/>
 
     <div class="container-custom">
       <div class="shop">
@@ -332,10 +340,10 @@ pageEncoding="UTF-8"%>
                     </c:if>
                   </div>
                   <div class="details">
-                    <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div>
-                    <div>최소 주문 금액: <strong>${vo.shop_min_price}</strong></div>
+                    <!-- <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div> -->
+                    <div>최소 주문 금액: <strong id="shop_min_pricd"> <fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/> </strong></div>
                     <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
-                    <button class="btn btn-danger">4,000원 할인</button>
+                    <!-- <button class="btn btn-danger">4,000원 할인</button> -->
                   </div>
                 </span>
               </div>
@@ -347,7 +355,7 @@ pageEncoding="UTF-8"%>
               <div class="col-sm-4" style="padding:0px">
                 <div class="menu-tab border">
                   <input type="button" id="menuButton" value="메뉴 (${vo.menu_count})"
-                    onclick="get_menu('${vo.shop_id}', '${status}')">
+                    onclick="get_menu('${vo.shop_id}', '${shop_status}')">
                 </div>
               </div>
               <div class="col-sm-4" style="padding:0px">

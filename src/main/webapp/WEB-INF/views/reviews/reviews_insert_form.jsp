@@ -194,52 +194,169 @@ input[type="radio"]:checked ~ label {
 </script>
 </head>
 <body>
-    <div class="container" style="width: 1000px; margin-top: 100px">
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="orders_id" value="${vo.orders_id}"/>
-            <div id="reviews_info">
-                <div name="shop_name" class="reviews_feature shop_name"><strong>${vo.shop_name}</strong></div>
-                <hr />
-                <div name="menu_name" class="reviews_feature menu_name">${vo.orders_name}</div>
-                <hr />
-                <div class="reviews_feature" >이 가게를 추천하시겠어요?</div>
-                <fieldset class="reviews_feature"  >
-                    <span class="text-bold">별점을 선택해주세요</span>
-                    <input type="radio" name="reviews_rating" value="5" id="rate1" />
-                    <label for="rate1">★</label>
-                    <input type="radio" name="reviews_rating" value="4" id="rate2" />
-                    <label for="rate2">★</label>
-                    <input type="radio" name="reviews_rating" value="3" id="rate3" />
-                    <label for="rate3">★</label>
-                    <input type="radio" name="reviews_rating" value="2" id="rate4" />
-                    <label for="rate4">★</label>
-                    <input type="radio" name="reviews_rating" value="1" id="rate5" />
-                    <label for="rate5">★</label>
-                </fieldset>
-                <div class="reviews_feature" >상세한 리뷰를 남겨주세요</div>
-                <div class="reviews_feature">
-                    <textarea name="reviews_content" class="col-auto form-control" type="text"
-                    id="reviewContents" placeholder="리뷰를 남기면 다른 고객에게 큰 도움이 됩니다."></textarea>
-                </div>
-            </div>
-            <!-- File Input Image -->
-            <label for="file-input" class="camera-square reviews_feature">
-                <div class="camera-icon reviews_feature"></div>
-            </label>
-            
-            <!-- File Input -->
-            <input class="reviews_feature" name="photo" type="file" id="file-input"  multiple onchange="fileCount()"/>
-            <div style="text-align: center; margin-top: 10px;">이미지는 최대 2대까지만 등록 가능합니다.</div>
-            <div id="file-list" class="file_list"></div>
+  <%@ include file="../common.jsp" %> 
+  <%@ include file="../header.jsp" %>
+  <%@ include file="../sidebar.jsp" %>
 
-            <div class="reviews_feature" style="text-align: center;">
-                <span id="file-count"></span>
-                <div class="imgs_wrap" style="align-items: center;">
-                    <img id="img"/>
+  <main id="main" class="main">
+    <div class="container">
+      <div class="pagetitle">
+        <h1>Reviews</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Reviews</li>
+          </ol>
+        </nav>
+      </div>
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">리뷰 작성하기</h5>
+                <div class="row">
+                  <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="orders_id" value="${vo.orders_id}"/>
+
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <div name="shop_name" class="reviews_feature shop_name form-control"><strong>${vo.shop_name}</strong></div>
+                      <label >상호명</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <div name="menu_name" class="reviews_feature menu_name form-control">${vo.orders_name}</div>
+                      <label>주문한 메뉴</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12" style="margin-top: 30px;">
+                    <div class="form-floating form-control">
+                      <fieldset class="reviews_feature">
+                        <input type="radio" name="reviews_rating" value="5" id="rate1" />
+                        <label for="rate1">★</label>
+                        <input type="radio" name="reviews_rating" value="4" id="rate2" />
+                        <label for="rate2">★</label>
+                        <input type="radio" name="reviews_rating" value="3" id="rate3" />
+                        <label for="rate3">★</label>
+                        <input type="radio" name="reviews_rating" value="2" id="rate4" />
+                        <label for="rate4">★</label>
+                        <input type="radio" name="reviews_rating" value="1" id="rate5" />
+                        <label for="rate5">★</label>
+                      </fieldset>
+                      <label>별점을 선택해주세요.</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <div class="reviews_feature">
+                        <textarea name="reviews_content" class="col-auto form-control" type="text"
+                        id="reviewContents" placeholder="리뷰를 남기면 다른 고객에게 큰 도움이 됩니다."></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12" style="margin-top: 30px;">
+                    <div class="form-control"> <!-- Keep only form-control for a normal layout -->
+                        <label for="file-input" class="camera-square reviews_feature" style="cursor: pointer;">
+                            <div class="camera-icon reviews_feature"></div>
+                        </label>
+                        <input class="reviews_feature" name="photo" type="file" id="file-input" multiple onchange="fileCount()" />
+                        <div style="text-align: center; margin-top: 10px;">이미지는 최대 2대까지만 등록 가능합니다.</div>
+                        <div id="file-list" class="file_list"></div>
+                        <div class="reviews_feature" style="text-align: center;">
+                            <span id="file-count"></span>
+                            <div class="imgs_wrap" style="align-items: center;">
+                                <!-- Dynamically appended images go here -->
+                            </div>
+                            <input type="button" class="button_style" value="등록완료" onclick="reviews_insert(this.form);" />
+                        </div>
+                    </div>
+                  </div>
+                  </form>
                 </div>
-                <input type="button" value="등록완료" onclick="reviews_insert(this.form);" />
+              </div>
             </div>
-        </form>
+          </div>
+        </div>
+      </section>
     </div>
+  </main>
 </body>
 </html>
+                  <!-- <div class="container" style="width: 1000px; margin-top: 100px; float: left;">
+                      <form method="post" enctype="multipart/form-data">
+                          <input type="hidden" name="orders_id" value="${vo.orders_id}"/>
+                          <div id="reviews_info">
+                              <div name="shop_name" class="reviews_feature shop_name"><strong>${vo.shop_name}</strong></div>
+                              <hr />
+                              <div name="menu_name" class="reviews_feature menu_name">${vo.orders_name}</div>
+                              <hr />
+                              <div class="reviews_feature" >이 가게를 추천하시겠어요?</div>
+                              <fieldset class="reviews_feature"  >
+                                  <span class="text-bold">별점을 선택해주세요</span>
+                                  <input type="radio" name="reviews_rating" value="5" id="rate1" />
+                                  <label for="rate1">★</label>
+                                  <input type="radio" name="reviews_rating" value="4" id="rate2" />
+                                  <label for="rate2">★</label>
+                                  <input type="radio" name="reviews_rating" value="3" id="rate3" />
+                                  <label for="rate3">★</label>
+                                  <input type="radio" name="reviews_rating" value="2" id="rate4" />
+                                  <label for="rate4">★</label>
+                                  <input type="radio" name="reviews_rating" value="1" id="rate5" />
+                                  <label for="rate5">★</label>
+                              </fieldset>
+                              <div class="reviews_feature" >상세한 리뷰를 남겨주세요</div>
+                              <div class="reviews_feature">
+                                  <textarea name="reviews_content" class="col-auto form-control" type="text"
+                                  id="reviewContents" placeholder="리뷰를 남기면 다른 고객에게 큰 도움이 됩니다."></textarea>
+                              </div>
+                        </div>
+                        < File Input Image -->
+                        <!-- <label for="file-input" class="camera-square reviews_feature">
+                            <div class="camera-icon reviews_feature"></div>
+                        </label> -->
+            
+                    <!-- File Input -->
+                    <!-- <input class="reviews_feature" name="photo" type="file" id="file-input"  multiple onchange="fileCount()"/>
+                    <div style="text-align: center; margin-top: 10px;">이미지는 최대 2대까지만 등록 가능합니다.</div>
+                    <div id="file-list" class="file_list"></div>
+
+                    <div class="reviews_feature" style="text-align: center;">
+                        <span id="file-count"></span>
+                        <div class="imgs_wrap" style="align-items: center;">
+                            <img id="img"/>
+                        </div>
+                        <input type="button" value="등록완료" onclick="reviews_insert(this.form);" />
+                    </div>
+                </form>
+              </div> -->
+
+
+
+
+              <!-- <div class="col-md-12">
+                <div class="form-floating form-control"> -->
+                  <!-- file input image -->
+                  <!-- <label for="file-input" class="camera-square reviews_feature" style="cursor: pointer;">
+                    <div class="camera-icon reviews_feature"></div>
+                  </label> -->
+    
+                  <!-- File Input -->
+                  <!-- <input class="reviews_feature" name="photo" type="file" id="file-input"  multiple onchange="fileCount()"/>
+                  <div style="text-align: center; margin-top: 10px;">이미지는 최대 2대까지만 등록 가능합니다.</div>
+                  <div id="file-list" class="file_list"></div>
+
+                  <div class="reviews_feature" style="text-align: center;">
+                      <span id="file-count"></span>
+                      <div class="imgs_wrap" style="align-items: center;">
+                          <img id="img"/>
+                      </div>
+                    <input type="button" value="등록완료" onclick="reviews_insert(this.form);" />
+                  </div>
+                </div>
+              </div> -->

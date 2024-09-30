@@ -2,6 +2,7 @@
 pageEncoding="UTF-8" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -168,9 +169,9 @@ pageEncoding="UTF-8" %>
                   ${item.menu_name}
                 </h5>
                 <p style="margin: 5px 0;">${item.menu_content}</p>
-                <p style="margin: 5px 0;">${item.menu_price}원</p>
+                <p style="margin: 5px 0;"><fmt:formatNumber value="${item.menu_price}" pattern="#,###"/>원</p>
 
-                <c:if test="${status == '영업중'}">
+                <c:if test="${shop_status == '영업중'}">
                   <input class="button_style" type="button" value="장바구니담기"
                     onclick="menu_modal('${ item.menu_id }', '${ item.menu_soldout }');" style="margin-top:-130px; margin-left:350px;">
                 </c:if>

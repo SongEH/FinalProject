@@ -43,7 +43,7 @@ public interface OrderMapper {
     List<OrderVo> selectPageListByDate(Map<String, Object> params);
     ///////////////////// 페이징 END //////////////////////
 
-    int getShopIdByOrderId(int owner_id);
+    Integer getShopIdByOrderId(int owner_id);
 
     int setHasReview(int reviews_id);
 

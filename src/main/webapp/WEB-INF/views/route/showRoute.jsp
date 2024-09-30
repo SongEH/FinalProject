@@ -9,16 +9,34 @@
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e45d2ae43d58ec086189b83a1f462c21"
     ></script>
     <style>
+      body{
+        background-color: #ffebd4;
+      }
       #map {
         width: 100%;
         height: 400px;
+      }
+      .route_btn{
+        width: 150px;
+        height: 40px;
+        padding: 10px 15px;
+        background-color: #f0a8d0;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 11px;
+      }
+      .route_btn:hover{
+        background-color: #e090b5;
       }
     </style>
   </head>
   <body>
     <h2>배달 거리</h2>
     <div id="map"></div>
-    <button id="kakaoMapButton">카카오맵에서 경로 찾기</button>
+    <button id="kakaoMapButton" class="route_btn">카카오맵에서 경로 찾기</button>
 
     <script type="text/javascript">
       // JSP에서 넘겨받은 값들을 자바스크립트 변수로 안전하게 할당

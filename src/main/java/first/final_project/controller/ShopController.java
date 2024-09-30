@@ -326,7 +326,7 @@ public class ShopController {
     // 가게 하나 선택
     @RequestMapping("/shop/select_one.do")
     public String shop_selectOne(int shop_id,
-    @RequestParam(name="status", required = false)String status,
+    @RequestParam(name="shop_status", required = false)String shop_status,
     Model model) {
         System.out.println("shop_id : " + shop_id);
         
@@ -348,7 +348,7 @@ public class ShopController {
 
           
             model.addAttribute("vo", vo);
-            model.addAttribute("status", status);
+            model.addAttribute("shop_status", shop_status);
           
             // if (vo != null) {
             //     vo.setMenu_count(counts != null ? counts.get("menu_count") : 0);
@@ -453,17 +453,6 @@ public class ShopController {
         System.out.println("변경할 이미지가 없습니다. ");
         try {
             System.out.println("업데이트전");
-            System.out.println(vo.getShop_name());
-            System.out.println(vo.getShop_content());
-            System.out.println(vo.getShop_addr1());
-            System.out.println(vo.getShop_addr2());
-            System.out.println(vo.getShop_call());
-            System.out.println(vo.getShop_min_price());
-            System.out.println(vo.getShop_open_hour());
-            System.out.println(vo.getShop_close_hour());
-            System.out.println(vo.getShop_close_day());
-            System.out.println(vo.getFood_category());
-            System.out.println(vo.getShop_img());
 
             if(vo.getShop_img()==null){
                 vo.setShop_img(filename);
@@ -471,7 +460,9 @@ public class ShopController {
             }
             
             int res = shop_Service.update(vo);
+            res = shop_Service.updateStatus();
             System.out.println("가게수정 완료");
+            ra.addAttribute("reason", "shop_modify_success");
             return "redirect:modify_form.do";
             // shop_id = vo.getShop_id();
         } catch (Exception e) {

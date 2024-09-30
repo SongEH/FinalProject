@@ -80,10 +80,11 @@ Main : 프로덕션 코드. 항상 Main을 기준으로 branch 생성<br>
 ## 사용 방법
 1. 파일을 다운 받는다.<br>
 2. VSCode로 실행을 한다.<br>
-3. 카카오 개발자 사이트(https://developers.kakao.com/)에서 api를 발급 받는다.<br>
-4. 카카오 맵 api(KakaoMapService.java) 키를 삽입한다.<br>
-5. 아임포트 사이트(https://portone.io/korea/ko)에서 api를 발급 받는다.<br>
-6. application.property 에서 imp.api.key랑 imp.api.secretkey를 작성한다.<br>
+3. MySQL을 실행하여 테이블을 등록한다.<br>
+4. 카카오 개발자 사이트(https://developers.kakao.com/)에서 api를 발급 받는다.<br>
+5. 카카오 맵 api(KakaoMapService.java) 키를 삽입한다.<br>
+6. 아임포트 사이트(https://portone.io/korea/ko)에서 api를 발급 받는다.<br>
+7. application.property 에서 imp.api.key랑 imp.api.secretkey를 작성한다.<br>
 <br>
 <br>
 <br>

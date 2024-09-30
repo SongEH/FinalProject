@@ -71,7 +71,7 @@ https://www.erdcloud.com/d/cd5tCqegTyFd9srKc
 ## Git 브랜치 전략
 ![269341571-ceeda2bb-cc43-441d-aadb-a373d2e53c33](https://github.com/user-attachments/assets/5eb190ce-eff2-47df-94ad-1a056969cd55)
 
-저장소를 효과적으로 활용하기 위해 곤모슬팀은 Github-Flow 전략 브랜치를 생성한다.<br>
+저장소를 효과적으로 활용하기 위해 Github-Flow 전략 브랜치를 생성한다.<br>
 Main : 프로덕션 코드. 항상 Main을 기준으로 branch 생성<br>
 <br>
 <br>

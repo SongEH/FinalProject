@@ -10,9 +10,9 @@ import first.final_project.vo.CouponVo;
 @Mapper
 public interface CouponMapper {
 
-        void insertCoupon(CouponVo coupon);
+        void insertCoupon(CouponVo coupon); // Insert coupon
 
-        List<CouponVo> getCouponsByMemberId(@Param("member_id") int member_id);
+        List<CouponVo> getCouponsByMemberId(@Param("member_id") int member_id); // Retrieve coupons by member ID
 
-        List<CouponVo> getAllIssuedCoupons();
+        List<CouponVo> getAllIssuedCoupons(); // Retrieve all issued coupons
 }

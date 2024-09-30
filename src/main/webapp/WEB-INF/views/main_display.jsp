@@ -23,10 +23,10 @@ pageEncoding="UTF-8"%>
 
     <style>
       body {
-        font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
         background-color: #f7f7f7;
+        font-family: 'Noto Sans KR', sans-serif !important;
       }
       /* .search-bar {
         display: flex;
@@ -160,6 +160,7 @@ pageEncoding="UTF-8"%>
 </script>
 </head>
 <body>
+  
   <%@ include file="header.jsp" %>
   <%@ include file="searchbar.jsp" %>
   <div id="main_display" style="margin-top: 60px;">

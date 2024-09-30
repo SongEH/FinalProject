@@ -70,14 +70,27 @@ public class ShopServiceImpl implements ShopService {
         return shopMapper.selectMenuAndReviewsCount(shop_id);
     }
 
+    // 기존 가게 등록 여부 확인 
     @Override
     public Boolean hasShop(int owner_id) {
         return shopMapper.hasShop(owner_id);
     }
 
+    // 가게 리스트 필터링 
     @Override
     public List<ShopVo> selectListValue(Map selectMap) {
         return shopMapper.selectListValue(selectMap);
     }
 
+    // @Override 트라이중 
+    // public int setHoliday(int shop_id) {
+    //     return shopMapper.setHoliday(shop_id);
+    // }
+
+    @Override
+    public int updateStatus() {
+        return shopMapper.updateStatus();
+    }
+
+    
 }

@@ -118,8 +118,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">공지&문의</li>
+          <li class="breadcrumb-item active">문의사항</li>
         </ol>
       </nav>
 
@@ -139,6 +139,11 @@
                 <div class="inquiries-card">
                     <div class="inquiries-title">
                         <a href="${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id=${inquiries.o_inquiries_id}">${inquiries.o_inquiries_title}</a>
+                        <c:if test="${inquiries.o_answer_content == null}">
+                            <span class="badge rounded-pill bg-warning">
+                            ❗️미답변 
+                            </span>
+                        </c:if>
                     </div>
                     <div class="inquiries-date">
                         작성일자: ${inquiries.o_inquiries_cdate}

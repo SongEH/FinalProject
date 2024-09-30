@@ -6,13 +6,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="first.final_project.dao.MemberInquiriesMapper">
 
     <select id="selectListByType" parameterType="int" resultType="member_inquiries">
-        select * from member_inquiries
+        <!-- select * from member_inquiries
             <trim prefix="where">
                 <if test="m_inquiries_type !='전체'">
                     m_inquiries_type=#{m_inquiries_type}
                 </if>
             </trim>
-        order by m_inquiries_id desc
+        order by m_inquiries_id desc -->
+
+        <!-- SELECT * 
+        FROM member_inquiries m 
+        LEFT JOIN member_answer ma 
+        ON m.m_inquiries_id = ma.m_inquiries_id 
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="inquiries_type != '전체'">
+                AND m.m_inquiries_type = #{inquiries_type}
+            </if>
+        </trim>
+        ORDER BY m.m_inquiries_id DESC; -->
+
+        SELECT m.*, ma.*, 
+        (SELECT count(*) FROM member_inquiries m
+        left join member_answer ma on m.m_inquiries_id = ma.m_inquiries_id
+        where ma.m_answer_content is null) as null_answer_count
+        FROM member_inquiries m
+        LEFT JOIN member_answer ma
+        ON m.m_inquiries_id = ma.m_inquiries_id
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="inquiries_type != '전체'">
+                AND m.m_inquiries_type = #{inquiries_type}
+            </if>
+        </trim>
+        ORDER BY m.m_inquiries_id DESC;
+        
     </select>
 
     <select id="selectFromIdx" parameterType="int" resultType="member_inquiries">
@@ -36,5 +62,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from member_inquiries where m_inquiries_id=#{m_inquiries_id}
     </delete>
 </mapper>
-
-

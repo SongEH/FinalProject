@@ -115,13 +115,13 @@
     <main id="main" class="main">
       <div class="pagetitle">
 
-        <h1>회원정보 수정</h1>
+        <h1>사장정보 수정</h1>
 
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">사장관리</li>
+            <li class="breadcrumb-item active">사장정보 수정</li>
           </ol>
         </nav>
 

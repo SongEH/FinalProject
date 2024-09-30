@@ -157,7 +157,7 @@
         <c:if test="${item.shop_id != currentShopId}">
           <!-- 이전 가게의 주문 버튼과 총 가격 표시 -->
           <c:if test="${currentShopId != '' && shop_status=='영업중'}">
-            <p>총 가격: ${currentShopTotal}원
+            <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
               <button class="order-button button_style"
                 onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
             </p>
@@ -180,7 +180,7 @@
               <button class="button_style small_btn" onclick="updateQuantity('${item.carts_id}', 'plus')">+</button>
             </div>
           </td>
-          <td style="padding: 10px; text-align: right;">${item.carts_quantity * item.menu_price}원</td>
+          <td style="padding: 10px; text-align: right;"><fmt:formatNumber value="${item.carts_quantity * item.menu_price}" pattern="#,###"/>원</td>
           <td style="padding: 10px; text-align: center;">
             <button class="button_style small_btn" onclick="deleteItem('${item.carts_id}')">x</button>
           </td>
@@ -196,7 +196,7 @@
   
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
   <c:if test="${currentShopId != '' && shop_status=='영업중'}">
-    <p>총 가격: ${currentShopTotal}원
+    <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
       <button class="order-button button_style"
         onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
     </p>

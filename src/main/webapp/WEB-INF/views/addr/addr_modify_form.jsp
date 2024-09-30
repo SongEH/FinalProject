@@ -163,8 +163,8 @@
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">회원관리</li>
+            <li class="breadcrumb-item active">주소목록</li>
           </ol>
         </nav>
 
@@ -180,7 +180,15 @@
             <input type="hidden" name="addr_id" value="${addr.addr_id}" />
 
             <div class="mb-4">
-              <label for="zipcode">우편번호</label>
+              <label for="zipcode">우편번호
+                <input
+                class="button_style"
+                type="button"
+                value="주소검색"
+                class="form-control"
+                onclick="execDaumPostcode()"
+                />
+              </label>
               <input
                 class="form-control"
                 type="text"
@@ -188,12 +196,7 @@
                 id="addr_zipcode"
                 value="${addr.addr_zipcode}"
               />
-              <input
-                type="button"
-                value="주소검색"
-                class="form-control"
-                onclick="execDaumPostcode()"
-              />
+              
             </div>
             <div class="mb-4">
               <label for="line1">기본주소</label>
@@ -242,7 +245,6 @@
                 value="이전으로"
                 onclick="location.href='/addr/addr_list.do'"
               />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <input class="button_style" type="button" value="주소수정" onclick="send(this.form);" />
             </div>
           </form>

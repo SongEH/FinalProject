@@ -8,30 +8,74 @@
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-  <style type="text/css">
-    #box {
-      width: 600px;
-      margin: auto;
-      margin-top: 50px;
+  <style>
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    textarea {
+    h5,
+    h6 {
+      margin-bottom: 10px;
+    }
+
+    table {
       width: 100%;
-      resize: none;
+      border-collapse: collapse;
+      margin-top: 10px;
     }
 
-    input[type='button'] {
-      width: 100px;
+    td {
+      padding: 10px;
+      border: none;
+      text-align: left;
+      font-weight: bold;
+
     }
 
-    /* img {
-      width: 200px;
-    } */
+    td:nth-child(2),
+    td:nth-child(4),
+    td:nth-child(5) {
+      text-align: left;
+      font-weight: normal;
+    }
+
+    .button_style {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button_style:hover {
+      background-color: #0056b3;
+    }
+
+    #menuList table {
+      border-collapse: collapse;
+      /* 테이블 경계 제거 */
+    }
+
+    #menuList td {
+      padding: 10px;
+      text-align: left;
+      font-weight: normal;
+    }
+
+    #menuList img {
+      width: 70px;
+      border-radius: 10px;
+    }
   </style>
 
 
+
   <script type="text/javascript">
-    
     function delete_order(orders_id) {
 
       if (confirm("정말 삭제하시겠습니까?") == false) return;
@@ -68,13 +112,14 @@
 
     <div class="pagetitle">
 
-      <h1>Form Layouts</h1>
-
+      <h1>주문상세보기</h1>
+      <br>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">주문&리뷰</li>
+          <li class="breadcrumb-item">주문내역</li>
+          <li class="breadcrumb-item active">상세보기</li>
         </ol>
       </nav>
 
@@ -85,67 +130,99 @@
         <div class="col-lg-10">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">주문 상세보기</h5>
-              <p>${ vo.shop_name }</p>
-              <p>${ vo.orders_name }</p>
-              <p>주문일시
-                <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
-              </p>
-              <p>주문번호 ${vo.orders_merchant_uid}</p>
+              <h5 class="card-title" style="font-weight: bold; ">주문 상세보기</h5>
+              <hr>
+              <table>
+                <tr>
+                  <td>가게명</td>
+                  <td>${vo.shop_name}</td>
+                </tr>
+                <tr>
+                  <td>주문명</td>
+                  <td>${vo.orders_name}</td>
+                </tr>
+                <tr>
+                  <td>주문일시</td>
+                  <td>
+                    <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>주문번호</td>
+                  <td>${vo.orders_merchant_uid}</td>
+                </tr>
+              </table>
+              <hr>
+              <table>
+                <tr>
+                  <td>주문금액</td>
+                  <td>${vo.orders_price}원</td>
+                </tr>
+                <tr>
+                  <td>쿠폰</td>
+                  <td>(쿠폰 구현되면 업데이트)</td>
+                </tr>
+                <tr>
+                  <td>총 결제 금액</td>
+                  <td>${vo.orders_price}원</td>
+                </tr>
+                <tr>
+                  <td>결제방법</td>
+                  <td>${vo.orders_payment}</td>
+                </tr>
+              </table>
+              <hr>
+              <table>
+                <tr>
+                  <td>주소</td>
+                  <td>${vo.addr_line1} ${vo.addr_line2}</td>
+                </tr>
+                <tr>
+                  <td>회원 전화번호</td>
+                  <td>${vo.member_phone}</td>
+                </tr>
+                <tr>
+                  <td>가게 요청사항</td>
+                  <td>${vo.orders_srequest}</td>
+                </tr>
+                <tr>
+                  <td>배달 요청사항</td>
+                  <td>${vo.orders_drequest}</td>
+                </tr>
+              </table>
 
               <hr>
-              메뉴 목록
 
-              <table>
-                <c:forEach var="vo" items="${list}">
+              <h5>메뉴 목록</h5>
+              <table id="menuList">
+                <tr>
+                  <td>이미지</td>
+                  <td>이름</td>
+                  <td>개수</td>
+                  <td>가격</td>
+                </tr>
+                <c:forEach var="menu" items="${list}">
 
-                  <!-- 상점 항목 정보를 출력 -->
                   <tr>
-                    <td class="cart_menuimg">
-                      <div>
-                        <img src="../resources/images/${vo.menu_img}" class="img-fluid rounded" alt="..." width="150px">
-                      </div>
+                    <td>
+                      <img src="../resources/images/${menu.menu_img}" alt="..." width="100px">
                     </td>
-                    <td class="cart_menuname">${vo.menu_name}</td>
-
-                    <td class="cart_quantity">
-                      <input type="number" class="form-control quantity-input" id="quantity_${vo.carts_id}"
-                        value="${vo.carts_quantity}" min="1" max="50" disabled>
+                    <td>${menu.menu_name}</td>
+                    <td>${menu.carts_quantity}개
                     </td>
-
-                    <td class="cart_price">${vo.menu_price}</td>
-                    <td class="cart_total_price">
-                      ${vo.menu_price * vo.carts_quantity}
-                    </td>
-
-
+                    <td>${menu.menu_price * menu.carts_quantity}원</td>
                   </tr>
                 </c:forEach>
               </table>
 
-              <hr>
-              <p>주문금액 (쿠폰 구현되면 업데이트)</p>
-              <p>쿠폰 (쿠폰 구현되면 업데이트) </p>
-              <p>총 결제 금액 ${ vo.orders_price }</p>
-              <p>결제방법 ${ vo.orders_payment }</p>
-
-              <hr>
-              <p>주소 ${ vo.addr_line1 } ${ vo.addr_line2 }</p>
-              <p>회원 전화번호 ${vo.member_phone} </p>
-              <p>가게 요청사항 ${ vo.orders_srequest }</p>
-              <p>배달 요청사항 ${ vo.orders_drequest }</p>
-
-              <input class="button_style" type="button" value="주문내역삭제"
-                    onclick="delete_order('${vo.orders_id}');">
-            
-              <!-- <button>같은 메뉴 담기</button> -->
+              <input class="button_style" type="button" value="주문내역삭제" onclick="delete_order('${vo.orders_id}');">
             </div>
           </div>
         </div>
       </div>
     </section>
 
-  </main><!-- End #main -->
+
 </body>
 
 </html>

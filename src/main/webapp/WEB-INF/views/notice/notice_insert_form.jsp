@@ -50,7 +50,7 @@ prefix="c" %>
         .form-group textarea {
             resize: vertical;
         }
-        .form-group button {
+        /* .form-group button {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
@@ -60,7 +60,7 @@ prefix="c" %>
         }
         .form-group button:hover {
             background-color: #0056b3;
-        }
+        } */
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
             word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
@@ -95,9 +95,9 @@ prefix="c" %>
 
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">공지&문의</li>
+            <li class="breadcrumb-item active">공지사항</li>
         </ol>
       </nav>
 
@@ -129,7 +129,7 @@ prefix="c" %>
                     등록
                 </button>
                 <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/notice/list.do'">
-                    등록
+                    취소
                 </button>
             </div>
         </form>

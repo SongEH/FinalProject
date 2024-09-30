@@ -139,6 +139,8 @@
                 }
             });
         }
+
+
     </script>
 </head>
 <body>
@@ -157,9 +159,9 @@
 
         <nav>
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">공지&문의</li>
+                <li class="breadcrumb-item active">문의사항</li>
             </ol>
         </nav>
 
@@ -186,10 +188,10 @@
                     작성자: ${vo.memberAccountId}
                 </div>    
 
-                <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=전체" class="back-button">목록으로</a>
+                <button class="back-button button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=전체'">목록으로</button>
                 <c:if test="${userType == 'MEMBER' && vo.memberAccountId == currentUser }">
-                    <button type="button" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/modify_form.do?m_inquiries_id=${vo.m_inquiries_id}&m_inquiries_type=${vo.m_inquiries_type}'">수정</button>
-                    <button type="button" onclick="del('${vo.m_inquiries_id}');">삭제</button>
+                    <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/modify_form.do?m_inquiries_id=${vo.m_inquiries_id}&m_inquiries_type=${vo.m_inquiries_type}'">수정</button>
+                    <button class="button_style" onclick="del('${vo.m_inquiries_id}');">삭제</button>
                 </c:if>
                 
             </div>    
@@ -198,7 +200,7 @@
 
             <c:if test="${sessionScope.userType == 'ADMIN'}">
                 <div class="admin-actions">
-                    <a href="${pageContext.request.contextPath}/member_inquiries/answer_insert_form.do?m_inquiries_id=${param.m_inquiries_id}">답변 등록</a>
+                    <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/answer_insert_form.do?m_inquiries_id=${param.m_inquiries_id}'">답변 등록</button>
                 </div>
             </c:if>
 
@@ -218,8 +220,8 @@
                 
                     <c:if test="${sessionScope.userType == 'ADMIN'}">
                         <div class="admin-actions">
-                            <button type="button" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/answer_modify_form.do?m_answer_id=${answer.m_answer_id}&m_inquiries_id=${param.m_inquiries_id}'">수정</button>
-                            <button type="button" onclick="del('${answer.m_answer_id}');">삭제</button>
+                            <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/answer_modify_form.do?m_answer_id=${answer.m_answer_id}&m_inquiries_id=${param.m_inquiries_id}'">수정</button>
+                            <button type="button" class="button_style" onclick="del('${answer.m_answer_id}');">삭제</button>
                         </div>
                     </c:if>
                 </c:forEach>

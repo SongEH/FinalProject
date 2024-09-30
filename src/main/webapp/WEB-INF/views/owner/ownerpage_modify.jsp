@@ -115,23 +115,22 @@
     <main id="main" class="main">
       <div class="pagetitle">
 
-        <h1>회원정보 수정</h1>
+        <h1>사장정보 수정</h1>
 
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">사장관리</li>
+            <li class="breadcrumb-item active">사장정보 수정</li>
           </ol>
         </nav>
 
       </div><!-- End Page Title -->
 
-        <form
-        action="${pageContext.request.contextPath}/owner/ownerpage/modify.do"
-        method="post">
+        
         <input type="hidden" name="owner_id" value="${owner.owner_id}" />
         <div class="container mx-auto p-6">
+          <form action="${pageContext.request.contextPath}/owner/ownerpage/modify.do" method="post">
           <div class="mb-4">
             <label for="name">이름:</label>
             <input
@@ -200,9 +199,9 @@
             />
           </div>
           <div class="flex justify-end">
-            <input type="button" value="수정하기" onclick="send(this.form);" />
+            <input type="button" class="button_style" value="수정하기" onclick="send(this.form);" />
             <input
-              type="button"
+              type="button" class="button_style"
               value="돌아가기"
               onclick="location.href='/owner/ownerpage.do'"
             />

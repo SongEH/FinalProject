@@ -25,7 +25,44 @@ pageEncoding="UTF-8" %>
         cursor: default; /* Show a default cursor instead of a pointer */
     }
   </style>
+  <script>
+    // 문의사항 답변 상황 확인 
+    $(document).ready(function() {
+    // Only execute if ajaxExecuted is false and status is 0
+    let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
+    let status = 0; // Example status
+    if (!ajaxExecuted && status === 0) {
+        $.ajax({
+            url: "../member_inquiries/answer_count.do", // Adjust the URL if needed
+            method: "GET",
+            data: { m_inquiries_type: "전체" }, // Pass any parameters if necessary
+            success: function(response) {
+                // response now contains the integer value of null_answer_count directly
+                // alert("Null Answer Count: " + response.null_answer_count);
+                // alert("owner_null_answer_count:" + response.owner_null_answer_count)
 
+                // Update the HTML to show the count next to the link
+                if (response.null_answer_count !== null && response.null_answer_count > 0 ) {
+                    $('#null_answer_count').text(response.null_answer_count); // Set the count in the span
+                } 
+
+                if (response.owner_null_answer_count !== null && response.owner_null_answer_count > 0 ) {
+                    $('#owner_null_answer_count').text(response.owner_null_answer_count); // Set the count in the span
+                } 
+
+                // Set ajaxExecuted to true to prevent future executions
+            },
+            error: function(err) {
+                alert(err.responseText);
+            }
+        });
+    }
+});
+
+
+
+
+  </script>
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <c:choose>
@@ -35,7 +72,7 @@ pageEncoding="UTF-8" %>
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#member-management" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>회원페이지</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-person"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="member-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -45,7 +82,7 @@ pageEncoding="UTF-8" %>
                 </li>
                 <li>
                   <a href="/addr/addr_list.do">
-                    <i class="bi bi-circle"></i><span>주소정보</span>
+                    <i class="bi bi-circle"></i><span>주소목록</span>
                   </a>
                 </li>
               </ul>
@@ -95,7 +132,7 @@ pageEncoding="UTF-8" %>
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
               <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>관리자페이지</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-person"></i><span>관리자페이지</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -106,6 +143,11 @@ pageEncoding="UTF-8" %>
                 <li>
                   <a href="/admin/owner_list.do">
                     <i class="bi bi-circle"></i><span>사장리스트</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/admin/shop_list.do">
+                    <i class="bi bi-circle"></i><span>가게리스트</span>
                   </a>
                 </li>
                 <li>
@@ -126,8 +168,8 @@ pageEncoding="UTF-8" %>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
+              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" onclick="null_count();">
+                <i class="bi bi-layout-text-window-reverse" ></i><span >공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -138,11 +180,14 @@ pageEncoding="UTF-8" %>
                 <li>
                   <a href="/member_inquiries/list.do">
                     <i class="bi bi-circle"></i><span>회원 문의사항</span>
+                    <span id="null_answer_count" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
                   </a>
                 </li>
                 <li>
                   <a href="/owner_inquiries/list.do">
                     <i class="bi bi-circle"></i><span>사장 문의사항</span>
+                    <span id="owner_null_answer_count" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
+
                   </a>
                 </li>
               </ul>
@@ -153,12 +198,12 @@ pageEncoding="UTF-8" %>
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#owner-management" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-person"></i><span>사장관리</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="owner-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                   <a href="/owner/ownerpage.do">
-                    <i class="bi bi-circle"></i><span>회원정보</span>
+                    <i class="bi bi-circle"></i><span>사장정보</span>
                   </a>
                 </li>
               </ul>

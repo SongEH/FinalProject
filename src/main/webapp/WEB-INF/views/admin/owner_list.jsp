@@ -93,8 +93,8 @@
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">관리자페이지</li>
+            <li class="breadcrumb-item active">사장리스트</li>
           </ol>
         </nav>
 
@@ -120,7 +120,7 @@
           <td>${owner.owner_license}</td>
           <td>${owner.approval_status}</td>
           <td>
-            <a href="delete_owner.do?owner_id=${owner.owner_id}">Delete</a>
+            <button class="button_style" onclick="locaion.href='delete_owner.do?owner_id=${owner.owner_id}'">Delete</button>
           </td>
         </tr>
       </c:forEach>

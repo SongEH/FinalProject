@@ -97,8 +97,8 @@ prefix="c" %>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">공지&문의</li>
+            <li class="breadcrumb-item active">공지사항</li>
           </ol>
         </nav>
       </div>
@@ -112,22 +112,22 @@ prefix="c" %>
           <div class="notice-author">작성자: ${vo.adminAccountId}</div>
         </div>
 
-        <a
-          href="${pageContext.request.contextPath}/notice/list.do?notice_type=전체"
+        <button class="button_style"
+          onclick="location.href='${pageContext.request.contextPath}/notice/list.do?notice_type=전체'"
           class="back-button"
-          >목록으로</a
+          >목록으로</button
         >
         <c:if test="${userType == 'ADMIN'}">
           <button
             type="button"
-            class="btn btn-primary"
+            class="button_style"
             onclick="location.href='${pageContext.request.contextPath}/notice/modify_form.do?notice_id=${vo.notice_id}&notice_type=${vo.notice_type}'"
           >
             수정
           </button>
           <button
             type="button"
-            class="btn btn-primary"
+            class="button_style"
             onclick="del('${vo.notice_id}');"
           >
             삭제

@@ -42,6 +42,20 @@
             display: flex;
             gap: 10px;
         }
+        .button_style {
+            background-color: #f0a8d0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 10px 15px;
+        } 
+
+        .button_style:hover {
+            background-color: #e090b5;
+        }
+</style>    
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -93,6 +107,21 @@
         // 특정 주기 마다 주문 내역을 가져옵니다.
         setInterval(fetchOrders, 5000); // 10000ms = 10초
       </script> -->
+      <!-- <script>
+        function setHoliday(){
+            
+            $.ajax({
+            url     :     "../shop/set_holiday.do",
+            data    :      {},
+            success :   function(res_data){
+                        alert("금일 휴무로 설정 완료");
+            },
+            error   :   function(err){
+            alert(error.responseText)
+            }
+            });
+        }
+      </script> -->
 </head>
 
 <body>
@@ -106,6 +135,11 @@
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>주문 목록</h1>
+            <div style="display: flex; justify-content: flex-end;">
+                <!-- <input type="button" class="button_style" style="margin-right: 10px;" value="영업시작" onclick=""/>
+                <input type="button" class="button_style" value="휴무일" onclick="setHoliday()" /> -->
+            </div>
+
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>

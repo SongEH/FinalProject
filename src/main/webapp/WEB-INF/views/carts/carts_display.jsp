@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!DOCTYPE html>
@@ -155,8 +156,8 @@
       <c:forEach var="item" items="${list}">
         <c:if test="${item.shop_id != currentShopId}">
           <!-- 이전 가게의 주문 버튼과 총 가격 표시 -->
-          <c:if test="${currentShopId != '' && status=='영업중'}">
-            <p>총 가격: ${currentShopTotal}원
+          <c:if test="${currentShopId != '' && shop_status=='영업중'}">
+            <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
               <button class="order-button button_style"
                 onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
             </p>
@@ -179,7 +180,7 @@
               <button class="button_style small_btn" onclick="updateQuantity('${item.carts_id}', 'plus')">+</button>
             </div>
           </td>
-          <td style="padding: 10px; text-align: right;">${item.carts_quantity * item.menu_price}원</td>
+          <td style="padding: 10px; text-align: right;"><fmt:formatNumber value="${item.carts_quantity * item.menu_price}" pattern="#,###"/>원</td>
           <td style="padding: 10px; text-align: center;">
             <button class="button_style small_btn" onclick="deleteItem('${item.carts_id}')">x</button>
           </td>
@@ -194,8 +195,8 @@
   </table>
   
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
-  <c:if test="${currentShopId != '' && status=='영업중'}">
-    <p>총 가격: ${currentShopTotal}원
+  <c:if test="${currentShopId != '' && shop_status=='영업중'}">
+    <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
       <button class="order-button button_style"
         onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
     </p>
@@ -203,7 +204,7 @@
   
   <!-- 전체 가격 출력 -->
   <div class="total-price">
-    장바구니 총 가격: ${totalPrice}원
+    장바구니 총 가격: <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원
   </div>
   
 

@@ -15,4 +15,7 @@ public class MemberInquiriesVo {
     private String m_inquiries_type;
     private int member_id;
     private String memberAccountId;
+
+    private String m_answer_content;
+    private int null_answer_count;
 }

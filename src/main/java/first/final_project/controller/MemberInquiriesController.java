@@ -3,22 +3,31 @@ package first.final_project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import first.final_project.dao.AdminMapper;
 import first.final_project.dao.MemberAnswerMapper;
 import first.final_project.dao.MemberInquiriesMapper;
 import first.final_project.dao.MemberMapper;
+import first.final_project.dao.OwnerInquiriesMapper;
 import first.final_project.vo.AdminVo;
 import first.final_project.vo.MemberAnswerVo;
 import first.final_project.vo.MemberInquiriesVo;
 import first.final_project.vo.MemberVo;
+import first.final_project.vo.OwnerInquiriesVo;
+import first.final_project.vo.CountVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/member_inquiries/")
@@ -41,6 +50,9 @@ public class MemberInquiriesController {
 
     @Autowired
     AdminMapper admin_mapper;
+
+    @Autowired
+    OwnerInquiriesMapper owner_inquiries_mapper;
 
     @RequestMapping("list.do")
     public String list(@RequestParam(value = "m_inquiries_type", defaultValue = "전체") String m_inquiries_type,
@@ -269,4 +281,30 @@ public class MemberInquiriesController {
         member_answer_mapper.delete(m_answer_id);
         return "redirect:/member_inquiries/detail.do?m_inquiries_id=" + m_inquiries_id;
     }
+
+    @RequestMapping("answer_count.do")
+    @ResponseBody
+    public CountVo answer_count(
+            @RequestParam(value = "m_inquiries_type", defaultValue = "전체") String m_inquiries_type) {
+        
+        List<MemberInquiriesVo> list = member_inquiries_mapper.selectListByType(m_inquiries_type);
+        int null_answer_count = 0; // Initialize the count
+
+        for (int i=list.size()-1; i < list.size(); i++) {
+            MemberInquiriesVo vo = list.get(i);
+            null_answer_count = vo.getNull_answer_count(); // Get the value (last value in loop)
+        }
+
+        List<OwnerInquiriesVo> owner_list = owner_inquiries_mapper.selectList();
+        int owner_null_answer_count = 0;
+        for(int i=owner_list.size()-1; i < owner_list.size(); i++){
+            OwnerInquiriesVo Ovo = owner_list.get(i);
+            owner_null_answer_count = Ovo.getOwner_null_answer_count();
+        }
+        
+        return new CountVo(null_answer_count, owner_null_answer_count); // Return the count directly
+    }
+
+
+
 }

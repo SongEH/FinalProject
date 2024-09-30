@@ -39,4 +39,9 @@ public interface ShopService {
     // hasShop from owner_id
     Boolean hasShop(int owner_id);
 
+    //  // 가게 휴무 지정  트라이중
+    // int setHoliday(int shop_id);
+
+    // 가게 status 업데이트 
+    int updateStatus();
 }

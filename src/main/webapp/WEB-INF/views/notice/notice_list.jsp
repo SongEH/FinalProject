@@ -101,7 +101,8 @@ prefix="c" %>
     </style>
   </head>
   <body>
-    <%@include file="../common.jsp" %> <%@include file="../header.jsp" %>
+    <%@include file="../common.jsp" %> 
+    <%@include file="../header.jsp" %>
     <%@include file="../sidebar.jsp" %>
 
     <main id="main" class="main">

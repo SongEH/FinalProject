@@ -32,4 +32,7 @@ public interface MemberMapper {
 
     MemberVo getAddr(int member_id);
 
+    // 쿠폰활용Test
+    MemberVo getMemberWithCoupons(int member_id);
+
 }

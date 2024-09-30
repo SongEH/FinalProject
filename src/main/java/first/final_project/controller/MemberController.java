@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import first.final_project.dao.MemberMapper;
+import first.final_project.service.MemberService;
 import first.final_project.vo.MemberVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +26,9 @@ public class MemberController {
 
     @Autowired
     MemberMapper member_mapper;
+
+    @Autowired
+    MemberService memberService;
 
     // 마이페이지
     @RequestMapping("mypage.do")
@@ -70,6 +74,18 @@ public class MemberController {
         member_mapper.delete(member_id);
         session.invalidate(); // 세션 무호화 -> 사용자가 탈퇴할 때 세션에 저장된 정보가 더이상 유효하지 않기에 세션을 무효화 시켜야 한다
         return "redirect:/main.do";
+    }
+
+    // 쿠폰활용TEST
+    @RequestMapping("selectcoupon.do")
+    public String getMemberCoupons(Model model) {
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login_form.do";
+        }
+        MemberVo member = memberService.getMemberWithCoupons(user.getMember_id());
+        model.addAttribute("member", member);
+        return "member/member_Mycoupon";
     }
 
 }

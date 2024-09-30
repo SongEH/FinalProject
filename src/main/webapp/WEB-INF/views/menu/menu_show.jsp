@@ -137,8 +137,8 @@
                 </div>
 
                 <div class="text-center">
-                  <input class="btn btn-success" type="button" value="목록으로" onclick="location.href='list.do'">
-                  <input class="btn btn-primary" type="button" value="수정"
+                  <input class="button_style" type="button" value="목록으로" onclick="location.href='list.do'">
+                  <input class="button_style" type="button" value="수정"
                     onclick="location.href='modify_form.do?menu_id=${ vo.menu_id }'">
                 </div>
               </form><!-- End floating Labels Form -->

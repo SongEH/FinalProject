@@ -1,12 +1,17 @@
 package first.final_project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import first.final_project.dao.AddrMapper;
 import first.final_project.dao.MemberMapper;
@@ -52,30 +57,23 @@ public class AddrController {
   }
 
   @RequestMapping("addr_insert_form.do")
-  public String addr_insert_form(String nextPath, Model model) {
+  public String addr_insert_form(Model model) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
       return "redirect:/member/login_form.do";
     }
-
-    System.out.println(nextPath);
-
-    model.addAttribute("nextPath", nextPath);
 
     return "addr/addr_insert_form";
   }
 
   @RequestMapping("addr_insert.do")
-  public String addr_insert(AddrVo vo, String nextPath) {
+  public String addr_insert(AddrVo vo) {
     MemberVo user = (MemberVo) session.getAttribute("user");
 
     if (user == null) {
       return "redirect:/member/login_form.do";
     }
-
-    //
-    System.out.println(nextPath);
 
     vo.setMember_id(user.getMember_id());
 
@@ -83,12 +81,34 @@ public class AddrController {
 
     session.setAttribute("vo", vo);
 
-    if (nextPath.equals("addr_list")) {
-      return "redirect:/addr/addr_list.do";
-    } else {
-      return "redirect:/order/pending_list.do";
-    }
+    return "redirect:/addr/addr_list.do";
 
+  }
+
+  // 주문할 때 새 주소 추가시 - 한지혜
+  @RequestMapping("addr_insert2.do")
+  @ResponseBody
+  public int addr_insert2(
+      @RequestParam String addr_zipcode,
+      @RequestParam String addr_name,
+      @RequestParam String addr_line1,
+      @RequestParam String addr_line2) {
+
+    MemberVo user = (MemberVo) session.getAttribute("user");
+
+    AddrVo vo = new AddrVo();
+    vo.setMember_id(user.getMember_id());
+    vo.setAddr_zipcode(addr_zipcode);
+    vo.setAddr_name(addr_name);
+    vo.setAddr_line1(addr_line1);
+    vo.setAddr_line2(addr_line2);
+
+    // db insert
+    addr_mapper.insertNewAddr(vo); // DB에 주소 추가
+
+    System.out.println("생성된 addr_id: " + vo.getAddr_id()); // 생성된 ID 확인
+
+    return vo.getAddr_id();
   }
 
   @RequestMapping("addr_modify_form.do")
@@ -110,7 +130,7 @@ public class AddrController {
     return "addr/addr_modify_form";
   }
 
-  @RequestMapping("addr_modify.do") 
+  @RequestMapping("addr_modify.do")
   public String addr_modify(@RequestParam("addr_id") int addr_id,
       @RequestParam("addr_zipcode") String addr_zipcode,
       @RequestParam("addr_line1") String addr_line1,

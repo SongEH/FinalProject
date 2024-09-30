@@ -62,6 +62,7 @@ pageEncoding="UTF-8"%>
         width: 200px;
         height: 200px;
         float: left;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
 
       .card img {
@@ -70,6 +71,11 @@ pageEncoding="UTF-8"%>
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         margin: auto;
+        transition: transform 0.2s ease;
+      }
+
+      .card:hover img {
+        transform: scale(1.1); /* Slightly enlarge the image */
       }
 
       .card p {
@@ -78,12 +84,17 @@ pageEncoding="UTF-8"%>
       }
       .card:hover {
         cursor: pointer;
+        transform: scale(1.05); /* Slightly enlarge the card */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a shadow */
+        background-color: #FFC6C6;
       }
 
       .footer {
         text-align: center;
         margin: 20px 0;
+        margin-top: 50px;
       }
+      
     </style>
     <script>
     function shopListAll(element){
@@ -129,7 +140,7 @@ pageEncoding="UTF-8"%>
         new daum.Postcode({
               oncomplete: function(data) {
                   // 사용자 주소를 받아올 변수를 정의한다.
-                    // let addr = '';
+                    let addr = '';
                     
                     //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                     if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우(R)
@@ -137,9 +148,11 @@ pageEncoding="UTF-8"%>
                     } else { // 사용자가 지번 주소를 선택했을 경우(J)
                         addr = data.jibunAddress;
                     }
-                    
                     // 부모창의 주소칸에 받아온 주소를 넣는다.
                     $("#order_addr").val(addr);
+
+                    // 부모창의 주소칸에 받아온 우편번호를 넣는다.
+                    $("#order_addr_zipcode").val(data.zonecode);                  
               }
           }).open();
       }
@@ -149,7 +162,7 @@ pageEncoding="UTF-8"%>
 <body>
   <%@ include file="header.jsp" %>
   <%@ include file="searchbar.jsp" %>
-  <div id="main_display">
+  <div id="main_display" style="margin-top: 60px;">
   <form id="myForm" method="POST">
     <div class="container">
       <div class="row">
@@ -209,7 +222,7 @@ pageEncoding="UTF-8"%>
   <div>
     <div id="shop_list_main_display"></div>
   </div>
-  <div style="margin-top: 50px;">
+  <div class="container" style="margin:auto">
     <%@ include file="footer.jsp" %>
   </div>
 </body>

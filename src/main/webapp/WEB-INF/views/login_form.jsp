@@ -104,17 +104,63 @@ pageEncoding="UTF-8"%>
     <script>
       bod.y;
     </script>
+    <style>
+      /* 메인 이미지 배치 및 흐리게 처리 */
+      .background-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.5; /* 흐리게 처리 */
+        z-index: -1; /* 카드보다 뒤에 오도록 */
+        max-width: 100%; /* 이미지 크기 조정 */
+        height: auto;
+      }
+
+      /* 카드들을 가로로 중앙 정렬 */
+      .card-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px; /* 카드 간 간격 조절 */
+      }
+
+      .card {
+        width: 18rem;
+      }
+
+      /* 메인 컨테이너에 약간의 상단 마진 */
+      .main {
+        margin-top: 100px;
+      }
+
+    </style>
+    
   </head>
   <body>
+
+    <%@include file="common.jsp" %>
+
+    <%@include file="header.jsp" %>
+
+    
+
+    <main id="main" class="main">
+    <img
+        class="background-image"
+        src="/resources/assets/img/notextlogo.png"
+        alt="Final Logo"
+      />
     <div class="container mt-5">
-      <h2>Login Page</h2>
+    
+     
+
       <div class="row">
         <div class="col-md-4">
           <div class="card" style="width: 18rem">
             <!-- <img class="card-img-top" src="admin.jpg" alt="Admin Login" /> -->
             <div class="card-body">
               <h5 class="card-title">Admin Login</h5>
-              <button class="btn btn-primary" onclick="showLoginModal('admin')">
+              <button class="button_style" onclick="showLoginModal('admin')">
                 Login as Admin
               </button>
             </div>
@@ -125,7 +171,7 @@ pageEncoding="UTF-8"%>
             <!-- <img class="card-img-top" src="owner.jpg" alt="Owner Login" /> -->
             <div class="card-body">
               <h5 class="card-title">Owner Login</h5>
-              <button class="btn btn-primary" onclick="showLoginModal('owner')">
+              <button class="button_style" onclick="showLoginModal('owner')">
                 Login as Owner
               </button>
             </div>
@@ -137,7 +183,7 @@ pageEncoding="UTF-8"%>
             <div class="card-body">
               <h5 class="card-title">Member Login</h5>
               <button
-                class="btn btn-primary"
+                class="button_style"
                 onclick="showLoginModal('member')"
               >
                 Login as Member
@@ -199,7 +245,7 @@ pageEncoding="UTF-8"%>
                 </div>
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="button_style"
                   onclick="admin_send(this.form);"
                 >
                   로그인
@@ -262,7 +308,7 @@ pageEncoding="UTF-8"%>
                 </div>
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="button_style"
                   onclick="owner_send(this.form);"
                 >
                   로그인
@@ -327,7 +373,7 @@ pageEncoding="UTF-8"%>
                 </div>
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="button_style"
                   onclick="member_send(this.form);"
                 >
                   로그인
@@ -338,5 +384,6 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </div>
+    </main>
   </body>
 </html>

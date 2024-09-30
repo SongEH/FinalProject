@@ -114,9 +114,9 @@
 
         <nav>
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">공지&문의</li>
+                <li class="breadcrumb-item active">문의사항</li>
             </ol>
         </nav>
 
@@ -145,8 +145,11 @@
                 <textarea id="m_inquiries_content" name="m_inquiries_content" rows="5" required></textarea>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="send(this.form);">
+                <button type="button" class="button_style" onclick="send(this.form);">
                     등록
+                </button>
+                <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/list.do'">
+                    취소
                 </button>
             </div>
         </form>

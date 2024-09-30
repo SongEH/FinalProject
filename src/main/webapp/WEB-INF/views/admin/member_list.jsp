@@ -95,8 +95,8 @@
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">관리자페이지</li>
+            <li class="breadcrumb-item active">회원리스트</li>
           </ol>
         </nav>
 
@@ -121,7 +121,7 @@
           <td>${member.member_email}</td>
           <td>${member.member_phone}</td>
           <td>
-            <a href="delete_member.do?member_id=${member.member_id}">Delete</a>
+            <button class="button_style" onclick="location.href='delete.do?member_id=${member.member_id}'">Delete</button>
           </td>
         </tr>
       </c:forEach>

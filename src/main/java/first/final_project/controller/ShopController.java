@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -70,8 +71,6 @@ public class ShopController {
     @RequestMapping("/shop/list.do")
     public String shop_list(String food_category,String order_addr,String activeCategory, Model model, RedirectAttributes ra) {
 
- 
-
         System.out.println(food_category);
         System.out.println(order_addr);
 
@@ -87,6 +86,9 @@ public class ShopController {
 
         // 가게 리스트 필터링
         List<ShopVo> allShops = shop_Service.selectList(food_category);
+
+        // 가게 영업유무 업데이트
+        int res = shop_Service.updateStatus();
         
         list = new ArrayList<>();
 
@@ -98,7 +100,7 @@ public class ShopController {
 
             // 모든 가게에 대해 좌표 계산 후 반경 내 가게 필터링
             for (ShopVo shop : allShops) {
-                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
+                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
                 double distance = kakaoMapService.calculateDistance(customerCoordinates[0], customerCoordinates[1],
                                                                     shopCoordinates[0], shopCoordinates[1]);
                 if (distance <= radius) {
@@ -160,6 +162,7 @@ public class ShopController {
         // 가게 리스트 필터링
         List<ShopVo> allShops = shop_Service.selectListValue(selectMap);
         // List<ShopVo> allShops = shop_Service.selectList(food_category);
+        int res = shop_Service.updateStatus();
         
         list = new ArrayList<>();
 
@@ -171,7 +174,7 @@ public class ShopController {
 
             // 모든 가게에 대해 좌표 계산 후 반경 내 가게 필터링
             for (ShopVo shop : allShops) {
-                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr());
+                double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
                 double distance = kakaoMapService.calculateDistance(customerCoordinates[0], customerCoordinates[1],
                                                                     shopCoordinates[0], shopCoordinates[1]);
                 if (distance <= radius) {
@@ -384,7 +387,7 @@ public class ShopController {
             // System.out.println(vo.getShop_id());
             model.addAttribute("vo", vo);
 
-            // 가게 리스트 확인 
+            // 가게 등록 여부 확인  
             Boolean result = shop_Service.hasShop(user.getOwner_id());
             System.out.println("result : " + result);
             Boolean hasShop = (result != null) ? result : false;
@@ -450,6 +453,23 @@ public class ShopController {
         System.out.println("변경할 이미지가 없습니다. ");
         try {
             System.out.println("업데이트전");
+            System.out.println(vo.getShop_name());
+            System.out.println(vo.getShop_content());
+            System.out.println(vo.getShop_addr1());
+            System.out.println(vo.getShop_addr2());
+            System.out.println(vo.getShop_call());
+            System.out.println(vo.getShop_min_price());
+            System.out.println(vo.getShop_open_hour());
+            System.out.println(vo.getShop_close_hour());
+            System.out.println(vo.getShop_close_day());
+            System.out.println(vo.getFood_category());
+            System.out.println(vo.getShop_img());
+
+            if(vo.getShop_img()==null){
+                vo.setShop_img(filename);
+                System.out.println(vo.getShop_img());
+            }
+            
             int res = shop_Service.update(vo);
             System.out.println("가게수정 완료");
             return "redirect:modify_form.do";
@@ -473,4 +493,22 @@ public class ShopController {
         }
         return "redirect:shoplist.do";
     }
+
+    // 트라이중 
+    // @RequestMapping("/shop/set_holiday.do")
+    // @ResponseBody
+    // public String set_holiday(RedirectAttributes ra){
+
+    //     OwnerVo user = (OwnerVo) session.getAttribute("user");
+    //     if(user==null){
+    //         ra.addAttribute("reason", "session_timeout");
+    //         return "redirect:../login_form.do";
+    //     }
+
+    //     int shop_id = shop_Service.select_one_shop_id(user.getOwner_id());
+
+    //     int res = shop_Service.setHoliday(shop_id);
+
+    //     return "";
+    // } 
 }

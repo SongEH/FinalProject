@@ -11,7 +11,7 @@ import first.final_project.vo.ShopVo;
 public interface ShopMapper {
 
     // 가게 전체 출력
-    // List<ShopVo> selectList();
+    List<ShopVo> selectListAll();
 
     // 가게 카테고리별 출력
     List<ShopVo> selectList(String food_category);
@@ -42,5 +42,11 @@ public interface ShopMapper {
 
     // hasShop from Owner_id
     Boolean hasShop(int owner_id);
+
+    // // 가게 휴무 지정 트라이중
+    // int setHoliday(int shop_id);
+
+    // 가게 status 업데이트 
+    int updateStatus();
 
 }

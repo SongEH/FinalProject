@@ -84,12 +84,13 @@
             text-decoration: none;
             padding: 10px 20px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #f0a8d0;
             border-radius: 5px;
             font-size: 16px;
         }
         .admin-actions a:hover {
-            background-color: #0056b3;
+            background-color: #e090b5;
+            color: #fff;
         }
         .back-button {
             display: block;
@@ -99,12 +100,13 @@
             text-align: center;
             font-size: 16px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #f0a8d0;
             border-radius: 5px;
             text-decoration: none;
         }
         .back-button:hover {
-            background-color: #0056b3;
+            background-color: #e090b5;
+            color: #fff;
         }
         .content {
             white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
@@ -118,6 +120,25 @@
             location.href = "delete.do?o_inquiries_id=" + o_inquiries_id;
         }
     </script>
+
+    <script type="text/javascript">
+        function del(o_answer_id) {
+            if (confirm("정말 삭제 하시겠습니까?") == false) return;
+            $.ajax({
+                url: "${pageContext.request.contextPath}/owner_inquiries/answer_delete.do",
+                type: "POST",
+                data: { o_answer_id: o_answer_id, o_inquiries_id: '${param.o_inquiries_id}' },
+                success: function(response) {
+                    alert("답변이 삭제되었습니다.");
+                    location.href = "${pageContext.request.contextPath}/owner_inquiries/detail.do?o_inquiries_id=" + '${param.o_inquiries_id}';
+                },
+                error: function(xhr) {
+                    alert("답변 삭제에 실패했습니다. 다시 시도해 주세요.");
+                }
+            });
+        }
+    </script>
+
 </head>
 <body>
 
@@ -135,9 +156,9 @@
 
         <nav>
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">공지&문의</li>
+                <li class="breadcrumb-item active">문의사항</li>
             </ol>
         </nav>
 
@@ -161,10 +182,10 @@
                     작성자: ${vo.owner_accountId}
                 </div>    
 
-                <a href="${pageContext.request.contextPath}/owner_inquiries/list.do" class="back-button">목록으로</a>
+                <button class="back-button button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/list.do'">목록으로</button>
                 <c:if test="${userType == 'OWNER' && vo.owner_accountId == currentUser}">
-                    <button type="button" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/modify_form.do?o_inquiries_id=${vo.o_inquiries_id}'">수정</button>
-                    <button type="button" onclick="del('${vo.o_inquiries_id}');">삭제</button>
+                    <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/modify_form.do?o_inquiries_id=${vo.o_inquiries_id}'">수정</button>
+                    <button class="button_style" onclick="del('${vo.o_inquiries_id}');">삭제</button>
                 </c:if>
             </div>
         </div>
@@ -172,24 +193,31 @@
 
             <c:if test="${sessionScope.userType == 'ADMIN'}">
                 <div class="admin-actions">
-                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_insert_form.do">답변 등록</a>
-                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_modify_form.do">답변 수정</a>
-                    <a href="${pageContext.request.contextPath}/owner_inquiries/answer_delete.do">답변 삭제</a>
+                    <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/answer_insert_form.do?o_inquiries_id=${param.o_inquiries_id}'">답변 등록</a>
                 </div>
             </c:if>
 
             <div class="admin-answer">
-                <c:if test="${not empty answer}">
-                    <div class="answer-content">
-                        <strong>답변 :</strong> ${answer.o_answer_content}
-                    </div>
-                    <div class="answer-cdate">
-                        ${answer.o_answer_cdate}
-                    </div>
-                    <div class="answer-author">
-                        <strong>작성자 :</strong> ${admin_accountId}
-                    </div>
-                </c:if>
+                <c:forEach var="answer" items="${answer_list}">
+                    <c:if test="${not empty answer}">
+                        <div class="answer-content">
+                            <strong>답변 :</strong> ${answer.o_answer_content}
+                        </div>
+                        <div class="answer-cdate">
+                            ${answer.o_answer_cdate}
+                        </div>
+                        <div class="answer-author">
+                            <strong>작성자 :</strong> ${answer.admin_accountId}
+                        </div>
+                    </c:if>
+                
+                    <c:if test="${sessionScope.userType == 'ADMIN'}">
+                        <div class="admin-actions">
+                            <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/owner_inquiries/answer_modify_form.do?o_answer_id=${answer.o_answer_id}&o_inquiries_id=${param.o_inquiries_id}'">수정</button>
+                            <button type="button" class="button_style" onclick="del('${answer.o_answer_id}');">삭제</button>
+                        </div>
+                    </c:if>
+                </c:forEach>
             </div>
         </div>
             

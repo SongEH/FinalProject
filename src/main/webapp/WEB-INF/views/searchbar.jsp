@@ -22,7 +22,6 @@
   margin-top: 60px;
 }
 
-
 .search-bar input {
   width: 300px;
   height: 50px;
@@ -30,7 +29,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-.search-bar button {
+/* .search-bar button {
   background-color: #F7B5CA;
   color: black;
   border: none;
@@ -39,13 +38,31 @@
   border-radius: 5px;
   cursor: pointer;
   height: 50px;
+} */
+
+.button_style {
+  background-color: #f0a8d0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 10px 15px;
+  height: 50px;
+  margin-left: 10px;
+} 
+
+.button_style:hover {
+  background-color: #e090b5;
 }
+
 </style>
 <html lang="ko">
   <body>
-    <div class="search-bar" style="margin-top:0;">
-        <input type="text" id="order_addr" name="order_addr" placeholder="주소 설정 또는 로그인 후 이용할 수 있습니다." value="${order_addr}" readonly>
-        <button type="button" id="addressSearch" onclick="findAddr()">주소설정</button>
+    <div class="search-bar" style="margin-top:60px;">
+        <input type="text" id="order_addr" name="order_addr" placeholder="로그인 후 이용할 수 있습니다." value="${order_addr}" readonly>
+        <button type="button" class="button_style" id="addressSearch" onclick="findAddr()">주소설정</button>
+        <input type="hidden" id="order_addr_zipcode" name="order_addr_zipcode" value="${order_addr_zipcode}">
     </div>
 </body>
 </html>

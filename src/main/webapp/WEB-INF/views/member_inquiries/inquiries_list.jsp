@@ -97,6 +97,7 @@
         .inquiries-title a:hover {
             text-decoration: underline;
         }
+        
 
     </style>
 </head>
@@ -117,8 +118,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
+          <li class="breadcrumb-item">공지&문의</li>
+          <li class="breadcrumb-item active">문의사항</li>
         </ol>
       </nav>
 
@@ -126,21 +127,31 @@
 
     <div class="container">
         <input type="hidden" id="inquiries_type" value="${vo.m_inquiries_type}">
-        <p>문의사항 작성자 ID: ${vo.memberAccountId}</p>
+        <!-- <p>문의사항 작성자 ID: ${vo.memberAccountId}</p> -->
         
 
 
         <div class="filter">
+            
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=전체" class="${m_inquiries_type == '전체' ? 'active' : ''}">전체</a>
+        
+            
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=결제문의" class="${m_inquiries_type == '결제문의' ? 'active' : ''}">결제문의</a>
+         
+          
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=주문문의" class="${m_inquiries_type == '주문문의' ? 'active' : ''}">주문문의</a>
+            
+            
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=서비스이용" class="${m_inquiries_type == '서비스이용' ? 'active' : ''}">서비스이용</a>
+            
+           
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=배송문의" class="${m_inquiries_type == '배송문의' ? 'active' : ''}">배송문의</a>
+           
         </div>
 
         <c:if test="${sessionScope.userType == 'MEMBER'}">
             <div class="member-actions">
-                <a href="${pageContext.request.contextPath}/member_inquiries/insert_form.do">문의사항 등록</a>
+                <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/insert_form.do'">문의사항 등록</button>
             </div>
         </c:if>
        
@@ -149,7 +160,13 @@
             <c:forEach var="inquiries" items="${list}">
                 <div class="inquiries-card">
                     <div class="inquiries-title">
-                        <a href="${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id=${inquiries.m_inquiries_id}">${inquiries.m_inquiries_title}</a>
+                        <a href="${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id=${inquiries.m_inquiries_id}">${inquiries.m_inquiries_title}
+                            <c:if test="${inquiries.m_answer_content == null}">
+                                <span class="badge rounded-pill bg-warning">
+                                ❗️미답변 
+                                </span>
+                            </c:if>
+                        </a>
                     </div>
                     <div class="inquiries-date">
                         작성일자: ${inquiries.m_inquiries_cdate}

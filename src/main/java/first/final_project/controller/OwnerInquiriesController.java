@@ -60,7 +60,7 @@ public class OwnerInquiriesController {
     }
 
     @RequestMapping("detail.do")
-    public String detail(@RequestParam(value="o_inquiries_id",required = false)Integer o_inquiries_id,Model model){
+    public String detail(@RequestParam(value="o_inquiries_id",required = true)Integer o_inquiries_id,Model model){
 
         OwnerInquiriesVo vo = owner_inquiries_mapper.selectFromIdx(o_inquiries_id);
         if(vo == null){
@@ -76,20 +76,21 @@ public class OwnerInquiriesController {
         vo.setO_inquiries_content(content);
         model.addAttribute("vo", vo);
 
-        OwnerAnswerVo answer = owner_answer_mapper.selectOneFromIdx(o_inquiries_id);
-        if(answer != null){
-            String o_answer_content = answer.getO_answer_content().replace("\n", "<br/>");
-            answer.setO_answer_content(o_answer_content);
-            model.addAttribute("answer", answer);
-            model.addAttribute("answer", o_inquiries_id);
+        List<OwnerAnswerVo> answer_list = owner_answer_mapper.selectListFromIdx(o_inquiries_id);
+        if(answer_list != null && !answer_list.isEmpty()){
+            for(OwnerAnswerVo answer : answer_list){
+                String o_answer_content = answer.getO_answer_content();
+                answer.setO_answer_content(o_answer_content);
 
-            AdminVo admin = admin_mapper.selectOneFromIdx(answer.getAdmin_id());
-            if(admin != null){
-                model.addAttribute("admin_accountId", admin.getAdmin_accountId());
+                AdminVo admin = admin_mapper.selectOneFromIdx(answer.getAdmin_id());
+                if(admin != null){
+                    answer.setAdmin_accountId(admin.getAdmin_accountId());
+                }
             }
         }
         String userType = (String)session.getAttribute("userType");
         model.addAttribute("userType", userType);
+        model.addAttribute("answer_list", answer_list);
         
         return "owner_inquiries/inquiries_detail";
     }
@@ -100,7 +101,7 @@ public class OwnerInquiriesController {
         if ("OWNER".equals(userType)) {
             return "owner_inquiries/inquiries_insert_form";
         } else {
-            return "redirec:/login_form.do";
+            return "redirect:/login_form.do";
         }
 
     }
@@ -115,7 +116,6 @@ public class OwnerInquiriesController {
         String userType = (String) session.getAttribute("userType");
         if ("OWNER".equals(userType)) {
             OwnerInquiriesVo vo = new OwnerInquiriesVo();
-
             vo.setO_inquiries_title(o_inquiries_title);
             vo.setO_inquiries_content(o_inquiries_content);
             vo.setOwner_id(owner.getOwner_id());
@@ -164,13 +164,7 @@ public class OwnerInquiriesController {
         vo.setOwner_id(owner.getOwner_id());
         vo.setOwner_accountId(owner.getOwner_accountId());
 
-        // System.out.println("member :" + member);
-        // System.out.println(vo.getMemberAccountId());
-        // System.out.println(vo.getMember_id());
-
         owner_inquiries_mapper.update(vo);
-
-        System.out.println("여기까지왔나?");
         return "redirect:/owner_inquiries/detail.do?o_inquiries_id=" + o_inquiries_id;
     }
 
@@ -181,11 +175,10 @@ public class OwnerInquiriesController {
     }
 
     @RequestMapping("answer_insert_form.do")
-    public String answer_insert_form(@RequestParam(value="o_inquiries_id", required = false) Integer o_inquiries_id,Model model){
+    public String answer_insert_form(@RequestParam(value="o_inquiries_id", required = true) Integer o_inquiries_id,Model model){
         String userType = (String)session.getAttribute("userType");
         if("ADMIN".equals(userType)){
             model.addAttribute("o_inquiries_id", o_inquiries_id);
-            System.out.println("o_inquiries_id :" + o_inquiries_id);
             return "owner_answer/answer_insert_form";
         }else{
             return "redirect:/owner_inquiries/list.do";
@@ -197,16 +190,55 @@ public class OwnerInquiriesController {
 
         AdminVo admin = (AdminVo)session.getAttribute("user");
         if(admin == null){
-            System.out.println("admin:"+admin);
             return "redirect:/login_form.do";
         }
         OwnerAnswerVo answer = new OwnerAnswerVo();
         answer.setO_inquiries_id(o_inquiries_id);
         answer.setO_answer_content(o_answer_content);
-        answer.setAdmin_id(admin.getAdmin_id());
-        System.out.println("o_inquiries_id :" + o_inquiries_id);
+        answer.setAdmin_id(admin.getAdmin_id()); 
         owner_answer_mapper.insert(answer);
+        System.out.println("o_inquiries_id:"+o_inquiries_id);
         
-        return "redirect:/owner_inquiries/detail.do?o_inquiries_id="+o_inquiries_id;
+        return "redirect:/owner_inquiries/detail.do?o_inquiries_id="+ o_inquiries_id;
+    }
+    @RequestMapping("answer_modify_form.do")
+    public String answer_modify_form(Integer o_answer_id, @RequestParam(value = "o_inquiries_id", required = true) Integer o_inquiries_id,Model model){
+
+        //System.out.println("o_answer_id: " + o_answer_id + ", o_inquiries_id: " + o_inquiries_id); // 로깅
+        OwnerAnswerVo vo = owner_answer_mapper.selectOne(o_answer_id);
+        if(vo == null){
+            return "redirect:/owner_inquiries/detail.do?o_inquiries_id=" + o_inquiries_id;
+        }
+
+        model.addAttribute("vo", vo);
+        model.addAttribute("o_inquiries_id", vo.getO_inquiries_id());
+
+        return "owner_answer/answer_modify_form";
+    }
+
+    @RequestMapping("answer_modify.do")
+    public String answer_modify(int o_answer_id,String o_answer_content, int o_inquiries_id){
+        AdminVo admin = (AdminVo)session.getAttribute("user");
+        if(admin == null){
+            System.out.println("admin:"+admin);
+            return "redirect:/login_form.do";
+        }
+
+        OwnerAnswerVo answer = new OwnerAnswerVo();
+        answer.setO_answer_id(o_answer_id);
+        answer.setO_answer_content(o_answer_content);
+        answer.setO_inquiries_id(o_inquiries_id);
+        answer.setAdmin_id(admin.getAdmin_id());
+        answer.setAdmin_accountId(admin.getAdmin_accountId());
+
+        owner_answer_mapper.update(answer);
+        return "redirect:/owner_inquiries/detail.do?o_inquiries_id="+ o_inquiries_id;
+    }
+
+    @RequestMapping("answer_delete.do")
+    public String answer_delete(@RequestParam int o_inquiries_id,@RequestParam int o_answer_id){
+
+        owner_answer_mapper.delete(o_answer_id);
+        return "redirect:/owner_inquiries/detail.do?o_inquiries_id="+ o_inquiries_id;
     }
 }    

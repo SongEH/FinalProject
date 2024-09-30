@@ -44,20 +44,6 @@
         color: #333;
       }
 
-      input[type="button"] {
-        background-color: #5cb85c;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
-
-      input[type="button"]:hover {
-        background-color: #4cae4c;
-      }
-
       table {
         width: 100%;
         border-collapse: collapse;
@@ -102,13 +88,13 @@
     <main id="main" class="main">
       <div class="pagetitle">
 
-        <h1>주소 정보</h1>
+        <h1>주소목록</h1>
 
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">회원관리</li>
+            <li class="breadcrumb-item active">주소목록</li>
           </ol>
         </nav>
 
@@ -117,7 +103,7 @@
       
       <!-- <input type="hidden" name="addr_id" id="${addr.addr_id}" /> -->
       <div class="container">
-        <input
+        <input class="button_style"
         type="button"
         value="주소 등록"
         onclick="location.href='/addr/addr_insert_form.do?nextPath=addr_list'"
@@ -139,10 +125,10 @@
               <td>${addr.addr_line2}</td>
               <td>${addr.addr_name}</td>
               <td>
-                <input type="button" class="btn btn-success" value="수정" onclick="location.href='addr_modify_form.do?addr_id=${addr.addr_id}'">
+                <input type="button" class="button_style" value="수정" onclick="location.href='addr_modify_form.do?addr_id=${addr.addr_id}'">
               </td>
               <td>
-                <input type="button" class="btn btn-success" value="삭제" onclick="del('${addr.addr_id}')">
+                <input type="button" class="button_style" value="삭제" onclick="del('${addr.addr_id}')">
               </td>
             </tr>
           </c:forEach>

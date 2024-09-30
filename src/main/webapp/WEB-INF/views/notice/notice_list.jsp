@@ -111,8 +111,8 @@ prefix="c" %>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item">공지&문의</li>
+            <li class="breadcrumb-item active">공지사항</li>
           </ol>
         </nav>
       </div>
@@ -147,8 +147,8 @@ prefix="c" %>
         <!-- 관리자 전용 액션 버튼 -->
         <c:if test="${userType == 'ADMIN'}">
           <div class="admin-actions">
-            <a href="${pageContext.request.contextPath}/notice/insert_form.do"
-              >공지사항 등록</a
+            <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/notice/insert_form.do'"
+              >공지사항 등록</button
             >
           </div>
         </c:if>

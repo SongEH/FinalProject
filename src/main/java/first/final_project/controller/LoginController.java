@@ -89,17 +89,11 @@ public class LoginController {
         session.setAttribute("isLoggedIn", true);
 
         session.setAttribute("currentUser", user.getMember_accountId());
-        // 절대 경로 사용
-        // String redirectUrl = (url == null || url.isEmpty()) ? "/main.do" : url;
-        // return "redirect:" + redirectUrl;
-
+        
         // 절대 경로 사용 (수정 by 태광)
         return "redirect:../main/display.do";
 
-        // if (url == null || url.isEmpty())
-        // return "redirect:/main.do";
-        // else
-        // return "redirect:" + url;
+     
     }
 
     // 아이디 중복 체크
@@ -160,7 +154,7 @@ public class LoginController {
         session.setAttribute("userType", "OWNER");
         session.setAttribute("currentUser", user.getOwner_accountId());
         System.out.println(user);
-        // return "redirect:../main.do";
+
         // 태광 수정 
         return "redirect:../order/accept.do";
     }
@@ -198,7 +192,7 @@ public class LoginController {
         session.setAttribute("user", user);
         session.setAttribute("userType", "ADMIN");
         
-        return "redirect:../main.do";
+        return "redirect:/admin/member_list.do";
     }
 
     // 로그아웃
@@ -207,7 +201,7 @@ public class LoginController {
 
         session.invalidate();
 
-        // return "redirect:/main.do";
+
         return "redirect:/main/display.do";
     }
 

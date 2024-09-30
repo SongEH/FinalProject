@@ -21,69 +21,124 @@
                 location.href = "ownerpage/delete.do?owner_id=" + owner_id;
             }
         </script>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0px;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: auto;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .mb-4 {
+                margin-bottom: 16px;
+            }
+
+            label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+
+            .form-control[readonly] {
+                background-color: #f9f9f9;
+            }
+
+            .flex {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+
+
+        </style>
     </head>
 
     <body>
 
-        <%@include file="../common.jsp" %>
+        <%@ include file="../common.jsp" %>
 
-        <%@include file="../header.jsp" %>
+        <%@ include file="../header.jsp" %>
 
-        <%@include file="../sidebar.jsp" %>
+        <%@ include file="../sidebar.jsp" %>
 
         <main id="main" class="main">
             <div class="pagetitle">
 
-            <h1>회원정보</h1>
+                <h1>사장정보</h1>
 
-            <nav>
-                <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Forms</li>
-                <li class="breadcrumb-item active">Layouts</li>
-                </ol>
-            </nav>
+                <nav>
+                    <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">사장관리</li>
+                    <li class="breadcrumb-item active">사장정보</li>
+                    </ol>
+                </nav>
 
             </div><!-- End Page Title -->
 
-            <input type="hidden" name="owner_id" value="${owner.owner_id}" />
+            
             
             <div class="container mx-auto p-6">
+                <input type="hidden" name="owner_id" value="${owner.owner_id}" />
                 <div class="mb-4">
-                    <lable for="name">이름:</lable>
+                    <label for="name">이름:</label>
                     <input class="form-control" type="text" value="${owner.owner_name}" readonly />
                 </div>
                 <div class="mb-4">
-                    <lable for="accountId">아이디:</lable>
+                    <label for="accountId">아이디:</label>
                     <input class="form-control" type="text" value="${owner.owner_accountId}" readonly />
                 </div>
                 <div class="mb-4">
-                    <lable for="password">비밀번호:</lable>
+                    <label for="password">비밀번호:</label>
                     <input class="form-control" type="password" value="${owner.owner_pwd}" readonly />
                 </div>
                 <div class="mb-4">
-                    <lable for="email">이메일:</lable>
+                    <label for="email">이메일:</label>
                     <input class="form-control" type="text" value="${owner.owner_email}" readonly />
                 </div>
-                    <div class="mb-4">
-                        <lable for="phone">전화번호:</lable>
-                        <input class="form-control" type="text" value="${owner.owner_phone}" readonly />
-                    </div>
-                    <div class="mb-4">
-                        <lable for="license">사업자등록번호:</lable>
-                        <input class="form-control" type="text" value="${owner.owner_license}" readonly />
-                    </div>
-                    <div class="mb-4">
-                        <lable for="bankbook">법인통장번호:</lable>
-                        <input class="form-control" type="text" value="${owner.owner_bankbook}" readonly />
-                    </div>
-                    <div class="flex justify-end">
-                        <c:if test="( user.owner_id eq owner.owner_id )">
-                            <input type="button" value="회원 수정"
-                                onclick="location.href='ownerpage/modify_form.do?owner_id=${owner.owner_id}'" />
-                            <input type="button" value="회원 탈퇴" onclick="del('${ owner.owner_id }');" />
-                        </c:if>
-                    </div>
+                <div class="mb-4">
+                    <label for="phone">전화번호:</labllabele>
+                    <input class="form-control" type="text" value="${owner.owner_phone}" readonly />
+                </div>
+                <div class="mb-4">
+                     <label for="license">사업자등록번호:</label>
+                     <input class="form-control" type="text" value="${owner.owner_license}" readonly />
+                </div>
+                 <div class="mb-4">
+                    <label for="bankbook">법인통장번호:</label>
+                    <input class="form-control" type="text" value="${owner.owner_bankbook}" readonly />
+                 </div>
+                <div class="flex justify-end">
+                    <c:if test="${user.owner_id eq owner.owner_id}">
+                         <input style="margin-right: 10px;" type="button" class="button_style" value="회원 수정"
+                            onclick="location.href='ownerpage/modify_form.do?owner_id=${owner.owner_id}'" />
+                        <input type="button" class="button_style" value="회원 탈퇴" onclick="del('${ owner.owner_id }');" />
+                     </c:if>
                 </div>
             </div>
 

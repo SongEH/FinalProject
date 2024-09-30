@@ -122,6 +122,9 @@ pageEncoding="UTF-8"%>
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      display: -webkit-box;   
+      -webkit-box-orient: vertical; /* Set orientation to vertical */
+      -webkit-line-clamp: 3;
     }
 
     .shop_info_list {
@@ -186,6 +189,19 @@ pageEncoding="UTF-8"%>
       color: white;
       text-shadow: 0px 0px 0.5px black;
     }
+    .container .container {
+      width: auto; /* Override specific styles */
+      max-width: none; /* Reset width restrictions */
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    footer{
+      margin: auto;
+      padding:0;
+      border-top: none;   
+    }
   </style>
   <script>
     function get_info(shop_id) {
@@ -195,7 +211,6 @@ pageEncoding="UTF-8"%>
           "shop_id": shop_id
         },
         success: function (res_data) {
-          alert("menu호출");
           $("#shop_info_display").html(res_data).show();
           $("#menu_display").hide();
           $('#reviews_display').hide();
@@ -377,8 +392,7 @@ pageEncoding="UTF-8"%>
 
                 <!-- 장바구니 목록 출력 -->
                 <div id="cart_list"></div>
-              </div>            
-              <button class="btn btn-secondary" onclick="orderFromShop('${vo.shop_id}','${vo.shop_name}')">주문하기</button>
+              </div>                          
             </div>
             <!-- </div> -->
           </div>

@@ -5,114 +5,123 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Review List</title>
-<link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-/>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
-<style>
-.reviews-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-top: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.reviews-item .stars {
-  color: gold;
-}
-.reviews-item .star-empty {
-  color: #ddd;
-}
-.ceoreview_display {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-top: 20px;
-  background-color: lightgray;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.slideshow-container {
-  display: flex;
-  max-width: 500px;
-  margin: auto;
-  margin-left: 5px;
-}
-.mySlides {
-  width: 100%;
-  /* flex: 0 0 auto; */
-  /* position: relative; */
-}
-/* Default size */
-.first-slide-1 img {
-  width: 300px;
-  height: 200px;
-  border: 1px solid black;
-}
-.second-slide-1 img {
-  width: 300px;
-  height: 200px;
-  border: 1px solid black;
-}
-.second-slide-2 img {
-  width: 300px;
-  height: 200px;
-  border: 1px solid black;
-  margin-left: 10px;
-}
-/* Layout for three images */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Review List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <style>
+    .reviews-item {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-.btn-delete {
-  margin-left: auto;
-}
-</style>
-<script>
-  function reviews_del(reviews_id) {
-    if (!confirm("해당 리뷰를 정말 삭제하시겠습니까?\n삭제 이후에는 댓글을 작성할 수 없습니다.")) return;
+    .reviews-item .stars {
+      color: gold;
+    }
 
-    $.ajax({
-      url: "delete.do",
-      data: { reviews_id: reviews_id },
-      success: function (res_data) {
-        // alert("성공");
-        location.href = "list.do";
-      },
-      error: function (err) {
-        alert(error.responseText);
-      },
-    });
-  }
+    .reviews-item .star-empty {
+      color: #ddd;
+    }
 
-</script>
+    .ceoreview_display {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      background-color: lightgray;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .slideshow-container {
+      display: flex;
+      max-width: 500px;
+      margin: auto;
+      margin-left: 5px;
+    }
+
+    .mySlides {
+      width: 100%;
+      /* flex: 0 0 auto; */
+      /* position: relative; */
+    }
+
+    /* Default size */
+    .first-slide-1 img {
+      width: 300px;
+      height: 200px;
+      border: 1px solid black;
+    }
+
+    .second-slide-1 img {
+      width: 300px;
+      height: 200px;
+      border: 1px solid black;
+    }
+
+    .second-slide-2 img {
+      width: 300px;
+      height: 200px;
+      border: 1px solid black;
+      margin-left: 10px;
+    }
+
+    /* Layout for three images */
+
+    .btn-delete {
+      margin-left: auto;
+    }
+  </style>
+  <script>
+    function reviews_del(reviews_id) {
+      if (!confirm("해당 리뷰를 정말 삭제하시겠습니까?\n삭제 이후에는 댓글을 작성할 수 없습니다.")) return;
+
+      $.ajax({
+        url: "delete.do",
+        data: {
+          reviews_id: reviews_id
+        },
+        success: function (res_data) {
+          // alert("성공");
+          location.href = "list.do";
+        },
+        error: function (err) {
+          alert(error.responseText);
+        },
+      });
+    }
+  </script>
 </head>
 
-  <body>
-    <%@ include file="../common.jsp" %> 
-    <%@ include file="../header.jsp" %>
-    <%@ include file="../sidebar.jsp" %>
+<body>
+  <%@ include file="../common.jsp" %>
+  <%@ include file="../header.jsp" %>
+  <%@ include file="../sidebar.jsp" %>
 
-    <main id="main" class="main">
-      <div class="container">
-        <div class="pagetitle">
-          <h1>Reviews</h1>
-          <nav>
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item">Reviews</li>
-            </ol>
-          </nav>
-        </div>
-
+  <main id="main" class="main">
+    <div class="container">
+      <div class="pagetitle">
+        <h1>리뷰내역</h1>
+        <br>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">리뷰내역</li>
+          </ol>
+        </nav>
+      </div>
+      <c:if test="${empty list}">
+        <p>리뷰내역이 없습니다.</p>
+      </c:if>
+      <c:if test="${not empty list}">
         <section class="section">
           <div class="row">
             <div class="col-lg-10">
@@ -123,14 +132,9 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
                     <input type="hidden" value="${vo.shop_id}" />
                     <div class="col-md-12">
                       <div class="reviews-item d-flex flex-column">
-                        <div
-                          class="d-flex justify-content-between align-items-center"
-                        >
+                        <div class="d-flex justify-content-between align-items-center">
                           <h5>${vo.shop_name}</h5>
-                          <button
-                            class="btn btn-danger btn-sm btn-delete"
-                            onclick="reviews_del('${vo.reviews_id}')"
-                          >
+                          <button class="btn btn-danger btn-sm btn-delete" onclick="reviews_del('${vo.reviews_id}')">
                             Delete
                           </button>
                         </div>
@@ -143,42 +147,20 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
                           </c:forEach>
                         </div>
                         <p class="mt-2">${vo.reviews_content}</p>
-                        <div
-                          class="slideshow-container"
-                          id="slideshow-${vo.reviews_id}"
-                        >
+                        <div class="slideshow-container" id="slideshow-${vo.reviews_id}">
                           <c:if test="${not empty vo.reviews_img_list }">
-                            <c:set
-                              var="imageCount"
-                              value="${fn:length(vo.reviews_img_list)}"
-                            />
+                            <c:set var="imageCount" value="${fn:length(vo.reviews_img_list)}" />
                             <c:if test="${imageCount == 2}">
-                              <c:forEach
-                                var="img"
-                                items="${vo.reviews_img_list}"
-                                varStatus="status"
-                              >
-                                <div
-                                  class="mySlides second-slide-${status.index + 1}"
-                                >
-                                  <img
-                                    src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}"
-                                  />
+                              <c:forEach var="img" items="${vo.reviews_img_list}" varStatus="status">
+                                <div class="mySlides second-slide-${status.index + 1}">
+                                  <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
                                 </div>
                               </c:forEach>
                             </c:if>
                             <c:if test="${imageCount ==1}">
-                              <c:forEach
-                                var="img"
-                                items="${vo.reviews_img_list}"
-                                varStatus="status"
-                              >
-                                <div
-                                  class="mySlides first-slide-${status.index + 1}"
-                                >
-                                  <img
-                                    src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}"
-                                  />
+                              <c:forEach var="img" items="${vo.reviews_img_list}" varStatus="status">
+                                <div class="mySlides first-slide-${status.index + 1}">
+                                  <img src="${pageContext.request.contextPath}/resources/images/${img.reviews_img}" />
                                 </div>
                               </c:forEach>
                             </c:if>
@@ -195,9 +177,7 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
                               <div class="col-lg-12">
                                 <div class="ceoreview_display">
                                   <div>
-                                    <strong
-                                      >⮑ 사장님 (${vo.ceoreviews_cdate})</strong
-                                    >
+                                    <strong>⮑ 사장님 (${vo.ceoreviews_cdate})</strong>
                                   </div>
                                   <div style="margin-top: 3px">
                                     ${vo.ceoreviews_content}
@@ -216,7 +196,9 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
             </div>
           </div>
         </section>
-      </div>
-    </main>
-  </body>
+      </c:if>
+    </div>
+  </main>
+</body>
+
 </html>

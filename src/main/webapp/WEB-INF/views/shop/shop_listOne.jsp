@@ -328,7 +328,7 @@ pageEncoding="UTF-8"%>
               <div class="rating" id="shop_info">
                 <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Rating Star">
                 <span>
-                  <div class="stars">
+                  <div class="stars" style="margin-bottom: 10px;">
                     <c:if test="${vo.shop_rating != null && vo.shop_rating > 0}">
                       <c:forEach begin="1" end="${vo.shop_rate}">
                         <i class="fa fa-star"></i>
@@ -341,7 +341,7 @@ pageEncoding="UTF-8"%>
                   </div>
                   <div class="details">
                     <!-- <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div> -->
-                    <div>최소 주문 금액: <strong id="shop_min_pricd"> <fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/> </strong></div>
+                    <div style="margin-bottom: 10px;">최소 주문 금액: <strong id="shop_min_pricd"> <fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/> </strong></div>
                     <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
                     <!-- <button class="btn btn-danger">4,000원 할인</button> -->
                   </div>

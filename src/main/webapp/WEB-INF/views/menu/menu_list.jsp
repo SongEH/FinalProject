@@ -83,7 +83,7 @@
     </div>
     <!-- End Page Title -->
 
-    <div id="menu_sort" style="margin-bottom: 20px;">
+    <!-- <div id="menu_sort" style="margin-bottom: 20px;">
       <select id="sortOption" class="form-control" onchange="optionChange()">
         <option value="rank">모든메뉴</option>
         <option value="rank_normal">기본메뉴</option>
@@ -91,7 +91,7 @@
         <option value="rank_soldout">품절메뉴</option>
         <option value="rank_hidden">숨김메뉴</option>
       </select>
-    </div>
+    </div> -->
 
     <input type="hidden" id="shop_id" value="${shop_id}">
 
@@ -107,11 +107,10 @@
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">
-                    <div style="color:red;">
+                  <h4 class="card-title">
                       <c:choose>
                         <c:when test="${item.menu_popularity == 1}">
-                          인기
+                          <p style="color:red;">인기</p>
                         </c:when>
                         <c:when test="${item.menu_hidden == 1}">
                           숨김
@@ -123,11 +122,10 @@
                           <!-- 아무 조건에도 해당하지 않으면 빈 문자열 -->
                         </c:otherwise>
                       </c:choose>
-                    </div>
-                    ${item.menu_name}
-                  </h5>
-                  <p class="card-text">${item.menu_content}</p>
-                  <p class="card-text">${item.menu_price}원</p>
+                      ${item.menu_name}                    
+                  </h4>
+                  <p class="card-text">설명 : ${item.menu_content}</p>
+                  <p class="card-text">가격 : ${item.menu_price}원</p>
 
                   <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
                     onclick="show_menu('${item.menu_id}');">

@@ -99,13 +99,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="owner_name" column="owner_name"/>
 
         <!-- Mapping the coupons -->
-        <collection property="coupons" ofType="first.final_project.vo.CouponVo">
-            <id property="coupon_id" column="coupon_id"/>
-            <result property="coupon_code" column="coupon_code"/>
-            <result property="discount_amount" column="discount_amount"/>
-            <result property="start_date" column="start_date"/>
-            <result property="end_date" column="end_date"/>
-        </collection>
+       <collection property="coupons" ofType="first.final_project.vo.CouponVo" column="member_id" select="selectCouponsByMemberId">
+    <id property="coupon_id" column="coupon_id"/>
+    <result property="coupon_code" column="coupon_code"/>
+    <result property="discount_amount" column="discount_amount"/>
+    <result property="start_date" column="start_date"/>
+    <result property="end_date" column="end_date"/>
+</collection>
     </resultMap>
-
+    
+<select id="selectCouponsByMemberId" resultType="first.final_project.vo.CouponVo" parameterType="int">
+    SELECT coupon_id, coupon_code, discount_amount, start_date, end_date
+    FROM coupons
+    WHERE member_id = #{member_id}
+</select>
 </mapper>

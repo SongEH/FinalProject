@@ -3,6 +3,7 @@
 <br>
 <br>
 <br>
+<br>
 ## 프로젝트 설명
 한입만 주문 + 배달 시스템<br>
 주문 시스템이랑 배달 시스템이 둘 다 존재하는 프로젝트입니다.<br>
@@ -26,10 +27,13 @@
 ![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
+![Confluence](https://img.shields.io/badge/Confluence-172B4D?logo=confluence&logoColor=white)
+
 
 ### 기타
 
 ![ERDCloud](https://img.shields.io/badge/ERDCloud-00C7B7?logoColor=white)
+<br>
 <br>
 <br>
 <br>
@@ -44,7 +48,7 @@ Final Project 개발 기간<br>
 2024.08.22 ~ 2024.10.04<br>
 <br>
 <br>
-
+<br>
 ## 팀원 소개
 
 |팀장| 팀원 1     | 팀원 2      | 팀원 3      | 팀원 4      |
@@ -63,12 +67,23 @@ https://www.erdcloud.com/d/cd5tCqegTyFd9srKc
 <br>
 <br>
 <br>
-
+<br>
 ## Git 브랜치 전략
 ![269341571-ceeda2bb-cc43-441d-aadb-a373d2e53c33](https://github.com/user-attachments/assets/5eb190ce-eff2-47df-94ad-1a056969cd55)
 
 저장소를 효과적으로 활용하기 위해 곤모슬팀은 Github-Flow 전략 브랜치를 생성한다.<br>
 Main : 프로덕션 코드. 항상 Main을 기준으로 branch 생성<br>
+<br>
+<br>
+<br>
+<br>
+## 사용 방법
+1. 파일을 다운 받는다.<br>
+2. VSCode로 실행을 한다.<br>
+3. 카카오 개발자 사이트(https://developers.kakao.com/)에서 api를 발급 받는다.<br>
+4. 카카오 맵 api(KakaoMapService.java) 키를 삽입한다.<br>
+5. 아임포트 사이트(https://portone.io/korea/ko)에서 api를 발급 받는다.<br>
+6. application.property 에서 imp.api.key랑 imp.api.secretkey를 작성한다.<br>
 <br>
 <br>
 <br>

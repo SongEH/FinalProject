@@ -78,7 +78,7 @@
         // 응답으로 받은 HTML을 장바구니 목록에 업데이트
         $('#cart_list').html(response);
       },
-      error: function (xhr, status, error) {
+      error: function (xhr, shop_status, error) {
         alert("장바구니 목록을 불러오는 데 실패했습니다: " + xhr.responseText);
       }
     });
@@ -99,7 +99,7 @@
         updateCartList();
         // location.reload(); // 필요시 페이지 새로고침
       },
-      error: function (xhr, status, error) {
+      error: function (xhr, shop_status, error) {
         alert("삭제에 실패했습니다: " + xhr.responseText);
       }
     });
@@ -110,6 +110,16 @@
 
   function orderFromShop(shop_id, shop_name) {
 
+    let shopMinPriceInput = document.getElementById("shop_min_price_" + shop_id).value;
+    alert(shopMinPriceInput);
+    let currentShopTotal = document.getElementById("currentShopTotal_" + shop_id).value;
+    alert(currentShopTotal);
+
+    if (shopMinPriceInput) {
+        alert('Shop Min Price: ' + shopMinPriceInput.value); // Display the value
+    } else {
+        alert('shop_min_price element not found');
+    }
     // order_addr 요소를 선택합니다.
     const orderAddrInput = document.getElementById('order_addr');
     const orderAddrZipCodeInput = document.getElementById('order_addr_zipcode');
@@ -154,10 +164,14 @@
     </thead>
     <tbody>
       <c:forEach var="item" items="${list}">
+        <input type="hidden" value="${item.shop_min_price}" name="shop_min_price" id="shop_min_price_${item.shop_id}"/>
+        ${item.shop_min_price}
         <c:if test="${item.shop_id != currentShopId}">
           <!-- 이전 가게의 주문 버튼과 총 가격 표시 -->
           <c:if test="${currentShopId != '' && shop_status=='영업중'}">
-            <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
+            <p>
+                총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
+                <input type="hidden" value="${currentShopTotal}" id="currentShopTotal_${shop_id}"/>
               <button class="order-button button_style"
                 onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
             </p>
@@ -189,14 +203,16 @@
         <!-- 가게별 총 가격 계산 -->
         <c:set var="currentShopTotal" value="${currentShopTotal + (item.carts_quantity * item.menu_price)}" />
         <c:set var="totalPrice" value="${totalPrice + (item.carts_quantity * item.menu_price)}" />
-        <c:set var="status" value="${item.status}" />
+        <c:set var="shop_status" value="${item.shop_status}" />
       </c:forEach>
     </tbody>
   </table>
   
   <!-- 마지막 가게의 주문 버튼과 총 가격 출력 -->
   <c:if test="${currentShopId != '' && shop_status=='영업중'}">
-    <p>총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
+    <p>
+        총 가격: <fmt:formatNumber value="${currentShopTotal}" pattern="#,###"/>원
+        <input type="hidden" value="${currentShopTotal}" id="currentShopTotal_${shop_id}"/>
       <button class="order-button button_style"
         onclick="orderFromShop('${currentShopId}', '${currentShopName}')">주문</button>
     </p>

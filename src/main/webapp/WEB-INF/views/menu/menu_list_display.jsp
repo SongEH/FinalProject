@@ -18,7 +18,7 @@ pageEncoding="UTF-8" %>
     // shop_listOne.jsp에서 장바구니 목록 표시
     $(document).ready(function () {
       if (userType === 'MEMBER') {
-        updateCartList('${status}'); // 페이지 로딩 시 함수 실행
+        updateCartList('${shop_status}'); // 페이지 로딩 시 함수 실행
       } else if (userType === "UNKNOWN") {
         $('#cart_list').html('<p>로그인해주세요.</p>');
       }
@@ -95,18 +95,18 @@ pageEncoding="UTF-8" %>
     }
 
     // 장바구니 목록 업데이트
-    function updateCartList(status) {
+    function updateCartList(shop_status) {
       $.ajax({
         url: '/carts/list2.do',
         type: 'GET',
         data: {
-          "status": status
+          "shop_status": shop_status
         },
         success: function (response) {
           // 응답으로 받은 HTML을 장바구니 목록에 업데이트
           $('#cart_list').html(response);
         },
-        error: function (xhr, status, error) {
+        error: function (xhr, shop_status, error) {
           alert("장바구니 목록을 불러오는 데 실패했습니다: " + xhr.responseText);
         }
       });

@@ -58,8 +58,6 @@ public class PaymentController {
     @ResponseBody
     public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id, HttpSession session) {
 
-        //System.out.println(vo);
-
         System.out.println("getAddr_id\n\n" + vo.getAddr_id());
         try {
             paymentService.insert(vo);

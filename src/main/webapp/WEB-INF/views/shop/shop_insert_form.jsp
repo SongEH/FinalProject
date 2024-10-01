@@ -154,6 +154,7 @@
                     <li class="breadcrumb-item"><a href="../order/accept.do">Home</a></li>
                     <li class="breadcrumb-item">가맹점관리</li>
                     <li class="breadcrumb-item active">가맹점 등록</li>
+
                   </ol>
                 </nav>
               </div><!-- End Page Title -->

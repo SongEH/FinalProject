@@ -138,10 +138,12 @@ pageEncoding="UTF-8"%>
             value="내역보기"
             onclick="location.href='mypage/list.do?raiders_id=${vo.raiders_id}'"
           />
-          <a href="${pageContext.request.contextPath}/riders/delivery">
-            <input type="button" value="메인이동" />
-          </a>
 
+          <input
+          type="button"
+          value="메인이동"
+          onclick="location.href='/riders/delivery'"
+        />
           <input
             type="button"
             value="회원 탈퇴"

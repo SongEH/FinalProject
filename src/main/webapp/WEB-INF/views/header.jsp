@@ -83,10 +83,12 @@ header .logout{
 //     sessionStorage.setItem('logoutChecked', 'true');
 //   }
 // };
+
 </script>
 <html lang="ko">
   <body>
     <header class="header fixed-top d-flex align-items-center">
+
       <c:choose>
         <c:when test="${not empty sessionScope.userType}">
           <c:choose>

@@ -1,18 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
   <style>
-    #menuImg {
-      width: 200px !important;
+    .menu-card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px 15px;
+      /* 상하 2px, 좌우 15px */
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      padding-bottom: 7px !important;
+    }
+
+    .menu-img {
+      border-radius: 8px;
+      width: 150px;
+      height: 150px;
+      /* 자동 높이 조정 */
+      object-fit: cover;
+      /* 비율 유지 */
+    }
+
+    .button_style {
+      padding: 50px 50px;
+      width: 150px;
+      margin-bottom: 10px;
+      margin-left: 30px;
     }
   </style>
   <script>
-
     // 메뉴 필터링
     function optionChange() {
       let selectValue = document.getElementById("sortOption").value;
@@ -100,50 +128,46 @@
       <c:forEach var="item" items="${menu_list}">
         <!-- item.menu_status가 1인 경우만 표시 -->
         <c:if test="${item.menu_status == 1}">
-          <div class="card mb-3">
-            <div class="row g-0" lass="photo">
-              <div class="col-md-4">
-                <img id="menuImg" src="../resources/images/${item.menu_img}" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h4 class="card-title">
-                      <c:choose>
-                        <c:when test="${item.menu_popularity == 1}">
-                          <p style="color:red;">인기</p>
-                        </c:when>
-                        <c:when test="${item.menu_hidden == 1}">
-                          숨김
-                        </c:when>
-                        <c:when test="${item.menu_soldout == 1}">
-                          품절
-                        </c:when>
-                        <c:otherwise>
-                          <!-- 아무 조건에도 해당하지 않으면 빈 문자열 -->
-                        </c:otherwise>
-                      </c:choose>
-                      ${item.menu_name}                    
-                  </h4>
-                  <p class="card-text">설명 : ${item.menu_content}</p>
-                  <p class="card-text">가격 : ${item.menu_price}원</p>
-
+          <div class="menu-card" style="width:60%;">
+            <table style="border-collapse: collapse;">
+              <tr>
+                <td style="vertical-align: top;">
+                  <img id="menuImg" src="../resources/images/${item.menu_img}" alt="..." class="menu-img">
+                </td>
+                <td style="padding-left: 15px; width: 450px; vertical-align: top;">
+                  <h5>                   
+                    ${item.menu_name}
+                    <c:choose>
+                      <c:when test="${item.menu_popularity == 1}"><span class="badge rounded-pill bg-warning"
+                          style="margin-left: 5px;">인기</span></c:when>
+                      <c:when test="${item.menu_soldout == 1}"><span class="badge rounded-pill bg-secondary"
+                          style="margin-left: 5px;">품절</span></c:when>
+                      <c:otherwise></c:otherwise>
+                    </c:choose>
+                  </h5>
+                  <p style="margin: 15px 0;">${item.menu_content}</p>
+                  <p style="margin: 15px 0;">
+                    <fmt:formatNumber value="${item.menu_price}" pattern="#,###" />원</p>
+                </td>
+                <td>
                   <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
-                    onclick="show_menu('${item.menu_id}');">
+                    onclick="show_menu('${item.menu_id}');"><br>
                   <input class="button_style" type="button" id="btn_popup_update" value="수정"
-                    onclick="modify_menu('${item.menu_id}');">
+                    onclick="modify_menu('${item.menu_id}');"><br>
                   <input class="button_style" type="button" id="btn_popup_delete" value="삭제"
                     onclick="delete_menu('${item.menu_id}');">
-                </div>
-              </div>
-            </div><!-- End Card with an image on left -->
+                </td>
+
+              </tr>
+            </table>
           </div>
         </c:if>
       </c:forEach>
     </div>
 
     <!-- 메뉴 필터링된 목록 표시 영역 -->
-    <div id="menu_rank_list">
-    </div>
+    <!-- <div id="menu_rank_list">
+    </div> -->
 
   </main><!-- End #main -->
 

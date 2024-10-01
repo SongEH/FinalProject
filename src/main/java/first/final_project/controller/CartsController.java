@@ -59,9 +59,10 @@ public class CartsController {
 	@RequestMapping("list2.do")
 	public String list2(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 	@RequestParam(name="shop_status", required = false) String shop_status,
-	Model model) {
+	Model model, RedirectAttributes ra) {
 
 		MemberVo user = (MemberVo) session.getAttribute("user");
+		
 
 		int member_id = user.getMember_id();
 

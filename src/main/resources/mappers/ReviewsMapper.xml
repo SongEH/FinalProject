@@ -49,6 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ceoreview c on r.reviews_id = c.reviews_id
     WHERE 
         m.member_id = #{member_id}
+    ORDER BY 
+        r.reviews_id desc
 </select>
 
 <resultMap id="reviewsShopIdMap" type="reviews">
@@ -93,6 +95,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ceoreview c on r.reviews_id = c.reviews_id
     WHERE 
         s.shop_id = #{shop_id}
+    ORDER BY 
+        r.reviews_id desc
 </select>
 
     <select id="getReviewIdFromOrderId" parameterType="int" resultType="Int">

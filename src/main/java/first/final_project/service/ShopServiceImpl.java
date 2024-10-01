@@ -61,7 +61,7 @@ public class ShopServiceImpl implements ShopService {
 
     // Owner_id로 shop_id 찾아오기
     @Override
-    public int select_one_shop_id(int owner_id) {
+    public Integer select_one_shop_id(int owner_id) {
         return shopMapper.select_one_shop_id(owner_id);
     }
 

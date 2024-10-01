@@ -10,11 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Member List</title>
+    <title>가게목록</title>
     
     <style>
      body {
-        font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
         padding: 0px;
@@ -27,11 +26,6 @@
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      h1 {
-        text-align: center;
-        color: #333;
       }
 
       input[type="button"] {
@@ -90,13 +84,13 @@
     <main id="main" class="main">
       <div class="pagetitle">
 
-        <h1>가게리스트</h1>
+        <h1>가게목록</h1><br>
 
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
             <li class="breadcrumb-item">관리자페이지</li>
-            <li class="breadcrumb-item active">가게리스트</li>
+            <li class="breadcrumb-item active">가게목록</li>
           </ol>
         </nav>
 

@@ -137,17 +137,17 @@ pageEncoding="UTF-8" %>
               <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                   <a href="/admin/member_list.do">
-                    <i class="bi bi-circle"></i><span>회원리스트</span>
+                    <i class="bi bi-circle"></i><span>회원목록</span>
                   </a>
                 </li>
                 <li>
                   <a href="/admin/owner_list.do">
-                    <i class="bi bi-circle"></i><span>사장리스트</span>
+                    <i class="bi bi-circle"></i><span>사장목록</span>
                   </a>
                 </li>
                 <li>
                   <a href="/admin/shop_list.do">
-                    <i class="bi bi-circle"></i><span>가게리스트</span>
+                    <i class="bi bi-circle"></i><span>가게목록</span>
                   </a>
                 </li>
                 <li>

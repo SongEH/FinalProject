@@ -39,6 +39,25 @@
     });
   </script>
 
+  <script>
+    // 주소 API 
+    function execDaumPostcode() {
+      new daum.Postcode({
+        oncomplete: function (data) {
+          var addr = "";
+          if (data.userSelectedType === "R") {
+            addr = data.roadAddress;
+          } else {
+            addr = data.jibunAddress;
+          }
+          document.getElementById("order_addr_zipcode").value = data.zonecode;
+          document.getElementById("order_addr").value = addr;
+        },
+      }).open();
+    }
+  </script>
+
+
   <script type="text/javascript">
     let order_name = '';
     let addr_id = '';
@@ -225,7 +244,7 @@
   <main id="main" class="main">
     <div class="pagetitle">
 
-      <h1>주문하기</h1>
+      <h1>주문하기</h1><br>
 
       <nav>
         <ol class="breadcrumb">
@@ -258,41 +277,58 @@
                 <div class="col-md-12">
                   <div class="form-check">
                     <input type="radio" id="saved_addr" name="address_choice" class="form-check-input" checked>
-                    <label class="form-check-label" for="saved_addr">주소</label>
+                    <label class="form-check-label" for="saved_addr">기존 주소</label>
                   </div>
+                </div>
 
-                  <div class="form-floating">
-                    <select id="addr_select" name="addr_id" class="form-select">
-                      <c:forEach var="addr" items="${addr_list}">
-                        <option value="${addr.addr_id}" data-addr-name="${addr.addr_name}"
-                          data-addr-line1="${addr.addr_line1}" data-addr-line2="${addr.addr_line2}">
-                          ${addr.addr_name} : ${addr.addr_line1} ${addr.addr_line2}
-                        </option>
-                      </c:forEach>
-                    </select>
-                    <label>주소</label>
-                  </div>
+                <div class="">
+                  <select id="addr_select" name="addr_id" class="form-select">
+                    <c:forEach var="addr" items="${addr_list}">
+                      <option value="${addr.addr_id}" data-addr-name="${addr.addr_name}"
+                        data-addr-line1="${addr.addr_line1}" data-addr-line2="${addr.addr_line2}">
+                        (${addr.addr_name}) ${addr.addr_line1} ${addr.addr_line2}
+                      </option>
+                    </c:forEach>
+                  </select>
+
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-check">
                     <input type="radio" id="current_addr" name="address_choice" class="form-check-input">
-                    <label class="form-check-label" for="current_addr">새로 등록할 주소</label>
+                    <label class="form-check-label" for="current_addr">새 주소</label>
+                  </div>
+                </div>
+
+               
+                <input type="button" value="주소검색" class="button_style" onclick="execDaumPostcode()" />
+                <div class="d-flex">
+                  <div class="form-floating me-2" style="flex: 1;">
+                    <input type="text" class="form-control" placeholder="우편번호" name="order_addr_zipcode"
+                      id="order_addr_zipcode" value="${order_addr_zipcode}" readonly>
+                    <label>우편번호</label>
                   </div>
 
-
-                  <input type="text" class="form-control" placeholder="우편번호" name="order_addr_zipcode"
-                    id="order_addr_zipcode" value="${order_addr_zipcode}" readonly>
-                  <input type="text" class="form-control" placeholder="별칭" name="order_addr_name">
-                  <input type="text" class="form-control" placeholder="선택주소" name="order_addr" id="order_addr"
-                    value="${order_addr}" readonly>
-                  <input type="text" class="form-control" placeholder="세부주소" name="order_addr_detail">
-
-
+                  <div class="form-floating" style="flex: 1;">
+                    <input type="text" class="form-control" placeholder="별칭" name="order_addr_name">
+                    <label>별칭</label>
+                  </div>
                 </div>
 
 
+                <div class="d-flex">
+                  <div class="form-floating me-2" style="flex: 1;">
+                    <input type="text" class="form-control" placeholder="기본주소" name="order_addr" id="order_addr"
+                      value="${order_addr}" readonly>
+                    <label>기본주소</label>
+                  </div>
+                  <div class="form-floating" style="flex: 1;">
+                    <input type="text" class="form-control" placeholder="세부주소" name="order_addr_detail">
+                    <label>세부주소</label>
+                  </div>
+                </div>
 
+                <hr>
 
                 <div class="col-md-12">
                   <div class="form-floating">
@@ -317,7 +353,7 @@
                     <label>가게요청사항</label>
                   </div>
                 </div>
-
+                <hr>
                 <div class="col-md-12">
                   <div class="form-floating">
                     <input type="text" class="form-control" placeholder="결제가격" id="menu_price_all" name="orders_price"
@@ -333,7 +369,7 @@
                     <label>결제방식</label>
                   </div>
                 </div>
-
+                <hr>
                 <h5>메뉴목록</h5>
                 <!-- 장바구니 항목 테이블 -->
                 <table class="table">

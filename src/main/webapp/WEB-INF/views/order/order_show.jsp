@@ -71,6 +71,36 @@
       width: 70px;
       border-radius: 10px;
     }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
   </style>
 
 
@@ -112,7 +142,7 @@
 
     <div class="pagetitle">
 
-      <h1>주문상세보기</h1>
+      <h1>주문상세보기</h1><br>
       <br>
       <nav>
         <ol class="breadcrumb">
@@ -134,11 +164,11 @@
               <hr>
               <table>
                 <tr>
-                  <td>가게명</td>
+                  <td style="width:250px;">가게명</td>
                   <td>${vo.shop_name}</td>
                 </tr>
                 <tr>
-                  <td>주문명</td>
+                  <td>메뉴명</td>
                   <td>${vo.orders_name}</td>
                 </tr>
                 <tr>
@@ -155,7 +185,7 @@
               <hr>
               <table>
                 <tr>
-                  <td>주문금액</td>
+                  <td style="width:250px;">주문금액</td>
                   <td>${vo.orders_price}원</td>
                 </tr>
                 <tr>
@@ -174,7 +204,7 @@
               <hr>
               <table>
                 <tr>
-                  <td>주소</td>
+                  <td style="width:250px;">주소</td>
                   <td>${vo.addr_line1} ${vo.addr_line2}</td>
                 </tr>
                 <tr>
@@ -196,13 +226,13 @@
               <h5>메뉴 목록</h5>
               <table id="menuList">
                 <tr>
-                  <td>이미지</td>
-                  <td>이름</td>
-                  <td>개수</td>
-                  <td>가격</td>
+                  <td style="background-color: #f8f9fa; text-align: left; padding: 10px;">이미지</td>
+                  <td style="background-color: #f8f9fa; text-align: left; padding: 10px;">이름</td>
+                  <td style="background-color: #f8f9fa; text-align: left; padding: 10px;">개수</td>
+                  <td style="background-color: #f8f9fa; text-align: left; padding: 10px;">가격</td>
                 </tr>
-                <c:forEach var="menu" items="${list}">
 
+                <c:forEach var="menu" items="${list}">
                   <tr>
                     <td>
                       <img src="../resources/images/${menu.menu_img}" alt="..." width="100px">

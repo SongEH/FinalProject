@@ -260,7 +260,13 @@ public class OrderController {
 		int owner_id = user.getOwner_id();
 
 		// session에 shop_id 삽입
-		int shop_id = shop_Service.select_one_shop_id(owner_id);
+		Integer shop_id = shop_Service.select_one_shop_id(owner_id);
+
+		// shop_id가 0인 경우를 체크 (가게가 없다는 가정)
+		if (shop_id == null) {
+			return "redirect:../shop/insert_form.do"; // 가게 ID가 없으면 삽입 폼으로 이동
+		}
+
 		session.setAttribute("shop_id", shop_id);
 
 		// 주문 대기 상태의 주문 정보를 가져옴

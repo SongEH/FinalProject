@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE o.member_id = #{member_id}
         AND o.orders_isdelete = 0
         GROUP BY o.orders_id, s.shop_name, s.shop_img
+        ORDER BY o.orders_id DESC
     </select>
 
     <select id="selectOne" parameterType="int" resultType="order">
@@ -68,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       JOIN member m ON a.member_id = m.member_id
       WHERE ow.owner_id = #{owner_id}
       AND o.orders_status != '배달 완료'
-      ORDER BY o.orders_id
+      ORDER BY o.orders_id DESC
     </select>
 
     <update id="updateOrderStatus">
@@ -91,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       JOIN member m ON a.member_id = m.member_id
       WHERE ow.owner_id = #{owner_id}
       AND o.orders_status = '배달 완료'
-      ORDER BY o.orders_id
+      ORDER BY o.orders_id DESC
     </select>
 
 

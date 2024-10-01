@@ -101,11 +101,10 @@ pageEncoding="UTF-8"%>
       }
     </script>
     <!-- 태광 아래부분 추가 에러메시지 호출   -->
-    <script>
+    <!-- <script>
       $(document).ready(function(){
 
         setTimeout(showMessage,10);
-
 
       });
 
@@ -114,13 +113,13 @@ pageEncoding="UTF-8"%>
           alert("로그인이 만료되었습니다. 로그인 후 이용할 수 있습니다.")
         }
       }
-    </script>
+    </script> -->
     <style>
       /* 메인 이미지 배치 및 흐리게 처리 */
       .background-image {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        top: 60%;
+        left: 46%;
         transform: translate(-50%, -50%);
         opacity: 0.5; /* 흐리게 처리 */
         z-index: -1; /* 카드보다 뒤에 오도록 */
@@ -155,7 +154,7 @@ pageEncoding="UTF-8"%>
 
     
 
-    <main id="main" class="main">
+    <main id="main" class="main" style="margin: auto; margin-top: 10%;">
     <img
         class="background-image"
         src="/resources/assets/img/notextlogo.png"

@@ -13,295 +13,315 @@ pageEncoding="UTF-8" %>
 
 <head>
   <meta charset="UTF-8" />
-  
+
   <style>
     .disabled-link {
-    color: gray; /* Set your desired color */
-    pointer-events: none; /* Disable clicking */
-    text-decoration: none; /* Remove underline */
+      color: gray;
+      /* Set your desired color */
+      pointer-events: none;
+      /* Disable clicking */
+      text-decoration: none;
+      /* Remove underline */
     }
+
     .disabled-link:hover {
-        color: gray; /* Prevent color change */
-        cursor: default; /* Show a default cursor instead of a pointer */
+      color: gray;
+      /* Prevent color change */
+      cursor: default;
+      /* Show a default cursor instead of a pointer */
     }
   </style>
   <script>
     // 문의사항 답변 상황 확인 
-    $(document).ready(function() {
-    // Only execute if ajaxExecuted is false and status is 0
-    let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
-    let status = 0; // Example status
-    if (!ajaxExecuted && status === 0) {
+    $(document).ready(function () {
+      // Only execute if ajaxExecuted is false and status is 0
+      let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
+      let status = 0; // Example status
+      if (!ajaxExecuted && status === 0) {
         $.ajax({
-            url: "/member_inquiries/answer_count.do", // Adjust the URL if needed
-            method: "GET",
-            data: { m_inquiries_type: "전체" }, // Pass any parameters if necessary
-            success: function(response) {
-                // response now contains the integer value of null_answer_count directly
-                // alert("Null Answer Count: " + response.null_answer_count);
-                // alert("owner_null_answer_count:" + response.owner_null_answer_count)
+          url: "/member_inquiries/answer_count.do", // Adjust the URL if needed
+          method: "GET",
+          data: {
+            m_inquiries_type: "전체"
+          }, // Pass any parameters if necessary
+          success: function (response) {
+            // response now contains the integer value of null_answer_count directly
+            // alert("Null Answer Count: " + response.null_answer_count);
+            // alert("owner_null_answer_count:" + response.owner_null_answer_count)
 
-                // Update the HTML to show the count next to the link
-                if (response.null_answer_count !== null && response.null_answer_count > 0 ) {
-                    $('#null_answer_count').text(response.null_answer_count); // Set the count in the span
-                } 
-
-                if (response.owner_null_answer_count !== null && response.owner_null_answer_count > 0 ) {
-                    $('#owner_null_answer_count').text(response.owner_null_answer_count); // Set the count in the span
-                } 
-
-                // Set ajaxExecuted to true to prevent future executions
-            },
-            error: function(err) {
-                alert(err.responseText);
+            // Update the HTML to show the count next to the link
+            if (response.null_answer_count !== null && response.null_answer_count > 0) {
+              $('#null_answer_count').text(response.null_answer_count); // Set the count in the span
             }
+
+            if (response.owner_null_answer_count !== null && response.owner_null_answer_count > 0) {
+              $('#owner_null_answer_count').text(response
+                .owner_null_answer_count); // Set the count in the span
+            }
+
+            // Set ajaxExecuted to true to prevent future executions
+          },
+          error: function (err) {
+            alert(err.responseText);
+          }
         });
-    }
-});
-
-
-
-
+      }
+    });
   </script>
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <c:choose>
-    <c:when test="${not empty sessionScope.userType}">
-      <c:choose>
-        <c:when test="${sessionScope.userType == 'MEMBER'}">
-          <ul class="sidebar-nav" id="sidebar-nav">
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#member-management" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="member-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/member/mypage.do">
-                    <i class="bi bi-circle"></i><span>회원정보</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/addr/addr_list.do">
-                    <i class="bi bi-circle"></i><span>주소목록</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>주문&리뷰</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/order/list.do">
-                    <i class="bi bi-circle"></i><span>주문내역</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/carts/list.do">
-                    <i class="bi bi-circle"></i><span>장바구니</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/reviews/list.do">
-                    <i class="bi bi-circle"></i><span>리뷰내역</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/notice/list.do">
-                    <i class="bi bi-circle"></i><span>공지사항</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/member_inquiries/list.do">
-                    <i class="bi bi-circle"></i><span>문의사항</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </c:when>
-        <c:when test="${sessionScope.userType == 'ADMIN'}">
-          <ul class="sidebar-nav" id="sidebar-nav">
-            <li class="nav-item">
-              <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>관리자페이지</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/admin/member_list.do">
-                    <i class="bi bi-circle"></i><span>회원목록</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/owner_list.do">
-                    <i class="bi bi-circle"></i><span>사장목록</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/shop_list.do">
-                    <i class="bi bi-circle"></i><span>가게목록</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/pending_requests.do">
-                    <i class="bi bi-circle"></i><span>승인요청</span>
-                  </a>
-                </li>
-                <li>
-                      <a href="/coupon/main.do">
-                        <i class="bi bi-circle"></i><span>쿠폰발행</span>
-                      </a>
-                </li>
-                <li>
-                       <a href="/coupon/list.do">
-                        <i class="bi bi-circle"></i><span>쿠폰조회</span>
-                      </a>
-                 </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" onclick="null_count();">
-                <i class="bi bi-layout-text-window-reverse" ></i><span >공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/notice/list.do">
-                    <i class="bi bi-circle"></i><span>공지사항</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/member_inquiries/list.do">
-                    <i class="bi bi-circle"></i><span>회원 문의사항</span>
-                    <span id="null_answer_count" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/owner_inquiries/list.do">
-                    <i class="bi bi-circle"></i><span>사장 문의사항</span>
-                    <span id="owner_null_answer_count" class="badge rounded-pill bg-warning" style="margin-left: 5px;"></span>
+      <c:when test="${not empty sessionScope.userType}">
+        <c:choose>
+          <c:when test="${sessionScope.userType == 'MEMBER'}">
+            <ul class="sidebar-nav" id="sidebar-nav">
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#member-management" href="#">
+                  <i class="bi bi-person"></i><span>회원관리</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="member-management" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/member/mypage.do">
+                      <i class="bi bi-circle"></i><span>회원정보</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/addr/addr_list.do">
+                      <i class="bi bi-circle"></i><span>주소목록</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" href="#">
+                  <i class="bi bi-journal-text"></i><span>주문&리뷰</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/order/list.do">
+                      <i class="bi bi-circle"></i><span>주문내역</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/carts/list.do">
+                      <i class="bi bi-circle"></i><span>장바구니</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/reviews/list.do">
+                      <i class="bi bi-circle"></i><span>리뷰내역</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" href="#">
+                  <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/notice/list.do">
+                      <i class="bi bi-circle"></i><span>공지사항</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/member_inquiries/list.do">
+                      <i class="bi bi-circle"></i><span>문의사항</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </c:when>
+          <c:when test="${sessionScope.userType == 'ADMIN'}">
 
+            <ul class="sidebar-nav" id="sidebar-nav">
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" href="#">
+                  <i class="bi bi-person"></i><span>관리자페이지</span><i class="bi ms-auto"></i>
+                </a>
+
+                <ul id="forms-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/admin/member_list.do">
+                      <i class="bi bi-circle"></i><span>회원목록</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/admin/owner_list.do">
+                      <i class="bi bi-circle"></i><span>사장목록</span>
+                    </a>
+                  </li>
+                  <li></li>
+                  <a href="/admin/pending_requests.do">
+                    <i class="bi bi-circle"></i><span>사장승인요청목록</span>
                   </a>
-                </li>
+              </li>
+              <li>
+                <a href="/admin/shop_list.do">
+                  <i class="bi bi-circle"></i><span>가게목록</span>
+                </a>
+              </li>
               </ul>
-            </li>
-          </ul>
-        </c:when>
-        <c:when test="${sessionScope.userType == 'OWNER'}">
-          <ul class="sidebar-nav" id="sidebar-nav">
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#owner-management" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>사장관리</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="owner-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/owner/ownerpage.do">
-                    <i class="bi bi-circle"></i><span>사장정보</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>메뉴관리</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/menu/list.do">
-                    <i class="bi bi-circle"></i><span>메뉴목록</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/menu/insert_form.do">
-                    <i class="bi bi-circle"></i><span>메뉴등록</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>가맹점관리</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <c:choose>
-                    <c:when test="${hasShop}">
-                      <a href="#" class="disabled-link">
-                        <i class="bi bi-circle"></i><span>가맹점 등록 완료</span>
-                      </a>
-                    </c:when>
-                    <c:otherwise>
-                      <a href="/shop/insert_form.do">
-                        <i class="bi bi-circle"></i><span>가맹점 등록</span>
-                      </a>
-                    </c:otherwise>
-                  </c:choose>
-                </li>
-                <li>
-                  <a href="/shop/modify_form.do">
-                    <i class="bi bi-circle"></i><span>가맹점 수정</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#orders-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-box"></i><span>주문 관리</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="orders-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/order/accept.do">
-                    <i class="bi bi-circle"></i><span>주문 내역</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/order/complete.do">
-                    <i class="bi bi-circle"></i><span>완료 주문 내역</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-gem"></i><span>리뷰관리</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/reviews/listByOwner.do">
-                    <i class="bi bi-circle"></i><span>리뷰관리</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#notice-management" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-star"></i><span>공지&문의</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="notice-management" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="/notice/list.do">
-                    <i class="bi bi-circle"></i><span>공지사항</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/owner_inquiries/list.do">
-                    <i class="bi bi-circle"></i><span>문의사항</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </c:when>
-      </c:choose>
-    </c:when>
-  </c:choose>
+              
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" href="#">
+                  <i class="bi bi-journal-text"></i><span>쿠폰관리</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/coupon/main.do">
+                      <i class="bi bi-circle"></i><span>쿠폰발행</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/coupon/list.do">
+                      <i class="bi bi-circle"></i><span>쿠폰조회</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" href="#" onclick="null_count();">
+                  <i class="bi bi-layout-text-window-reverse"></i><span>공지&문의</span><i class="bi  ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/notice/list.do">
+                      <i class="bi bi-circle"></i><span>공지사항</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/member_inquiries/list.do">
+                      <i class="bi bi-circle"></i><span>회원 문의사항</span>
+                      <span id="null_answer_count" class="badge rounded-pill bg-warning"
+                        style="margin-left: 5px;"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/owner_inquiries/list.do">
+                      <i class="bi bi-circle"></i><span>사장 문의사항</span>
+                      <span id="owner_null_answer_count" class="badge rounded-pill bg-warning"
+                        style="margin-left: 5px;"></span>
+
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </c:when>
+          <c:when test="${sessionScope.userType == 'OWNER'}">
+            <ul class="sidebar-nav" id="sidebar-nav">
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#owner-management" href="#">
+                  <i class="bi bi-person"></i><span>사장관리</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="owner-management" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/owner/ownerpage.do">
+                      <i class="bi bi-circle"></i><span>사장정보</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" href="#">
+                  <i class="bi bi-journal-text"></i><span>메뉴관리</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/menu/list.do">
+                      <i class="bi bi-circle"></i><span>메뉴목록</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/menu/insert_form.do">
+                      <i class="bi bi-circle"></i><span>메뉴등록</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" href="#">
+                  <i class="bi bi-layout-text-window-reverse"></i><span>가맹점관리</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <c:choose>
+                      <c:when test="${hasShop}">
+                        <a href="#" class="disabled-link">
+                          <i class="bi bi-circle"></i><span>가맹점 등록 (완료)</span>
+                        </a>
+                      </c:when>
+                      <c:otherwise>
+                        <a href="/shop/insert_form.do">
+                          <i class="bi bi-circle"></i><span>가맹점 등록</span>
+                        </a>
+                      </c:otherwise>
+                    </c:choose>
+                  </li>
+                  <li>
+                    <a href="/shop/modify_form.do">
+                      <i class="bi bi-circle"></i><span>가맹점 수정</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#orders-nav" href="#">
+                  <i class="bi bi-box"></i><span>주문 관리</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="orders-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/order/accept.do">
+                      <i class="bi bi-circle"></i><span>주문 내역</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/order/complete.do">
+                      <i class="bi bi-circle"></i><span>완료 주문 내역</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" href="#">
+                  <i class="bi bi-gem"></i><span>리뷰관리</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="icons-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/reviews/listByOwner.do">
+                      <i class="bi bi-circle"></i><span>리뷰관리</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#notice-management" href="#">
+                  <i class="bi bi-star"></i><span>공지&문의</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="notice-management" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/notice/list.do">
+                      <i class="bi bi-circle"></i><span>공지사항</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/owner_inquiries/list.do">
+                      <i class="bi bi-circle"></i><span>문의사항</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </c:when>
+        </c:choose>
+      </c:when>
+    </c:choose>
 
     <!--------------------- 사장 로그인 시 END --------------------->
 
@@ -525,4 +545,3 @@ pageEncoding="UTF-8" %>
 </head>
 
 </html>
-

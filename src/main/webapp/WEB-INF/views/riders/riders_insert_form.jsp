@@ -252,7 +252,7 @@ pageEncoding="UTF-8"%>
       <div class="wrapper">
         <div class="container">
           <div class="header">
-            <h2>회원가입 riders_insert_form</h2>
+            <h2>회원가입</h2>
           </div>
           <div class="form-group">
             <label for="rider_name">로그인 시 사용할 이름을 입력해 주세요</label>

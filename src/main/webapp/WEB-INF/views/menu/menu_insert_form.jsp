@@ -9,7 +9,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   <meta charset="utf-8" />
 
   <script type="text/javascript">
-
     /* -----------------메뉴 인기, 숨김, 품절 옵션 설정-----------------*/
     // onclick 이벤트를 사용하여 하나의 체크박스만 선택되도록 함
     function handleCheckboxChange(clickedCheckbox) {
@@ -85,6 +84,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       f.submit(); //전송
     }
   </script>
+
+  <style>
+    img {
+      width: 300px;
+    }
+
+    #my_img {
+      border-radius: 8px;
+
+    }
+  </style>
 </head>
 
 <body>
@@ -103,7 +113,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="../order/accept.do">Home</a></li>
           <li class="breadcrumb-item">메뉴관리</li>
           <li class="breadcrumb-item active">메뉴등록</li>
         </ol>
@@ -143,9 +153,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </div>
 
                 <div class="col-md-12">
-                  <div class="form-floating">
-                    <input class="form-control" type="file" name="photo" />
-                    <label>사진</label>
+                  <div class="form-floating" style="text-align:center;">
+                    <input class="form-control" type="file" name="photo" id="my_img" />
                   </div>
                 </div>
 
@@ -178,6 +187,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </label>
                   </div>
                 </div>
+
+
 
                 <!-- Hidden inputs to ensure all values are submitted -->
                 <input type="hidden" name="menu_popularity" value="0" />

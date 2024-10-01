@@ -79,8 +79,8 @@ pageEncoding="UTF-8"%>
                 },
               }); //ajax end
             } else {
-              let msg = "결제 실패";
-              msg += "\n에러내용" + rsp.error_msg;
+              let msg = "결제가 실패되었습니다.";
+              // msg += "\n에러내용" + rsp.error_msg;
             }
             alert(msg);
           }

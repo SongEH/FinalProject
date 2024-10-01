@@ -66,13 +66,8 @@ public class ShopController {
     @Autowired
     AddrService addrService;
 
-    // 메인화면 이전 코드 (list.do -> shoplist.do)
-    // 가계 수정이나 등록하면 direct 걸려있어서 살려놓음
     @RequestMapping("/shop/list.do")
     public String shop_list(String food_category,String order_addr,String activeCategory, Model model, RedirectAttributes ra) {
-
-        System.out.println(food_category);
-        System.out.println(order_addr);
 
         if(order_addr == null) { 
             ra.addAttribute("reason", "not find address");
@@ -80,7 +75,7 @@ public class ShopController {
         }
 
         List<ShopVo> list;
-        double radius = 10000;  // 10km 반경
+        double radius = 3000;  // 3km 반경
 
         System.out.println("1 : " + order_addr);
 
@@ -96,8 +91,6 @@ public class ShopController {
             // 고객 주소의 좌표 가져오기
             double[] customerCoordinates = kakaoMapService.getCoordinates(order_addr);
 
-            //System.out.println("2 : " + customerCoordinates[0] + " " + customerCoordinates[1]);
-
             // 모든 가게에 대해 좌표 계산 후 반경 내 가게 필터링
             for (ShopVo shop : allShops) {
                 double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
@@ -111,11 +104,7 @@ public class ShopController {
                     BigDecimal shop_rating = shop.getShop_rating().setScale(1, RoundingMode.HALF_UP);
                     shop.setShop_rating(shop_rating);
                 }
-                //System.out.println("3 : " + shopCoordinates[0] + " " + shopCoordinates[1]);
-                //System.out.println("4 : " + distance);
             }
-            //System.out.println("5 : " + list);
-            //System.out.println("6 : " + list.size());
             model.addAttribute("list", list);
             model.addAttribute("order_addr", order_addr);
             model.addAttribute("food_category", food_category);
@@ -155,7 +144,7 @@ public class ShopController {
         }
 
         List<ShopVo> list;
-        double radius = 10000;  // 10km 반경
+        double radius = 3000;  // 10km 반경
 
         System.out.println("1 : " + order_addr);
 
@@ -203,21 +192,21 @@ public class ShopController {
     }
 
     // 메인화면
-    @RequestMapping("/shop/list2.do")
-    public String shop_list(String food_category,Model model, HttpSession session) {
-        // 세션에서 고객의 정보(MemberVo) 가져오기
+    // @RequestMapping("/shop/list2.do")
+    // public String shop_list(String food_category,Model model, HttpSession session) {
+    //     // 세션에서 고객의 정보(MemberVo) 가져오기
         
-        List<ShopVo> list = shop_Service.selectList(food_category);
-        System.out.println(food_category);
+    //     List<ShopVo> list = shop_Service.selectList(food_category);
+    //     System.out.println(food_category);
 
-        for(ShopVo vo : list){
-            if(vo.getShop_rating() !=null){
-                BigDecimal shop_rating = vo.getShop_rating().setScale(1, RoundingMode.HALF_UP);
-                vo.setShop_rating(shop_rating);
-            }
-        }
-        model.addAttribute("list", list);
-        return "shop/shop_list";
+    //     for(ShopVo vo : list){
+    //         if(vo.getShop_rating() !=null){
+    //             BigDecimal shop_rating = vo.getShop_rating().setScale(1, RoundingMode.HALF_UP);
+    //             vo.setShop_rating(shop_rating);
+    //         }
+    //     }
+    //     model.addAttribute("list", list);
+    //     return "shop/shop_list";
 
 
         // MemberVo member = (MemberVo) session.getAttribute("user");
@@ -280,7 +269,7 @@ public class ShopController {
         //     }
         // }
         // return "shop/shop_list";
-    }
+    // }
 
     // 가게 등록 폼 이동
     @RequestMapping("/shop/insert_form.do")
@@ -384,6 +373,7 @@ public class ShopController {
                 ra.addAttribute("reason", "session_timeout");
                 return "redirect:../login_form.do";
             }
+            
             int owner_id = user.getOwner_id();
             System.out.println("owner_id : " + owner_id);
 

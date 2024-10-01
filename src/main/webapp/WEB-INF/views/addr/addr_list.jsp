@@ -90,9 +90,9 @@
       <br>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">회원관리</li>
-          <li class="breadcrumb-item active">주소목록</li>
+          <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+          <li class="breadcrumb-item">회원관리</a></li>
+          <li class="breadcrumb-item active">주소목록</a></li>
         </ol>
       </nav>
 

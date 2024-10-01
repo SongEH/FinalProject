@@ -144,23 +144,27 @@ function ceoWriteReview(f){
   <%@ include file="../sidebar.jsp" %>
 
   <main id="main" class="main">
-    <div class="container">
       <div class="pagetitle">
-          <h1>Reviews</h1>
+          <h1>리뷰관리</h1><br>
           <nav>
               <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                  <li class="breadcrumb-item">Reviews</li>
+                <li class="breadcrumb-item"><a href="../order/accept.do">Home</a></li>
+                  <li class="breadcrumb-item">리뷰관리</li>
               </ol>
           </nav>
       </div>
+      
       <section class="section">
         <div class="row">
           <div class="col-lg-10">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Floating labels Form</h5>
+                <c:if test="${empty list}">
+                  <p style="margin-top: 20px;">작성된 리뷰가 없습니다.</p> 
+                  </c:if>
                 <c:forEach var="reviews" items="${list}">
+                 
+                
                   <div class="col-md-12">
                     <div class="reviews-item d-flex flex-column">
                       <div class="d-flex justify-content-between align-items-center">
@@ -239,7 +243,6 @@ function ceoWriteReview(f){
           </div>
         </div>
       </section>
-    </div>
   </main>
   </div>
 </body>

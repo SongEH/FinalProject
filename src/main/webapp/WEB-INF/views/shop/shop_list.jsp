@@ -179,6 +179,14 @@ body {
     
     <script>
       function selectOne(shop_id, shop_status){
+        
+        let user = "${sessionScope.user}";
+        if(user == "" || user == null || user == undefined){
+          window.location.href='../login_form.do';
+          alert("로그인이 만료되었습니다. 로그인 후 이용할 수 있습니다.");
+          
+        }
+
         $.ajax({
           url     :     "/shop/select_one.do",
           data    :      {"shop_id": shop_id,
@@ -201,6 +209,7 @@ body {
           }
         });
       }
+      
     </script>
     <script>
       function optionChange(){

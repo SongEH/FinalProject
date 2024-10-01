@@ -105,11 +105,12 @@ pageEncoding='UTF-8'%>
     <main id="main" class="main">
       <div class="container">
         <div class="pagetitle">
-          <h1>Reviews</h1>
+          <h1>리뷰내역</h1>
           <nav>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item">Reviews</li>
+              <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+              <li class="breadcrumb-item">주문&리뷰</a></li>
+              <li class="breadcrumb-item">리뷰내역</li>
             </ol>
           </nav>
         </div>
@@ -119,7 +120,6 @@ pageEncoding='UTF-8'%>
             <div class="col-lg-10">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Floating labels Form</h5>
                   <c:forEach var="vo" items="${list}">
                     <input type="hidden" value="${vo.shop_id}" />
                     <div class="col-md-12">

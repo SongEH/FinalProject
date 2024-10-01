@@ -26,24 +26,24 @@ public class CouponService {
     @Autowired
     private GradeMapper gradeMapper;
 
-    모든 회원에게 등급에 맞는 쿠폰 발행
+    // 모든 회원에게 등급에 맞는 쿠폰 발행
     @Transactional
     public void issueCouponsForAllMembers() {
         List<MemberVo> members = memberMapper.selectList(); // 모든 회원 조회
         System.out.println(memberMapper.selectList());
-        for (MemberVo member : members) {
-            GradeVo grade = gradeMapper.getGradeById(member.getGrade_id()); // 회원의 등급 조회
+        // for (MemberVo member : members) {
+        //     GradeVo grade = gradeMapper.getGradeById(member.getGrade_id()); // 회원의 등급 조회
 
-            if (grade != null) {
-                CouponVo coupon = new CouponVo();
-                coupon.setMember_id(member.getMember_id());
-                coupon.setDiscount_amount(grade.getGrade_discount()); // 등급에 맞는 할인 금액 설정
-                coupon.setCoupon_code(generateCouponCode()); // 쿠폰 코드 생성
-                coupon.setGrade_id(grade.getGrade_id());
+        //     if (grade != null) {
+        //         CouponVo coupon = new CouponVo();
+        //         coupon.setMember_id(member.getMember_id());
+        //         coupon.setDiscount_amount(grade.getGrade_discount()); // 등급에 맞는 할인 금액 설정
+        //         coupon.setCoupon_code(generateCouponCode()); // 쿠폰 코드 생성
+        //         coupon.setGrade_id(grade.getGrade_id());
 
-                couponMapper.insertCoupon(coupon); // 쿠폰 발행
-            }
-        }
+        //         couponMapper.insertCoupon(coupon); // 쿠폰 발행
+        //     }
+        // }
     }
 
     public List<CouponVo> getCouponsForMember(int memberId) {

@@ -70,7 +70,7 @@
             <h1>완료 주문 목록</h1><br>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                  <li class="breadcrumb-item"><a href="../order/accept.do">Home</a></li>
                     <li class="breadcrumb-item">주문 관리</li>
                     <li class="breadcrumb-item active">완료 주문 목록</li>
                 </ol>

@@ -147,13 +147,13 @@
             <main id="main" class="main">
               <div class="pagetitle">
 
-                <h1>Form Layouts</h1>
+                <h1>가맹점 등록</h1>
 
                 <nav>
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Forms</li>
-                    <li class="breadcrumb-item active">Layouts</li>
+                    <li class="breadcrumb-item">가맹점관리</li>
+                    <li class="breadcrumb-item active">가맹점등록</li>
                   </ol>
                 </nav>
               </div><!-- End Page Title -->

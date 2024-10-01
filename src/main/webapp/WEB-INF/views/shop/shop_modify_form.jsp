@@ -120,14 +120,14 @@
 
             <main id="main" class="main">
               <div class="pagetitle">
-                <h1>Form Layouts</h1>
+                <h1>가맹점 수정</h1>
               </div><!-- End Page Title -->
               <section class="section">
                 <div class="row">
                   <div class="col-lg-10">
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title">Floating labels Form</h5>
+                        <h5 class="card-title">가게 정보를 입력하세요</h5>
                         
                         
                         <!-- Floating Labels Form -->

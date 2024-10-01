@@ -26,18 +26,18 @@ pageEncoding="UTF-8" %>
 
     .menu-img {
       border-radius: 8px;
-      width: 100%;
-      height: auto;
+      width: 150px;
+      height: 150px;
       /* 자동 높이 조정 */
       object-fit: cover;
       /* 비율 유지 */
     }
 
-    .button_style{
-      padding:50px 50px;
-      width:150px;
-      margin-bottom:10px;
-      margin-left:200px;
+    .button_style {
+      padding: 50px 50px;
+      width: 150px;
+      margin-bottom: 10px;
+      margin-left: 30px;
     }
   </style>
   <script>
@@ -131,17 +131,19 @@ pageEncoding="UTF-8" %>
           <div class="menu-card" style="width:60%;">
             <table style="border-collapse: collapse;">
               <tr>
-                <td style="width: 150px; vertical-align: top;">
+                <td style="vertical-align: top;">
                   <img id="menuImg" src="../resources/images/${item.menu_img}" alt="..." class="menu-img">
                 </td>
-                <td style="padding-left: 45px; width:200px; vertical-align: top;">
-                  <h5>
+                <td style="padding-left: 15px; width: 450px; vertical-align: top;">
+                  <h5>                   
+                    ${item.menu_name}
                     <c:choose>
-                      <c:when test="${item.menu_popularity == 1}">인기</c:when>
-                      <c:when test="${item.menu_soldout == 1}">품절</c:when>
+                      <c:when test="${item.menu_popularity == 1}"><span class="badge rounded-pill bg-warning"
+                          style="margin-left: 5px;">인기</span></c:when>
+                      <c:when test="${item.menu_soldout == 1}"><span class="badge rounded-pill bg-secondary"
+                          style="margin-left: 5px;">품절</span></c:when>
                       <c:otherwise></c:otherwise>
                     </c:choose>
-                    ${item.menu_name}
                   </h5>
                   <p style="margin: 15px 0;">${item.menu_content}</p>
                   <p style="margin: 15px 0;">

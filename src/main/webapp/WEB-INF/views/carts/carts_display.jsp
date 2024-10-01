@@ -120,7 +120,7 @@
     const orderAddrZipCodeValue = orderAddrZipCodeInput.value;
 
     // 직접 페이지 이동
-    //window.location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name + "&order_addr=" +  orderAddrValue + "&order_addr_zipcode=" + orderAddrZipCodeValue;
+    window.location.href = "/order/pending_order.do?shop_id=" + shop_id + "&shop_name=" + shop_name + "&order_addr=" +  orderAddrValue + "&order_addr_zipcode=" + orderAddrZipCodeValue;
   }
 
   function updateQuantity(cartsId, operation) {

@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      select * from carts order by carts_id desc
   </select> -->
   
-   <select id="selectList" parameterType="int" resultType="carts">
+   <select id="selectList" parameterType="int" resultType="carts"> 
       SELECT 
          c.*,                          
          s.shop_name   AS shop_name,    
@@ -17,7 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          m.menu_img    AS menu_img,   
          m.menu_price  AS menu_price,
          s.shop_min_price as shop_min_price,
-         s.shop_status AS shop_status
+         s.shop_status AS shop_status,
+         s.shop_min_price AS shop_min_price
          <!-- CASE 
             WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
             WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) 

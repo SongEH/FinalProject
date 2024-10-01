@@ -101,7 +101,20 @@ pageEncoding="UTF-8"%>
       }
     </script>
     <!-- 태광 아래부분 추가 에러메시지 호출   -->
-  
+    <script>
+      $(document).ready(function(){
+
+        setTimeout(showMessage,10);
+
+
+      });
+
+      function showMessage(){
+        if("${param.reason=='session_timeout'}" == "true"){
+          alert("로그인이 만료되었습니다. 로그인 후 이용할 수 있습니다.")
+        }
+      }
+    </script>
     <style>
       /* 메인 이미지 배치 및 흐리게 처리 */
       .background-image {

@@ -22,5 +22,6 @@ public class CartsVo {
     private int menu_price;
 
     // 판단하기 위한 연산 column
-    private String status;
+    private String shop_status;
+    private int shop_min_price;
 }

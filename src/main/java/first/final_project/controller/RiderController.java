@@ -233,28 +233,38 @@ public class RiderController {
     public String getWaitingOrders(Model model) {
         // 세션에서 라이더 정보를 가져옴
         HttpSession session = request.getSession();
-        RiderVo user = (RiderVo) session.getAttribute("user");
 
-        // 라이더 정보가 없을 경우
-        if (user == null) {
-            // 로그인 화면으로 리다이렉트
-            return "redirect:login_form.do";
+        // 세션에서 저장된 객체를 가져옴
+        Object userObj = session.getAttribute("user");
+
+        // 객체가 존재하고, 타입이 RiderVo일 때만 처리
+        if (userObj != null) {
+            if (userObj instanceof RiderVo) {
+                RiderVo user = (RiderVo) userObj;
+                int raiders_id = user.getRaiders_id();
+
+                // raiders_id를 세션에 저장
+                session.setAttribute("raiders_id", raiders_id);
+
+                // 라이더가 배차 대기 중인 주문 목록를 가져오기
+                List<OrderVo> orders = riderService.getOrdersByStatus("배차 대기", raiders_id);
+
+                if (orders == null || orders.isEmpty()) {
+                    // 오류가 발생한 경우를 처리하거나 빈 목록을 반환
+                    model.addAttribute("error", "현재 배차 대기 중인 주문이 없습니다.");
+                    return "riders/waitingOrders";
+                }
+
+                model.addAttribute("orders", orders);
+                model.addAttribute("raiders_id", raiders_id);
+                return "riders/waitingOrders";
+            }else{
+                // RiderVo를 사용하지 않는 세션"user" 로그아웃 처리
+                session.removeAttribute("user");
+                return "redirect:/riders/main.do";
+            }
         }
-
-        int raiders_id = user.getRaiders_id();
-        session.setAttribute("raiders_id", raiders_id);
-
-        List<OrderVo> orders = riderService.getOrdersByStatus("배차 대기", raiders_id);
-
-        if (orders == null || orders.isEmpty()) {
-            // 오류가 발생한 경우를 처리하거나 빈 목록을 반환
-            model.addAttribute("error", "현재 배차 대기 중인 주문이 없습니다.");
-            return "riders/waitingOrders";
-        }
-
-        model.addAttribute("orders", orders);
-        model.addAttribute("raiders_id", raiders_id);
-        return "riders/waitingOrders";
+    return "redirect:/riders/main.do";
     }
 
     // 라이더가 진행 중인 주문 리스트를 표시
@@ -270,7 +280,9 @@ public class RiderController {
         }
 
         int raiders_id = user.getRaiders_id();
+        // 배차가 완료된 리스트 가져오기
         List<OrderVo> orders = riderService.getOrdersByRiderAndStatus(raiders_id, "배차 완료");
+        // 배차가 완료된 리스트가 없을시
         if (orders == null || orders.isEmpty()) {
             model.addAttribute("message", "현재 진행 중인 주문이 없습니다.");
         } else {
@@ -289,7 +301,7 @@ public class RiderController {
         // 배달 이력 상태도 '배달 중'으로 업데이트
         riderService.updateDeliveryHistory(orders_id, "배달 중");
 
-        // 서버 측: 주문이 들어왔을 때 전송할 메시지
+        // 주문이 들어왔을 때 웹 소켓에 전송할 메시지
         Map<String, Object> message = new HashMap<>();
         message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
         message.put("orders_id", orders_id); // 주문 ID

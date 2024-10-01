@@ -62,19 +62,16 @@ public class CartsController {
 	Model model, RedirectAttributes ra) {
 
 		MemberVo user = (MemberVo) session.getAttribute("user");
-		
 
 		int member_id = user.getMember_id();
 
 		List<CartsVo> list = carts_mapper.selectList(member_id);
-		System.out.println("장바구니목록\n" + list);
 
 		// request binding
 		model.addAttribute("list", list);
 		model.addAttribute("shop_status", shop_status);
 
 		return "carts/carts_display"; // 반환할 뷰 이름
-
 	}
 
 	// 장바구니에 메뉴 추가

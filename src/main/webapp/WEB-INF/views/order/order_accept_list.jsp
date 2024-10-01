@@ -101,15 +101,15 @@
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>주문 목록</h1><br>
+      <h1>주문 내역</h1><br>
       <div style="display: flex; justify-content: flex-end;">
       </div>
 
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="../order/accept.do">Home</a></li>
           <li class="breadcrumb-item">주문 관리</li>
-          <li class="breadcrumb-item active">주문 목록</li>
+          <li class="breadcrumb-item active">주문 내역</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->

@@ -147,24 +147,24 @@
             <main id="main" class="main">
               <div class="pagetitle">
 
-                <h1>Form Layouts</h1>
+                <h1>가맹점 등록</h1><br>
 
                 <nav>
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Forms</li>
-                    <li class="breadcrumb-item active">Layouts</li>
+                    <li class="breadcrumb-item"><a href="../order/accept.do">Home</a></li>
+                    <li class="breadcrumb-item">가맹점관리</li>
+                    <li class="breadcrumb-item active">가맹점 등록</li>
                   </ol>
                 </nav>
               </div><!-- End Page Title -->
               
+              <div class="conatainer">
               <section class="section">
                 <div class="row">
                   <div class="col-lg-10">
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title">Floating labels Form </h5>
-
+                        <h5></h5>
                         <!-- Floating Labels Form -->
                         <form class="row g-3" id="frm" method="POST" action="insert.do" enctype="multipart/form-data">
                           <!-- <input type="hidden" value="" /> -->
@@ -287,6 +287,7 @@
                   </div>
                 </div>
               </section>
+            </div>
 
             </main><!-- End #main -->
 

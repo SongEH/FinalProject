@@ -75,7 +75,7 @@ public class ShopController {
         }
 
         List<ShopVo> list;
-        double radius = 10000;  // 10km 반경
+        double radius = 3000;  // 3km 반경
 
         System.out.println("1 : " + order_addr);
 
@@ -144,7 +144,7 @@ public class ShopController {
         }
 
         List<ShopVo> list;
-        double radius = 10000;  // 10km 반경
+        double radius = 3000;  // 10km 반경
 
         System.out.println("1 : " + order_addr);
 
@@ -192,21 +192,21 @@ public class ShopController {
     }
 
     // 메인화면
-    @RequestMapping("/shop/list2.do")
-    public String shop_list(String food_category,Model model, HttpSession session) {
-        // 세션에서 고객의 정보(MemberVo) 가져오기
+    // @RequestMapping("/shop/list2.do")
+    // public String shop_list(String food_category,Model model, HttpSession session) {
+    //     // 세션에서 고객의 정보(MemberVo) 가져오기
         
-        List<ShopVo> list = shop_Service.selectList(food_category);
-        System.out.println(food_category);
+    //     List<ShopVo> list = shop_Service.selectList(food_category);
+    //     System.out.println(food_category);
 
-        for(ShopVo vo : list){
-            if(vo.getShop_rating() !=null){
-                BigDecimal shop_rating = vo.getShop_rating().setScale(1, RoundingMode.HALF_UP);
-                vo.setShop_rating(shop_rating);
-            }
-        }
-        model.addAttribute("list", list);
-        return "shop/shop_list";
+    //     for(ShopVo vo : list){
+    //         if(vo.getShop_rating() !=null){
+    //             BigDecimal shop_rating = vo.getShop_rating().setScale(1, RoundingMode.HALF_UP);
+    //             vo.setShop_rating(shop_rating);
+    //         }
+    //     }
+    //     model.addAttribute("list", list);
+    //     return "shop/shop_list";
 
 
         // MemberVo member = (MemberVo) session.getAttribute("user");
@@ -269,7 +269,7 @@ public class ShopController {
         //     }
         // }
         // return "shop/shop_list";
-    }
+    // }
 
     // 가게 등록 폼 이동
     @RequestMapping("/shop/insert_form.do")
@@ -373,6 +373,7 @@ public class ShopController {
                 ra.addAttribute("reason", "session_timeout");
                 return "redirect:../login_form.do";
             }
+            
             int owner_id = user.getOwner_id();
             System.out.println("owner_id : " + owner_id);
 

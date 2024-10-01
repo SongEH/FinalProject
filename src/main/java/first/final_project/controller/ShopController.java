@@ -66,13 +66,8 @@ public class ShopController {
     @Autowired
     AddrService addrService;
 
-    // 메인화면 이전 코드 (list.do -> shoplist.do)
-    // 가계 수정이나 등록하면 direct 걸려있어서 살려놓음
     @RequestMapping("/shop/list.do")
     public String shop_list(String food_category,String order_addr,String activeCategory, Model model, RedirectAttributes ra) {
-
-        System.out.println(food_category);
-        System.out.println(order_addr);
 
         if(order_addr == null) { 
             ra.addAttribute("reason", "not find address");
@@ -96,8 +91,6 @@ public class ShopController {
             // 고객 주소의 좌표 가져오기
             double[] customerCoordinates = kakaoMapService.getCoordinates(order_addr);
 
-            //System.out.println("2 : " + customerCoordinates[0] + " " + customerCoordinates[1]);
-
             // 모든 가게에 대해 좌표 계산 후 반경 내 가게 필터링
             for (ShopVo shop : allShops) {
                 double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
@@ -111,11 +104,7 @@ public class ShopController {
                     BigDecimal shop_rating = shop.getShop_rating().setScale(1, RoundingMode.HALF_UP);
                     shop.setShop_rating(shop_rating);
                 }
-                //System.out.println("3 : " + shopCoordinates[0] + " " + shopCoordinates[1]);
-                //System.out.println("4 : " + distance);
             }
-            //System.out.println("5 : " + list);
-            //System.out.println("6 : " + list.size());
             model.addAttribute("list", list);
             model.addAttribute("order_addr", order_addr);
             model.addAttribute("food_category", food_category);

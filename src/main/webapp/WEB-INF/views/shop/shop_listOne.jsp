@@ -98,7 +98,7 @@ pageEncoding="UTF-8"%>
     }
 
     .order_info {
-      width: 300px;
+      width: 350px;
       position: sticky;
       top: 0;
     }

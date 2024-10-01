@@ -29,7 +29,7 @@
       }
 
       input[type="button"] {
-        background-color: #5cb85c;
+        /* background-color: #5cb85c; */
         color: white;
         border: none;
         padding: 10px 15px;

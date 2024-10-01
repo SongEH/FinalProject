@@ -223,12 +223,6 @@
       );
     }
   </script>
-
-  <script>
-    function addr_insert() {
-
-    }
-  </script>
 </head>
 
 <body>

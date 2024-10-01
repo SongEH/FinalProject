@@ -43,6 +43,8 @@ public class MainDisplayController {
                     sb.append(" ");
                     sb.append(vo.getAddr_line2());
                 }
+                String order_addr = sb.toString();
+                model.addAttribute("order_addr", order_addr);
             }else if(userObj instanceof RiderVo){
                 // RiderVo를 사용하는 경우 로그아웃 처리
                 session.removeAttribute("user");

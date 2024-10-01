@@ -327,9 +327,14 @@ public class ShopController {
     @RequestMapping("/shop/select_one.do")
     public String shop_selectOne(int shop_id,
     @RequestParam(name="shop_status", required = false)String shop_status,
-    Model model) {
+    Model model, RedirectAttributes ra) {
         System.out.println("shop_id : " + shop_id);
         
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        if(user==null){
+			ra.addAttribute("reason", "session_timeout");
+			return "redirect:../login_form.do";
+		};
         try {
             ShopVo vo = shop_Service.selectOne(shop_id);
             if(vo.getShop_rating()!=null){

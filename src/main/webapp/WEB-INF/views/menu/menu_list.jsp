@@ -103,7 +103,7 @@ pageEncoding="UTF-8" %>
 
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="../order/accept.do">Home</a></li>
           <li class="breadcrumb-item">메뉴관리</li>
           <li class="breadcrumb-item active">메뉴목록</li>
         </ol>

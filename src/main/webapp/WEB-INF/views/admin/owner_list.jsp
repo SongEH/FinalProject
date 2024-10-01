@@ -86,7 +86,7 @@
 
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="../admin/member_list.do">Home</a></li>
             <li class="breadcrumb-item">관리자페이지</li>
             <li class="breadcrumb-item active">사장목록</li>
           </ol>

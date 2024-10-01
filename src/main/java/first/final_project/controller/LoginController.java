@@ -68,6 +68,9 @@ public class LoginController {
     // 로그인 폼
     @RequestMapping("login_form.do")
     public String login_form() {
+
+        session.invalidate();
+
         return "login_form";
     }
 

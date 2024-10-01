@@ -1,5 +1,6 @@
 package first.final_project.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,7 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class KakaoMapService {
 
-    private final String apiKey = "468780eb2df5022cd5c83fcacdc8b927";
+    @Value("${kakao.api.key}")
+    private String apiKey;
 
     public double[] getCoordinates(String address) throws Exception {
         String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + address;

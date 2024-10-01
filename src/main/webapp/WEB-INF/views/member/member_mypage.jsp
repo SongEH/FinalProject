@@ -85,9 +85,9 @@ pageEncoding="UTF-8"%>
 
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
           <li class="breadcrumb-item">회원관리</li>
-          <li class="breadcrumb-item active">회원정보</li>
+          <li class="breadcrumb-item">회원정보</a></li>
         </ol>
       </nav>
 

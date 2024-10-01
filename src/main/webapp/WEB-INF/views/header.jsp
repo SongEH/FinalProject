@@ -128,13 +128,13 @@ header .logout{
             </c:when>
             <c:when test="${sessionScope.userType == 'OWNER'}">
               <span>${sessionScope.user.owner_name}님 안녕하세요👋
-                  <input class="button_style" type="button" value="관리페이지" onclick="location.href='/owner/ownerpage.do'">
+                  <!-- <input class="button_style" type="button" value="관리페이지" onclick="location.href='/owner/ownerpage.do'"> -->
                   <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
               </span>
             </c:when>
             <c:when test="${sessionScope.userType == 'ADMIN'}">
               <span>${sessionScope.user.admin_accountId}님 안녕하세요👋
-                <input class="button_style" type="button" value="가맹점관리페이지" onclick="location.href='/admin/member_list.do'">
+                <!-- <input class="button_style" type="button" value="가맹점관리페이지" onclick="location.href='/admin/member_list.do'"> -->
                 <input class="button_style" type="button" id="logOut" value="로그아웃" onclick="location.href='/logout.do'"/>
 
               </span>

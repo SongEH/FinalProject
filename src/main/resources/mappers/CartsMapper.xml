@@ -16,13 +16,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          m.menu_name   AS menu_name,    
          m.menu_img    AS menu_img,   
          m.menu_price  AS menu_price,
-         CASE 
+         s.shop_min_price as shop_min_price,
+         s.shop_status AS shop_status
+         <!-- CASE 
             WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
             WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) 
             and TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
             WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
             ELSE '영업전'
-         END AS status  
+         END AS status   -->
       FROM 
          carts c
       JOIN 

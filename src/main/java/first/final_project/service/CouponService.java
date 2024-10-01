@@ -26,6 +26,10 @@ public class CouponService {
     @Autowired
     private GradeMapper gradeMapper;
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     // 모든 회원에게 등급에 맞는 쿠폰 발행
     @Transactional
     public void issueCouponsForAllMembers() {

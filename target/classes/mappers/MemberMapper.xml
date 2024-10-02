@@ -70,10 +70,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 쿠폰을 활용하기 위한 Test -->
     <select id="getMemberWithCoupons" resultType="Coupon">
     SELECT coupon_id, coupon_code, discount_amount, start_date, end_date
-    FROM coupons
-    WHERE member_id = #{memberId}
+    FROM coupon
+    WHERE member_id = #{member_id}
     </select>
 
+    <select id="selectOne" parameterType="int" resultType="member">
+    SELECT * FROM member WHERE member_id = #{member_id}
+    </select>
 
     <resultMap id="memberWithCouponsResultMap" type="first.final_project.vo.MemberVo">
         <id property="member_id" column="member_id"/>

@@ -35,6 +35,6 @@ public interface MemberMapper {
 
     MemberVo getMemberWithCoupons(int member_id);
 
-    List<CouponVo> selectOne(String string, int memberId);
+    List<CouponVo> selectOne(String string, int member_id);
 
 }

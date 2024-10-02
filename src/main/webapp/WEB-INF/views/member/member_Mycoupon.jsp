@@ -31,6 +31,11 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
           </tr>
         </c:forEach>
       </table>
+      <c:if test="${empty member.coupon}">
+        <tr>
+          <td colspan="4">보유하신 쿠폰이 없습니다.</td>
+        </tr>
+      </c:if>
     </main>
   </body>
 </html>

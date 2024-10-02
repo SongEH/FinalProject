@@ -72,6 +72,10 @@
     background-color: #e090b5;
   }
 
+  .button_gray{
+    background-color: gray !important;
+  }
+
   @font-face {
     font-family: 'Noto Sans KR';
     font-style: normal;
@@ -134,6 +138,13 @@
   a,
   p {
     font-family: 'Noto Sans KR', sans-serif !important;
+  }
+
+  textarea {
+    width: 100%;
+    height: 6.25em;
+    border: none;
+    resize: none;
   }
 </style>
 

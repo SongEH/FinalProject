@@ -24,7 +24,12 @@
     }
 
     img {
-      width: 200px;
+      width: 300px;
+    }
+
+    #my_img {
+      border-radius: 8px;
+
     }
   </style>
 
@@ -218,16 +223,6 @@
                   </div>
                 </div>
 
-                <div class="col-md-12">
-                  <div class="form-floating">
-                    <img src="../resources/images/${ vo.menu_img }" id="my_img">
-                    <br>
-                    <input class="button_style" type="button" value="이미지편집" onclick="ajaxFileUpload();">
-                    <label>사진</label>
-                  </div>
-                </div>
-
-
                 <div class="col-12">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="menu_popularity" id="menu_popularity_edit"
@@ -255,6 +250,14 @@
                     <label class="form-check-label" for="menu_soldout_edit">
                       품절
                     </label>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-floating" style="text-align:center;">
+                    <img src="../resources/images/${ vo.menu_img }" id="my_img">
+                    <br>
+                    <input class="button_style" type="button" value="이미지편집" onclick="ajaxFileUpload();" style="margin-top:10px;">                  
                   </div>
                 </div>
 

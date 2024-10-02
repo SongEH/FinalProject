@@ -142,7 +142,7 @@
 
     <div class="pagetitle">
 
-      <h1>주문상세보기</h1><br>
+      <h1>주문상세보기</h1>
       <br>
       <nav>
         <ol class="breadcrumb">
@@ -161,7 +161,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title" style="font-weight: bold; ">주문 상세보기</h5>
-              <hr>
+              
               <table>
                 <tr>
                   <td style="width:250px;">가게명</td>
@@ -182,7 +182,6 @@
                   <td>${vo.orders_merchant_uid}</td>
                 </tr>
               </table>
-              <hr>
               <table>
                 <tr>
                   <td style="width:250px;">주문금액</td>
@@ -201,10 +200,9 @@
                   <td>${vo.orders_payment}</td>
                 </tr>
               </table>
-              <hr>
               <table>
                 <tr>
-                  <td style="width:250px;">주소</td>
+                  <td style="width:250px;">회원 주소</td>
                   <td>${vo.addr_line1} ${vo.addr_line2}</td>
                 </tr>
                 <tr>
@@ -220,8 +218,7 @@
                   <td>${vo.orders_drequest}</td>
                 </tr>
               </table>
-
-              <hr>
+<br><br>
 
               <h5>메뉴 목록</h5>
               <table id="menuList">

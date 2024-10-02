@@ -154,7 +154,7 @@ pageEncoding="UTF-8" %>
                   </li>
                   <li></li>
                   <a href="/admin/pending_requests.do">
-                    <i class="bi bi-circle"></i><span>사장승인요청</span>
+                    <i class="bi bi-circle"></i><span>사장승인요청목록</span>
                   </a>
               </li>
               <li>

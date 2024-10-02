@@ -97,25 +97,23 @@ public class OrderService {
     }
 
     public Map<String, Object> getPagedOrder(int member_id, int page, String startDate, String endDate) {
-        
+
         int blockList = MyCommon.Order.BLOCK_LIST;
-     
+
         int blockPage = MyCommon.Order.BLOCK_PAGE;
-       
+
         int rowTotal = order_mapper.getTotalCountByDate(member_id, startDate, endDate);
 
-        
         int totalPage = (rowTotal + blockList - 1) / blockList;
-      
+
         if (page < 1)
             page = 1;
         if (page > totalPage)
             page = totalPage;
 
-       
         int offset = (page - 1) * blockList;
         if (offset < 0) {
-            offset = 0; /
+            offset = 0;
         }
 
         // 데이터베이스 쿼리에 사용할 파라미터를 Map에 담아 전달

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="first.final_project.dao.CouponMapper">
 
 
-    <!-- 모든 회원에게 쿠폰 발행 -->
+
     <insert id="issueCouponsForAllMembers3000">
         INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
         SELECT m.member_id, LEFT(UUID(), 8), #{discount_amount}, NOW()
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-    <!-- 특정 회원에게 쿠폰 발행 -->
+
     <insert id="issueCouponForMember">
         INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
         VALUES (#{member_id}, LEFT(UUID(), 8), #{discount_amount}, NOW());

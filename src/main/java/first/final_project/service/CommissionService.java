@@ -102,6 +102,6 @@ public class CommissionService {
         result.put("totalCommission", totalCommission);
         result.put("pageMenu", pageMenu);
 
-        return result; // Ensure the method always returns a result
+        return result;
     }
 }

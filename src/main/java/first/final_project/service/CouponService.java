@@ -53,12 +53,10 @@ public class CouponService {
         return couponMapper.getCouponsByMemberId(member_id);
     }
 
-    // 고유 쿠폰 코드 생성
     private String generateCouponCode() {
-        return UUID.randomUUID().toString().substring(0, 8); // 랜덤 8자리 쿠폰 코드 생성
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 
-    // 모든 발급된 쿠폰을 조회하는 서비스 로직
     public List<CouponVo> getAllIssuedCoupons() {
         return couponMapper.getAllIssuedCoupons();
     }

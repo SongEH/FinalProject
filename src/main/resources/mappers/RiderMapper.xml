@@ -4,25 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="first.final_project.dao.RidersMapper">
 
-    <!-- 전체조회 -->
+
     <select id="selectList" resultType="rider">
        select * from riders order by raiders_id
     </select>
 
 
-    <!-- mem_idx 이용해서  MemberVo  구하기 -->
+
     <select id="selectOneFromId" parameterType="int" resultType="rider">
        select * from riders where raiders_id=#{raiders_id}
     </select>
 
-    <!-- mem_id 이용해서  MemberVo  구하기 -->
+
     <select id="selectOneFromEmail" parameterType="String" resultType="rider">
        select * from riders where riders_email=#{riders_email}
     </select>
 
-    <!-- 추가  
-        #{mem_name} => vo.getMem_name()
-   -->
+
     <insert id="insert" parameterType="rider">
       INSERT INTO riders
       (
@@ -43,12 +41,11 @@
                                   
     </insert>
 
-    <!-- 삭제  -->
     <delete id="delete" parameterType="int">
       delete from riders where raiders_id=#{ raiders_id }
     </delete>
 
-    <!-- 수정  -->
+
     <update id="update" parameterType="rider">
       update riders 
              set riders_phone=#{ riders_phone }, riders_pwd=#{ riders_pwd }, riders_region=#{ riders_region}
@@ -67,10 +64,7 @@
         UPDATE orders SET orders_status = #{status} WHERE orders_id = #{orders_id}
     </update>
 
-    <!-- <insert id="assignDelivery">
-        INSERT INTO Deliveries (deliveries_id, raiders_id, deliveries_method, orders_id)
-        VALUES (null, #{raiders_id}, #{deliveries_method}, #{orders_id})
-    </insert> -->
+
 
     <insert id="assignDelivery" useGeneratedKeys="true" keyProperty="deliveries_id">
         INSERT INTO deliveries (raiders_id, deliveries_method, orders_id)
@@ -83,7 +77,7 @@
     </insert>
 
 
-    <!-- Orders와 Shop을 조인하여 주문과 관련된 가게 정보를 가져옴 -->
+
     <select id="findOrdersByStatus" parameterType="map" resultType="order">
         SELECT o.*, s.shop_name AS shop_name, s.shop_addr1 AS shop_addr1, s.shop_addr2 AS shop_addr2,
             d.deliveries_method AS deliveries_method, 

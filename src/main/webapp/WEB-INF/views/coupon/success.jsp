@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
     <title>Success</title>
   </head>
   <body>
-    <h1>Coupons Issued Successfully!</h1>
-    <a href="list.do">View Coupons</a>
+    <h1>발생성공</h1>
+    <a href="list.do">발행된 쿠폰 조회</a>
   </body>
 </html>

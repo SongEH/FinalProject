@@ -148,6 +148,7 @@ header .logout{
           <div class="login-section">
             <input class="button_style" type="button" value="로그인" 
             onclick="location.href='/login_form.do'"/>
+            &nbsp;&nbsp;
             <input class="button_style" type="button" value="회원가입" 
             onclick="location.href='/insert_form.do'"/>
           </div>

@@ -1,6 +1,7 @@
 package first.final_project.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,10 @@ public class CommissionService {
             startDate = "2023-01-01";
         }
         if (endDate == null || endDate.isEmpty()) {
-            endDate = LocalDate.now().toString();
+            endDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE) + " 23:59:59";
+        } else {
+
+            endDate = LocalDate.parse(endDate).format(DateTimeFormatter.ISO_LOCAL_DATE) + " 23:59:59";
         }
 
         int blockList = MyCommon.Commission.BLOCK_LIST;

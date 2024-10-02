@@ -176,7 +176,6 @@ pageEncoding="UTF-8"%>
             type="text"
             name="rider_name"
             value="${vo.rider_name}"
-            disabled
           />
         </div>
 

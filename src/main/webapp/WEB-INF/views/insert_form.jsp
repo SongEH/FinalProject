@@ -405,6 +405,38 @@ pageEncoding="UTF-8"%>
         }
       }
     </script>
+
+    <style>
+      /* 메인 이미지 배치 및 흐리게 처리 */
+      .background-image {
+        position: absolute;
+        top: 60%;
+        left: 46%;
+        transform: translate(-50%, -50%);
+        opacity: 0.5; /* 흐리게 처리 */
+        z-index: -1; /* 카드보다 뒤에 오도록 */
+        max-width: 100%; /* 이미지 크기 조정 */
+        height: auto;
+      }
+
+      /* 카드들을 가로로 중앙 정렬 */
+      .card-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px; /* 카드 간 간격 조절 */
+      }
+
+      .card {
+        width: 18rem;
+      }
+
+      /* 메인 컨테이너에 약간의 상단 마진 */
+      .main {
+        margin-top: 100px;
+      }
+
+    </style>
+
   </head>
   <body>
 
@@ -414,8 +446,12 @@ pageEncoding="UTF-8"%>
 
     
 
-    <main id="main" class="main">
-
+    <main id="main" class="main" style="margin: auto; margin-top: 10%;">
+      <img
+        class="background-image"
+        src="/resources/assets/img/notextlogo.png"
+        alt="Final Logo"
+      />
     <div class="container mt-4">
       
       <div class="row">
@@ -797,6 +833,7 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
     </main>
+
     <!-- end -->
   </body>
 </html>

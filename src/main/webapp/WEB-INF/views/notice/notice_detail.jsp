@@ -13,7 +13,6 @@ prefix="c" %>
     <title>공지사항 상세</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
         background-color: #f4f4f4;
@@ -25,11 +24,6 @@ prefix="c" %>
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      h1 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
       }
       .notice-detail {
         padding: 20px;
@@ -92,7 +86,7 @@ prefix="c" %>
 
     <main id="main" class="main">
       <div class="pagetitle">
-        <h1>공지사항 상세</h1>
+        <h1>공지사항 상세</h1><br>
 
         <nav>
           <ol class="breadcrumb">
@@ -137,6 +131,5 @@ prefix="c" %>
     </main>
     <!-- End #main -->
 
-    <%@include file="../footer.jsp" %>
   </body>
 </html>

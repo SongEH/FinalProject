@@ -47,7 +47,10 @@ public class LoginController {
     @RequestMapping("/member/insert.do")
     public String insert(MemberVo vo) {
         member_mapper.insert(vo);
-        session.setAttribute("vo", vo);
+        session.setAttribute("user", vo);
+        session.setAttribute("userType", "MEMBER");
+        session.setAttribute("isLoggedIn", true);
+        session.setAttribute("currentUser", vo.getMember_accountId());
         return "redirect:/login_form.do";
     }
 
@@ -55,13 +58,19 @@ public class LoginController {
     @RequestMapping("/owner/insert.do")
     public String insert(OwnerVo vo) {
         owner_mapper.insert(vo);
-        session.setAttribute("vo", vo);
+        session.setAttribute("user", vo);
+        session.setAttribute("userType", "OWNER");
+        session.setAttribute("isLoggedIn", true);
+        session.setAttribute("currentUser", vo.getOwner_accountId());
         return "redirect:/login_form.do";
     }
 
     // 로그인 폼
     @RequestMapping("login_form.do")
     public String login_form() {
+
+        session.invalidate();
+
         return "login_form";
     }
 
@@ -87,7 +96,6 @@ public class LoginController {
         session.setAttribute("user", user);
         session.setAttribute("userType", "MEMBER");
         session.setAttribute("isLoggedIn", true);
-
         session.setAttribute("currentUser", user.getMember_accountId());
         
         // 절대 경로 사용 (수정 by 태광)

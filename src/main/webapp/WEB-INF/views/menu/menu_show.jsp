@@ -24,7 +24,12 @@
     }
 
     img {
-      width: 200px;
+      width: 300px;
+    }
+
+    #my_img {
+      border-radius: 8px;
+
     }
   </style>
 
@@ -49,7 +54,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>메뉴상세보기</h1>
+      <h1>메뉴상세보기</h1><br>
 
       <nav>
         <ol class="breadcrumb">
@@ -98,14 +103,6 @@
                   </div>
                 </div>
 
-                <div class="col-md-12">
-                  <div class="form-floating">
-                    <img src="../resources/images/${ vo.menu_img }" id="my_img">
-                    <br>
-                    <label>사진</label>
-                  </div>
-                </div>
-
                 <div class="col-12">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="menu_popularity_view" value="1"
@@ -136,6 +133,12 @@
                   </div>
                 </div>
 
+                <div class="col-md-12">
+                  <div class="form-floating" style="text-align:center;">
+                    <img src="../resources/images/${ vo.menu_img }" id="my_img">
+                    <br>
+                  </div>
+                </div>
                 <div class="text-center">
                   <input class="button_style" type="button" value="목록으로" onclick="location.href='list.do'">
                   <input class="button_style" type="button" value="수정"

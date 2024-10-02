@@ -12,7 +12,6 @@
     <title>공지사항 수정</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -24,11 +23,6 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -109,7 +103,7 @@
     <main id="main" class="main">
         <div class="pagetitle">
 
-        <h1>공지사항 수정</h1>
+        <h1>공지사항 수정</h1><br>
 
         <nav>
             <ol class="breadcrumb">

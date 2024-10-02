@@ -12,7 +12,6 @@
     <title>답변 등록</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -24,11 +23,6 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -94,7 +88,7 @@
     <main id="main" class="main">
         <div class="pagetitle">
 
-        <h1>답변 등록</h1>
+        <h1>답변 수정</h1><br>
 
         <nav>
             <ol class="breadcrumb">
@@ -118,7 +112,7 @@
                 </div>
                 <div class="form-group">
                     <button type="button" class="button_style" onclick="send(this.form);">
-                        등록
+                        수정
                     </button>
                     <button type="button" class="button_style" onclick="location.href='${pageContext.request.contextPath}/member_inquiries/detail.do?m_inquiries_id='+'${param.m_inquiries_id}'">
                         취소

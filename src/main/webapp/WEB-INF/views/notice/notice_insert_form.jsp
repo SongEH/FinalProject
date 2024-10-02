@@ -13,7 +13,6 @@ prefix="c" %>
     <title>공지사항 등록</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -26,11 +25,7 @@ prefix="c" %>
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
+        
         .form-group {
             margin-bottom: 15px;
         }
@@ -79,8 +74,25 @@ prefix="c" %>
           f.notice_title.focus();
           return;
         }
+
+        if (notice_type == "") {
+          alert("유형을 선택하시오");
+          f.notice_type.value = "";
+          f.notice_type.focus();
+          return;
+        }
+
+        if (notice_content == "") {
+          alert("내용을 입력하시오");
+          f.notice_content.value = "";
+          f.notice_content.focus();
+          return;
+        }
+
+        f.action="/notice/insert.do";
+        f.submit();
       }
-        </script>
+    </script>
 <body>
    <%@ include file="../common.jsp" %>
 
@@ -91,7 +103,7 @@ prefix="c" %>
   <main id="main" class="main">
     <div class="pagetitle">
 
-      <h1>공지사항 등록</h1>
+      <h1>공지사항 등록</h1><br>
 
       <nav>
         <ol class="breadcrumb">
@@ -106,7 +118,6 @@ prefix="c" %>
    <div class="container">
         
         <form action="${pageContext.request.contextPath}/notice/insert_form.do" method="post">
-            <input type="hidden" name="notice_id" value="${vo.notice_id}">
             <div class="form-group">
                 <label for="notice_title">제목</label>
                 <input type="text" id="notice_title" name="notice_title" required>

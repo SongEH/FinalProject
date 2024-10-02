@@ -14,49 +14,6 @@
     integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous">
   </script>
 
-  <script>
-    function insert_review(orders_id) {
-      location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
-    }
-  </script>
-
-
-  <!-- polling 방식으로 주문상태 업데이트 -->
-  <!-- <script>
-    function fetchOrders() {
-      $.ajax({
-        url: `/order/order_list.do`, // 주문 내역을 가져오는 API 경로
-        data: {
-          type: 'member'
-        }, // type 데이터를 전달
-        method: 'GET',
-        success: function (orders) {
-
-          orders.forEach(order => {
-            console.log(order.orders_id, order.orders_status);
-
-            let orders_id = '#order-' + order.orders_id;
-            let orderRow = $(orders_id);
-            let orderStatusElement = orderRow.find('.orders-status')[0]; // jQuery로 선택한 후, 첫 번째 요소 가져오기
-
-            console.log("orderRow" + orderRow);
-            if (orderStatusElement) {
-              orderStatusElement.textContent = order.orders_status; // 상태 업데이트
-              console.log("Status updated for order " + order.orders_id);
-            } else {
-              console.log("요소를 찾을 수 없습니다: " + orders_id); // 요소를 찾지 못했을 경우 로그 출력
-            }
-          });
-        },
-        error: function (err) {
-          console.error('주문을 가져오는 중 오류 발생:', err);
-        }
-      });
-    }
-
-    // 특정 주기 마다 주문 내역을 가져옵니다.
-    setInterval(fetchOrders, 30000); // 10000ms = 10초
-  </script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
@@ -73,6 +30,11 @@
     });
   </script>
 
+  <script>
+    function insert_review(orders_id) {
+      location.href = "../reviews/insert_form.do?orders_id=" + orders_id;
+    }
+  </script>
 
   <style>
     .menu-card {
@@ -82,6 +44,7 @@
       /* 상하 2px, 좌우 15px */
       margin-bottom: 20px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 65%;
     }
 
     .menu-img {
@@ -91,6 +54,12 @@
       /* 자동 높이 조정 */
       object-fit: cover;
       /* 비율 유지 */
+    }
+
+    #btns .button_style {
+      margin-left: 100px;
+
+      width: 150px;
     }
   </style>
 </head>
@@ -111,7 +80,7 @@
       <br>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
           <li class="breadcrumb-item">주문&리뷰</li>
           <li class="breadcrumb-item active">주문내역</li>
         </ol>
@@ -143,13 +112,13 @@
       <c:forEach var="vo" items="${list}">
         <c:if test="${vo.orders_isdelete == 0}">
           <div class="menu-card">
-            <table>
+            <table style="table-layout: fixed;">
               <tr id="order-${vo.orders_id}">
                 <!-- 각 주문에 고유 ID를 부여 -->
-                <td style="width: 150px; vertical-align: center;">
+                <td style="width: 250px; vertical-align: center;" style="flex: 1;">
                   <img src="../resources/images/${vo.shop_img}" class="menu-img" alt="...">
                 </td>
-                <td style="padding-left: 15px; vertical-align: top;">
+                <td style="padding-left: 15px; vertical-align: top;" style="flex: 1;">
                   <h5>
                     ${vo.shop_name}
                     <span class="orders-status" style="color:red;">${vo.orders_status}</span>
@@ -161,15 +130,18 @@
                     <fmt:formatDate value="${vo.orders_cdate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
                   </p>
                   <p class="card-text">메뉴 : ${vo.orders_name}, ${vo.menu_count}개</p>
-                  <p class="card-text">가격 : <fmt:formatNumber value="${vo.orders_price}" pattern="#,###"/>원</p>
-                  <div>
+                  <p class="card-text">가격 :
+                    <fmt:formatNumber value="${vo.orders_price}" pattern="#,###" />원</p>
+                </td>
+                <td style="flex: 1;">
+                  <div id="btns">
                     <input class="button_style" type="button" id="btn_popup_update" value="상세보기"
                       onclick="window.location.href='order_show.do?orders_id=' + ${vo.orders_id}">
-                    <input class="button_style" type="button" id="btn_popup_update" value="배송조회"
-                      onclick="modify_menu('${vo.orders_id}');">
+                    <br><br>
                     <c:choose>
                       <c:when test="${vo.hasReview}">
-                        <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성완료" style="cursor: default; pointer-events: none; color:rgb(229, 84, 84)" disabled>
+                        <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성완료"
+                          style="cursor: default; pointer-events: none; background-color:gray" disabled>
                       </c:when>
                       <c:otherwise>
                         <input class="button_style" type="button" id="btn_popup_delete" value="리뷰작성"
@@ -183,16 +155,17 @@
           </div>
         </c:if>
       </c:forEach>
+      <!-- 페이징 처리 -->
+      <div style="text-align: center; margin-top: 20px; font-size: 15px">
+        ${pageMenu}
+      </div>
+
+      <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
+      <input type="hidden" name="startDate" value="${param.startDate}" />
+      <input type="hidden" name="endDate" value="${param.endDate}" />
     </c:if>
 
-    <!-- 페이징 처리 -->
-    <div style="text-align: center; margin-top: 20px; font-size: 15px">
-      ${pageMenu}
-    </div>
 
-    <!-- 필터링된 페이지에서도 현재 날짜와 필터를 유지하기 위한 hidden 필드 -->
-    <input type="hidden" name="startDate" value="${param.startDate}" />
-    <input type="hidden" name="endDate" value="${param.endDate}" />
 
   </main><!-- End #main -->
 </body>

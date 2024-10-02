@@ -73,7 +73,7 @@ public class MemberController {
     public String myPageDelete(@RequestParam int member_id) {
         member_mapper.delete(member_id);
         session.invalidate(); // 세션 무호화 -> 사용자가 탈퇴할 때 세션에 저장된 정보가 더이상 유효하지 않기에 세션을 무효화 시켜야 한다
-        return "redirect:/main.do";
+        return "redirect:/main/display.do";
     }
 
     // 쿠폰활용TEST

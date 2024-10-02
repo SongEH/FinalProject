@@ -9,10 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Owner List</title>
+    <title>사장목록</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
         padding: 0px;
@@ -27,13 +26,8 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
-      h1 {
-        text-align: center;
-        color: #333;
-      }
-
       input[type="button"] {
-        background-color: #5cb85c;
+        /* background-color: #5cb85c; */
         color: white;
         border: none;
         padding: 10px 15px;
@@ -88,13 +82,13 @@
     <main id="main" class="main">
       <div class="pagetitle">
 
-        <h1>사장리스트</h1>
+        <h1>사장목록</h1><br>
 
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="../admin/member_list.do">Home</a></li>
             <li class="breadcrumb-item">관리자페이지</li>
-            <li class="breadcrumb-item active">사장리스트</li>
+            <li class="breadcrumb-item active">사장목록</li>
           </ol>
         </nav>
 
@@ -120,7 +114,7 @@
           <td>${owner.owner_license}</td>
           <td>${owner.approval_status}</td>
           <td>
-            <button class="button_style" onclick="locaion.href='delete_owner.do?owner_id=${owner.owner_id}'">Delete</button>
+            <button class="button_style" onclick="location.href='/admin/delete_owner.do?owner_id='+'${owner.owner_id}'">Delete</button>
           </td>
         </tr>
       </c:forEach>

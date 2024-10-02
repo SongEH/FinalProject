@@ -51,10 +51,21 @@ public class MenuController {
 	@RequestMapping("list.do")
 	public String list(Model model) {
 
-		// Menu Vo에 가게 ID 부여 (현재 로그인된 사장의 가게ID 가져와서 등록)
+		// Menu Vo에 가게 ID 부여 (로그인 사장의 가게ID)
 		OwnerVo user = (OwnerVo) session.getAttribute("user");
+		
+		// 로그인 여부 체크
+		
+
 		int owner_id = user.getOwner_id();
-		int shop_id = shop_service.select_one_shop_id(owner_id);
+		Integer shop_id = shop_service.select_one_shop_id(owner_id);
+
+		System.out.println("shop_id : " + shop_id);
+
+		// shop_id가 0인 경우를 체크 (가게가 없다는 가정)
+		if (shop_id == null) {
+			return "redirect:../shop/insert_form.do"; // 가게 ID가 없으면 삽입 폼으로 이동
+		}
 
 		List<MenuVo> menu_list = menu_mapper.selectList(shop_id);
 
@@ -65,8 +76,7 @@ public class MenuController {
 		return "menu/menu_list";
 	}
 
-
-	// shop_id로 메뉴 목록 조회 
+	// shop_listOne.jsp에서 회원에게 보여지는 메뉴 목록 (shop_id로 조회)
 	@RequestMapping("listByShopId.do")
 	public String listByShopId(int shop_id,
 	@RequestParam(name="shop_status", required = false)String shop_status, Model model) {
@@ -74,7 +84,7 @@ public class MenuController {
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
 		MemberVo user = (MemberVo) session.getAttribute("user");
-		if(user!=null){
+		if (user != null) {
 			session.setAttribute("userType", "MEMBER");
 		}
 		// model.addAttribute("list", list);
@@ -85,24 +95,24 @@ public class MenuController {
 
 	}
 
-	// 가게 메뉴목록 필터링(숨김, 품절, 인기) 
+	// 가게 메뉴목록 필터링(숨김, 품절, 인기)
 	@RequestMapping("menu_rank.do")
 	public String menu_rank(int shop_id, Model model, String selectValue) {
-		
-		System.out.println("menu_rank 도착");
 
 		// List<MenuVo> list = menu_mapper.selectList(shop_id);
 
 		Map<String, Object> selectMap = new HashMap<String, Object>();
-        selectMap.put("shop_id", shop_id);      
-        selectMap.put("selectValue", selectValue); 
+		selectMap.put("shop_id", shop_id);
+		selectMap.put("selectValue", selectValue);
+
+		System.out.println("selectValue " + selectValue);
 
 		List<MenuVo> menu_list = menu_mapper.selectListValue(selectMap);
 
 		model.addAttribute("menu_list", menu_list);
 		System.out.println("menu_list : \n" + menu_list);
 
-		return "menu/menu_list_display";
+		return "menu/menu_display"; // 변경 필요
 
 	}
 
@@ -110,10 +120,24 @@ public class MenuController {
 	@RequestMapping("insert_form.do")
 	public String insert_form() {
 
+		// Menu Vo에 가게 ID 부여 (로그인 사장의 가게ID)
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+		// 로그인 여부 체크
+		
+
+		int owner_id = user.getOwner_id();
+		Integer shop_id = shop_service.select_one_shop_id(owner_id);
+		
+		// shop_id가 0인 경우를 체크 (가게가 없다는 가정)
+		if (shop_id == null) {
+			return "redirect:../shop/insert_form.do"; // 가게 ID가 없으면 삽입 폼으로 이동
+		}
+
 		return "menu/menu_insert_form";
 	}
-	
-	// 메뉴 등록 
+
+	// 메뉴 등록
 	@RequestMapping("insert.do")
 	public String insert(MenuVo vo,
 			@RequestParam(name = "photo") MultipartFile photo,
@@ -184,7 +208,7 @@ public class MenuController {
 		// VO를 -> JSON 객체로 생성해서 반환
 		// JSONObject json = new JSONObject();
 		// json.put("menu_id", vo.getMenu_id());
-		// ... 
+		// ...
 		// return json.toString();
 	}
 
@@ -293,7 +317,7 @@ public class MenuController {
 		delFile.delete();
 
 		// DB delete
-		int res = menu_mapper.delete(menu_id);
+		menu_mapper.delete(menu_id);
 
 		return "redirect:list.do";
 	}

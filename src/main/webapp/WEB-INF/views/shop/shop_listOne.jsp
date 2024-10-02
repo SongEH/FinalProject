@@ -98,7 +98,7 @@ pageEncoding="UTF-8"%>
     }
 
     .order_info {
-      width: 300px;
+      width: 350px;
       position: sticky;
       top: 0;
     }
@@ -316,6 +316,7 @@ pageEncoding="UTF-8"%>
     <!-- 표현은 하지않고 활용하기 위한 데이터  -->
     <input type="hidden" name="shop_id" value="${vo.shop_id}" />
     <input type="hidden" name="shop_status" value="${shop_status}"/>
+    <input type="hidden" name="shop_min_price" id="shop_min_price" value="${shop_min_price}"/>
 
     <div class="container-custom">
       <div class="shop">
@@ -328,7 +329,7 @@ pageEncoding="UTF-8"%>
               <div class="rating" id="shop_info">
                 <img src="${pageContext.request.contextPath }/resources/images/${vo.shop_img}" alt="Rating Star">
                 <span>
-                  <div class="stars">
+                  <div class="stars" style="margin-bottom: 10px;">
                     <c:if test="${vo.shop_rating != null && vo.shop_rating > 0}">
                       <c:forEach begin="1" end="${vo.shop_rate}">
                         <i class="fa fa-star"></i>
@@ -341,7 +342,7 @@ pageEncoding="UTF-8"%>
                   </div>
                   <div class="details">
                     <!-- <div><strong>21,000원 이상 주문 시 4,000원 할인</strong></div> -->
-                    <div>최소 주문 금액: <strong id="shop_min_pricd"> <fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/> </strong></div>
+                    <div style="margin-bottom: 10px;">최소 주문 금액: <strong id="shop_min_price"> <fmt:formatNumber value="${vo.shop_min_price}" pattern="#,###"/> </strong></div>
                     <div>결제: <strong>신용카드, 현금, 요기서결제</strong></div>
                     <!-- <button class="btn btn-danger">4,000원 할인</button> -->
                   </div>

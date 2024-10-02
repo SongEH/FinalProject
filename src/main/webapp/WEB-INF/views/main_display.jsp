@@ -98,12 +98,11 @@ pageEncoding="UTF-8"%>
     </style>
     <script>
     function shopListAll(element){
-      var food_category = element.getAttribute('food_category');
+      let food_category = element.getAttribute('food_category');
       // alert(food_category);
       let order_addr = $("#order_addr").val().trim();
       // alert(order_addr);
       // let isLoggedIn = ${"#isLoggedIn"}.val().trim();
-
       
       if("${ empty user}"=="true" ){
         alert("로그인 후 이용할 수 있습니다.");

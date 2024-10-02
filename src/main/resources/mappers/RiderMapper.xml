@@ -114,7 +114,7 @@
         JOIN addr a ON o.addr_id = a.addr_id
         JOIN member m ON a.member_id = m.member_id
         WHERE d.raiders_id = #{raiders_id}
-        ORDER BY o.orders_id
+        ORDER BY o.orders_id DESC
     </select>
 
     <select id="getAddrById" parameterType="int" resultType="addr">

@@ -53,10 +53,8 @@
     <script type="text/javascript">
         function send(f){
             let o_inquiries_title = f.o_inquiries_title.value.trim();
-            
             let o_inquiries_content = f.o_inquiries_content.value.trim();
             
-
             if(o_inquiries_title ==""){
                 alert("제목을 입력하시오");
                 f.o_inquiries_title.value="";

@@ -98,7 +98,7 @@ pageEncoding="UTF-8"%>
     </style>
     <script>
     function shopListAll(element){
-      var food_category = element.getAttribute('food_category');
+      let food_category = element.getAttribute('food_category');
       // alert(food_category);
       let order_addr = $("#order_addr").val().trim();
       // alert(order_addr);

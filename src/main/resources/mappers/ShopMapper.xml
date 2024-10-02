@@ -26,34 +26,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 전체 리스트 조회  -->
     <select id="selectList" parameterType="String" resultType="shop">
+        
         SELECT 
         s.*,
         (SELECT COUNT(*) FROM menu WHERE shop_id = s.shop_id) AS menu_count,
         (SELECT COUNT(*) 
-        FROM reviews r
-        INNER JOIN orders o ON o.orders_id = r.orders_id
-        WHERE o.shop_id = s.shop_id) AS reviews_count,
+            FROM reviews r
+            INNER JOIN orders o ON o.orders_id = r.orders_id
+            WHERE o.shop_id = s.shop_id) AS reviews_count,
         (SELECT AVG(r.reviews_rating) 
-        FROM reviews r
-        INNER JOIN orders o ON o.orders_id = r.orders_id
-        WHERE o.shop_id = s.shop_id) AS shop_rating,
+            FROM reviews r
+            INNER JOIN orders o ON o.orders_id = r.orders_id
+            WHERE o.shop_id = s.shop_id) AS shop_rating,
         (SELECT COUNT(*) 
-        FROM ceoreview c
-        INNER JOIN reviews r ON c.reviews_id = r.reviews_id
-        INNER JOIN orders o ON o.orders_id = r.orders_id
-        WHERE o.shop_id = s.shop_id) AS ceoreview_count
-        <!-- CASE 
-            WHEN s.shop_status ='휴무일' THEN '휴무일' 
-            WHEN DAYNAME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) = s.shop_close_day THEN '휴무일'
-            WHEN TIME('23:59:59') > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) 
-            and TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) > TIME(s.shop_open_hour) THEN '영업중'
-		    WHEN TIME(s.shop_close_hour) > TIME(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul')) THEN '영업중'
-            ELSE '영업전'
-        END AS status -->
+            FROM ceoreview c
+            INNER JOIN reviews r ON c.reviews_id = r.reviews_id
+            INNER JOIN orders o ON o.orders_id = r.orders_id
+            WHERE o.shop_id = s.shop_id) AS ceoreview_count
     FROM shop s
         <where>
-            <if test="foodCategory != null and foodCategory != 'all'">
-                AND food_category = #{foodCategory}
+            <if test="food_category != 'all'">
+                AND food_category = #{food_category}
             </if>
         </where>
     </select>

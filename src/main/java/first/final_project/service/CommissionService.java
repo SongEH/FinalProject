@@ -69,7 +69,7 @@ public class CommissionService {
         if (endDate == null || endDate.isEmpty()) {
             endDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE) + " 23:59:59";
         } else {
-
+            // endDate가 주어졌을 때 마지막 시간으로 설정
             endDate = LocalDate.parse(endDate).format(DateTimeFormatter.ISO_LOCAL_DATE) + " 23:59:59";
         }
 

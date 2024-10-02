@@ -139,11 +139,13 @@ pageEncoding="UTF-8"%>
   </style>
     <script type="text/javascript">
      
-      // 전화번호 포맷팅 함수
+     
+
+     
       function formatPhoneNumber(input) {
-          let riders_phone = input.value.replace(/\D/g, ''); // 숫자만 남기기
+          let riders_phone = input.value.replace(/\D/g, ''); 
           if (riders_phone.length > 11) {
-            riders_phone = riders_phone.slice(0, 10); // 10자리까지만
+            riders_phone = riders_phone.slice(0, 10); 
           }
           if (riders_phone.length > 6) {
               input.value = riders_phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
@@ -161,19 +163,18 @@ pageEncoding="UTF-8"%>
     let email_id = $("#email_id").val().trim();
     let email_domain = $("#email_domain").val().trim();
     let riders_email = email_id + "@" + email_domain;
-    $("#riders_email").val(riders_email); // email 필드가 있는지 확인
+    $("#riders_email").val(riders_email); 
+    
+    
+    $("#riders_region").val(""); 
 
     
-     // 지역 선택 초기화
-    $("#riders_region").val(""); // 이전 값 지우기
-
-    // 지역 선택 수집
     let selectedRegions = [];
     $("input[name='riders_region']:checked").each(function() {
         selectedRegions.push($(this).val());
     });
 
-    let riders_region = selectedRegions.join(","); // 쉼표로 구분된 값
+    let riders_region = selectedRegions.join(","); 
     $("#riders_region").val(riders_region);
     
 
@@ -199,27 +200,31 @@ pageEncoding="UTF-8"%>
         return;
     }
 
-    // 폼 제출 방지 플래그 추가
-    f.action = "insert.do"; // MemberInsertAction
-    f.submit(); // 전송
+   
+    f.action = "insert.do"; 
+    f.submit(); 
 }
 
     </script>
 
     <script type="text/javascript">
       function setEmailDomain(domain) {
-        // '직접입력'을 선택한 경우, 도메인 입력 필드를 비웁니다.
+     
         if (domain === "직접입력") {
           document.getElementById("email_domain").value = "";
         } else {
-          // 선택된 도메인 값을 도메인 입력 필드에 설정합니다.
+         
           document.getElementById("email_domain").value = domain;
         }
       }
     </script>
 
     <script type="text/javascript">
-      /* 자바 스크립트 함수 선언(비밀번호 확인) */
+     function validateEmail(email) {
+        // Regular expression for validating email format
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
 
       function passConfirm() {
         var password = $("#riders_pwd").val();
@@ -236,13 +241,14 @@ pageEncoding="UTF-8"%>
           confirmMsg.html("비밀번호 불일치");
         }
       }
+    
     </script>
   </head>
   <body>
     
     <form action="${pageContext.request.contextPath}/riders/insert.do" method="post">
       <input type="hidden" name="riders_email" id="riders_email" />
-      <!-- <input type="hidden" id="riders_region" name="riders_region" /> -->
+   
       <div class="wrapper">
         <div class="container">
           <div class="header">
@@ -303,8 +309,7 @@ pageEncoding="UTF-8"%>
           </div>
         
           <div class="button-group">
-            <!-- <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">로그인 화면 으로</button> 
-            <button type="button" class="btn btn-primary" onclick="send(this.form);">가입하기</button> -->
+        
            <input class="button_style" type="button" id="btn_popup_update" value="로그인 화면으로" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">
             <input class="button_style" type="button" id="btn_popup_updated" value="가입하기" onclick="send(this.form);">
           </div>

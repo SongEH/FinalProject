@@ -27,7 +27,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     }
   </style>
   <body>
-    <!-- 날짜 필터링 폼 -->
     <form action="list.do" method="get" class="form-inline">
       <input type="hidden" name="raiders_id" value="${param.raiders_id}" />
       <div class="form-group">
@@ -64,7 +63,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
       />
     </form>
 
-    <!-- 완료된 배달 정보 테이블 -->
     <table border="1" id="delivery-table" class="table table-striped">
       <thead>
         <tr>
@@ -88,10 +86,8 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
       </tbody>
     </table>
 
-    <!-- 총 수수료 -->
     <h3>총 수입: ${totalCommission} 원</h3>
 
-    <!-- 페이징 처리 -->
     <div style="text-align: center; margin-top: 20px; font-size: 15px">
       ${pageMenu}
     </div>

@@ -103,31 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LIMIT #{offset}, #{blockList};
     </select>
 
-    <!-- 날짜 범위로 필터링된 배달 목록을 조회하는 쿼리 -->
-    <!-- <select id="selectPageListByDate" parameterType="map" resultType="CommissionVo">
-    SELECT
-        d.deliveries_id, r.rider_name, o.orders_id, o.orders_price, dh.delivery_history_status,
-        o.orders_cdate, s.shop_name, a.addr_line1, a.addr_line2,
-        COALESCE(c.commission, o.orders_price * 0.03) AS commission
-    FROM
-        deliveries d
-    JOIN riders r ON d.raiders_id = r.raiders_id
-    JOIN orders o ON d.orders_id = o.orders_id
-    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
-    JOIN shop s ON o.shop_id = s.shop_id
-    JOIN addr a ON o.addr_id = a.addr_id
-    LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
-    WHERE d.raiders_id = #{raiders_id}
-    AND dh.delivery_history_status = '배달 완료'
-        <if test="startDate != null and startDate != ''">
-        AND o.orders_cdate &gt;= #{startDate}
-        </if>
-        <if test="endDate != null and endDate != ''">
-        AND o.orders_cdate &lt;= #{endDate}
-        </if>
-    ORDER BY o.orders_cdate DESC
-    LIMIT #{offset}, #{blockList};
-    </select> -->
+
 
     <select id="selectPageListByDate" parameterType="map" resultType="CommissionVo">
     SELECT 

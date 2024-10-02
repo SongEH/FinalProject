@@ -119,33 +119,25 @@ pageEncoding="UTF-8"%>
           return;
         }
 
-        f.action = "login.do"; // MemberLoginAction
+        f.action = "login.do";
         f.submit();
       } //end:send()
     </script>
 
     <script type="text/javascript">
-      //javascript 초기화
-      //window.onload = function(){};
-
-      //jQuery 초기화
       $(document).ready(function () {
-        //showMessage();
-        setTimeout(showMessage, 100); //0.1초후에 메시지 띄워라
+        setTimeout(showMessage, 100);
       });
 
       function showMessage() {
-        // /member/login_form.do?reason=fail_id => "true"
         if ("${ param.reason == 'fail_id'}" == "true") {
           alert("아이디가 틀립니다");
         }
 
-        // /member/login_form.do?reason=fail_pwd => "true"
         if ("${ param.reason == 'fail_pwd'}" == "true") {
           alert("비밀번호가 틀립니다");
         }
 
-        // /member/login_form.do?reason=session_timeout
         if ("${ param.reason == 'session_timeout'}" == "true") {
           alert("로그아웃되었습니다\n로그인을 해주세요");
         }

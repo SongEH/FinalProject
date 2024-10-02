@@ -114,7 +114,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
               <th>만료날짜</th>
               <th>사용 날짜</th>
       </tr>
-          <c:forEach var="coupon" items="${coupons}">
+          <c:forEach var="coupon" items="${coupon}">
         <tr>
           <td>${coupon.member_name}</td>
                 <td>${coupon.coupon_code}</td>
@@ -132,7 +132,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         </tr>
       </c:forEach>
     </table>
-      <c:if test="${empty coupons}">
+      <c:if test="${empty coupon}">
         <p>발행된 쿠폰이 없습니다.</p>
       </c:if>
     </main><!-- End #main -->

@@ -130,6 +130,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   </li>
                 </ul>
               </li>
+              <li class="nav-item"></li>
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" href="#">
+                  <i class="bi bi-layout-text-window-reverse"></i><span>My쿠폰</span><i class="bi ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/member/selectcoupon.do">
+                      <i class="bi bi-circle"></i><span>쿠폰조회</span>
+                    </a>
+                    </li>
+                </ul>
+              </li>
             </ul>
           </c:when>
           <c:when test="${sessionScope.userType == 'ADMIN'}">

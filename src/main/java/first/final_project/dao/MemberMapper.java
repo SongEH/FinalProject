@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import first.final_project.vo.CouponVo;
 import first.final_project.vo.MemberVo;
 
 @Mapper
@@ -33,5 +34,7 @@ public interface MemberMapper {
     MemberVo getAddr(int member_id);
 
     MemberVo getMemberWithCoupons(int member_id);
+
+    List<CouponVo> selectOne(String string, int memberId);
 
 }

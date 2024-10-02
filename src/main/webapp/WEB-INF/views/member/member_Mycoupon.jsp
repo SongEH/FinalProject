@@ -22,7 +22,7 @@ prefix="fn" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
           <th>발급일</th>
           <th>만료일</th>
         </tr>
-        <c:forEach var="coupon" items="${member.coupons}">
+        <c:forEach var="coupon" items="${member.coupon}">
           <tr>
             <td>${coupon.coupon_code}</td>
             <td>${coupon.discount_amount}원</td>

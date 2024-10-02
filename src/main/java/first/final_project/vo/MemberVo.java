@@ -1,5 +1,7 @@
 package first.final_project.vo;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -16,11 +18,10 @@ public class MemberVo {
     String member_phone;
     String member_cdate;
 
-
-    
-    // inner join from addr 
+    // inner join from addr
     String addr_line1;
     String addr_line2;
 
     String owner_name;
+    List<CouponVo> coupon;
 }

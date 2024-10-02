@@ -48,16 +48,16 @@ public class CouponController {
     public String listCouponsForMember(Model model, HttpSession session) {
         MemberVo member = (MemberVo) session.getAttribute("member");
         if (member != null) {
-            List<CouponVo> coupons = couponService.getCouponsForMember(member.getMember_id());
-            model.addAttribute("coupons", coupons);
+            List<CouponVo> coupon = couponService.getCouponsForMember(member.getMember_id());
+            model.addAttribute("coupon", coupon);
         }
         return "coupon/coupon_list";
     }
 
     @RequestMapping("list.do")
     public String listCoupons(Model model) {
-        List<CouponVo> coupons = couponService.getAllIssuedCoupons();
-        model.addAttribute("coupons", coupons);
+        List<CouponVo> coupon = couponService.getAllIssuedCoupons();
+        model.addAttribute("coupon", coupon);
         return "coupon/coupon_list";
     }
 

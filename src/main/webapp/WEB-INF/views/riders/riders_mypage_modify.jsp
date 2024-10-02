@@ -200,6 +200,26 @@ pageEncoding="UTF-8"%>
             />
             <label class="form-check-label" for="inlineCheckbox3">인천</label>
           </div>
+          <div class="form-check form-check-inline"></div>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="inlineCheckbox4"
+              name="riders_region"
+              value="대전"
+            />
+            <label class="form-check-label" for="inlineCheckbox4">대전</label>
+          </div>     
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="inlineCheckbox5"
+              name="riders_region"
+              value="부산"
+            />
+            <label class="form-check-label" for="inlineCheckbox5">부산</label>
+          </div>     
         </div>
 
         <div class="buttons">

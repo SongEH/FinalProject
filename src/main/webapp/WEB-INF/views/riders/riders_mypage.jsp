@@ -175,11 +175,6 @@ pageEncoding="UTF-8"%>
 
           <input
             type="button"
-            value="메인이동"
-            onclick="location.href='/riders/delivery'"
-          />
-          <input
-            type="button"
             value="회원 탈퇴"
             onclick="del('${ vo.raiders_id }');"
           />

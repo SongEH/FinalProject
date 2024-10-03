@@ -83,10 +83,12 @@ header .logout{
 //     sessionStorage.setItem('logoutChecked', 'true');
 //   }
 // };
+
 </script>
 <html lang="ko">
   <body>
     <header class="header fixed-top d-flex align-items-center">
+
       <c:choose>
         <c:when test="${not empty sessionScope.userType}">
           <c:choose>
@@ -146,6 +148,7 @@ header .logout{
           <div class="login-section">
             <input class="button_style" type="button" value="로그인" 
             onclick="location.href='/login_form.do'"/>
+            &nbsp;&nbsp;
             <input class="button_style" type="button" value="회원가입" 
             onclick="location.href='/insert_form.do'"/>
           </div>

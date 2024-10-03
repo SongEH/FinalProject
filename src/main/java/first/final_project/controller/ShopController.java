@@ -67,7 +67,9 @@ public class ShopController {
     AddrService addrService;
 
     @RequestMapping("/shop/list.do")
-    public String shop_list(String food_category,String order_addr,String activeCategory, Model model, RedirectAttributes ra) {
+    public String shop_list(
+        @RequestParam(name="food_category",required = false) String food_category,
+        @RequestParam(name="order_addr", required = false) String order_addr, Model model, RedirectAttributes ra) {
 
         if(order_addr == null) { 
             ra.addAttribute("reason", "not find address");
@@ -79,6 +81,7 @@ public class ShopController {
 
         System.out.println("1 : " + order_addr);
 
+        System.out.println(food_category);
         // 가게 리스트 필터링
         List<ShopVo> allShops = shop_Service.selectList(food_category);
 
@@ -93,6 +96,7 @@ public class ShopController {
 
             // 모든 가게에 대해 좌표 계산 후 반경 내 가게 필터링
             for (ShopVo shop : allShops) {
+                System.out.println(shop.getShop_addr1());
                 double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
                 double distance = kakaoMapService.calculateDistance(customerCoordinates[0], customerCoordinates[1],
                                                                     shopCoordinates[0], shopCoordinates[1]);
@@ -119,7 +123,8 @@ public class ShopController {
 
     @RequestMapping("/shop/food_list.do")
     public String shop_food_list(
-    @RequestParam(name="food_category", defaultValue = "all") String food_category,String order_addr, 
+    @RequestParam(name="food_category", defaultValue = "all") String food_category,
+    @RequestParam(name="order_addr", required = false) String order_addr, 
     @RequestParam(name="selectValue", required = false) String selectValue,
     @RequestParam(name="searchValue", required = false)String searchValue,
      Model model, RedirectAttributes ra) throws UnsupportedEncodingException {
@@ -373,7 +378,7 @@ public class ShopController {
                 ra.addAttribute("reason", "session_timeout");
                 return "redirect:../login_form.do";
             }
-            
+
             int owner_id = user.getOwner_id();
             System.out.println("owner_id : " + owner_id);
 

@@ -68,8 +68,8 @@ prefix="c" %>
         background-color: #0056b3;
       }
       .content {
-        white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
-        word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
+        white-space: pre-wrap; 
+        word-wrap: break-word; 
       }
     </style>
     <script type="text/javascript">
@@ -96,7 +96,6 @@ prefix="c" %>
           </ol>
         </nav>
       </div>
-      <!-- End Page Title -->
 
       <div class="container">
         <div class="notice-detail">
@@ -129,7 +128,6 @@ prefix="c" %>
         </c:if>
       </div>
     </main>
-    <!-- End #main -->
 
   </body>
 </html>

@@ -138,10 +138,9 @@ public class OwnerInquiriesController {
             return "redirect:/login_form.do";
         }
 
-        // member_id를 이용해 작성자의 정보를 조회
         OwnerVo owner_accountId = owner_mapper.selectOneFromIdx(vo.getOwner_id());
         if (owner_accountId != null) {
-            // 작성자의 accountId를 조회해서 vo에 설정
+
             vo.setOwner_accountId(owner_accountId.getOwner_accountId());
         }
 
@@ -205,7 +204,6 @@ public class OwnerInquiriesController {
     @RequestMapping("answer_modify_form.do")
     public String answer_modify_form(Integer o_answer_id, @RequestParam(value = "o_inquiries_id", required = true) Integer o_inquiries_id,Model model){
 
-        //System.out.println("o_answer_id: " + o_answer_id + ", o_inquiries_id: " + o_inquiries_id); // 로깅
         OwnerAnswerVo vo = owner_answer_mapper.selectOne(o_answer_id);
         if(vo == null){
             return "redirect:/owner_inquiries/detail.do?o_inquiries_id=" + o_inquiries_id;

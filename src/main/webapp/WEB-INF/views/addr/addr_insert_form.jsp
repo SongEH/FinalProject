@@ -121,7 +121,6 @@ prefix="c" %>
     }
 
     .btn {
-      /* background-color: #5cb85c; */
       color: white;
       border: none;
       padding: 10px 15px;
@@ -165,7 +164,6 @@ prefix="c" %>
         </ol>
       </nav>
     </div>
-    <!-- End Page Title -->
 
     <div class="container mx-auto p-6">
       <div class="bg-white shadow-md rounded-lg p-6">
@@ -205,7 +203,7 @@ prefix="c" %>
       </div>
     </div>
   </main>
-  <!-- End #main -->
+
 </body>
 
 </html>

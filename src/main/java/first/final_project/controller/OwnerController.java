@@ -24,7 +24,6 @@ public class OwnerController {
     @Autowired
     OwnerMapper owner_mapper;
 
-    // 사장의 마이페이지
     @RequestMapping("ownerpage.do")
     public String showOnwerPage(OwnerVo vo, Model model) {
         OwnerVo user = (OwnerVo) session.getAttribute("user");
@@ -37,7 +36,6 @@ public class OwnerController {
         return "owner/owner_page";
     }
 
-    // 사장의 마이페이지에서 수정폼 띄우기
     @RequestMapping(value = "ownerpage/modify_form.do", method = RequestMethod.GET)
     public String ownerPageEditForm(Model model) {
         OwnerVo user = (OwnerVo) session.getAttribute("user");
@@ -51,7 +49,6 @@ public class OwnerController {
 
     }
 
-    // 사장의 마이페이지에서 수정을 처리하는 메소드
     @RequestMapping(value = "ownerpage/modify.do", method = RequestMethod.POST)
     public String ownerPageEdit(OwnerVo vo) {
         owner_mapper.update(vo);
@@ -59,7 +56,6 @@ public class OwnerController {
         return "redirect:/owner/ownerpage.do";
     }
 
-    // 사장의 마이페이지에서 회원 탈퇴
     @RequestMapping(value = "ownerpage/delete.do", method = RequestMethod.GET)
     public String ownerPageDelete(@RequestParam int owner_id) {
         owner_mapper.delete(owner_id);

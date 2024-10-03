@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %>
-
-<%@ page import="first.final_project.vo.OwnerVo" %>
-<%@ page import="first.final_project.vo.MemberVo" %>
-<%@ page import="first.final_project.vo.AdminVo" %>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8" %> <%@ page import="first.final_project.vo.OwnerVo" %> <%@
+page import="first.final_project.vo.MemberVo" %> <%@ page
+import="first.final_project.vo.AdminVo" %> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
 <html lang="ko">
+  <head>
+    <meta charset="utf-8" />
 
 <head>
   <meta charset="UTF-8" />
@@ -323,10 +322,10 @@ pageEncoding="UTF-8" %>
       </c:when>
     </c:choose>
 
-    <!--------------------- 사장 로그인 시 END --------------------->
+      <!--------------------- 사장 로그인 시 END --------------------->
 
-    <!-- End Tables Nav -->
-    <!-- <li class="nav-item">
+      <!-- End Tables Nav -->
+      <!-- <li class="nav-item">
         <a
           class="nav-link collapsed"
           data-bs-target="#components-nav"
@@ -413,9 +412,9 @@ pageEncoding="UTF-8" %>
           </li>
         </ul>
       </li> -->
-    <!-- End Components Nav -->
+      <!-- End Components Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
         <a
           class="nav-link collapsed"
           data-bs-target="#charts-nav"
@@ -447,9 +446,9 @@ pageEncoding="UTF-8" %>
           </li>
         </ul>
       </li> -->
-    <!-- End Charts Nav -->
+      <!-- End Charts Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
         <a
           class="nav-link collapsed"
           data-bs-target="#icons-nav"
@@ -481,9 +480,9 @@ pageEncoding="UTF-8" %>
           </li>
         </ul>
       </li> -->
-    <!-- End Icons Nav -->
+      <!-- End Icons Nav -->
 
-    <!-- <li class="nav-heading">Pages</li>
+      <!-- <li class="nav-heading">Pages</li>
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="users-profile.html">
@@ -491,49 +490,49 @@ pageEncoding="UTF-8" %>
       <span>Profile</span>
     </a>
   </li> -->
-    <!-- End Profile Page Nav -->
+      <!-- End Profile Page Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="pages-faq.html">
       <i class="bi bi-question-circle"></i>
       <span>F.A.Q</span>
     </a>
   </li> -->
-    <!-- End F.A.Q Page Nav -->
+      <!-- End F.A.Q Page Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="pages-contact.html">
       <i class="bi bi-envelope"></i>
       <span>Contact</span>
     </a>
   </li> -->
-    <!-- End Contact Page Nav -->
+      <!-- End Contact Page Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="pages-register.html">
       <i class="bi bi-card-list"></i>
       <span>Register</span>
     </a>
   </li> -->
-    <!-- End Register Page Nav -->
+      <!-- End Register Page Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="pages-login.html">
       <i class="bi bi-box-arrow-in-right"></i>
       <span>Login</span>
     </a>
   </li> -->
-    <!-- End Login Page Nav -->
+      <!-- End Login Page Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="pages-error-404.html">
       <i class="bi bi-dash-circle"></i>
       <span>Error 404</span>
     </a>
   </li> -->
-    <!-- End Error 404 Page Nav -->
+      <!-- End Error 404 Page Nav -->
 
-    <!-- <li class="nav-item">
+      <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="pages-blank.html">
       <i class="bi bi-file-earmark"></i>
       <span>Blank</span>

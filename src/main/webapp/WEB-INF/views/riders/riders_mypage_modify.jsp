@@ -4,6 +4,7 @@ pageEncoding="UTF-8"%>
 <html>
   <head>
     <meta charset="UTF-8" />
+
     <title>회원 정보 수정</title>
     <link
       rel="stylesheet"
@@ -11,40 +12,56 @@ pageEncoding="UTF-8"%>
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0px;
+      }
+
       h1 {
-        color: #f0a8d0; /* 연보라색 */
         text-align: center;
-        margin-bottom: 30px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      mb-4 {
+        margin-bottom: 16px;
       }
 
       .container {
-        background-color: white;
-        border-radius: 10px;
+        max-width: 800px;
+        margin: auto;
+        background: white;
         padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        margin: 0 auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
       label {
         font-weight: bold;
-        color: #f7b5ca; /* 연핑크색 */
+        color: black; /* 연핑크색 */
+        margin-bottom: 5px;
       }
 
       .form-control {
-        border: 2px solid #f0a8d0; /* 연보라색 */
-        border-radius: 5px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
       }
 
       .form-check-label {
-        color: #f0a8d0;
+        color: black;
         margin-right: 10px;
       }
 
       .form-check-input {
-        accent-color: #f0a8d0; /* 체크박스 색상 변경 */
+        accent-color: black; /* 체크박스 색상 변경 */
       }
 
       .buttons {
@@ -55,7 +72,7 @@ pageEncoding="UTF-8"%>
 
       .buttons a,
       .buttons input[type="submit"] {
-        background-color: #ffc6c6; /* 살구색 */
+        background-color: #f0a8d0; /* 살구색 */
         color: white;
         border: none;
         border-radius: 5px;
@@ -69,11 +86,34 @@ pageEncoding="UTF-8"%>
 
       .buttons input[type="submit"]:hover,
       .buttons a:hover {
-        background-color: #f7b5ca; /* 연핑크색으로 hover 효과 */
+        background-color: #f0a8d0; /* 연핑크색으로 hover 효과 */
       }
 
       .buttons a {
         background-color: #f0a8d0; /* 연보라색 */
+      }
+
+      /* 반응형 스타일 */
+      @media (max-width: 768px) {
+        .login-container {
+          padding: 20px; /* 모바일에서 패딩 감소 */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-container h1 {
+          font-size: 20px; /* 제목 폰트 사이즈 줄임 */
+        }
+
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+          font-size: 14px; /* 폰트 크기 축소 */
+        }
+
+        .login-container button,
+        .login-container .btn {
+          font-size: 14px; /* 버튼 폰트 사이즈 줄임 */
+        }
       }
     </style>
 
@@ -136,7 +176,6 @@ pageEncoding="UTF-8"%>
             type="text"
             name="rider_name"
             value="${vo.rider_name}"
-            disabled
           />
         </div>
 
@@ -164,8 +203,7 @@ pageEncoding="UTF-8"%>
         <div class="mb-4">
           <label for="phone">전화번호:</label>
           <input class="form-control" type="text" name="riders_phone"
-          value="${vo.riders_phone}" <<<<<<< HEAD
-          oninput="formatPhoneNumber(this);"
+          value="${vo.riders_phone}" oninput="formatPhoneNumber(this);"
         </div>
 
         <div class="mb-4">

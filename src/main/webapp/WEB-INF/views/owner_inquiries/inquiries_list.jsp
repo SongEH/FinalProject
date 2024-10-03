@@ -117,7 +117,7 @@
         </ol>
       </nav>
 
-    </div><!-- End Page Title -->
+    </div>
 
     <div class="container">
 
@@ -150,7 +150,7 @@
         </div>
     </div>
 
-  </main><!-- End #main -->
+  </main>
 
 </body>
 </html>

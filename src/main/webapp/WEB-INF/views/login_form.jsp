@@ -15,12 +15,11 @@ pageEncoding="UTF-8"%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
       function showLoginModal(userType) {
-        // Hide all modals
+        
         $("#adminLoginModal").modal("hide");
         $("#ownerLoginModal").modal("hide");
         $("#memberLoginModal").modal("hide");
 
-        // Show the selected modal
         if (userType === "admin") {
           $("#adminLoginModal").modal("show");
         } else if (userType === "owner") {
@@ -100,45 +99,30 @@ pageEncoding="UTF-8"%>
         f.submit();
       }
     </script>
-    <!-- 태광 아래부분 추가 에러메시지 호출   -->
-    <!-- <script>
-      $(document).ready(function(){
 
-        setTimeout(showMessage,10);
-
-      });
-
-      function showMessage(){
-        if("${param.reason=='session_timeout'}" == "true"){
-          alert("로그인이 만료되었습니다. 로그인 후 이용할 수 있습니다.")
-        }
-      }
-    </script> -->
     <style>
-      /* 메인 이미지 배치 및 흐리게 처리 */
+
       .background-image {
         position: absolute;
         top: 60%;
         left: 46%;
         transform: translate(-50%, -50%);
-        opacity: 0.5; /* 흐리게 처리 */
-        z-index: -1; /* 카드보다 뒤에 오도록 */
-        max-width: 100%; /* 이미지 크기 조정 */
+        opacity: 0.5; 
+        z-index: -1; 
+        max-width: 100%; 
         height: auto;
       }
 
-      /* 카드들을 가로로 중앙 정렬 */
       .card-container {
         display: flex;
         justify-content: center;
-        gap: 30px; /* 카드 간 간격 조절 */
+        gap: 30px; 
       }
 
       .card {
         width: 18rem;
       }
 
-      /* 메인 컨테이너에 약간의 상단 마진 */
       .main {
         margin-top: 100px;
       }
@@ -167,7 +151,6 @@ pageEncoding="UTF-8"%>
       <div class="row">
         <div class="col-md-4">
           <div class="card" style="width: 18rem">
-            <!-- <img class="card-img-top" src="admin.jpg" alt="Admin Login" /> -->
             <div class="card-body">
               <h5 class="card-title">Admin Login</h5>
               <button class="button_style" onclick="showLoginModal('admin')">
@@ -178,7 +161,6 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="col-md-4">
           <div class="card" style="width: 18rem">
-            <!-- <img class="card-img-top" src="owner.jpg" alt="Owner Login" /> -->
             <div class="card-body">
               <h5 class="card-title">Owner Login</h5>
               <button class="button_style" onclick="showLoginModal('owner')">
@@ -189,7 +171,6 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="col-md-4">
           <div class="card" style="width: 18rem">
-            <!-- <img class="card-img-top" src="member.jpg" alt="Member Login" /> -->
             <div class="card-body">
               <h5 class="card-title">Member Login</h5>
               <button
@@ -203,7 +184,6 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
 
-      <!-- Admin Login Modal -->
       <div
         class="modal fade"
         id="adminLoginModal"
@@ -258,7 +238,6 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
 
-      <!-- Owner Login Modal -->
       <div
         class="modal fade"
         id="ownerLoginModal"
@@ -313,7 +292,6 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
 
-      <!-- Member Login Modal -->
       <div
         class="modal fade"
         id="memberLoginModal"

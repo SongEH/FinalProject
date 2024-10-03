@@ -11,7 +11,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>사장 정보 수정</title>
     <script type="text/javascript">
-      /* 자바 스크립트 함수 선언(비밀번호 확인) */
 
       function passConfirm() {
         var password = $("#owner_pwd").val();
@@ -32,9 +31,9 @@
 
     <script type="text/javascript">
       function formatPhoneNumber(input) {
-        let owner_phone = input.value.replace(/\D/g, ""); // 숫자만 남기기
+        let owner_phone = input.value.replace(/\D/g, ""); 
         if (owner_phone.length > 11) {
-          owner_phone = owner_phone.slice(0, 10); // 10자리까지만
+          owner_phone = owner_phone.slice(0, 10); 
         }
         if (owner_phone.length > 6) {
           input.value = owner_phone.replace(
@@ -87,21 +86,19 @@
 
         if (owner_license == "") {
           alert("사업자등록번호를 입력하시오");
-          // f.owner_license.value = "";
           f.owner_license.focus();
           return;
         }
 
         if (owner_bankbook == "") {
           alert("법인통장번호를 입력하시오");
-          // f.owner_bankbook.value = "";
           f.owner_bankbook.focus();
           return;
         }
 
         f.action = "modify.do";
-        f.submit(); //전송
-      } //end:send()
+        f.submit(); 
+      } 
     </script>
   </head>
   <body>
@@ -125,7 +122,7 @@
           </ol>
         </nav>
 
-      </div><!-- End Page Title -->
+      </div>
 
         
         <input type="hidden" name="owner_id" value="${owner.owner_id}" />
@@ -209,7 +206,7 @@
         </div>
       </form>
 
-    </main><!-- End #main -->
+    </main>
 
 
     

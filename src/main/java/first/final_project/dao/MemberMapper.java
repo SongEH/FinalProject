@@ -10,11 +10,11 @@ import first.final_project.vo.MemberVo;
 public interface MemberMapper {
     List<MemberVo> selectList();
 
-    MemberVo selectOneFromIdx(int member_id); // 회원 일련번호 조회
+    MemberVo selectOneFromIdx(int member_id); 
 
-    MemberVo selectOneFromId(String member_accountId); // 회원 아이디 조회
+    MemberVo selectOneFromId(String member_accountId); 
 
-    MemberVo selectOneFromNickname(String member_nickname); // 회원 닉네임 조회
+    MemberVo selectOneFromNickname(String member_nickname); 
 
     int insert(MemberVo vo);
 
@@ -22,14 +22,8 @@ public interface MemberMapper {
 
     int delete(int member_id);
 
-    // void deactivate(int member_id);
-
-    // void updateOrderCount(int member_id, int newOrderCount);
-
-    // void resetOrderCounts();
-
-    // void resetGrades(int grade_id);
-
     MemberVo getAddr(int member_id);
+
+    MemberVo getMemberWithCoupons(int member_id);
 
 }

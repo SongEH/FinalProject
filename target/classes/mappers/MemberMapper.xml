@@ -102,10 +102,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <result property="end_date" column="end_date"/>
         </collection>
     </resultMap>
-
+    
     <select id="selectCouponsByMemberId" resultType="first.final_project.vo.CouponVo" parameterType="int">
-    SELECT coupon_id, coupon_code, discount_amount, start_date, end_date
-    FROM coupon
-    WHERE member_id = #{member_id}
+        SELECT coupon_id, coupon_code, discount_amount, start_date, end_date
+        FROM coupons
+        WHERE member_id = #{member_id}
     </select>
 </mapper>

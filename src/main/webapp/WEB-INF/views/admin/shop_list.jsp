@@ -29,7 +29,6 @@
       }
 
       input[type="button"] {
-        /* background-color: #5cb85c; */
         color: white;
         border: none;
         padding: 10px 15px;
@@ -94,7 +93,7 @@
           </ol>
         </nav>
 
-      </div><!-- End Page Title -->
+      </div>
 
       <table border="1">
       <tr>
@@ -119,8 +118,7 @@
       </c:forEach>
     </table>
       
-    </main><!-- End #main -->
-
+    </main>
    
   </body>
 </html>

@@ -11,7 +11,7 @@ public interface AddrMapper {
 
     List<AddrVo> selectList(Integer member_id);
 
-    AddrVo selectOneFromIdx(int addr_id); // 주소 일련번호 조회
+    AddrVo selectOneFromIdx(int addr_id); 
 
     int insert(AddrVo vo);
 

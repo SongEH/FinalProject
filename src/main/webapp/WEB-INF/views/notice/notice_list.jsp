@@ -111,7 +111,6 @@ prefix="c" %>
           </ol>
         </nav>
       </div>
-      <!-- End Page Title -->
 
       <div class="container">
         <input type="hidden" id="notice_type" value="${vo.notice_type}" />
@@ -139,7 +138,6 @@ prefix="c" %>
           >
         </div>
 
-        <!-- 관리자 전용 액션 버튼 -->
         <c:if test="${userType == 'ADMIN'}">
           <div class="admin-actions">
             <button class="button_style" onclick="location.href='${pageContext.request.contextPath}/notice/insert_form.do'"
@@ -164,7 +162,6 @@ prefix="c" %>
         </div>
       </div>
     </main>
-    <!-- End #main -->
 
   </body>
 </html>

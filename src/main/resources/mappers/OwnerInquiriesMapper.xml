@@ -6,7 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="first.final_project.dao.OwnerInquiriesMapper">
 
     <select id="selectList" resultType="owner_inquiries">
-        <!-- select * from owner_inquiries order by o_inquiries_id desc -->
         select *,
         (select count(*) from owner_inquiries o
 		left join owner_answer oa on o.o_inquiries_id = oa.o_inquiries_id

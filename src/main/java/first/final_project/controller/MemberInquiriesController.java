@@ -73,9 +73,6 @@ public class MemberInquiriesController {
     public String detail(@RequestParam(value = "m_inquiries_id", required = false) Integer m_inquiries_id,
             Model model) {
 
-        // if (m_inquiries_id == null) {
-        //     return "redirect:/login_form.do";
-        // }
         MemberInquiriesVo vo = member_inquiries_mapper.selectFromIdx(m_inquiries_id);
         if (vo == null) {
             return "redirect:/member_inquiries/list.do";
@@ -156,10 +153,8 @@ public class MemberInquiriesController {
             return "redirect:/login_form.do";
         }
         
-        // member_id를 이용해 작성자의 정보를 조회
         MemberVo member_accountId = member_mapper.selectOneFromIdx(vo.getMember_id());
         if (member_accountId != null) {
-            // 작성자의 accountId를 조회해서 vo에 설정
             vo.setMemberAccountId(member_accountId.getMember_accountId());
         }
 
@@ -171,10 +166,7 @@ public class MemberInquiriesController {
     @RequestMapping("modify.do")
     public String modify(int m_inquiries_id, String m_inquiries_title, String m_inquiries_content,
             String m_inquiries_type, RedirectAttributes ra) {
-        // String userType = (String) session.getAttribute("userType");
-        // if (userType == null || !"MEMBER".equals(userType)) {
-        //     return "redirect:/login_form.do"; 
-        // }
+
         MemberVo member = (MemberVo) session.getAttribute("user");
         if (member == null) {
            return "redirect:/login_form.do";
@@ -281,11 +273,10 @@ public class MemberInquiriesController {
             @RequestParam(value = "m_inquiries_type", defaultValue = "전체") String m_inquiries_type) {
         
         List<MemberInquiriesVo> list = member_inquiries_mapper.selectListByType(m_inquiries_type);
-        int null_answer_count = 0; // Initialize the count
-
+        int null_answer_count = 0; 
         for (int i=list.size()-1; i < list.size(); i++) {
             MemberInquiriesVo vo = list.get(i);
-            null_answer_count = vo.getNull_answer_count(); // Get the value (last value in loop)
+            null_answer_count = vo.getNull_answer_count();
         }
 
         List<OwnerInquiriesVo> owner_list = owner_inquiries_mapper.selectList();
@@ -295,7 +286,7 @@ public class MemberInquiriesController {
             owner_null_answer_count = Ovo.getOwner_null_answer_count();
         }
         
-        return new CountVo(null_answer_count, owner_null_answer_count); // Return the count directly
+        return new CountVo(null_answer_count, owner_null_answer_count); 
     }
 
 

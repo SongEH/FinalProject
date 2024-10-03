@@ -14,10 +14,8 @@
 
         <script type="text/javascript">
             function del(owner_id) {
-                //console.log(mem_idx,"삭제");
                 if (confirm("정말 탈퇴 하시겠습니까?") == false) return;
 
-                //삭제요청
                 location.href = "ownerpage/delete.do?owner_id=" + owner_id;
             }
         </script>
@@ -92,7 +90,7 @@
                     </ol>
                 </nav>
 
-            </div><!-- End Page Title -->
+            </div>
 
             
             
@@ -135,7 +133,7 @@
                 </div>
             </div>
 
-        </main><!-- End #main -->
+        </main>
 
         
     </body>

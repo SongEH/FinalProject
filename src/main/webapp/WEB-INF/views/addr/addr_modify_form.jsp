@@ -154,7 +154,7 @@
           </ol>
         </nav>
 
-      </div><!-- End Page Title -->
+      </div>
 
       <div class="container mx-auto p-6">
         
@@ -237,8 +237,7 @@
         </div>
     </div>
 
-    </main><!-- End #main -->
-
+    </main>
 
     
   </body>

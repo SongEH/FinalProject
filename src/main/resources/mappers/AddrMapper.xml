@@ -21,7 +21,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )
     </insert>
 
-    <!-- 주문 중 새 주소 추가 - 한지혜 -->
     <insert id="insertNewAddr" parameterType="addr" useGeneratedKeys="true" keyProperty="addr_id">
         insert into addr(
             `member_id`,`addr_zipcode`,`addr_line1`,`addr_line2`,`addr_name`

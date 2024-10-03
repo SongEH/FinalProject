@@ -32,4 +32,6 @@ public interface MemberMapper {
 
     MemberVo getAddr(int member_id);
 
+    MemberVo getMemberWithCoupons(int member_id);
+
 }

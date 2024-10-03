@@ -310,7 +310,6 @@ body {
                     <!-- 가게 로고 이미지 -->
                     <img class="image-z2" src="${pageContext.request.contextPath}/resources/images/${vo.shop_img}" alt="Store 1 Logo">
                     <!-- 이미지 위에 표시할 텍스트 -->
-                    <div class="overlay-text">Closed</div>
                   </div>
                 </div>
                 <div class="store-info">

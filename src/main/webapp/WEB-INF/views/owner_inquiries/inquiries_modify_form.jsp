@@ -45,8 +45,8 @@
             resize: vertical;
         }
         .content {
-            white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
-            word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 
@@ -96,7 +96,7 @@
             </ol>
         </nav>
 
-        </div><!-- End Page Title -->
+        </div>
         
             <div class="container">
                 
@@ -121,7 +121,7 @@
                 </form>
             </div>
          
-    </main><!-- End #main -->
+    </main>
     
 </body>
 </html>

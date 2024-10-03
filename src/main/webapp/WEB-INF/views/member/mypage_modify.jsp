@@ -13,9 +13,9 @@
 
       <script type="text/javascript">
         function formatPhoneNumber(input) {
-          let member_phone = input.value.replace(/\D/g, ""); // 숫자만 남기기
+          let member_phone = input.value.replace(/\D/g, ""); 
           if (member_phone.length > 11) {
-            member_phone = member_phone.slice(0, 10); // 10자리까지만
+            member_phone = member_phone.slice(0, 10); 
           }
           if (member_phone.length > 6) {
             input.value = member_phone.replace(
@@ -139,7 +139,7 @@
             </ol>
           </nav>
 
-        </div><!-- End Page Title -->
+        </div>
 
         <div class="container mx-auto p-6">
           
@@ -186,7 +186,7 @@
           
         </div>
 
-      </main><!-- End #main -->
+      </main>
 
     </body>
 

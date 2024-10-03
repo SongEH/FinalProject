@@ -103,28 +103,10 @@
             color: #fff;
         }
         .content {
-            white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
-            word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
         }
     </style>
-
-    <!-- <script type="text/javascript">
-        function del(o_inquiries_id) {
-            if (confirm("정말 삭제 하시겠습니까?") == false) return;
-            $.ajax({
-                url:"${pageContext.request.contextPath}/owner_inquiries/delete.do?o_inquiries_id=" + o_inquiries_id,
-                type:"POST",
-                data:{o_inquiries_id:o_inquiries_id},
-                success:function(response){
-                    alert("문의사항이 삭제되었습니다.");
-                    location.href="${pageContext.request.contextPath}/owner_inquiries/list.do";
-                },
-                error:function(xhr){
-                    alert("문의사항 삭제에 실패했습니다. 다시 시도해 주세요.");
-                }
-            });
-        }
-    </script> -->
 
     <script type="text/javascript">
         function del(o_answer_id) {
@@ -167,12 +149,11 @@
             </ol>
         </nav>
 
-        </div><!-- End Page Title -->
+        </div>
 
         
         <div class="container">
             <input type="hidden" id="o_inquiries_id" value="${vo.o_inquiries_id}">
-            <!-- 상세 정보 표시 영역 -->
             <div class="inquiries_detail">
                 <div class="inquiries_title">
                     ${vo.o_inquiries_title}
@@ -230,7 +211,7 @@
             
         
 
-    </main><!-- End #main -->
+    </main>
 
 </body>
 </html>

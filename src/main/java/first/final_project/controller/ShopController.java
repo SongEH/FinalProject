@@ -474,6 +474,7 @@ public class ShopController {
 
     // 가게 삭제
     @RequestMapping("/shop/delete.do")
+    @ResponseBody
     public String shop_delete(int shop_id, RedirectAttributes ra, Model model) {
         try {
             @SuppressWarnings("unused")
@@ -485,21 +486,24 @@ public class ShopController {
         return "redirect:shoplist.do";
     }
 
-    // 트라이중 
-    // @RequestMapping("/shop/set_holiday.do")
-    // @ResponseBody
-    // public String set_holiday(RedirectAttributes ra){
+    @RequestMapping("shop/hasShop.do")
+    @ResponseBody
+    public String hasShop(RedirectAttributes ra, Model model){
 
-    //     OwnerVo user = (OwnerVo) session.getAttribute("user");
-    //     if(user==null){
-    //         ra.addAttribute("reason", "session_timeout");
-    //         return "redirect:../login_form.do";
-    //     }
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        if(user==null){
+            ra.addAttribute("reason", "session_timeout");
+            return "redirect:../login_form.do";
+        }
+        Boolean result = shop_Service.hasShop(user.getOwner_id());
+        System.out.println("result : " + result);
+        Boolean hasShop = (result != null) ? result : false;
+        System.out.println("hasShop : " + hasShop);
+        model.addAttribute("hasShop", hasShop);
+        if(hasShop == false){
+            return "redirect:../shop/insert_form.do";
+        }
 
-    //     int shop_id = shop_Service.select_one_shop_id(user.getOwner_id());
-
-    //     int res = shop_Service.setHoliday(shop_id);
-
-    //     return "";
-    // } 
+        return "{\"hasShop\": " + hasShop + "}";
+    }
 }

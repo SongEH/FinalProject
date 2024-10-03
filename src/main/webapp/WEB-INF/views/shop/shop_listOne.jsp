@@ -2,6 +2,7 @@
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 
@@ -115,18 +116,19 @@ pageEncoding="UTF-8"%>
       border-top: none;
     }
 
-    #shop_content {
-      padding: 10px;
-      border: 1px solid grey;
-      border-top: none;
-      width: 100%;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      display: -webkit-box;   
-      -webkit-box-orient: vertical; /* Set orientation to vertical */
-      -webkit-line-clamp: 3;
-    }
+    .shop_content_CSS {
+    padding: 10px;
+    border: 1px solid grey;
+    border-top: none;
+    width: 100%;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    height: 40px;
+}
 
     .shop_info_list {
       border: 1px solid grey;
@@ -348,7 +350,7 @@ pageEncoding="UTF-8"%>
                   </div>
                 </span>
               </div>
-              <div id="shop_content">${vo.shop_content}</div>
+              <div class="shop_content_CSS">📢사장님 알림${vo.shop_content.replaceAll('<[^>]*>', '')}</div>
             </div>
 
             <!-- 메뉴 / 클린리뷰 / 정보  -->

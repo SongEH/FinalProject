@@ -15,7 +15,7 @@
       function send(f){
 
         let shop_id = f.shop_id.value;
-        let shop_content = oEditors.getById["shop_content"].getIR();
+        let shop_content = oEditors.getById["shop_content"].getIR().trim();
         f.action = "modify.do";
         f.submit();
       }

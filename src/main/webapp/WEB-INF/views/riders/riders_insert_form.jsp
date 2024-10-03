@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%>
           background-color: #fff;
           padding: 30px;
           border-radius: 10px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         
       }
 
       .header {
@@ -53,28 +53,7 @@ pageEncoding="UTF-8"%>
           height: 45px;
       }
 
-      .btn-primary {
-          background-color: #F0A8D0;
-          border-color: #FFEBD4;
-          width: 100%;
-          height: 50px;
-          font-size: 16px;
-          font-weight: bold;
-          border-radius: 10px;
-          position: relative;
-      }
-
-      .btn-primary:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border: 2px solid #FFEBD4;
-          border-radius: 10px;
-          pointer-events: none;
-      }
+      
 
       .password-info {
           font-size: 12px;
@@ -107,7 +86,7 @@ pageEncoding="UTF-8"%>
       .button-group button {
           width: 48%;
           padding: 15px;
-          background-color: #FFC6C6;
+          background-color: #f0a8d0;
           color: white;
           border: none;
           border-radius: 5px;
@@ -116,7 +95,7 @@ pageEncoding="UTF-8"%>
       }
 
       .button-group button:hover {
-          background-color: #555;
+          background-color: #f0a8d0;
       }
 
       .location-select,
@@ -131,25 +110,42 @@ pageEncoding="UTF-8"%>
       }
 
       .options button {
-          background-color: #f5f5f5;
-          border: 1px solid #ddd;
+          background-color: #f0a8d0;
+          border: 1px solid #f0a8d0;
           border-radius: 5px;
           padding: 10px;
           cursor: pointer;
       }
 
       .options button.selected {
-          background-color: #FFC6C6;
-          border-color: #FFC6C6;
+          background-color: #f0a8d0;
+          border-color: #f0a8d0;
       }
+  </style>
+  <style>
+    .button_style {
+      background-color: #f0a8d0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      padding: 10px 15px;
+    } 
+  
+    .button_style:hover {
+      background-color: #e090b5;
+    }
   </style>
     <script type="text/javascript">
      
-      // 전화번호 포맷팅 함수
+     
+
+     
       function formatPhoneNumber(input) {
-          let riders_phone = input.value.replace(/\D/g, ''); // 숫자만 남기기
+          let riders_phone = input.value.replace(/\D/g, ''); 
           if (riders_phone.length > 11) {
-            riders_phone = riders_phone.slice(0, 10); // 10자리까지만
+            riders_phone = riders_phone.slice(0, 10); 
           }
           if (riders_phone.length > 6) {
               input.value = riders_phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
@@ -167,19 +163,18 @@ pageEncoding="UTF-8"%>
     let email_id = $("#email_id").val().trim();
     let email_domain = $("#email_domain").val().trim();
     let riders_email = email_id + "@" + email_domain;
-    $("#riders_email").val(riders_email); // email 필드가 있는지 확인
+    $("#riders_email").val(riders_email); 
+    
+    
+    $("#riders_region").val(""); 
 
     
-     // 지역 선택 초기화
-    $("#riders_region").val(""); // 이전 값 지우기
-
-    // 지역 선택 수집
     let selectedRegions = [];
     $("input[name='riders_region']:checked").each(function() {
         selectedRegions.push($(this).val());
     });
 
-    let riders_region = selectedRegions.join(","); // 쉼표로 구분된 값
+    let riders_region = selectedRegions.join(","); 
     $("#riders_region").val(riders_region);
     
 
@@ -205,27 +200,31 @@ pageEncoding="UTF-8"%>
         return;
     }
 
-    // 폼 제출 방지 플래그 추가
-    f.action = "insert.do"; // MemberInsertAction
-    f.submit(); // 전송
+   
+    f.action = "insert.do"; 
+    f.submit(); 
 }
 
     </script>
 
     <script type="text/javascript">
       function setEmailDomain(domain) {
-        // '직접입력'을 선택한 경우, 도메인 입력 필드를 비웁니다.
+     
         if (domain === "직접입력") {
           document.getElementById("email_domain").value = "";
         } else {
-          // 선택된 도메인 값을 도메인 입력 필드에 설정합니다.
+         
           document.getElementById("email_domain").value = domain;
         }
       }
     </script>
 
     <script type="text/javascript">
-      /* 자바 스크립트 함수 선언(비밀번호 확인) */
+     function validateEmail(email) {
+        // Regular expression for validating email format
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
 
       function passConfirm() {
         var password = $("#riders_pwd").val();
@@ -242,13 +241,14 @@ pageEncoding="UTF-8"%>
           confirmMsg.html("비밀번호 불일치");
         }
       }
+    
     </script>
   </head>
   <body>
     
     <form action="${pageContext.request.contextPath}/riders/insert.do" method="post">
       <input type="hidden" name="riders_email" id="riders_email" />
-      <!-- <input type="hidden" id="riders_region" name="riders_region" /> -->
+   
       <div class="wrapper">
         <div class="container">
           <div class="header">
@@ -293,6 +293,7 @@ pageEncoding="UTF-8"%>
           </div>
           <div> &nbsp;</div>
           <div class="form-group">
+            <label for="riders_region">배달지역 선택</label>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="riders_region" value="서울">
               <label class="form-check-label" for="inlineCheckbox1">서울</label>
@@ -305,11 +306,20 @@ pageEncoding="UTF-8"%>
               <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="riders_region" value="인천">
               <label class="form-check-label" for="inlineCheckbox3">인천</label>
             </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="riders_region" value="대전">
+              <label class="form-check-label" for="inlineCheckbox4">대전</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox5" name="riders_region" value="부산">
+              <label class="form-check-label" for="inlineCheckbox5">부산</label>
+            </div>
           </div>
         
           <div class="button-group">
-            <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">로그인 화면 으로</button> 
-            <button type="button" class="btn btn-primary" onclick="send(this.form);">가입하기</button> 
+        
+           <input class="button_style" type="button" id="btn_popup_update" value="로그인 화면으로" onclick="location.href='${pageContext.request.contextPath}/riders/main.do'">
+            <input class="button_style" type="button" id="btn_popup_updated" value="가입하기" onclick="send(this.form);">
           </div>
         </div>
       </div>

@@ -67,6 +67,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from member where member_id=#{member_id}
     </delete>
 
-    
+    <!-- 쿠폰을 활용하기 위한 Test -->
+    <select id="getMemberWithCoupons" resultMap="memberWithCouponsResultMap">
+        SELECT
+            m.*,
+            c.coupon_id,
+            c.coupon_code,
+            c.discount_amount,
+            c.start_date,
+            c.end_date
+        FROM
+            member m
+        LEFT JOIN
+            coupon c ON m.member_id = c.member_id
+        WHERE
+            m.member_id = #{member_id}
+    </select>
 
+
+    <resultMap id="memberWithCouponsResultMap" type="first.final_project.vo.MemberVo">
+        <id property="member_id" column="member_id"/>
+        <result property="member_name" column="member_name"/>
+        <result property="member_nickname" column="member_nickname"/>
+        <result property="member_accountId" column="member_accountId"/>
+        <result property="member_pwd" column="member_pwd"/>
+        <result property="member_email" column="member_email"/>
+        <result property="member_phone" column="member_phone"/>
+        <result property="member_cdate" column="member_cdate"/>
+        <result property="addr_line1" column="addr_line1"/>
+        <result property="addr_line2" column="addr_line2"/>
+        <result property="owner_name" column="owner_name"/>
+
+        <!-- Mapping the coupons -->
+       <collection property="coupons" ofType="first.final_project.vo.CouponVo" column="member_id" select="selectCouponsByMemberId">
+    <id property="coupon_id" column="coupon_id"/>
+    <result property="coupon_code" column="coupon_code"/>
+    <result property="discount_amount" column="discount_amount"/>
+    <result property="start_date" column="start_date"/>
+    <result property="end_date" column="end_date"/>
+</collection>
+    </resultMap>
+    
+<select id="selectCouponsByMemberId" resultType="first.final_project.vo.CouponVo" parameterType="int">
+    SELECT coupon_id, coupon_code, discount_amount, start_date, end_date
+    FROM coupons
+    WHERE member_id = #{member_id}
+</select>
 </mapper>

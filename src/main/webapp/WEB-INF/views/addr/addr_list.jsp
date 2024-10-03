@@ -96,10 +96,8 @@
         </ol>
       </nav>
 
-    </div><!-- End Page Title -->
+    </div>
 
-
-    <!-- <input type="hidden" name="addr_id" id="${addr.addr_id}" /> -->
     <div class="container">
       <input class="button_style" type="button" value="주소 등록"
         onclick="location.href='/addr/addr_insert_form.do?nextPath=addr_list'" />
@@ -129,12 +127,11 @@
           </tr>
         </c:forEach>
       </table>
-      <!-- Data가 없는경우  -->
       <c:if test="${ empty requestScope.addr_list }">
         <div id="empty_msg">등록된 주소정보가 없습니다</div>
       </c:if>
     </div>
-  </main><!-- End #main -->
+  </main>
 
 </body>
 

@@ -37,13 +37,11 @@ public class LoginController {
     @Autowired
     AdminMapper admin_mapper;
 
-    // 회원가입 폼
     @RequestMapping("insert_form.do")
     public String insert_form() {
         return "insert_form";
     }
 
-    // 회원가입
     @RequestMapping("/member/insert.do")
     public String insert(MemberVo vo) {
         member_mapper.insert(vo);
@@ -54,7 +52,6 @@ public class LoginController {
         return "redirect:/login_form.do";
     }
 
-    // 사장 회원가입
     @RequestMapping("/owner/insert.do")
     public String insert(OwnerVo vo) {
         owner_mapper.insert(vo);
@@ -65,7 +62,6 @@ public class LoginController {
         return "redirect:/login_form.do";
     }
 
-    // 로그인 폼
     @RequestMapping("login_form.do")
     public String login_form() {
 
@@ -74,7 +70,6 @@ public class LoginController {
         return "login_form";
     }
 
-    // 회원의 로그인
     @RequestMapping("/member/login.do")
     public String member_login(String member_accountId, String member_pwd, String url, RedirectAttributes ra) {
 
@@ -98,13 +93,11 @@ public class LoginController {
         session.setAttribute("isLoggedIn", true);
         session.setAttribute("currentUser", user.getMember_accountId());
         
-        // 절대 경로 사용 (수정 by 태광)
         return "redirect:../main/display.do";
 
      
     }
 
-    // 아이디 중복 체크
     @RequestMapping("/member/check_member_accountId.do")
     @ResponseBody
     public Map<String, Boolean> check_member_id(@RequestParam("member_accountId") String member_accountId) {
@@ -115,7 +108,6 @@ public class LoginController {
         return map;
     }
 
-    // 닉네임 중복 체크
     @RequestMapping("/member/check_member_nickname.do")
     @ResponseBody
     public Map<String, Boolean> check_nickname(@RequestParam("member_nickname") String member_nickname) {
@@ -126,7 +118,6 @@ public class LoginController {
         return map;
     }
 
-    // 사장의 로그인
     @RequestMapping("/owner/login.do")
     public String owner_login(String owner_accountId, String owner_pwd, RedirectAttributes ra) {
 
@@ -163,11 +154,9 @@ public class LoginController {
         session.setAttribute("currentUser", user.getOwner_accountId());
         System.out.println(user);
 
-        // 태광 수정 
         return "redirect:../order/accept.do";
     }
 
-    // 아이디 중복 체크
     @RequestMapping("/owner/check_owner_accountId.do")
     @ResponseBody
     public Map<String, Boolean> check_owner_id(@RequestParam("owner_accountId") String owner_accountId) {
@@ -178,7 +167,7 @@ public class LoginController {
         return map;
     }
 
-    // 관리자 로그인
+
     @RequestMapping("/admin/login.do")
     public String admin_login(String admin_accountId, String admin_pwd, RedirectAttributes ra) {
 
@@ -203,13 +192,11 @@ public class LoginController {
         return "redirect:/admin/member_list.do";
     }
 
-    // 로그아웃
+
     @RequestMapping("logout.do")
     public String logout() {
 
         session.invalidate();
-
-
         return "redirect:/main/display.do";
     }
 

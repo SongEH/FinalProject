@@ -91,12 +91,11 @@ pageEncoding="UTF-8"%>
         </ol>
       </nav>
 
-    </div><!-- End Page Title -->
+    </div>
 
     
     
     <div class="container">
-      <!-- <input type="hidden" name="member_id" value="${member.member_id}" /> -->
       <div class="mb-4">
         <lable for="name">이름:</lable>
         <input

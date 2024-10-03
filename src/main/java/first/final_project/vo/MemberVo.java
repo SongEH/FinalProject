@@ -17,8 +17,6 @@ public class MemberVo {
     String member_cdate;
 
 
-    
-    // inner join from addr 
     String addr_line1;
     String addr_line2;
 

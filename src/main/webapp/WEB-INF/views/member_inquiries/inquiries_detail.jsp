@@ -95,17 +95,11 @@
             background-color: #0056b3;
         }
         .content {
-            white-space: pre-wrap; /* 줄 바꿈과 공백을 유지합니다 */
-            word-wrap: break-word; /* 긴 단어를 자동으로 줄 바꿈 */
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
         }
     </style>
 
-    <!-- <script type="text/javascript">
-        function del(m_inquiries_id) {
-            if (confirm("정말 삭제 하시겠습니까?") == false) return;
-            location.href = "delete.do?m_inquiries_id=" + m_inquiries_id;
-        }
-    </script> -->
      <script type="text/javascript">
         function del(m_answer_id) {
             if (confirm("정말 삭제 하시겠습니까?") == false) return;
@@ -148,12 +142,11 @@
             </ol>
         </nav>
 
-        </div><!-- End Page Title -->
+        </div>
 
         
         <div class="container">
 
-            <!-- 상세 정보 표시 영역 -->
             <div class="inquiries_detail">
                 <div class="inquiries_title">
                     ${vo.m_inquiries_title}
@@ -213,7 +206,7 @@
             </c:if>
         </div>
 
-    </main><!-- End #main -->
+    </main>
 
 </body>
 </html>

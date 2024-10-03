@@ -117,14 +117,10 @@
         </ol>
       </nav>
 
-    </div><!-- End Page Title -->
+    </div>
 
     <div class="container">
-        <input type="hidden" id="inquiries_type" value="${vo.m_inquiries_type}">
-        <!-- <p>문의사항 작성자 ID: ${vo.memberAccountId}</p> -->
-        
-
-
+        <input type="hidden" id="inquiries_type" value="${vo.m_inquiries_type}">       
         <div class="filter">
             
             <a href="${pageContext.request.contextPath}/member_inquiries/list.do?m_inquiries_type=전체" class="${m_inquiries_type == '전체' ? 'active' : ''}">전체</a>
@@ -173,7 +169,7 @@
         </div>
     </div>
 
-  </main><!-- End #main -->
+  </main>
 
 </body>
 </html>

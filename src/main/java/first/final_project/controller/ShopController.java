@@ -486,24 +486,4 @@ public class ShopController {
         return "redirect:shoplist.do";
     }
 
-    @RequestMapping("shop/hasShop.do")
-    @ResponseBody
-    public String hasShop(RedirectAttributes ra, Model model){
-
-        OwnerVo user = (OwnerVo) session.getAttribute("user");
-        if(user==null){
-            ra.addAttribute("reason", "session_timeout");
-            return "redirect:../login_form.do";
-        }
-        Boolean result = shop_Service.hasShop(user.getOwner_id());
-        System.out.println("result : " + result);
-        Boolean hasShop = (result != null) ? result : false;
-        System.out.println("hasShop : " + hasShop);
-        model.addAttribute("hasShop", hasShop);
-        if(hasShop == false){
-            return "redirect:../shop/insert_form.do";
-        }
-
-        return "{\"hasShop\": " + hasShop + "}";
-    }
 }

@@ -58,40 +58,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     });
   }
 
-  // Second AJAX Call: /shop/hasShop.do
-  if (!ajaxExecuted && status === 0) {
-    $.ajax({
-      url: "/shop/hasShop.do",
-      method: "GET",
-      success: function (res_data) {
-        let response = JSON.parse(res_data); // Ensure the response is parsed as JSON
-
-        let hasShop = response.hasShop; // Get the hasShop value
-
-        // Dynamically update the page based on the hasShop value
-        if (hasShop) {
-          // If the shop is already registered
-          $('#shop-registration').html(`
-            <a href="#" class="disabled-link">
-              <i class="bi bi-circle"></i><span>가맹점 등록 (완료)</span>
-            </a>
-          `);
-        } else {
-          // If the shop is not registered
-          $('#shop-registration').html(`
-            <a href="/shop/insert_form.do">
-              <i class="bi bi-circle"></i><span>가맹점 등록</span>
-            </a>
-          `);
-        }
-
-        ajaxExecuted = true; // Set flag to prevent future executions
-      },
-      error: function (err) {
-        alert(err.responseText);
-      }
-    });
-  }
 });
   </script>
   <!-- ======= Sidebar ======= -->
@@ -277,9 +243,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </a>
                 <ul id="tables-nav" class="nav-content" data-bs-parent="#sidebar-nav">
                   <li>
-                    <div id="shop-registration">
-                      <!-- AJAX will dynamically insert content here --></div>
-                    <!-- <c:choose>
+                    <c:choose>
                       <c:when test="${hasShop}">
                         <a href="#" class="disabled-link">
                           <i class="bi bi-circle"></i><span>가맹점 등록 (완료)</span>
@@ -290,7 +254,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                           <i class="bi bi-circle"></i><span>가맹점 등록</span>
                         </a>
                       </c:otherwise>
-                    </c:choose> -->
+                    </c:choose>
                   </li>
                   <li>
                     <a href="/shop/modify_form.do">

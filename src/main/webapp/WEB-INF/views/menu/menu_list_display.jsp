@@ -117,21 +117,24 @@ pageEncoding="UTF-8" %>
     .menu-card {
       background-color: white;
       border-radius: 8px;
-      padding: 2px 15px; /* 상하 2px, 좌우 15px */
+      padding: 2px 15px;
+      /* 상하 2px, 좌우 15px */
       margin-bottom: 20px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    td{
+    td {
       padding-bottom: 7px !important;
     }
+
     .menu-img {
       border-radius: 8px;
       width: 100%;
-      height: auto; /* 자동 높이 조정 */
-      object-fit: cover; /* 비율 유지 */
+      height: auto;
+      /* 자동 높이 조정 */
+      object-fit: cover;
+      /* 비율 유지 */
     }
-
   </style>
 </head>
 
@@ -139,18 +142,14 @@ pageEncoding="UTF-8" %>
   <!-- popup:Modal -->
   <%@include file="menu_popup.jsp" %>
 
-  <!-- ${status} -->
-
   <c:set var="userType" value="${sessionScope.userType}" />
-
-
 
   <c:forEach var="item" items="${menu_list}">
 
     <!-- item.menu_status가 1인 경우만 표시 -->
     <c:if test="${item.menu_status == 1}">
 
-      <!-- menu_hidden이 0인 경우를 표시합니다 -->
+      <!-- menu_hidden이 0인 경우를 표시 -->
       <c:if test="${ item.menu_hidden == 0}">
 
         <div class="menu-card">
@@ -169,11 +168,13 @@ pageEncoding="UTF-8" %>
                   ${item.menu_name}
                 </h5>
                 <p style="margin: 5px 0;">${item.menu_content}</p>
-                <p style="margin: 5px 0;"><fmt:formatNumber value="${item.menu_price}" pattern="#,###"/>원</p>
+                <p style="margin: 5px 0;">
+                  <fmt:formatNumber value="${item.menu_price}" pattern="#,###" />원</p>
 
                 <c:if test="${shop_status == '영업중'}">
                   <input class="button_style" type="button" value="장바구니담기"
-                    onclick="menu_modal('${ item.menu_id }', '${ item.menu_soldout }');" style="margin-top:-130px; margin-left:350px;">
+                    onclick="menu_modal('${ item.menu_id }', '${ item.menu_soldout }');"
+                    style="margin-top:-130px; margin-left:350px;">
                 </c:if>
               </td>
             </tr>

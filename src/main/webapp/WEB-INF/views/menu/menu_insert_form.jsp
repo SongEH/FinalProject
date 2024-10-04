@@ -80,7 +80,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       }
 
       //f.method = "POST";
-      f.action = "insert.do"; //전송대상(PhotoInsertAction)
+      f.action = "insert.do"; //전송대상
       f.submit(); //전송
     }
   </script>
@@ -128,7 +128,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <div class="card-body">
               <h5 class="card-title">메뉴 정보 입력</h5>
 
-              <!-- Floating Labels Form -->
               <form class="row g-3" method="POST" enctype="multipart/form-data">
                 <div class="col-md-12">
                   <div class="form-floating">
@@ -188,9 +187,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   </div>
                 </div>
 
-
-
-                <!-- Hidden inputs to ensure all values are submitted -->
                 <input type="hidden" name="menu_popularity" value="0" />
                 <input type="hidden" name="menu_hidden" value="0" />
                 <input type="hidden" name="menu_soldout" value="0" />
@@ -200,14 +196,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   <input class="button_style" type="button" value="메뉴등록" onclick="send(this.form);" />
                 </div>
               </form>
-              <!-- End floating Labels Form -->
             </div>
           </div>
         </div>
       </div>
     </section>
   </main>
-  <!-- End #main -->
 </body>
 
 </html>

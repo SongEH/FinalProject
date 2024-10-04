@@ -105,12 +105,8 @@
 
         dataType: 'json',
         success: function (res_data) {
-          //res_data = {"p_filename":"aaa.jpb"}
-
-          //location.href=''; //자신의 페이지를 리로드(refresh)
 
           $("#my_img").attr("src", "../resources/images/" + res_data.p_filename);
-          //$("#my_img").prop("src","../images/" + res_data.p_filename);
 
         },
         error: function (err) {
@@ -194,11 +190,8 @@
             <div class="card-body">
               <h5 class="card-title">메뉴수정</h5>
 
-              <!-- Floating Labels Form -->
               <form class="row g-3" method="POST" enctype="multipart/form-data">
-
                 <input type="hidden" name="menu_id" value="${ vo.menu_id }">
-
                 <div class="col-md-12">
                   <div class="form-floating">
                     <input type="text" class="form-control" placeholder="메뉴명" name="menu_name"
@@ -257,7 +250,8 @@
                   <div class="form-floating" style="text-align:center;">
                     <img src="../resources/images/${ vo.menu_img }" id="my_img">
                     <br>
-                    <input class="button_style" type="button" value="이미지편집" onclick="ajaxFileUpload();" style="margin-top:10px;">                  
+                    <input class="button_style" type="button" value="이미지편집" onclick="ajaxFileUpload();"
+                      style="margin-top:10px;">
                   </div>
                 </div>
 
@@ -271,21 +265,13 @@
 
                   <input class="button_style" type="button" value="수정완료" onclick="send(this.form);">
                 </div>
-              </form><!-- End floating Labels Form -->
+              </form>
 
             </div>
           </div>
         </div>
       </div>
     </section>
-
-  </main><!-- End #main -->
-
-
-
-
-
-
+  </main>
 </body>
-
 </html>

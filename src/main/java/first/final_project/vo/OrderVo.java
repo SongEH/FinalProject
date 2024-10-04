@@ -26,17 +26,17 @@ public class OrderVo {
     private String shop_img;
     private int orders_isdelete;
 
-    private String shop_name; // 추가
-    private String deliveries_method; // 추가
-    private String shop_status; // 추가
-    private String shop_addr1; // 추가
-    private String shop_addr2; // 추가
-    private String member_nickname; // 추가
-    private String addr_line1; // 추가
-    private String addr_line2; // 추가
-    private String delivery_history_status; // 추가
-    private String member_phone; // 추가
-    private int delivery_time; // 추가 
+    private String shop_name; 
+    private String deliveries_method; 
+    private String shop_status;
+    private String shop_addr1; 
+    private String shop_addr2;
+    private String member_nickname; 
+    private String addr_line1;
+    private String addr_line2; 
+    private String delivery_history_status; 
+    private String member_phone; 
+    private int delivery_time; 
     private int menu_count;
     
     private int reviews_delete; // 리뷰삭제이력 확인 

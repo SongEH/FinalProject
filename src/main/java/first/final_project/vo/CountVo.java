@@ -3,9 +3,8 @@ package first.final_project.vo;
 import lombok.Data;
 
 @Data
-public class CountVo {
+public class CountVo { // 문의사항 답변 VO
     
-
     private int null_answer_count;
     private int owner_null_answer_count;
     

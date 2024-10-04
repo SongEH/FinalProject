@@ -33,39 +33,32 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   <script>
     // 문의사항 답변 상황 확인 
     $(document).ready(function () {
-      // Only execute if ajaxExecuted is false and status is 0
-      let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
-      let status = 0; // Example status
-      if (!ajaxExecuted && status === 0) {
-        $.ajax({
-          url: "/member_inquiries/answer_count.do", // Adjust the URL if needed
-          method: "GET",
-          data: {
-            m_inquiries_type: "전체"
-          }, // Pass any parameters if necessary
-          success: function (response) {
-            // response now contains the integer value of null_answer_count directly
-            // alert("Null Answer Count: " + response.null_answer_count);
-            // alert("owner_null_answer_count:" + response.owner_null_answer_count)
+  // Only execute if ajaxExecuted is false and status is 0
+  let ajaxExecuted = false; // Flag to prevent multiple AJAX calls
+  let status = 0; // Example status
 
-            // Update the HTML to show the count next to the link
-            if (response.null_answer_count !== null && response.null_answer_count > 0) {
-              $('#null_answer_count').text(response.null_answer_count); // Set the count in the span
-            }
-
-            if (response.owner_null_answer_count !== null && response.owner_null_answer_count > 0) {
-              $('#owner_null_answer_count').text(response
-                .owner_null_answer_count); // Set the count in the span
-            }
-
-            // Set ajaxExecuted to true to prevent future executions
-          },
-          error: function (err) {
-            alert(err.responseText);
-          }
-        });
+  // First AJAX Call: /member_inquiries/answer_count.do
+  if (!ajaxExecuted && status === 0) {
+    $.ajax({
+      url: "/member_inquiries/answer_count.do", // Adjust the URL if needed
+      method: "GET",
+      data: { m_inquiries_type: "전체" }, // Pass any parameters if necessary
+      success: function (response) {
+        // Update the HTML to show the count next to the link
+        if (response.null_answer_count !== null && response.null_answer_count > 0) {
+          $('#null_answer_count').text(response.null_answer_count); // Set the count in the span
+        }
+        if (response.owner_null_answer_count !== null && response.owner_null_answer_count > 0) {
+          $('#owner_null_answer_count').text(response.owner_null_answer_count); // Set the count in the span
+        }
+      },
+      error: function (err) {
+        alert(err.responseText);
       }
     });
+  }
+
+});
   </script>
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">

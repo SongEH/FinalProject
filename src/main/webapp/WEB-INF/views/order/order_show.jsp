@@ -161,7 +161,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title" style="font-weight: bold; ">주문 상세보기</h5>
-              
+
               <table>
                 <tr>
                   <td style="width:250px;">가게명</td>
@@ -218,7 +218,7 @@
                   <td>${vo.orders_drequest}</td>
                 </tr>
               </table>
-<br><br>
+              <br><br>
 
               <h5>메뉴 목록</h5>
               <table id="menuList">

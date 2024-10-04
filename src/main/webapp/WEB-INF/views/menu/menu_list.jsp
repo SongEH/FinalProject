@@ -169,7 +169,7 @@ pageEncoding="UTF-8" %>
     <!-- <div id="menu_rank_list">
     </div> -->
 
-  </main><!-- End #main -->
+  </main>
 
 </body>
 

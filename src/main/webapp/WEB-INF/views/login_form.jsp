@@ -99,7 +99,20 @@ pageEncoding="UTF-8"%>
         f.submit();
       }
     </script>
+    <script>
+      $(document).ready(function(){
 
+        setTimeout(showMessage, 100);
+
+      });
+
+      function showMessage(){
+        
+        if("${param.reason=='pending'}" =="true"){
+        alert("관리자로부터 승인이 완료되지 않아 로그인 할 수 없습니다. ")
+      }
+      }
+    </script>
     <style>
 
       .background-image {

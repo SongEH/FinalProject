@@ -4,91 +4,91 @@ pageEncoding="UTF-8"%>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>라이더 정보</title>
 
-    <!-- Bootstrap 5 CSS -->
+    <!-- Bootstrap 3.x -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
     />
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <style>
       body {
+        background-color: #f8f9fa;
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
         margin: 0;
-        padding: 0px;
+        padding: 0;
       }
 
-      h1 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-      }
       .container {
-        max-width: 800px;
-        margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
+
+      .header h2 {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+      }
+
       .form-control {
         width: 100%;
         padding: 10px;
         border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
+        border-radius: 5px;
         font-size: 14px;
-      }
-      .form-control[readonly] {
         background-color: #f9f9f9;
       }
-      .mb-4 {
-        margin-bottom: 20px;
-      }
-      .flex {
+
+      .button-group {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        margin-top: 20px;
       }
-      input[type="button"] {
-        background-color: #f0a8d0; /* 버튼 배경색 */
+
+      .button-group input {
+        width: 48%;
+        padding: 15px;
+        background-color: #f0a8d0;
+        color: white;
         border: none;
-        color: #fff;
-        padding: 10px 20px;
-        margin-left: 10px;
         border-radius: 5px;
+        font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
-      input[type="button"]:hover {
-        background-color: #f7b5ca; /* 버튼 호버 색상 */
+
+      .button-group input:hover {
+        background-color: #e090b5;
       }
 
-      /* 반응형 스타일 */
+      /* Responsive Styles */
       @media (max-width: 768px) {
-        .login-container {
-          padding: 20px; /* 모바일에서 패딩 감소 */
-        }
-      }
-
-      @media (max-width: 480px) {
-        .login-container h1 {
-          font-size: 20px; /* 제목 폰트 사이즈 줄임 */
+        .container {
+          padding: 15px;
         }
 
-        .login-container input[type="email"],
-        .login-container input[type="password"] {
-          font-size: 14px; /* 폰트 크기 축소 */
-        }
-
-        .login-container button,
-        .login-container .btn {
-          font-size: 14px; /* 버튼 폰트 사이즈 줄임 */
+        .button-group input {
+          width: 100%;
+          margin-bottom: 10px;
         }
       }
     </style>
@@ -100,11 +100,16 @@ pageEncoding="UTF-8"%>
       }
     </script>
   </head>
+
   <body>
     <input type="hidden" name="raiders_id" value="${rider.raiders_id}" />
-    <h1>라&nbsp;이&nbsp;더&nbsp;정&nbsp;보</h1>
+
     <div class="container">
-      <div class="mb-4">
+      <div class="header">
+        <h2>라이더 정보</h2>
+      </div>
+
+      <div class="form-group">
         <label for="name" class="form-label">이름:</label>
         <input
           class="form-control"
@@ -114,7 +119,7 @@ pageEncoding="UTF-8"%>
         />
       </div>
 
-      <div class="mb-4">
+      <div class="form-group">
         <label for="email" class="form-label">이메일:</label>
         <input
           class="form-control"
@@ -124,7 +129,7 @@ pageEncoding="UTF-8"%>
         />
       </div>
 
-      <div class="mb-4">
+      <div class="form-group">
         <label for="password" class="form-label">비밀번호:</label>
         <input
           class="form-control"
@@ -134,7 +139,7 @@ pageEncoding="UTF-8"%>
         />
       </div>
 
-      <div class="mb-4">
+      <div class="form-group">
         <label for="phone" class="form-label">전화번호:</label>
         <input
           class="form-control"
@@ -144,7 +149,7 @@ pageEncoding="UTF-8"%>
         />
       </div>
 
-      <div class="mb-4">
+      <div class="form-group">
         <label for="region" class="form-label">배달지역:</label>
         <input
           class="form-control"
@@ -154,8 +159,8 @@ pageEncoding="UTF-8"%>
         />
       </div>
 
-      <div class="d-flex justify-content-end">
-        <c:if test="( user.raiders_id eq vo.raiders_id )">
+      <div class="button-group">
+        <c:if test="(user.raiders_id eq vo.raiders_id)">
           <input
             type="button"
             value="회원 수정"
@@ -166,17 +171,15 @@ pageEncoding="UTF-8"%>
             value="내역보기"
             onclick="location.href='mypage/list.do?raiders_id=${vo.raiders_id}'"
           />
-
           <input
             type="button"
             value="메인이동"
             onclick="location.href='${pageContext.request.contextPath}/riders/delivery'"
           />
-
           <input
             type="button"
             value="회원 탈퇴"
-            onclick="del('${ vo.raiders_id }');"
+            onclick="del('${vo.raiders_id}');"
           />
         </c:if>
       </div>

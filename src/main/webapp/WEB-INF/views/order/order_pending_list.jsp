@@ -289,13 +289,14 @@
 
                 <div class="col-md-12">
                   <div class="form-check">
-                    <input type="radio" id="current_addr" name="address_choice" class="form-check-input">
+                    <input type="radio" id="current_addr" name="address_choice" class="form-check-input" style="margin-top:17px;">
                     <label class="form-check-label" for="current_addr">새 주소</label>
+                    <input type="button" value="주소검색" class="button_style" onclick="execDaumPostcode()" style="margin-left:50px; width:100px;"/>
                   </div>
                 </div>
 
                
-                <input type="button" value="주소검색" class="button_style" onclick="execDaumPostcode()" />
+                
                 <div class="d-flex">
                   <div class="form-floating me-2" style="flex: 1;">
                     <input type="text" class="form-control" placeholder="우편번호" name="order_addr_zipcode"

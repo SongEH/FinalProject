@@ -20,8 +20,6 @@ public class CartsVo {
     private String menu_name;
     private String menu_img;
     private int menu_price;
-
-    // 판단하기 위한 연산 column
-    private String shop_status;
-    private int shop_min_price;
+    private String shop_status; // 가게상태 
+    private int shop_min_price; // 최소주문금액 
 }

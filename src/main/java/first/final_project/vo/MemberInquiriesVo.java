@@ -16,6 +16,6 @@ public class MemberInquiriesVo {
     private int member_id;
     private String memberAccountId;
 
-    private String m_answer_content;
+    private String m_answer_content; // 문의답변
     private int null_answer_count;
 }

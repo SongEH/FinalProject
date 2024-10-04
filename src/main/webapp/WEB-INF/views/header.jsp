@@ -3,6 +3,11 @@
 
 <!DOCTYPE html>
 <style>
+
+@font-face {
+  font-family: '롯데리아 촵땡겨체';
+  src: url('/resources/fonts/ccab.ttf') format('truetype'); /* 폰트 파일 경로 */
+}
 header {
     display: flex;
     justify-content: space-between; /* Align logo to the left and login to the right */
@@ -16,11 +21,21 @@ header .logo {
     font-size: 24px; /* Optional: Adjust logo size */
 }
 
+header .logo img {
+    height: 50px; /* Adjust logo image height to 40px */
+    width: auto;
+}
+
 header .login-section {
     display: flex;
     align-items: center;
 }
 
+header .logo span {
+    font-family: '롯데리아 촵땡겨체'; /* 폰트 적용 */
+    font-weight: normal !important;
+    color: black !important;
+}
 
 header .login, .insert {
     /* background-color: #F0A8D0; */
@@ -95,18 +110,27 @@ header .logout{
             <c:when test="${sessionScope.userType == 'MEMBER'}">
               <a href="/main/display.do" style="text-decoration: none;
               color: inherit; ">
-              <div class="logo" style="text-align:left;">한입만</div>
+              <div class="logo" style="text-align:left;">
+                <img src="/resources/assets/img/notextlogo.png" alt="Final Logo"/>
+                <span>한입만</span>
+              </div>
               </a>
             </c:when>
             <c:when test="${sessionScope.userType == 'OWNER'}">
               <a href="/order/accept.do" style="text-decoration: none;
               color: inherit; ">
-                <div class="logo" style="text-align:left;">한입만</div>
+                <div class="logo" style="text-align:left;">
+                  <img src="/resources/assets/img/notextlogo.png" alt="Final Logo"/>
+                  <span>한입만</span>
+                </div>
               </a>
             </c:when>
             <c:when test="${sessionScope.userType == 'ADMIN'}">
               <a href="/admin/member_list.do" style="text-decoration: none; color: inherit;">
-                <div class="logo" style="text-align:left;">한입만</div>
+                <div class="logo" style="text-align:left;">
+                  <img src="/resources/assets/img/notextlogo.png" alt="Final Logo"/>
+                  <span>한입만</span>
+                </div>
               </a>
             </c:when>
           </c:choose>
@@ -114,7 +138,10 @@ header .logout{
         <c:otherwise>
           <a href="/main/display.do" style="text-decoration: none;
           color: inherit; ">
-          <div class="logo" style="text-align:left;">한입만</div>
+          <div class="logo" style="text-align:left;">
+            <img src="/resources/assets/img/notextlogo.png" alt="Final Logo"/>
+            <span>한입만</span>
+          </div>
           </a>
         </c:otherwise>
       </c:choose>

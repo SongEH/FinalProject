@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE menu_id = #{menu_id}
   </update>
 
-  <!-- 가게 정렬 -->
+  <!-- 메뉴 정렬 -->
   <select id="selectListValue" parameterType="map" resultType="menu">
     SELECT *
     FROM menu

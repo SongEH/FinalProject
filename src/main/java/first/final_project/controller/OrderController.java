@@ -105,10 +105,8 @@ public class OrderController {
 
 	@RequestMapping("list.do")
 	public String list(@RequestParam(name = "page", defaultValue = "1") int page,
-			@RequestParam(name = "startDate", required = false) String startDate, // 요청 파라미터로 시작 날짜 필터를 받음. 필수 값이 아니기
-																					// 때문에 null일 수 있음
-			@RequestParam(name = "endDate", required = false) String endDate, // 요청 파라미터로 종료 날짜 필터를 받음. 필수 값이 아니기 때문에
-																				// null일 수 있음
+			@RequestParam(name = "startDate", required = false) String startDate, // 요청 파라미터로 시작날짜를 받음. 필수가 아님으로 null일 수 있음
+			@RequestParam(name = "endDate", required = false) String endDate, // 요청 파라미터로 종료날짜를 받음. 필수가 아님으로 null일 수 있음
 			Model model) {
 
 		// DATETIME 형식으로 비교하기 위해서 시:분:초 추가
@@ -118,14 +116,11 @@ public class OrderController {
 		if (endDate != null && !endDate.isEmpty()) {
 			endDate += " 23:59:59"; // 종료 날짜에 시간 추가
 		}
-
 		// OrderService에서 결과를 담을 Map 객체
 		Map<String, Object> resultMap;
-
 		// 로그인한 member_id
 		MemberVo user = (MemberVo) session.getAttribute("user");
 		int member_id = user.getMember_id();
-
 		// 필터가 없는 경우(날짜 필터 값이 null이거나 빈 값일 경우) 전체 목록을 가져옴
 		if ((startDate == null || startDate.isEmpty()) && (endDate == null || endDate.isEmpty())) {
 			resultMap = orderService.getPagedOrder(member_id, page); // 전체 배달 목록
@@ -133,7 +128,6 @@ public class OrderController {
 			// 필터가 있는 경우 해당 날짜 범위에 맞는 목록을 가져옴
 			resultMap = orderService.getPagedOrder(member_id, page, startDate, endDate); // 필터 적용된 목록
 		}
-
 		List<OrderVo> order_list = (List<OrderVo>) resultMap.get("order_list");
 
 		for (OrderVo vo : order_list) {
@@ -145,18 +139,12 @@ public class OrderController {
 				vo.setHasReview(hasReview);
 			}
 		}
-
 		// 결과적으로 request binding
 		model.addAttribute("list", order_list);
-		System.out.println("order_list : " + order_list);
-		System.out.println("order_list count : " + order_list.size());
-
 		// 페이지 메뉴 데이터를 모델에 추가하여 JSP에 전달 (페이징 처리된 페이지 번호)
 		model.addAttribute("pageMenu", resultMap.get("pageMenu"));
-
 		// 현재 페이지 번호를 모델에 추가하여 JSP에 전달
 		model.addAttribute("currentPage", page);
-
 		// 필터 값을 모델에 추가하여 JSP에서 필터를 유지할 수 있게 함
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
@@ -188,14 +176,12 @@ public class OrderController {
 			order_list = order_mapper.selectList(id);
 		}
 
-		System.out.println("주문리스트\n" + order_list);
-
 		return order_list;
 	}
 
 	// 회원 주문대기 (주문 전)
 	@RequestMapping("pending_order.do")
-	public String insert(int shop_id, String shop_name, String order_addr, String order_addr_zipcode, Model model) { 
+	public String insert(int shop_id, String shop_name, String order_addr, String order_addr_zipcode, Model model) {
 
 		// 현재 로그인한 사용자
 		MemberVo user = (MemberVo) session.getAttribute("user");
@@ -295,16 +281,16 @@ public class OrderController {
 	// 주문 접수
 	@GetMapping("accept")
 	public String acceptOrderList(@RequestParam("orders_id") int orders_id) {
-		
+
 		// 주문 상태를 '배차 대기'로 변경
 		orderService.updateOrderStatus(orders_id, "배차 대기");
 
 		// 서버 측: 주문이 들어왔을 때 전송할 메시지
-        Map<String, Object> message = new HashMap<>();
-        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
-        message.put("orders_id", orders_id); // 주문 ID
+		Map<String, Object> message = new HashMap<>();
+		message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+		message.put("orders_id", orders_id); // 주문 ID
 
-        messagingTemplate.convertAndSend("/topic/orders", message);
+		messagingTemplate.convertAndSend("/topic/orders", message);
 
 		return "redirect:/order/accept.do";
 	}
@@ -316,12 +302,12 @@ public class OrderController {
 		// 주문 상태를 '픽업 대기'로 변경
 		orderService.updateOrderStatus(orders_id, "픽업 대기");
 
-        // 서버 측: 주문이 들어왔을 때 전송할 메시지
-        Map<String, Object> message = new HashMap<>();
-        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
-        message.put("orders_id", orders_id); // 주문 ID
+		// 서버 측: 주문이 들어왔을 때 전송할 메시지
+		Map<String, Object> message = new HashMap<>();
+		message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
+		message.put("orders_id", orders_id); // 주문 ID
 
-        messagingTemplate.convertAndSend("/topic/orders", message);	
+		messagingTemplate.convertAndSend("/topic/orders", message);
 
 		return "redirect:/order/accept.do";
 	}

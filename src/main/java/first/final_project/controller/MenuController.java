@@ -53,9 +53,8 @@ public class MenuController {
 
 		// Menu Vo에 가게 ID 부여 (로그인 사장의 가게ID)
 		OwnerVo user = (OwnerVo) session.getAttribute("user");
-		
+
 		// 로그인 여부 체크
-		
 
 		int owner_id = user.getOwner_id();
 		Integer shop_id = shop_service.select_one_shop_id(owner_id);
@@ -79,7 +78,7 @@ public class MenuController {
 	// shop_listOne.jsp에서 회원에게 보여지는 메뉴 목록 (shop_id로 조회)
 	@RequestMapping("listByShopId.do")
 	public String listByShopId(int shop_id,
-	@RequestParam(name="shop_status", required = false)String shop_status, Model model) {
+			@RequestParam(name = "shop_status", required = false) String shop_status, Model model) {
 		System.out.println("listbyShopid 도착");
 		List<MenuVo> list = menu_mapper.selectList(shop_id);
 
@@ -124,11 +123,10 @@ public class MenuController {
 		OwnerVo user = (OwnerVo) session.getAttribute("user");
 
 		// 로그인 여부 체크
-		
 
 		int owner_id = user.getOwner_id();
 		Integer shop_id = shop_service.select_one_shop_id(owner_id);
-		
+
 		// shop_id가 0인 경우를 체크 (가게가 없다는 가정)
 		if (shop_id == null) {
 			return "redirect:../shop/insert_form.do"; // 가게 ID가 없으면 삽입 폼으로 이동

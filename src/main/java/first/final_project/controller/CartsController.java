@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import first.final_project.dao.CartsMapper;
 import first.final_project.vo.CartsVo;
 import first.final_project.vo.MemberVo;
-import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -58,8 +57,8 @@ public class CartsController {
 	// 회원용 shop_listOne.jsp 에서 보여질 장바구니 목록
 	@RequestMapping("list2.do")
 	public String list2(@RequestParam(name = "page", defaultValue = "1") int nowPage,
-	@RequestParam(name="shop_status", required = false) String shop_status,
-	Model model, RedirectAttributes ra) {
+			@RequestParam(name = "shop_status", required = false) String shop_status,
+			Model model, RedirectAttributes ra) {
 
 		MemberVo user = (MemberVo) session.getAttribute("user");
 
@@ -161,7 +160,7 @@ public class CartsController {
 		} else {
 			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("해당 항목을 찾을 수 없습니다.");
 		}
-		
+
 	}
-	
+
 }

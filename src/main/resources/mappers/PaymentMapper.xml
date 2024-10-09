@@ -5,38 +5,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="first.final_project.dao.PaymentMapper">
 
-    <insert id="insert" parameterType="payment" useGeneratedKeys="true" keyProperty="orders_id">
+  <insert id="insert" parameterType="payment" useGeneratedKeys="true" keyProperty="orders_id">
         insert into orders (
-                            orders_id,
-                            orders_payment,
-                            orders_method,
-                            orders_imp_uid,
-                            orders_merchant_uid,
-                            orders_name,
-                            orders_price,
-                            orders_srequest,
-                            orders_drequest,
-                            shop_id,
-                            addr_id,
-                            member_id
-                    ) values (
-                            null,             
-                            #{orders_payment},
-                            #{orders_method},
-                            #{orders_imp_uid},
-                            #{orders_merchant_uid},
-                            #{orders_name},
-                            #{orders_price},
-                            #{orders_srequest},
-                            #{orders_drequest},
-                            #{shop_id},
-                            #{addr_id},
-                            #{member_id}
-                            )  
-    </insert>
+          orders_id,
+          orders_payment,
+          orders_method,
+          orders_imp_uid,
+          orders_merchant_uid,
+          orders_name,
+          orders_price,
+          orders_srequest,
+          orders_drequest,
+          shop_id,
+          addr_id,
+          member_id
+        ) values (
+          null,             
+          #{orders_payment},
+          #{orders_method},
+          #{orders_imp_uid},
+          #{orders_merchant_uid},
+          #{orders_name},
+          #{orders_price},
+          #{orders_srequest},
+          #{orders_drequest},
+          #{shop_id},
+          #{addr_id},
+          #{member_id}
+        )  
+  </insert>
 
-    <select id="selectPaymentByOrderId" resultType="payment">
+  <select id="selectPaymentByOrderId" resultType="payment">
         SELECT * FROM orders WHERE orders_id = #{orders_id}
-    </select>
+  </select>
 
 </mapper>

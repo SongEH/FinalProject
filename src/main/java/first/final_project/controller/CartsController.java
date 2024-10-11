@@ -55,8 +55,8 @@ public class CartsController {
 	}
 
 	// 회원용 shop_listOne.jsp 에서 보여질 장바구니 목록
-	@RequestMapping("list2.do")
-	public String list2(@RequestParam(name = "page", defaultValue = "1") int nowPage,
+	@RequestMapping("listFromDisplay.do")
+	public String listFromDisplay(@RequestParam(name = "page", defaultValue = "1") int nowPage,
 			@RequestParam(name = "shop_status", required = false) String shop_status,
 			Model model, RedirectAttributes ra) {
 
@@ -126,32 +126,9 @@ public class CartsController {
 
 	}
 
-	// carts_display.jsp에서 호출
-	// @RequestMapping("delete2.do")
-	// public void delete2(@RequestParam("carts_id") int carts_id,
-	// RedirectAttributes ra) {
-	// System.out.println("delete2.do 호출\n\n");
-
-	// // CartsVo 정보 얻어온다
-	// CartsVo vo = carts_mapper.selectOne(carts_id);
-
-	// if (vo != null) {
-	// carts_mapper.delete(carts_id);
-	// System.out.println("삭제완\n\n");
-	// ra.addFlashAttribute("message", "장바구니 항목이 삭제되었습니다.");
-	// } else {
-	// ra.addFlashAttribute("error", "해당 항목을 찾을 수 없습니다.");
-	// }
-
-	// // return "redirect:/main/display.do"; // 적절한 리디렉션 URL
-
-	// // String referer = request.getHeader("Referer");
-	// // return "redirect:" + referer;
-	// }
-
-	@GetMapping("delete2.do")
+	@GetMapping("deleteFromDisplay.do")
 	@ResponseBody // JSON 응답을 반환
-	public ResponseEntity<String> deleteCartItem(@RequestParam("carts_id") int cartsId) {
+	public ResponseEntity<String> deleteFromDisplay(@RequestParam("carts_id") int cartsId) {
 		CartsVo vo = carts_mapper.selectOne(cartsId);
 
 		if (vo != null) {

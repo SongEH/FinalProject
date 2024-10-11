@@ -65,9 +65,8 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script>
   // 장바구니 목록 업데이트
   function updateCartList() {
-    // 장바구니 목록을 업데이트하기 위한 AJAX 요청 - 한지혜
     $.ajax({
-      url: "/carts/list2.do",
+      url: "/carts/listFromDisplay.do",
       type: "GET",
       success: function (response) {
         // 응답으로 받은 HTML을 장바구니 목록에 업데이트
@@ -86,15 +85,14 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     event.preventDefault();
 
     $.ajax({
-      url: "/carts/delete2.do",
+      url: "/carts/deleteFromDisplay.do",
       type: "GET", // GET 방식으로 변경
       data: {
         carts_id: cartsId,
       },
       success: function (response) {
-        alert(response); // 서버에서 보낸 메시지를 표시
+        alert(response); // 서버에서 보낸 메시지 표시
         updateCartList();
-        // location.reload(); // 필요시 페이지 새로고침
       },
       error: function (xhr, status, error) {
         alert("삭제에 실패했습니다: " + xhr.responseText);

@@ -58,12 +58,10 @@ public class PaymentController {
     @ResponseBody
     public void orders_insert(PaymentVo vo, RedirectAttributes ra, int shop_id, int member_id, HttpSession session) {
 
-        System.out.println("getAddr_id\n\n" + vo.getAddr_id());
         try {
             paymentService.insert(vo);
 
             Integer orders_id = vo.getOrders_id();
-            System.out.println("orders_id : " + orders_id);
 
             // 주문 후에는 장바구니 테이블에 주문 id 부여
             Map<String, Object> map = new HashMap<>();

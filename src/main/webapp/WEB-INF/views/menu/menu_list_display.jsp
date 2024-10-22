@@ -97,7 +97,7 @@ pageEncoding="UTF-8" %>
     // 장바구니 목록 업데이트
     function updateCartList(shop_status) {
       $.ajax({
-        url: '/carts/list2.do',
+        url: '/carts/listFromDisplay.do',
         type: 'GET',
         data: {
           "shop_status": shop_status

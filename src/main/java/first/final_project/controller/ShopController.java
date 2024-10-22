@@ -2,11 +2,10 @@ package first.final_project.controller;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -20,14 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import first.final_project.dao.MenuMapper;
 import first.final_project.service.AddrService;
 import first.final_project.service.KakaoMapService;
 import first.final_project.service.ShopService;
-import first.final_project.vo.AddrVo;
 import first.final_project.vo.MemberVo;
-import first.final_project.vo.MenuVo;
 import first.final_project.vo.OwnerVo;
 import first.final_project.vo.ShopVo;
 import jakarta.servlet.ServletContext;
@@ -71,6 +67,7 @@ public class ShopController {
         @RequestParam(name="food_category",required = false) String food_category,
         @RequestParam(name="order_addr", required = false) String order_addr, Model model, RedirectAttributes ra) {
 
+        // 주소가 없으면 에러 메시지와 함께 메인 페이지로 리다이렉트
         if(order_addr == null) { 
             ra.addAttribute("reason", "not find address");
 			return "redirect:../main/display.do";
@@ -79,14 +76,12 @@ public class ShopController {
         List<ShopVo> list;
         double radius = 3000;  // 3km 반경
 
-        System.out.println("1 : " + order_addr);
-
         System.out.println(food_category);
         // 가게 리스트 필터링
         List<ShopVo> allShops = shop_Service.selectList(food_category);
 
         // 가게 영업유무 업데이트
-        int res = shop_Service.updateStatus();
+        shop_Service.updateStatus();
         
         list = new ArrayList<>();
 
@@ -100,11 +95,10 @@ public class ShopController {
                 double[] shopCoordinates = kakaoMapService.getCoordinates(shop.getShop_addr1());
                 double distance = kakaoMapService.calculateDistance(customerCoordinates[0], customerCoordinates[1],
                                                                     shopCoordinates[0], shopCoordinates[1]);
-                if (distance <= radius) {
+                if (distance <= radius) { // 설정한 반경내에 있는 가게를 리스트에 추가
                     list.add(shop);
-                    //System.out.println("등록완료");
                 }
-                if(shop.getShop_rating() !=null){
+                if(shop.getShop_rating() !=null){ // 가게 평점 반올림 처리
                     BigDecimal shop_rating = shop.getShop_rating().setScale(1, RoundingMode.HALF_UP);
                     shop.setShop_rating(shop_rating);
                 }
@@ -114,7 +108,7 @@ public class ShopController {
             model.addAttribute("food_category", food_category);
         } catch (Exception e) {
             e.printStackTrace();  // 예외 발생 시 전체 스택 트레이스를 출력
-            System.out.println("예외 발생: " + e.getMessage());  // 구체적인 예외 메시지 출력
+            System.out.println("예외 발생: " + e.getMessage());  
             model.addAttribute("error", "가게 정보를 불러오는 중 오류가 발생했습니다.");
         }
     
